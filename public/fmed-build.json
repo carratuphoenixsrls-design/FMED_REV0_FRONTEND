@@ -1,0 +1,21 @@
+{
+  "product": "FMED Enterprise 1.0",
+  "release": "E8.2.3_LIGHT_ONLY",
+  "build": "FMED_ENTERPRISE_1_0_E8_2_3_LIGHT_ONLY_2026_07_26",
+  "frontend": true,
+  "backend_required": "E8.1.8",
+  "target_domain": "fmed512clean.vercel.app",
+  "features": [
+    "Tema chiaro unico e permanente su login e area operativa",
+    "Comando di cambio tema rimosso dalla sidebar",
+    "Stato, localStorage, classi e selettori del tema scuro eliminati",
+    "Fogli CSS ripuliti dalle regole dedicate alla modalità scura",
+    "Registro stili inline consolidato ai soli 145 gruppi realmente utilizzati",
+    "Funzioni E512, autenticazione, API, Supabase e backend invariati",
+    "Interfaccia ottimizzata per desktop 1366×768, 1536×864 e 1920×1080"
+  ],
+  "description": "Frontend E512 consolidato in modalità esclusivamente chiara, senza selettori, stato o codice del tema scuro.",
+  "version": "8.2.3",
+  "label": "FMED ENTERPRISE 1.0 · E8.2.3 LIGHT ONLY",
+  "date": "2026-07-26"
+}
