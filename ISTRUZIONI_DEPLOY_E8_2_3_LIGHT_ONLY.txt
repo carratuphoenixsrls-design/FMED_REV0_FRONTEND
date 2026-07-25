@@ -1,0 +1,15 @@
+FMED E8.2.3 LIGHT ONLY - DEPLOY VERCEL
+======================================
+
+1. Estrarre lo ZIP.
+2. Aprire PowerShell nella cartella del frontend.
+3. Eseguire:
+   Set-ExecutionPolicy -Scope Process Bypass
+   .\02_VERIFICA_BUILD.ps1
+4. Collegare la cartella al progetto Vercel esistente:
+   npx vercel link
+5. Verificare che VITE_API_BASE_URL sia presente in Production:
+   npx vercel env ls
+6. Pubblicare:
+   npx vercel --prod
+7. Aprire https://fmed512clean.vercel.app e premere Ctrl+F5.
