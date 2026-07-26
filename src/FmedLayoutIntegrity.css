@@ -682,6 +682,17 @@ body {
   border-color: rgba(14, 142, 168, .34) !important;
   box-shadow: 0 10px 20px rgba(14, 142, 168, .10) !important;
 }
+body[data-theme="dark"] .fmed-sidebar-control-btn,
+.fmed-dark-mode .fmed-sidebar-control-btn {
+  border-color: rgba(18, 198, 194, .22) !important;
+  background: rgba(18, 198, 194, .075) !important;
+  color: #f2f8fa !important;
+  box-shadow: none !important;
+}
+body[data-theme="dark"] .fmed-sidebar-control-btn > span:first-child,
+.fmed-dark-mode .fmed-sidebar-control-btn > span:first-child {
+  background: rgba(18, 198, 194, .13) !important;
+}
 .fmed-sidebar-controls.is-collapsed .fmed-sidebar-control-btn {
   width: 46px !important;
   min-width: 46px !important;
@@ -732,6 +743,8 @@ body {
   text-transform: none !important;
   white-space: normal !important;
 }
+body[data-theme="dark"] .fmed-sidebar-logo-byline,
+.fmed-dark-mode .fmed-sidebar-logo-byline { color: rgba(220, 238, 244, .72) !important; }
 
 .fmed-app-root aside.fmed-side-rail nav {
   flex: 1 1 auto !important;

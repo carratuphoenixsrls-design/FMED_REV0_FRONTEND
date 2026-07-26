@@ -42,6 +42,12 @@
 .fmed-sidebar-control-icon svg { width: 17px !important; height: 17px !important; }
 .fmed-sidebar-control-label { min-width: 0; line-height: 1.12; white-space: normal; }
 
+body[data-theme="dark"] .fmed-sidebar-control-icon,
+.fmed-dark-mode .fmed-sidebar-control-icon {
+  background: rgba(31, 174, 156, .14) !important;
+  color: #4ed9cd !important;
+}
+
 .fmed-app-root aside.fmed-side-rail .fmed-sidebar-logo-lockup {
   grid-template-columns: 50px minmax(0, 1fr) !important;
   min-height: 76px !important;
@@ -133,6 +139,19 @@
   text-overflow: clip !important;
 }
 .fmed-dashboard-page .fmed-quick-alert { background: linear-gradient(145deg, color-mix(in srgb, #1fae9c 9%, var(--fmed-card, #fff)), var(--fmed-card, #fff)) !important; }
+
+body[data-theme="dark"] .fmed-dashboard-page .fmed-quick-action,
+.fmed-dark-mode .fmed-dashboard-page .fmed-quick-action {
+  background: linear-gradient(145deg, #102431, #0b1b26) !important;
+  color: #f3f8fa !important;
+  -webkit-text-fill-color: #f3f8fa !important;
+  border-color: color-mix(in srgb, var(--qa-color, #1fae9c) 28%, rgba(255,255,255,.08)) !important;
+}
+body[data-theme="dark"] .fmed-dashboard-page .fmed-quick-action > span,
+.fmed-dark-mode .fmed-dashboard-page .fmed-quick-action > span {
+  color: #f3f8fa !important;
+  -webkit-text-fill-color: #f3f8fa !important;
+}
 
 /* ===== Dashboard KPI: numeri su una riga e badge sempre separati ===== */
 .fmed-dashboard-kpi-grid {

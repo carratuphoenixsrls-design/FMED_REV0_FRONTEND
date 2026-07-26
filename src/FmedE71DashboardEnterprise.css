@@ -315,6 +315,15 @@
 .fmed-e71-record-status b { color: var(--e71-secondary); font-size: 10px; }
 .fmed-e71-drawer-footer { justify-content: flex-end; gap: 10px; padding: 16px 20px; border-top: 1px solid var(--e71-border); }
 
+body[data-theme="dark"] .fmed-e71-dashboard,
+.fmed-dark-mode .fmed-e71-dashboard {
+  --e71-surface: rgba(16, 34, 40, .88);
+  --e71-surface-strong: #12262c;
+  --e71-border: rgba(127, 190, 183, .17);
+  --e71-text: #edf7f6;
+  --e71-muted: #a5b8bb;
+}
+
 @media (max-width: 1360px) {
   .fmed-e71-filters { grid-template-columns: repeat(4, minmax(145px, 1fr)); }
   .fmed-e71-quick-actions { grid-template-columns: repeat(3, minmax(150px, 1fr)); }

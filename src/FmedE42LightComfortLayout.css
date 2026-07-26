@@ -1,3 +1,8 @@
+/* FMED Enterprise 1.0 · E5.2 · Light Comfort compatibility layer
+   Light Mode più riposante, banner uniformi con icona di riferimento,
+   allineamento tipografico e comportamento desktop stabile.
+   Dark Mode e logiche applicative restano invariati. */
+
 /* ========================================================================== 
    1. PALETTE LIGHT COMFORT
    ========================================================================== */
@@ -32,7 +37,7 @@ body[data-theme="light"] .fmed-app-root {
   --fmed-sidebar-hover: #2b554e;
   --fmed-sidebar-active: #3a6e66;
 
-  /* I banner usano superfici chiare, leggere e coerenti. */
+  /* In Light Mode i banner non sono più blocchi scuri e aggressivi. */
   --fmed-hero: linear-gradient(135deg, #f8f9f6 0%, #edf2ee 100%);
   --fmed-hero-border: #cbd7d0;
   --fmed-hero-text: #24312e;
@@ -454,6 +459,37 @@ body[data-theme="light"] .fmed-settings-status *,
 }
 
 /* ========================================================================== 
+   4. DARK MODE: mantiene la palette scura, uniforma soltanto icone/layout
+   ========================================================================== */
+body[data-theme="dark"] .fmed-module-icon,
+.fmed-app-root.fmed-dark-mode .fmed-module-icon {
+  background: linear-gradient(135deg, #4b8d84 0%, #2f625b 100%) !important;
+  border-color: rgba(255,255,255,.14) !important;
+  color: #f6fbf9 !important;
+  -webkit-text-fill-color: #f6fbf9 !important;
+  box-shadow: 0 12px 28px rgba(0,0,0,.20) !important;
+}
+body[data-theme="dark"] .core-standard-head,
+body[data-theme="dark"] .fmed-wizard-head,
+.fmed-app-root.fmed-dark-mode .core-standard-head,
+.fmed-app-root.fmed-dark-mode .fmed-wizard-head {
+  background: var(--fmed-hero) !important;
+  border-color: var(--fmed-hero-border) !important;
+  color: var(--fmed-hero-text) !important;
+}
+body[data-theme="dark"] .core-standard-head h2,
+body[data-theme="dark"] .core-standard-head p,
+body[data-theme="dark"] .fmed-wizard-head h2,
+body[data-theme="dark"] .fmed-wizard-head p,
+.fmed-app-root.fmed-dark-mode .core-standard-head h2,
+.fmed-app-root.fmed-dark-mode .core-standard-head p,
+.fmed-app-root.fmed-dark-mode .fmed-wizard-head h2,
+.fmed-app-root.fmed-dark-mode .fmed-wizard-head p {
+  color: inherit !important;
+  -webkit-text-fill-color: inherit !important;
+}
+
+/* ========================================================================== 
    5. SHAREPOINT LINK SYNC — MIGRAZIONE CENTRALIZZATA E SICURA
    ========================================================================== */
 .fmed-sharepoint-sync-panel {
@@ -587,6 +623,19 @@ body[data-theme="light"] .fmed-settings-status *,
   margin: 3px 0 0;
   color: var(--fmed-text-secondary, #5e6d68);
   font-size: 11px;
+}
+
+body[data-theme="dark"] .fmed-sharepoint-sync-panel,
+.fmed-app-root.fmed-dark-mode .fmed-sharepoint-sync-panel {
+  background: var(--fmed-surface, #10202b);
+  border-color: var(--fmed-line, #334b5c);
+}
+body[data-theme="dark"] .fmed-sharepoint-sync-preview > div,
+body[data-theme="dark"] .fmed-sharepoint-sync-summary article,
+.fmed-app-root.fmed-dark-mode .fmed-sharepoint-sync-preview > div,
+.fmed-app-root.fmed-dark-mode .fmed-sharepoint-sync-summary article {
+  background: var(--fmed-surface-muted, #152a37);
+  border-color: var(--fmed-line, #334b5c);
 }
 
 @media (max-width: 900px) {

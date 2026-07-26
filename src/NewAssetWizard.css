@@ -109,6 +109,9 @@
 .fmed-wizard-actions button:disabled{opacity:.55;cursor:not-allowed}
 .fmed-wizard-progress{height:7px;overflow:hidden;border-radius:999px;background:var(--fmed-soft,#edf4f2)}
 .fmed-wizard-progress span{display:block;height:100%;border-radius:inherit;background:#0d8278;transition:width .25s ease}
+.fmed-dark-mode .fmed-wizard-card,.fmed-dark-mode .fmed-wizard-actions{background:#15212b;border-color:#34424e}
+.fmed-dark-mode .fmed-wizard-field input,.fmed-dark-mode .fmed-wizard-field select,.fmed-dark-mode .fmed-wizard-field textarea{background:#0e1820;border-color:#394754}
+.fmed-dark-mode .fmed-wizard-errors{background:#3a2020;border-color:#704040;color:#ffd8d8}
 
 @media(max-width:1180px){
   .fmed-wizard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -162,6 +165,8 @@
 .fmed-wizard-ocr span{font-size:12px;color:var(--fmed-muted,#60706d);line-height:1.4}
 .fmed-wizard-ocr button{border:0;border-radius:11px;padding:11px 14px;background:#0d8278;color:#fff;font-weight:800;cursor:pointer;white-space:nowrap}
 .fmed-wizard-field select:disabled,.fmed-wizard-field input:disabled{cursor:not-allowed;opacity:.68}
+.fmed-dark-mode .fmed-wizard-master-status.error{background:#3a2020;border-color:#704040}
+.fmed-dark-mode .fmed-wizard-master-status.error strong,.fmed-dark-mode .fmed-wizard-master-status.error span{color:#ffd8d8}
 @media(max-width:820px){
   .fmed-wizard-master-status{margin:12px 16px 0}
   .fmed-wizard-ocr{align-items:stretch;flex-direction:column}

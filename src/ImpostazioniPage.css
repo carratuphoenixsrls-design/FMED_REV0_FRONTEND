@@ -130,6 +130,21 @@
   line-height: 1.5;
 }
 
+body[data-theme="dark"] .fmed-settings-head,
+body[data-theme="dark"] .fmed-settings-tabs,
+body[data-theme="dark"] .fmed-settings-users,
+body[data-theme="dark"] .fmed-settings-overview button,
+.fmed-dark-mode .fmed-settings-head,
+.fmed-dark-mode .fmed-settings-tabs,
+.fmed-dark-mode .fmed-settings-users,
+.fmed-dark-mode .fmed-settings-overview button { background: #172633; border-color: #334b5c; }
+body[data-theme="dark"] .fmed-settings-status,
+body[data-theme="dark"] .fmed-settings-role-grid article,
+body[data-theme="dark"] .fmed-settings-note,
+.fmed-dark-mode .fmed-settings-status,
+.fmed-dark-mode .fmed-settings-role-grid article,
+.fmed-dark-mode .fmed-settings-note { background: #0f1d27; border-color: #334b5c; }
+
 @media (max-width: 1320px) and (min-width: 1024px) {
   .fmed-settings-role-grid { grid-template-columns: 1fr; }
   .fmed-settings-head { align-items: flex-start; }

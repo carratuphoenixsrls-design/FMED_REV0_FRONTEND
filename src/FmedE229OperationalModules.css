@@ -235,6 +235,33 @@
 .fmed-empty-row { padding: 24px !important; text-align: center; color: var(--fmed-muted, #647784) !important; }
 .fmed-table-note { margin: 0; color: var(--fmed-muted, #647784); font-size: 12px; }
 
+body[data-theme="dark"] .fmed-costi-hero,
+body[data-theme="dark"] .fmed-costi-controls,
+body[data-theme="dark"] .fmed-sharepoint-hero,
+body[data-theme="dark"] .fmed-sharepoint-kpis article,
+body[data-theme="dark"] .fmed-sharepoint-controls,
+body[data-theme="dark"] .fmed-sharepoint-table-wrap,
+body[data-theme="dark"] .fmed-sharepoint-table td,
+body[data-theme="dark"] .fmed-btn-secondary,
+.fmed-dark-mode .fmed-costi-hero,
+.fmed-dark-mode .fmed-costi-controls,
+.fmed-dark-mode .fmed-sharepoint-hero,
+.fmed-dark-mode .fmed-sharepoint-kpis article,
+.fmed-dark-mode .fmed-sharepoint-controls,
+.fmed-dark-mode .fmed-sharepoint-table-wrap,
+.fmed-dark-mode .fmed-sharepoint-table td,
+.fmed-dark-mode .fmed-btn-secondary { background: #172633 !important; border-color: #334b5c !important; }
+body[data-theme="dark"] .fmed-costi-period-pill,
+.fmed-dark-mode .fmed-costi-period-pill { background: #0f1d27; border-color: #334b5c; }
+body[data-theme="dark"] .fmed-costi-filter-grid select,
+body[data-theme="dark"] .fmed-costi-filter-grid input,
+body[data-theme="dark"] .fmed-sharepoint-control-grid select,
+body[data-theme="dark"] .fmed-sharepoint-control-grid input,
+.fmed-dark-mode .fmed-costi-filter-grid select,
+.fmed-dark-mode .fmed-costi-filter-grid input,
+.fmed-dark-mode .fmed-sharepoint-control-grid select,
+.fmed-dark-mode .fmed-sharepoint-control-grid input { background: #0f1d27; color: #f4f8fa; border-color: #334b5c; }
+
 @media (max-width: 1480px) and (min-width: 1024px) {
   .fmed-costi-filter-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .fmed-costi-summary-grid { grid-template-columns: repeat(3, minmax(170px, 1fr)) !important; }

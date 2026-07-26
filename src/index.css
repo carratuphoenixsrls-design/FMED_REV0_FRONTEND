@@ -129,6 +129,86 @@ html, body, #root, .fmed-app-root {
 .fmed-side-menu-btn span { opacity: 1 !important; visibility: visible !important; }
 .fmed-side-menu-btn .fmed-side-chevron { margin-left: auto !important; font-size: 20px !important; }
 
+/* ---------- Dark mode: elimina azzurrino/blu elettrico ---------- */
+body[data-theme="dark"],
+body[data-theme="dark"] #root,
+body[data-theme="dark"] .fmed-app-root,
+body[data-theme="dark"] .fmed-dark-mode {
+  --fmed-bg: #081924 !important;
+  --fmed-main-bg: radial-gradient(circle at 80% -10%, rgba(18,198,194,.10), transparent 32%), linear-gradient(135deg, #081924 0%, #0B1D29 54%, #06151D 100%) !important;
+  --fmed-sidebar-bg: linear-gradient(180deg, #0B1D29 0%, #081924 52%, #06151D 100%) !important;
+  --fmed-surface: rgba(16,38,53,.94) !important;
+  --fmed-surface-solid: #102635 !important;
+  --fmed-surface-soft: #143346 !important;
+  --fmed-text: #F7F9FB !important;
+  --fmed-muted: #9CB7C8 !important;
+  --fmed-border: rgba(255,255,255,.08) !important;
+  --fmed-accent: #12C6C2 !important;
+  --fmed-accent-2: #19DDD7 !important;
+  --fmed-card-gradient: linear-gradient(145deg, rgba(16,38,53,.98), rgba(9,28,40,.96)) !important;
+  --fmed-soft-gradient: linear-gradient(145deg, rgba(20,51,70,.92), rgba(11,29,41,.96)) !important;
+  --fmed-btn: linear-gradient(135deg, #12C6C2 0%, #0E8EA8 100%) !important;
+  --fmed-btn-shadow: 0 16px 34px rgba(18,198,194,.14) !important;
+  background: var(--fmed-main-bg) !important;
+  color: #F7F9FB !important;
+}
+
+body[data-theme="dark"] .fmed-app-root main,
+body[data-theme="dark"] .fmed-app-root section,
+body[data-theme="dark"] .fmed-app-root article,
+body[data-theme="dark"] .fmed-app-root .fmed-card,
+body[data-theme="dark"] .fmed-app-root .card,
+body[data-theme="dark"] .fmed-app-root main > div[style*="background"] {
+  background: var(--fmed-card-gradient) !important;
+  border-color: rgba(255,255,255,.08) !important;
+  color: #F7F9FB !important;
+  box-shadow: 0 18px 44px rgba(0,0,0,.26) !important;
+}
+
+body[data-theme="dark"] .fmed-app-root aside.fmed-side-rail {
+  background: var(--fmed-sidebar-bg) !important;
+  border-right: 1px solid rgba(255,255,255,.08) !important;
+  box-shadow: 18px 0 54px rgba(0,0,0,.30) !important;
+  color: #F7F9FB !important;
+}
+body[data-theme="dark"] .fmed-side-menu-btn {
+  background: rgba(255,255,255,.035) !important;
+  border: 1px solid rgba(255,255,255,.075) !important;
+  color: rgba(247,249,251,.82) !important;
+  -webkit-text-fill-color: rgba(247,249,251,.82) !important;
+  box-shadow: none !important;
+}
+body[data-theme="dark"] .fmed-side-menu-btn:hover {
+  background: rgba(18,198,194,.10) !important;
+  border-color: rgba(18,198,194,.24) !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+body[data-theme="dark"] .fmed-side-menu-btn.is-active,
+body[data-theme="dark"] .fmed-side-menu-btn[aria-current="page"] {
+  background: linear-gradient(135deg, rgba(18,198,194,.28), rgba(14,142,168,.22)) !important;
+  border-color: rgba(18,198,194,.44) !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  box-shadow: inset 4px 0 0 #12C6C2, 0 18px 34px rgba(0,0,0,.24) !important;
+}
+body[data-theme="dark"] .fmed-side-menu-btn * { color: inherit !important; -webkit-text-fill-color: inherit !important; }
+
+body[data-theme="dark"] button[style*="linear-gradient"],
+body[data-theme="dark"] [role="button"][style*="linear-gradient"],
+body[data-theme="dark"] button[style*="#1FAE9C"],
+body[data-theme="dark"] button[style*="#1FAE9C"],
+body[data-theme="dark"] button[style*="#1FAE9C"],
+body[data-theme="dark"] button[style*="#1467C9"] {
+  background: linear-gradient(135deg, #12C6C2 0%, #0E8EA8 100%) !important;
+  border-color: rgba(18,198,194,.32) !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  box-shadow: 0 16px 34px rgba(18,198,194,.14) !important;
+}
+body[data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(18,198,194,.34) !important; }
+body[data-theme="dark"] ::selection { background: rgba(18,198,194,.30) !important; color: #FFFFFF !important; }
+
 /* ---------- Light mode: pulito e allineato alla reference ---------- */
 body[data-theme="light"],
 body[data-theme="light"] #root,

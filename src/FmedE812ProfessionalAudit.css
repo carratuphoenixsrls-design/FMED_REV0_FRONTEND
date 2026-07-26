@@ -66,8 +66,65 @@ body[data-theme="light"] .fmed-app-root.fmed-e812-professional-ui {
   --fmed-brand-hover: var(--e812-brand-strong) !important;
 }
 
+body[data-theme="dark"] .fmed-app-root.fmed-e812-professional-ui,
+.fmed-dark-mode.fmed-e812-professional-ui {
+  --e812-canvas: #0d181e;
+  --e812-canvas-deep: #0a141a;
+  --e812-surface: #15242b;
+  --e812-surface-strong: #192a32;
+  --e812-surface-soft: #1d3038;
+  --e812-input: #101d23;
+  --e812-text: #edf4f2;
+  --e812-muted: #a8b8b4;
+  --e812-border: #31454c;
+  --e812-border-strong: #455d64;
+  --e812-brand: #36b8b1;
+  --e812-brand-strong: #55cac4;
+  --e812-brand-soft: rgba(54, 184, 177, .14);
+  --e812-info: #72a7c6;
+  --e812-success: #58af87;
+  --e812-warning: #d5a24b;
+  --e812-danger: #df737b;
+  --e812-secondary: #90a4ab;
+  --e812-shadow-sm: 0 4px 15px rgba(0, 0, 0, .17);
+  --e812-shadow-md: 0 12px 30px rgba(0, 0, 0, .23);
+  --e812-shadow-overlay: 0 28px 66px rgba(0, 0, 0, .38);
+  --e812-focus: 0 0 0 3px rgba(54, 184, 177, .20);
+
+  --fmed-bg: var(--e812-canvas) !important;
+  --fmed-card: var(--e812-surface) !important;
+  --fmed-card-strong: var(--e812-surface-strong) !important;
+  --fmed-soft: var(--e812-surface-soft) !important;
+  --fmed-input: var(--e812-input) !important;
+  --fmed-text: var(--e812-text) !important;
+  --fmed-muted: var(--e812-muted) !important;
+  --fmed-border: var(--e812-border) !important;
+  --fmed-border-strong: var(--e812-border-strong) !important;
+  --fmed-primary: var(--e812-brand) !important;
+  --fmed-primary-hover: var(--e812-brand-strong) !important;
+  --fmed-primary-soft: var(--e812-brand-soft) !important;
+  --fmed-success: var(--e812-success) !important;
+  --fmed-warning: var(--e812-warning) !important;
+  --fmed-danger: var(--e812-danger) !important;
+  --fmed-info: var(--e812-info) !important;
+  --fmed-shadow-sm: var(--e812-shadow-sm) !important;
+  --fmed-shadow-md: var(--e812-shadow-md) !important;
+  --fmed-main-bg: linear-gradient(180deg, var(--e812-canvas-deep) 0%, var(--e812-canvas) 100%) !important;
+  --fmed-surface: var(--e812-surface) !important;
+  --fmed-surface-raised: var(--e812-surface-strong) !important;
+  --fmed-input-surface: var(--e812-input) !important;
+  --fmed-text-primary: var(--e812-text) !important;
+  --fmed-text-secondary: var(--e812-muted) !important;
+  --fmed-line: var(--e812-border) !important;
+  --fmed-line-strong: var(--e812-border-strong) !important;
+  --fmed-brand: var(--e812-brand) !important;
+  --fmed-brand-hover: var(--e812-brand-strong) !important;
+}
+
 body[data-theme="light"],
-body[data-theme="light"] #root {
+body[data-theme="light"] #root,
+body[data-theme="dark"],
+body[data-theme="dark"] #root {
   background: var(--e812-canvas, #eef2ef) !important;
 }
 
@@ -615,6 +672,11 @@ body[data-theme="light"] #root {
   color: #203330 !important;
 }
 
+body[data-theme="dark"] .fmed-e812-login.fmed-login-page {
+  background: linear-gradient(145deg, #0b161c 0%, #102027 62%, #0c191f 100%) !important;
+  color: #edf4f2 !important;
+}
+
 .fmed-e812-login .fmed-login-card {
   width: min(460px, calc(100vw - 36px)) !important;
   padding: clamp(28px, 4vw, 42px) !important;
@@ -625,10 +687,21 @@ body[data-theme="light"] #root {
   backdrop-filter: blur(8px) !important;
 }
 
+body[data-theme="dark"] .fmed-e812-login .fmed-login-card {
+  border-color: #334950 !important;
+  background: rgba(21, 36, 43, .95) !important;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, .35) !important;
+}
+
 .fmed-e812-login .fmed-login-kicker {
   color: #176d69 !important;
   -webkit-text-fill-color: #176d69 !important;
   letter-spacing: .09em !important;
+}
+
+body[data-theme="dark"] .fmed-e812-login .fmed-login-kicker {
+  color: #55cac4 !important;
+  -webkit-text-fill-color: #55cac4 !important;
 }
 
 .fmed-e812-login .fmed-login-title {
@@ -663,6 +736,10 @@ body[data-theme="light"] #root {
 .fmed-e812-login .fmed-login-submit:hover:not(:disabled) {
   background: #105956 !important;
   box-shadow: 0 6px 16px rgba(23, 109, 105, .18) !important;
+}
+
+.fmed-e812-login .fmed-login-theme-toggle {
+  border-radius: 9px !important;
 }
 
 /* ========================================================================== 

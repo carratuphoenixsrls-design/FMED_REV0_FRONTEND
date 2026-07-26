@@ -171,6 +171,37 @@
 .s8108-fatal code{max-width:100%;padding:10px;border-radius:10px;background:var(--s8108-soft)!important;color:var(--s8108-text)!important;overflow-wrap:anywhere}
 .s8108-fatal button{padding:10px 14px;border:0;border-radius:10px;background:var(--s8108-accent)!important;color:#fff!important}
 
+body[data-theme="dark"] .s8108-page{
+  --s8108-card:var(--fmed-surface-solid,#102635);
+  --s8108-soft:var(--fmed-soft-gradient,linear-gradient(145deg,#143346,#0b1d29));
+  --s8108-text:var(--fmed-text,#f7f9fb);
+  --s8108-muted:var(--fmed-muted,#9cb7c8);
+  --s8108-border:var(--fmed-border,rgba(255,255,255,.08));
+  --s8108-input:#0f2938;
+}
+body[data-theme="dark"] .s8108-page-head,
+body[data-theme="dark"] .s8108-panel,
+body[data-theme="dark"] .s8108-kpi-grid article,
+body[data-theme="dark"] .s8108-site-card,
+body[data-theme="dark"] .s8108-tabs,
+body[data-theme="dark"] .s8108-table-wrap,
+body[data-theme="dark"] .s8108-table-wrap table,
+body[data-theme="dark"] .s8108-table-wrap td,
+body[data-theme="dark"] .s8108-notice{background:var(--s8108-card)!important;color:var(--s8108-text)!important}
+body[data-theme="dark"] .s8108-filter-grid,
+body[data-theme="dark"] .s8108-folder-grid,
+body[data-theme="dark"] .s8108-table-wrap th,
+body[data-theme="dark"] .s8108-category-links a,
+body[data-theme="dark"] .s8108-category-missing{background:var(--s8108-soft)!important}
+body[data-theme="dark"] .s8108-filter-grid input,
+body[data-theme="dark"] .s8108-filter-grid select{background:var(--s8108-input)!important;color:var(--s8108-text)!important;-webkit-text-fill-color:var(--s8108-text)!important}
+body[data-theme="dark"] .s8108-status.success{color:#6ee7a3!important}
+body[data-theme="dark"] .s8108-status.warning{color:#ffbe63!important}
+body[data-theme="dark"] .s8108-status.danger{color:#ff7b88!important}
+body[data-theme="dark"] .s8108-status.neutral,
+body[data-theme="dark"] .s8108-status.closed,
+body[data-theme="dark"] .s8108-cycle.closed{color:#b7c6cf!important}
+
 @media(max-width:1180px){
   .s8108-kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
   .s8108-filter-grid.is-operational{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -190,6 +221,8 @@
 /* FMED 4.1 - elenco documenti leggibile e senza sovrapposizioni */
 .s8108-doc-list{display:grid;gap:10px;padding:12px}.s8108-doc-card{display:grid;grid-template-columns:minmax(280px,1.7fr) minmax(440px,2fr) auto;gap:16px;align-items:center;padding:14px 16px;border:1px solid var(--s8108-border);border-radius:14px;background:var(--s8108-surface);min-width:0}.s8108-doc-main{display:flex;align-items:flex-start;gap:10px;min-width:0}.s8108-doc-title{min-width:0;display:grid;gap:4px}.s8108-doc-title strong,.s8108-doc-title small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.s8108-doc-title strong{font-size:.92rem}.s8108-doc-title small{font-size:.7rem;opacity:.68}.s8108-doc-meta{display:grid;grid-template-columns:repeat(4,minmax(90px,1fr));gap:10px;margin:0;min-width:0}.s8108-doc-meta div{min-width:0}.s8108-doc-meta dt{font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;opacity:.62}.s8108-doc-meta dd{margin:3px 0 0;font-size:.75rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.s8108-doc-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;white-space:nowrap}.s8108-delete-index{border:1px solid rgba(190,50,60,.28);background:rgba(190,50,60,.07);color:#a72732;border-radius:9px;padding:8px 10px;font:inherit;font-size:.68rem;font-weight:800;cursor:pointer}.s8108-delete-index:hover{background:rgba(190,50,60,.13)}.s8108-delete-index:disabled{opacity:.55;cursor:wait}
 @media(max-width:1150px){.s8108-doc-card{grid-template-columns:1fr}.s8108-doc-meta{grid-template-columns:repeat(2,minmax(0,1fr))}.s8108-doc-actions{justify-content:flex-start}}
+
+html[data-theme="dark"] .s8108-delete-index,.dark .s8108-delete-index{color:#ff9aa3;border-color:rgba(255,120,130,.3);background:rgba(255,90,105,.09)}
 
 /* FMED 4.2 - 81/08 esclusivamente documentale */
 .s8108-kpi-grid-documental{grid-template-columns:repeat(3,minmax(0,1fr))}

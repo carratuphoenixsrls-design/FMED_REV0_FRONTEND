@@ -34,6 +34,23 @@
   --fmed-space-6:24px;
   --fmed-space-8:32px;
 }
+body[data-theme="dark"],.fmed-dark-mode{
+  --fmed-bg:#0b151d;
+  --fmed-card:#17232c;
+  --fmed-card-strong:#1b2933;
+  --fmed-soft:#22343f;
+  --fmed-input:#101b23;
+  --fmed-text:#f2f6f7;
+  --fmed-muted:#a5b7bf;
+  --fmed-border:#344550;
+  --fmed-border-strong:#4a606c;
+  --fmed-primary:#18b5ab;
+  --fmed-primary-hover:#24c9be;
+  --fmed-primary-soft:rgba(24,181,171,.14);
+  --fmed-shadow-sm:0 6px 18px rgba(0,0,0,.18);
+  --fmed-shadow-md:0 14px 34px rgba(0,0,0,.25);
+  --fmed-shadow-lg:0 28px 64px rgba(0,0,0,.34);
+}
 
 /* Primitivi riutilizzabili */
 .fmed-ui-card{
@@ -306,6 +323,11 @@ button,input,select,textarea{font:inherit}
 body[data-theme="light"] .fmed-sidebar-control-btn{
   background:rgba(255,255,255,.94)!important;
   color:#092238!important;
+}
+body[data-theme="dark"] .fmed-sidebar-control-btn{
+  background:rgba(8,28,43,.94)!important;
+  color:#f4fbff!important;
+  border-color:rgba(40,181,214,.24)!important;
 }
 
 @media (max-width:1360px) and (min-width:1024px){

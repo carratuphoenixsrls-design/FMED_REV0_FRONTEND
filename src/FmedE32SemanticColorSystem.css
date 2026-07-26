@@ -1,3 +1,8 @@
+/* FMED Enterprise 1.0 — E3.2 Semantic Color System
+   Un'unica gerarchia cromatica per Light e Dark.
+   I colori descrivono il ruolo dell'elemento, non il modulo che lo contiene.
+   Nessuna modifica alla logica applicativa. */
+
 /* ========================================================================== 
    1. TOKENS SEMANTICI
    ========================================================================== */
@@ -99,6 +104,103 @@ body[data-theme="light"] .fmed-app-root {
   --fmed-table-head: var(--fmed-surface-muted) !important;
 }
 
+html[data-theme="dark"],
+body[data-theme="dark"],
+.fmed-app-root.fmed-dark-mode,
+body[data-theme="dark"] .fmed-app-root {
+  color-scheme: dark;
+
+  --fmed-canvas: #0e1514;
+  --fmed-canvas-soft: #121b19;
+  --fmed-surface: #17201e;
+  --fmed-surface-raised: #1e2926;
+  --fmed-surface-muted: #25322f;
+  --fmed-surface-selected: #203b36;
+  --fmed-input-surface: #111a18;
+
+  --fmed-text-primary: #f2f6f4;
+  --fmed-text-secondary: #b0bdb8;
+  --fmed-text-tertiary: #82918b;
+  --fmed-text-inverse: #0e1514;
+
+  --fmed-line: #334440;
+  --fmed-line-strong: #4a5f59;
+  --fmed-line-soft: #273632;
+
+  --fmed-brand: #68b7af;
+  --fmed-brand-hover: #80c8c1;
+  --fmed-brand-strong: #a0d8d1;
+  --fmed-brand-soft: #203c37;
+  --fmed-secondary: #7eabb9;
+  --fmed-accent-warm: #d4b06a;
+
+  --fmed-success: #6fc39c;
+  --fmed-success-soft: #18362a;
+  --fmed-warning: #d8a854;
+  --fmed-warning-soft: #3a2e17;
+  --fmed-danger: #e57c84;
+  --fmed-danger-soft: #3c2024;
+  --fmed-info: #78aec5;
+  --fmed-info-soft: #1d323b;
+  --fmed-neutral: #a6b2ae;
+  --fmed-neutral-soft: #28322f;
+
+  --fmed-sidebar: #09110f;
+  --fmed-sidebar-hover: #14231f;
+  --fmed-sidebar-active: #245e57;
+  --fmed-sidebar-text: #f2f6f4;
+  --fmed-sidebar-muted: #a5b8b1;
+  --fmed-sidebar-line: rgba(255, 255, 255, .10);
+
+  --fmed-hero: #182724;
+  --fmed-hero-border: #35504a;
+  --fmed-hero-text: #f4f8f6;
+  --fmed-hero-muted: #afc2bc;
+  --fmed-hero-accent: #76c0b8;
+
+  --fmed-shadow-1: 0 6px 18px rgba(0, 0, 0, .20);
+  --fmed-shadow-2: 0 14px 34px rgba(0, 0, 0, .27);
+  --fmed-shadow-3: 0 28px 64px rgba(0, 0, 0, .36);
+  --fmed-focus: 0 0 0 3px rgba(104, 183, 175, .22);
+
+  --fmed-bg: var(--fmed-canvas) !important;
+  --fmed-main-bg: var(--fmed-canvas) !important;
+  --fmed-sidebar-bg: var(--fmed-sidebar) !important;
+  --fmed-header-bg: var(--fmed-hero) !important;
+  --fmed-header-inner: var(--fmed-hero) !important;
+  --fmed-card: var(--fmed-surface) !important;
+  --fmed-card-strong: var(--fmed-surface-raised) !important;
+  --fmed-surface-solid: var(--fmed-surface) !important;
+  --fmed-surface-soft: var(--fmed-surface-muted) !important;
+  --fmed-soft: var(--fmed-surface-muted) !important;
+  --fmed-input: var(--fmed-input-surface) !important;
+  --fmed-text: var(--fmed-text-primary) !important;
+  --fmed-title: var(--fmed-text-primary) !important;
+  --fmed-muted: var(--fmed-text-secondary) !important;
+  --fmed-subtle: var(--fmed-text-tertiary) !important;
+  --fmed-border: var(--fmed-line) !important;
+  --fmed-border-strong: var(--fmed-line-strong) !important;
+  --fmed-d3-border: var(--fmed-line) !important;
+  --fmed-primary: var(--fmed-brand) !important;
+  --fmed-primary-hover: var(--fmed-brand-hover) !important;
+  --fmed-primary-2: var(--fmed-brand-strong) !important;
+  --fmed-primary-soft: rgba(104, 183, 175, .15) !important;
+  --fmed-accent: var(--fmed-brand) !important;
+  --fmed-accent-2: var(--fmed-brand-hover) !important;
+  --fmed-success: #6fc39c !important;
+  --fmed-warning: #d8a854 !important;
+  --fmed-danger: #e57c84 !important;
+  --fmed-info: #78aec5 !important;
+  --fmed-card-gradient: var(--fmed-surface) !important;
+  --fmed-soft-gradient: var(--fmed-surface-muted) !important;
+  --fmed-btn: var(--fmed-brand) !important;
+  --fmed-btn-secondary: var(--fmed-surface-raised) !important;
+  --fmed-btn-shadow: 0 10px 24px rgba(0, 0, 0, .28) !important;
+  --fmed-card-shadow: var(--fmed-shadow-2) !important;
+  --fmed-card-shadow-soft: var(--fmed-shadow-1) !important;
+  --fmed-table-head: var(--fmed-surface-muted) !important;
+}
+
 /* ========================================================================== 
    2. SUPERFICI E TESTI GLOBALI
    ========================================================================== */
@@ -186,6 +288,10 @@ body,
   color: var(--fmed-text-primary) !important;
   box-shadow: var(--fmed-shadow-1) !important;
 }
+
+/* ========================================================================== 
+   3. SIDEBAR — SEMPRE PETROLIO, STESSA GERARCHIA IN LIGHT E DARK
+   ========================================================================== */
 .fmed-app-root aside.fmed-side-rail {
   background: var(--fmed-sidebar) !important;
   border-right: 1px solid var(--fmed-sidebar-line) !important;
@@ -597,4 +703,20 @@ body,
   background: color-mix(in srgb, var(--fmed-brand) 42%, var(--fmed-line)) !important;
 }
 
-/* Evita che le vecchie regole grafiche trasformino ogni section/article in un pannello. */
+/* Evita che le vecchie regole dark trasformino ogni section/article in un pannello. */
+body[data-theme="dark"] .fmed-app-root main,
+body[data-theme="dark"] .fmed-app-root .fmed-dashboard-page,
+body[data-theme="dark"] .fmed-app-root .fmed-asset-page,
+body[data-theme="dark"] .fmed-app-root .fmed-interventi-enterprise,
+body[data-theme="dark"] .fmed-app-root .fmed-infrastrutture-page,
+body[data-theme="dark"] .fmed-app-root .fmed-scadenze-enterprise,
+body[data-theme="dark"] .fmed-app-root .fmed-costi-page,
+body[data-theme="dark"] .fmed-app-root .fmed-report-page,
+body[data-theme="dark"] .fmed-app-root .fmed-sharepoint-page,
+body[data-theme="dark"] .fmed-app-root .fmed-process-page,
+body[data-theme="dark"] .fmed-app-root .fmed-settings-page,
+body[data-theme="dark"] .fmed-app-root .core-standard-page,
+body[data-theme="dark"] .fmed-app-root .s8108-page {
+  background: transparent !important;
+  box-shadow: none !important;
+}

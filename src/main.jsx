@@ -4,6 +4,7 @@ import "./index.css";
 import "./FmedEnterpriseDesignSystem.css";
 import "./FmedVisualConsolidated.css";
 import "./FmedLayoutIntegrity.css";
+import "./FmedLegacyThemeBridge.css";
 import "./FmedE227Polish.css";
 import "./FmedE228EnterpriseFix.css";
 import "./FmedE2282TypographyLayout.css";
@@ -17,18 +18,8 @@ import "./FmedE71DashboardEnterprise.css";
 import "./FmedE81OperationalSimplified.css";
 import "./FmedE812ProfessionalAudit.css";
 import "./FmedE813SystemLayoutAudit.css";
-import "./FmedE817UnifiedOperationalUX.css";
-import "./FmedE818FrontendUxUiRefinement.css";
-import "./FmedEnterpriseVisualOnly.css";
-import "./FmedE820FinalBrandSystem.css";
 
-const FMED_APP_CACHE_VERSION = "fmed-enterprise-e8-2-3-light-only-20260726-1";
-
-function enforceLightThemeFmed() {
-  document.documentElement.dataset.theme = "light";
-  document.documentElement.style.colorScheme = "light";
-  document.body.dataset.theme = "light";
-}
+const FMED_APP_CACHE_VERSION = "fmed-enterprise-e8-1-3-scadenze-cessate-layout-audit-20260720-1";
 
 const FMED_API_WARMUP_URL = String(
   import.meta.env?.VITE_API_BASE_URL || "https://fmed-backend.onrender.com"
@@ -66,7 +57,6 @@ async function clearLegacyPwaCache() {
 }
 
 async function bootstrap() {
-  enforceLightThemeFmed();
   warmBackendFmed();
   await clearLegacyPwaCache();
 
