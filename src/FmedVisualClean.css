@@ -1,0 +1,2795 @@
+/*
+ * FMED Enterprise 1.0 · E8.2.3 Visual Final Polish
+ * Unico foglio grafico globale. Tema chiaro, sidebar petrolio, superfici,
+ * tipografia, controlli, tabelle e dialog coerenti.
+ * Nessuna logica applicativa, API o integrazione viene modificata.
+ */
+
+:root {
+  font-family: "Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  color: #172b34;
+  background: #f3f6f7;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --fmed-font-family: "Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  --fmed-font-mono: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  --fmed-bg: #f3f6f7;
+  --fmed-bg-accent: #e8f0f1;
+  --fmed-surface: #ffffff;
+  --fmed-surface-2: #f8fafb;
+  --fmed-surface-3: #eef3f4;
+  --fmed-card: #ffffff;
+  --fmed-text: #172b34;
+  --fmed-text-strong: #0d2028;
+  --fmed-title: #0d2028;
+  --fmed-muted: #5b6f78;
+  --fmed-subtle: #7a8c94;
+  --fmed-border: #dbe4e7;
+  --fmed-border-strong: #c9d6da;
+  --fmed-primary: #0b6f78;
+  --fmed-primary-strong: #075963;
+  --fmed-primary-soft: #e5f3f2;
+  --fmed-success: #16785a;
+  --fmed-success-soft: #e9f5ef;
+  --fmed-warning: #9a6408;
+  --fmed-warning-soft: #fff5dd;
+  --fmed-danger: #b33b3b;
+  --fmed-danger-soft: #fff0ef;
+  --fmed-info: #2d608f;
+  --fmed-info-soft: #edf4fb;
+  --fmed-shadow-xs: 0 1px 2px rgba(12,39,48,.04);
+  --fmed-shadow-sm: 0 8px 22px rgba(12,39,48,.055);
+  --fmed-shadow-md: 0 18px 46px rgba(12,39,48,.075);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 1180px;
+  min-height: 100%;
+  margin: 0;
+  font-family: var(--fmed-font-family);
+}
+
+html,
+body {
+  background: #f3f6f7;
+}
+
+body {
+  overflow-x: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  touch-action: manipulation;
+}
+
+.fmed-app-root.fmed-e820-premium {
+  --fmed-font-family: "Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  --fmed-font-mono: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  --fmed-radius-xs: 8px;
+  --fmed-radius-sm: 10px;
+  --fmed-radius-md: 14px;
+  --fmed-radius-lg: 18px;
+  --fmed-radius-xl: 22px;
+  --fmed-control-h: 42px;
+  --fmed-sidebar-w: 236px;
+  --fmed-sidebar-collapsed-w: 68px;
+  --fmed-ease: cubic-bezier(.2,.8,.2,1);
+  min-height: 100vh !important;
+  font-family: var(--fmed-font-family) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0 !important;
+  font-feature-settings: "kern" 1, "liga" 1, "tnum" 1;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+body[data-theme="light"] .fmed-app-root.fmed-e820-premium,
+.fmed-app-root.fmed-light-mode.fmed-e820-premium {
+  --fmed-bg: #f3f6f7 !important;
+  --fmed-bg-accent: #e8f0f1 !important;
+  --fmed-surface: #ffffff !important;
+  --fmed-surface-2: #f8fafb !important;
+  --fmed-surface-3: #eef3f4 !important;
+  --fmed-text: #172b34 !important;
+  --fmed-text-strong: #0d2028 !important;
+  --fmed-muted: #5b6f78 !important;
+  --fmed-subtle: #7a8c94 !important;
+  --fmed-border: #dbe4e7 !important;
+  --fmed-border-strong: #c9d6da !important;
+  --fmed-primary: #0b6f78 !important;
+  --fmed-primary-strong: #075963 !important;
+  --fmed-primary-soft: #e5f3f2 !important;
+  --fmed-success: #16785a !important;
+  --fmed-success-soft: #e9f5ef !important;
+  --fmed-warning: #9a6408 !important;
+  --fmed-warning-soft: #fff5dd !important;
+  --fmed-danger: #b33b3b !important;
+  --fmed-danger-soft: #fff0ef !important;
+  --fmed-info: #2d608f !important;
+  --fmed-info-soft: #edf4fb !important;
+  --fmed-shadow-xs: 0 1px 2px rgba(12,39,48,.04) !important;
+  --fmed-shadow-sm: 0 8px 22px rgba(12,39,48,.055) !important;
+  --fmed-shadow-md: 0 18px 46px rgba(12,39,48,.075) !important;
+  background:
+    radial-gradient(circle at 88% -12%, rgba(70,145,151,.11), transparent 31%),
+    linear-gradient(180deg, #f7f9f9 0%, #f1f5f6 100%) !important;
+  color: var(--fmed-text) !important;
+}
+
+/* ----------------------------- Typography ----------------------------- */
+.fmed-app-root.fmed-e820-premium,
+.fmed-app-root.fmed-e820-premium button,
+.fmed-app-root.fmed-e820-premium input,
+.fmed-app-root.fmed-e820-premium select,
+.fmed-app-root.fmed-e820-premium textarea,
+.fmed-app-root.fmed-e820-premium table {
+  font-family: var(--fmed-font-family) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(h1,h2,h3,h4,h5,h6,p,span,small,strong,em,label,button,a,th,td) {
+  letter-spacing: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(h1,h2,h3,h4,h5,h6) {
+  margin-top: 0;
+  color: var(--fmed-text-strong) !important;
+  font-weight: 650 !important;
+  line-height: 1.18 !important;
+  text-transform: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content h1 { font-size: clamp(27px, 2.1vw, 34px) !important; }
+.fmed-app-root.fmed-e820-premium .fmed-main-content h2 { font-size: clamp(24px, 1.8vw, 31px) !important; }
+.fmed-app-root.fmed-e820-premium .fmed-main-content h3 { font-size: 18px !important; }
+.fmed-app-root.fmed-e820-premium .fmed-main-content h4 { font-size: 15px !important; }
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(p,li,td,input,select,textarea) {
+  font-size: 13.5px !important;
+  line-height: 1.52 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(small,.fmed-banner-copy,.fmed-module-hero-subtitle) {
+  color: var(--fmed-muted) !important;
+  font-size: 12.5px !important;
+  line-height: 1.5 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(button,label,th,.fmed-module-kicker,.fmed-module-hero-eyebrow) {
+  font-weight: 600 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content button,
+.fmed-app-root.fmed-e820-premium .fmed-main-content th,
+.fmed-app-root.fmed-e820-premium .fmed-main-content label,
+.fmed-app-root.fmed-e820-premium .fmed-main-content [class*="kicker"],
+.fmed-app-root.fmed-e820-premium .fmed-main-content [class*="eyebrow"] {
+  text-transform: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is([class*="badge"],[class*="status"],[class*="pill"]) {
+  font-size: 11px !important;
+  font-weight: 650 !important;
+  letter-spacing: .015em !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is([class*="metric-value"],[class*="kpi-copy"] strong,[class*="summary"] strong,[class*="score"] strong) {
+  font-variant-numeric: tabular-nums lining-nums !important;
+  letter-spacing: -.025em !important;
+}
+
+/* ----------------------------- App layout ----------------------------- */
+.fmed-app-root.fmed-e820-premium .fmed-main-content {
+  min-width: 0 !important;
+  padding: 24px clamp(20px, 2.2vw, 34px) 38px !important;
+  background: transparent !important;
+  color: var(--fmed-text) !important;
+  overflow-x: hidden !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content > :first-child {
+  margin-top: 0 !important;
+}
+
+/* ----------------------------- Sidebar ----------------------------- */
+.fmed-app-root.fmed-e820-premium aside.fmed-side-rail,
+body[data-theme="light"] .fmed-app-root.fmed-e820-premium aside.fmed-side-rail {
+  --sidebar-text: #ecf5f6;
+  --sidebar-muted: #8faab2;
+  --sidebar-line: rgba(201,227,232,.12);
+  width: var(--fmed-sidebar-w) !important;
+  min-width: var(--fmed-sidebar-w) !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  padding: 14px 11px 11px !important;
+  gap: 0 !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(circle at 15% -8%, rgba(75,189,181,.16), transparent 31%),
+    linear-gradient(180deg, #0b313a 0%, #082630 47%, #061b23 100%) !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(1,16,21,.48) !important;
+  box-shadow: 14px 0 38px rgba(3,22,28,.11) !important;
+  color: var(--sidebar-text) !important;
+}
+
+.fmed-app-root.fmed-e820-premium aside.fmed-side-rail.is-collapsed {
+  width: var(--fmed-sidebar-collapsed-w) !important;
+  min-width: var(--fmed-sidebar-collapsed-w) !important;
+  flex: 0 0 var(--fmed-sidebar-collapsed-w) !important;
+  max-width: var(--fmed-sidebar-collapsed-w) !important;
+  padding-inline: 9px !important;
+}
+
+.fmed-app-root.fmed-e820-premium aside.fmed-side-rail > a:first-child {
+  min-height: 57px !important;
+  padding: 2px 7px 12px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--sidebar-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-wordmark {
+  padding: 0 !important;
+  min-height: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-wordmark-title {
+  color: #ffffff !important;
+  font-family: var(--fmed-font-family) !important;
+  font-size: 21px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: .105em !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-wordmark-subtitle {
+  margin-top: 7px !important;
+  color: var(--sidebar-muted) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  letter-spacing: .025em !important;
+  text-transform: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-wordmark-compact {
+  width: 42px !important;
+  height: 42px !important;
+  border: 1px solid rgba(112,220,208,.28) !important;
+  border-radius: 13px !important;
+  background: rgba(101,215,203,.10) !important;
+  color: #effffd !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06) !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-controls {
+  grid-template-columns: 1fr !important;
+  gap: 0 !important;
+  padding: 9px 0 10px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-control-btn,
+body[data-theme="light"] .fmed-app-root.fmed-e820-premium .fmed-sidebar-control-btn {
+  min-height: 34px !important;
+  height: 34px !important;
+  padding: 0 10px !important;
+  border: 1px solid var(--sidebar-line) !important;
+  border-radius: 10px !important;
+  background: rgba(255,255,255,.04) !important;
+  color: #dce9ec !important;
+  box-shadow: none !important;
+  font-size: 11px !important;
+  font-weight: 550 !important;
+  letter-spacing: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-control-btn:hover {
+  transform: translateY(-1px) !important;
+  border-color: rgba(111,220,208,.30) !important;
+  background: rgba(111,220,208,.09) !important;
+  color: #ffffff !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-navigation {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  padding: 2px 0 8px !important;
+  scrollbar-color: rgba(225,242,244,.18) transparent !important;
+  scrollbar-width: thin !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-menu-group,
+body[data-theme="light"] .fmed-app-root.fmed-e820-premium .fmed-sidebar-menu-group {
+  margin: 0 0 8px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-group-label {
+  padding: 0 8px 5px !important;
+  color: #7897a0 !important;
+  font-size: 9.5px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  letter-spacing: .055em !important;
+  text-transform: uppercase !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-group-items { gap: 3px !important; }
+
+.fmed-app-root.fmed-e820-premium .fmed-side-menu-btn,
+body[data-theme="light"] .fmed-app-root.fmed-e820-premium .fmed-side-menu-btn {
+  grid-template-columns: 27px minmax(0,1fr) !important;
+  gap: 9px !important;
+  min-height: 37px !important;
+  height: 37px !important;
+  padding: 0 9px !important;
+  border: 1px solid transparent !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  color: #d4e2e5 !important;
+  -webkit-text-fill-color: currentColor !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-side-menu-btn::before {
+  top: 9px !important;
+  bottom: 9px !important;
+  width: 3px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-side-menu-btn:hover {
+  transform: translateX(2px) !important;
+  border-color: rgba(211,236,239,.08) !important;
+  background: rgba(230,248,249,.065) !important;
+  color: #ffffff !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-side-menu-btn.is-active,
+body[data-theme="light"] .fmed-app-root.fmed-e820-premium .fmed-side-menu-btn.is-active {
+  border-color: rgba(104,218,205,.17) !important;
+  background: linear-gradient(90deg, rgba(92,205,193,.16), rgba(92,205,193,.075)) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-side-menu-btn.is-active::before {
+  background: #70dfd1 !important;
+  box-shadow: 0 0 12px rgba(105,218,205,.32) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-side-menu-icon,
+body[data-theme="light"] .fmed-app-root.fmed-e820-premium .fmed-side-menu-icon {
+  width: 27px !important;
+  height: 27px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: rgba(255,255,255,.045) !important;
+  color: #a9c2c8 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-side-menu-btn.is-active .fmed-side-menu-icon {
+  background: rgba(104,218,205,.14) !important;
+  color: #8ee9dd !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-side-menu-label,
+body[data-theme="light"] .fmed-app-root.fmed-e820-premium .fmed-side-menu-label {
+  color: inherit !important;
+  -webkit-text-fill-color: currentColor !important;
+  font-size: 12.5px !important;
+  font-weight: 550 !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-footer {
+  gap: 8px !important;
+  padding-top: 11px !important;
+  border-top: 1px solid var(--sidebar-line) !important;
+  background: transparent !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mover-sidebar-link,
+body[data-theme="light"] .fmed-app-root.fmed-e820-premium .fmed-mover-sidebar-link {
+  min-height: 47px !important;
+  padding: 6px 8px !important;
+  border: 1px solid rgba(91,147,215,.23) !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, rgba(24,51,78,.84), rgba(13,34,54,.86)) !important;
+  box-shadow: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mover-sidebar-copy strong {
+  color: #ffffff !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-mover-sidebar-copy small {
+  color: #9db4c0 !important;
+  font-size: 9.5px !important;
+  font-weight: 450 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-account,
+body[data-theme="light"] .fmed-app-root.fmed-e820-premium .fmed-sidebar-account {
+  min-height: 45px !important;
+  padding: 6px 7px !important;
+  border: 1px solid var(--sidebar-line) !important;
+  border-radius: 12px !important;
+  background: rgba(255,255,255,.035) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-account-copy strong {
+  color: #f2f8f9 !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-account-copy span {
+  color: #8ba5ae !important;
+  font-size: 9px !important;
+  font-weight: 500 !important;
+  letter-spacing: .02em !important;
+}
+
+/* ----------------------------- Shared surfaces ----------------------------- */
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(
+  .fmed-e71-header,.fmed-e71-panel,.fmed-e81-advanced,.fmed-module-hero,
+  .fmed-costi-hero,.fmed-report-hero,.fmed-sharepoint-sync-panel,
+  .fmed-sharepoint-controls,.fmed-sharepoint-table-wrap,.fmed-interventi-panel,
+  .fmed-process-group,.fmed-process-card,.fmed-process-detail-section,
+  .core-standard-head,.core-dictionary-panel,.core-relations-panel,.core-quality-panel,
+  .core-site-hygiene-panel,.core-uniformity-panel,.fmed-settings-head,.fmed-settings-users,
+  .fmed-wizard-card,.fmed-asset-data-panel,.fmed-predictive-card,.s8108-panel,
+  .fmed-audit-head,.fmed-audit-toolbar,.fmed-audit-list,.fmed-mission-section
+) {
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-lg) !important;
+  background: var(--fmed-surface) !important;
+  color: var(--fmed-text) !important;
+  box-shadow: var(--fmed-shadow-sm) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(
+  .fmed-e71-header,.fmed-module-hero,.fmed-costi-hero,.fmed-report-hero,.core-standard-head,
+  .fmed-settings-head,.fmed-audit-head
+) {
+  position: relative !important;
+  overflow: hidden !important;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--fmed-primary-soft) 52%, var(--fmed-surface)) 0%, var(--fmed-surface) 52%) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(
+  .fmed-e71-header,.fmed-module-hero,.fmed-costi-hero,.fmed-report-hero,.core-standard-head,
+  .fmed-settings-head,.fmed-audit-head
+)::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  top: -110px;
+  width: 250px;
+  height: 250px;
+  border-radius: 999px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--fmed-primary) 12%, transparent), transparent 68%);
+  pointer-events: none;
+}
+
+/* ----------------------------- Dashboard ----------------------------- */
+.fmed-app-root.fmed-e820-premium .fmed-e71-dashboard {
+  display: grid !important;
+  gap: 18px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-header {
+  min-height: 100px !important;
+  padding: 22px 24px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-title h2 {
+  margin: 0 !important;
+  font-size: clamp(26px, 2vw, 32px) !important;
+  font-weight: 650 !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e71-title p {
+  margin: 5px 0 0 !important;
+  color: var(--fmed-muted) !important;
+  font-size: 13px !important;
+  font-weight: 450 !important;
+  text-transform: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-dashboard-title-icon,
+.fmed-app-root.fmed-e820-premium .fmed-module-icon {
+  color: var(--fmed-primary) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-header-actions { gap: 8px !important; }
+.fmed-app-root.fmed-e820-premium .fmed-e71-live {
+  min-height: 34px !important;
+  padding: 0 11px !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: 999px !important;
+  background: var(--fmed-surface-2) !important;
+  color: var(--fmed-muted) !important;
+  font-size: 11px !important;
+  font-weight: 550 !important;
+  text-transform: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e81-automation-strip {
+  padding: 14px 17px !important;
+  border: 1px solid color-mix(in srgb, var(--fmed-success) 22%, var(--fmed-border)) !important;
+  border-radius: var(--fmed-radius-md) !important;
+  background: color-mix(in srgb, var(--fmed-success-soft) 70%, var(--fmed-surface)) !important;
+  box-shadow: var(--fmed-shadow-xs) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e81-automation-strip strong {
+  color: var(--fmed-text-strong) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-quick-actions {
+  display: grid !important;
+  gap: 10px !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e71-quick-actions button {
+  min-height: 54px !important;
+  padding: 0 15px !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-md) !important;
+  background: var(--fmed-surface) !important;
+  color: var(--fmed-text) !important;
+  box-shadow: var(--fmed-shadow-xs) !important;
+  font-size: 12.5px !important;
+  font-weight: 550 !important;
+  text-transform: none !important;
+  transition: transform .16s var(--fmed-ease), border-color .16s var(--fmed-ease), box-shadow .16s var(--fmed-ease), background .16s var(--fmed-ease) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e71-quick-actions button:hover {
+  transform: translateY(-2px) !important;
+  border-color: color-mix(in srgb, var(--fmed-primary) 35%, var(--fmed-border)) !important;
+  background: color-mix(in srgb, var(--fmed-primary-soft) 36%, var(--fmed-surface)) !important;
+  box-shadow: var(--fmed-shadow-sm) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e71-quick-actions button i {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 10px !important;
+  background: var(--fmed-primary-soft) !important;
+  color: var(--fmed-primary) !important;
+  font-size: 13px !important;
+  font-style: normal !important;
+  font-weight: 650 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e81-section-head {
+  padding: 4px 1px 0 !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e81-section-head h3 {
+  font-size: 19px !important;
+  font-weight: 650 !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e81-section-head p {
+  margin-top: 4px !important;
+  color: var(--fmed-muted) !important;
+  font-size: 12.5px !important;
+  font-weight: 450 !important;
+  text-transform: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-kpi-grid {
+  gap: 10px !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e71-kpi {
+  min-height: 112px !important;
+  padding: 17px 15px !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-md) !important;
+  background: var(--fmed-surface) !important;
+  color: var(--fmed-text) !important;
+  box-shadow: var(--fmed-shadow-xs) !important;
+  text-align: left !important;
+  transition: transform .16s var(--fmed-ease), border-color .16s var(--fmed-ease), box-shadow .16s var(--fmed-ease) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e71-kpi:hover {
+  transform: translateY(-2px) !important;
+  border-color: color-mix(in srgb, var(--kpi-tone, var(--fmed-primary)) 35%, var(--fmed-border)) !important;
+  box-shadow: var(--fmed-shadow-sm) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e71-kpi-icon {
+  width: 36px !important;
+  height: 36px !important;
+  flex-basis: 36px !important;
+  border-radius: 11px !important;
+  font-size: 13px !important;
+  font-weight: 650 !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e71-kpi-copy strong {
+  color: var(--fmed-text-strong) !important;
+  font-size: clamp(28px, 2.25vw, 36px) !important;
+  font-weight: 650 !important;
+  line-height: 1 !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e71-kpi-copy small {
+  margin-top: 5px !important;
+  color: var(--fmed-text) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e71-kpi-copy em {
+  color: var(--fmed-muted) !important;
+  font-size: 10.5px !important;
+  font-weight: 450 !important;
+  text-transform: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-panel {
+  padding: 19px !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e71-panel-header { margin-bottom: 14px !important; }
+.fmed-app-root.fmed-e820-premium .fmed-e71-panel-header h3 {
+  font-size: 17px !important;
+  font-weight: 650 !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e71-panel-header p {
+  color: var(--fmed-muted) !important;
+  font-size: 12px !important;
+  font-weight: 450 !important;
+  text-transform: none !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-e71-priority-list button,
+.fmed-app-root.fmed-e820-premium .fmed-e71-site-list button,
+.fmed-app-root.fmed-e820-premium .fmed-e71-module-list button,
+.fmed-app-root.fmed-e820-premium .fmed-e71-responsible-list button {
+  min-height: 51px !important;
+  padding: 10px 12px !important;
+  border: 1px solid transparent !important;
+  border-radius: 11px !important;
+  background: var(--fmed-surface-2) !important;
+  color: var(--fmed-text) !important;
+}
+
+/* ----------------------------- Heroes and page headers ----------------------------- */
+.fmed-app-root.fmed-e820-premium .fmed-module-hero {
+  min-height: 128px !important;
+  padding: 23px 25px !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-module-hero-title,
+.fmed-app-root.fmed-e820-premium .fmed-costi-title,
+.fmed-app-root.fmed-e820-premium .fmed-banner-heading {
+  color: var(--fmed-text-strong) !important;
+  font-size: clamp(25px, 1.9vw, 31px) !important;
+  font-weight: 650 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -.02em !important;
+  text-transform: none !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-module-hero-eyebrow,
+.fmed-app-root.fmed-e820-premium .fmed-module-kicker,
+.fmed-app-root.fmed-e820-premium .fmed-costi-kicker,
+.fmed-app-root.fmed-e820-premium .fmed-login-kicker {
+  color: var(--fmed-primary) !important;
+  font-size: 11px !important;
+  font-weight: 650 !important;
+  letter-spacing: .015em !important;
+  text-transform: none !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-module-hero-metric {
+  min-width: 150px !important;
+  padding: 13px 15px !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-md) !important;
+  background: color-mix(in srgb, var(--fmed-surface-2) 90%, transparent) !important;
+  box-shadow: none !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-module-hero-metric-value {
+  color: var(--fmed-text-strong) !important;
+  font-size: 26px !important;
+  font-weight: 650 !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-module-hero-metric-label {
+  color: var(--fmed-text) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+
+/* ----------------------------- Buttons ----------------------------- */
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(
+  .fmed-btn-primary,.fmed-e71-button-primary,.core-primary-button,.fmed-login-submit,
+  .s8108-btn.primary,.fmed-canonical-save
+) {
+  min-height: var(--fmed-control-h) !important;
+  padding: 0 16px !important;
+  border: 1px solid color-mix(in srgb, var(--fmed-primary-strong) 75%, transparent) !important;
+  border-radius: 11px !important;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--fmed-primary) 88%, #fff), var(--fmed-primary-strong)) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--fmed-primary) 18%, transparent) !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(
+  .fmed-btn-secondary,.fmed-e71-button-secondary,.s8108-btn,.fmed-canonical-cancel,
+  .fmed-e71-reset,.fmed-e818-open-list-btn
+) {
+  min-height: var(--fmed-control-h) !important;
+  padding: 0 15px !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: 11px !important;
+  background: var(--fmed-surface) !important;
+  color: var(--fmed-text) !important;
+  -webkit-text-fill-color: currentColor !important;
+  box-shadow: var(--fmed-shadow-xs) !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content button {
+  cursor: pointer;
+  transition: transform .15s var(--fmed-ease), border-color .15s var(--fmed-ease), box-shadow .15s var(--fmed-ease), background .15s var(--fmed-ease), color .15s var(--fmed-ease) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-main-content button:hover:not(:disabled) { transform: translateY(-1px); }
+.fmed-app-root.fmed-e820-premium .fmed-main-content button:active:not(:disabled) { transform: translateY(0) scale(.99); }
+.fmed-app-root.fmed-e820-premium .fmed-main-content button:disabled { opacity: .52 !important; cursor: not-allowed !important; box-shadow: none !important; }
+
+.fmed-app-root.fmed-e820-premium :is(button,a,input,select,textarea):focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--fmed-primary) 28%, transparent) !important;
+  outline-offset: 2px !important;
+}
+
+/* ----------------------------- Forms ----------------------------- */
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(input,select,textarea) {
+  min-height: var(--fmed-control-h) !important;
+  border: 1px solid var(--fmed-border-strong) !important;
+  border-radius: 10px !important;
+  background: var(--fmed-surface) !important;
+  color: var(--fmed-text) !important;
+  -webkit-text-fill-color: currentColor !important;
+  box-shadow: inset 0 1px 1px rgba(10,35,43,.025) !important;
+  font-size: 13px !important;
+  font-weight: 450 !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-main-content textarea { min-height: 98px !important; padding-block: 10px !important; }
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(input,select,textarea):hover {
+  border-color: color-mix(in srgb, var(--fmed-primary) 24%, var(--fmed-border-strong)) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(input,select,textarea):focus {
+  border-color: var(--fmed-primary) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--fmed-primary) 14%, transparent) !important;
+  outline: 0 !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-main-content label > span:first-child,
+.fmed-app-root.fmed-e820-premium .fmed-canonical-label {
+  color: var(--fmed-text) !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+
+/* ----------------------------- Tables ----------------------------- */
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(table,.fmed-process-table,.core-quality-table,.core-value-table,.core-relations-table,.fmed-sharepoint-table) {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  color: var(--fmed-text) !important;
+  font-size: 12.5px !important;
+  font-variant-numeric: tabular-nums lining-nums !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(table,.fmed-process-table,.core-quality-table,.core-value-table,.core-relations-table,.fmed-sharepoint-table) thead th {
+  min-height: 42px !important;
+  padding: 11px 12px !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--fmed-border-strong) !important;
+  background: var(--fmed-surface-2) !important;
+  color: var(--fmed-muted) !important;
+  font-size: 11px !important;
+  font-weight: 650 !important;
+  line-height: 1.25 !important;
+  letter-spacing: .01em !important;
+  text-align: left !important;
+  text-transform: none !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(table,.fmed-process-table,.core-quality-table,.core-value-table,.core-relations-table,.fmed-sharepoint-table) tbody td {
+  padding: 12px !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--fmed-border) !important;
+  background: var(--fmed-surface) !important;
+  color: var(--fmed-text) !important;
+  font-size: 12.5px !important;
+  line-height: 1.42 !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(table,.fmed-process-table,.core-quality-table,.core-value-table,.core-relations-table,.fmed-sharepoint-table) tbody tr:hover td {
+  background: color-mix(in srgb, var(--fmed-primary-soft) 35%, var(--fmed-surface)) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(.fmed-process-table-wrap,.fmed-sharepoint-table-wrap,[class*="table-wrap"]) {
+  overflow: auto !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-md) !important;
+  background: var(--fmed-surface) !important;
+  box-shadow: var(--fmed-shadow-xs) !important;
+}
+
+/* ----------------------------- Processi, cataloghi, impostazioni ----------------------------- */
+.fmed-app-root.fmed-e820-premium .fmed-process-page,
+.fmed-app-root.fmed-e820-premium .core-standard-page,
+.fmed-app-root.fmed-e820-premium .fmed-settings-page,
+.fmed-app-root.fmed-e820-premium .fmed-audit-page,
+.fmed-app-root.fmed-e820-premium .fmed-wizard-page,
+.fmed-app-root.fmed-e820-premium .s8108-page {
+  color: var(--fmed-text) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-process-head,
+.fmed-app-root.fmed-e820-premium .core-standard-head,
+.fmed-app-root.fmed-e820-premium .fmed-settings-head,
+.fmed-app-root.fmed-e820-premium .fmed-audit-head {
+  padding: 23px 25px !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-process-card {
+  padding: 18px !important;
+  transition: transform .16s var(--fmed-ease), border-color .16s var(--fmed-ease), box-shadow .16s var(--fmed-ease) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-process-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: color-mix(in srgb, var(--fmed-primary) 30%, var(--fmed-border)) !important;
+  box-shadow: var(--fmed-shadow-md) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-process-code,
+.fmed-app-root.fmed-e820-premium .core-auto-code-preview {
+  font-family: var(--fmed-font-mono) !important;
+  font-size: 11px !important;
+  letter-spacing: 0 !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-settings-tabs {
+  padding: 5px !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: 12px !important;
+  background: var(--fmed-surface-3) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-settings-tabs button {
+  min-height: 37px !important;
+  border-radius: 9px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+/* ----------------------------- Missione ----------------------------- */
+.fmed-app-root.fmed-e820-premium .fmed-mission-page {
+  color: var(--fmed-text) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-mission-hero {
+  min-height: 430px !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-xl) !important;
+  background:
+    radial-gradient(circle at 82% 12%, color-mix(in srgb, var(--fmed-primary) 20%, transparent), transparent 34%),
+    linear-gradient(145deg, color-mix(in srgb, var(--fmed-primary-soft) 48%, var(--fmed-surface)), var(--fmed-surface)) !important;
+  box-shadow: var(--fmed-shadow-md) !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-mission-copy h1 {
+  font-size: clamp(34px, 4vw, 58px) !important;
+  font-weight: 650 !important;
+  letter-spacing: -.035em !important;
+  text-transform: none !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-mission-copy p {
+  color: var(--fmed-muted) !important;
+  font-size: 16px !important;
+  line-height: 1.62 !important;
+}
+.fmed-app-root.fmed-e820-premium .fmed-mission-module,
+.fmed-app-root.fmed-e820-premium .fmed-mission-flow-step,
+.fmed-app-root.fmed-e820-premium .fmed-mission-mover-card {
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-md) !important;
+  background: var(--fmed-surface) !important;
+  box-shadow: var(--fmed-shadow-xs) !important;
+}
+
+/* ----------------------------- Sicurezza, wizard, audit ----------------------------- */
+.fmed-app-root.fmed-e820-premium .s8108-page-head {
+  padding: 22px 24px !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-lg) !important;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--fmed-primary-soft) 50%, var(--fmed-surface)), var(--fmed-surface)) !important;
+  box-shadow: var(--fmed-shadow-sm) !important;
+}
+.fmed-app-root.fmed-e820-premium .s8108-kpi-grid article,
+.fmed-app-root.fmed-e820-premium .fmed-wizard-summary,
+.fmed-app-root.fmed-e820-premium .fmed-audit-summary article {
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-md) !important;
+  background: var(--fmed-surface) !important;
+  box-shadow: var(--fmed-shadow-xs) !important;
+}
+.fmed-app-root.fmed-e820-premium .s8108-kpi-icon:empty,
+.fmed-app-root.fmed-e820-premium [style*="assetActionIcon"]:empty,
+.fmed-app-root.fmed-e820-premium [style*="predictiveIcon"]:empty,
+.fmed-app-root.fmed-e820-premium [style*="assetHeroIcon"]:empty {
+  display: none !important;
+}
+
+/* ----------------------------- Dialogs ----------------------------- */
+.fmed-app-root.fmed-e820-premium :is(.fmed-modal-overlay,.fmed-process-detail-backdrop,.fmed-canonical-overlay,.fmed-alert-dialog-overlay,.fmed-e71-drawer-backdrop) {
+  backdrop-filter: blur(8px) saturate(110%) !important;
+  background: rgba(3,19,25,.54) !important;
+}
+.fmed-app-root.fmed-e820-premium :is(.fmed-modal-card,.fmed-process-detail,.fmed-canonical-dialog,.fmed-alert-dialog,.fmed-e71-drawer) {
+  border: 1px solid var(--fmed-border-strong) !important;
+  border-radius: var(--fmed-radius-xl) !important;
+  background: var(--fmed-surface) !important;
+  color: var(--fmed-text) !important;
+  box-shadow: 0 30px 90px rgba(0,0,0,.28) !important;
+  animation: fmed-e820-dialog-in .18s var(--fmed-ease) both !important;
+}
+@keyframes fmed-e820-dialog-in {
+  from { opacity: 0; transform: translateY(8px) scale(.988); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ----------------------------- Login ----------------------------- */
+.fmed-e812-login {
+  display: grid !important;
+  grid-template-columns: minmax(0, 55fr) minmax(430px, 45fr) !important;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+  width: 100% !important;
+  min-width: 1180px !important;
+  min-height: 100vh !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #f5f1e8 !important;
+  color: #172b34 !important;
+  font-family: var(--fmed-font-family) !important;
+}
+
+.fmed-e812-login .fmed-login-brand-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  min-height: 100vh;
+  padding: clamp(44px, 6vw, 88px);
+  overflow: hidden;
+  color: #f3fbfb;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(101,215,203,.18), transparent 31%),
+    radial-gradient(circle at 100% 100%, rgba(41,130,138,.17), transparent 35%),
+    linear-gradient(145deg, #0b313a 0%, #082630 52%, #061b23 100%);
+}
+
+.fmed-e812-login .fmed-login-brand-panel::after {
+  content: "";
+  position: absolute;
+  right: -130px;
+  bottom: -150px;
+  width: 420px;
+  height: 420px;
+  border: 1px solid rgba(127,224,214,.13);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 52px rgba(127,224,214,.035),
+    0 0 0 104px rgba(127,224,214,.025);
+  pointer-events: none;
+}
+
+.fmed-e812-login .fmed-login-brand-content {
+  position: relative;
+  z-index: 1;
+  width: min(590px, 100%);
+  margin-block: auto;
+}
+
+.fmed-e812-login .fmed-login-monogram {
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  margin-bottom: 34px;
+  border: 1px solid rgba(136,230,220,.28);
+  border-radius: 20px;
+  background: rgba(118,222,211,.09);
+  color: #f2fffd;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+  font-size: 29px;
+  font-weight: 700;
+}
+
+.fmed-e812-login .fmed-login-brand-kicker {
+  margin-bottom: 16px;
+  color: #83dacf;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: .18em;
+}
+
+.fmed-e812-login .fmed-login-brand-content h1 {
+  max-width: 560px;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(40px, 4.25vw, 66px);
+  font-weight: 650;
+  line-height: 1.02;
+  letter-spacing: -.042em;
+}
+
+.fmed-e812-login .fmed-login-brand-content p {
+  max-width: 540px;
+  margin: 25px 0 0;
+  color: #adc2c7;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.fmed-e812-login .fmed-login-brand-footer {
+  position: relative;
+  z-index: 1;
+  color: #77969e;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .035em;
+}
+
+.fmed-e812-login .fmed-login-form-panel {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 100vh;
+  padding: clamp(38px, 5vw, 76px);
+  background:
+    radial-gradient(circle at 92% 0%, rgba(23,125,133,.07), transparent 31%),
+    #f5f1e8;
+}
+
+.fmed-e812-login .fmed-login-card {
+  position: relative !important;
+  width: min(440px, 100%) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #172b34 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.fmed-e812-login .fmed-login-kicker {
+  display: inline-flex !important;
+  margin: 0 0 18px !important;
+  padding: 7px 10px !important;
+  border: 1px solid #cfe0df !important;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.58) !important;
+  color: #0b6f78 !important;
+  -webkit-text-fill-color: #0b6f78 !important;
+  font-size: 10px !important;
+  font-weight: 650 !important;
+  line-height: 1 !important;
+  letter-spacing: .04em !important;
+  text-transform: none !important;
+}
+
+.fmed-e812-login .fmed-login-title {
+  margin: 0 0 11px !important;
+  color: #122a33 !important;
+  -webkit-text-fill-color: #122a33 !important;
+  font-size: clamp(31px, 3vw, 42px) !important;
+  font-weight: 650 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.035em !important;
+  text-transform: none !important;
+}
+
+.fmed-e812-login .fmed-login-subtitle {
+  margin: 0 0 27px !important;
+  color: #5f727a !important;
+  -webkit-text-fill-color: #5f727a !important;
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+}
+
+.fmed-e812-login .fmed-login-form {
+  display: grid !important;
+  gap: 10px !important;
+}
+
+.fmed-e812-login .fmed-login-form > label:not(.fmed-login-remember) {
+  margin: 8px 0 0 !important;
+  color: #314951 !important;
+  -webkit-text-fill-color: #314951 !important;
+  font-size: 11px !important;
+  font-weight: 650 !important;
+  letter-spacing: .015em !important;
+  text-transform: none !important;
+}
+
+.fmed-e812-login .fmed-login-form > input {
+  width: 100% !important;
+  min-height: 49px !important;
+  padding: 0 14px !important;
+  border: 1px solid #cedadd !important;
+  border-radius: 11px !important;
+  background: rgba(255,255,255,.88) !important;
+  color: #172b34 !important;
+  -webkit-text-fill-color: #172b34 !important;
+  box-shadow: 0 1px 2px rgba(12,39,48,.025) !important;
+  outline: 0 !important;
+  font-size: 14px !important;
+}
+
+.fmed-e812-login .fmed-login-form > input:focus {
+  border-color: #0b6f78 !important;
+  box-shadow: 0 0 0 3px rgba(11,111,120,.12) !important;
+}
+
+.fmed-e812-login .fmed-login-remember {
+  display: flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  margin: 6px 0 0 !important;
+  color: #536870 !important;
+  -webkit-text-fill-color: #536870 !important;
+  font-size: 12px !important;
+}
+
+.fmed-e812-login .fmed-login-remember input {
+  width: 16px !important;
+  height: 16px !important;
+  margin: 0 !important;
+  accent-color: #0b6f78;
+}
+
+.fmed-e812-login .fmed-login-error {
+  margin-top: 8px !important;
+  padding: 10px 12px !important;
+  border: 1px solid #efc7c5 !important;
+  border-radius: 10px !important;
+  background: #fff0ef !important;
+  color: #9f3434 !important;
+  -webkit-text-fill-color: #9f3434 !important;
+  font-size: 12px !important;
+}
+
+.fmed-e812-login .fmed-login-submit {
+  width: 100% !important;
+  min-height: 49px !important;
+  margin-top: 12px !important;
+  padding: 0 18px !important;
+  border: 1px solid #075963 !important;
+  border-radius: 11px !important;
+  background: linear-gradient(180deg, #0d7b84, #075963) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: 0 9px 20px rgba(7,89,99,.16) !important;
+  cursor: pointer !important;
+  font-size: 13px !important;
+  font-weight: 650 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.fmed-e812-login .fmed-login-submit:hover:not(:disabled) {
+  background: linear-gradient(180deg, #0b737c, #064f58) !important;
+  box-shadow: 0 11px 24px rgba(7,89,99,.20) !important;
+}
+
+.fmed-e812-login .fmed-login-submit:disabled {
+  opacity: .58 !important;
+  cursor: wait !important;
+}
+
+.fmed-e812-login .fmed-login-version {
+  margin-top: 17px !important;
+  color: #809197 !important;
+  -webkit-text-fill-color: #809197 !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: .025em !important;
+  text-align: left !important;
+}
+
+/* ----------------------------- Utility and empty states ----------------------------- */
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(.fmed-e71-empty,.core-empty-state,.s8108-empty,.fmed-process-empty,.fmed-audit-empty) {
+  padding: 26px !important;
+  border: 1px dashed var(--fmed-border-strong) !important;
+  border-radius: var(--fmed-radius-md) !important;
+  background: var(--fmed-surface-2) !important;
+  color: var(--fmed-muted) !important;
+  font-size: 13px !important;
+  text-align: center !important;
+}
+
+/* ==========================================================================
+   E8.2.2 · Riparazione strutturale finale
+   Unifica le vecchie variabili inline nel tema chiaro e impedisce che griglie,
+   tabelle o footer possano collassare o sovrapporsi a qualsiasi livello di zoom.
+   ========================================================================== */
+.fmed-app-root.fmed-e820-premium {
+  --fmed-d3-card: var(--fmed-surface) !important;
+  --fmed-d3-soft: var(--fmed-surface-2) !important;
+  --fmed-d3-hero: linear-gradient(135deg, #edf7f6 0%, #ffffff 62%) !important;
+  --fmed-d3-pill: var(--fmed-primary-soft) !important;
+  --fmed-d3-text: var(--fmed-text) !important;
+  --fmed-d3-title: var(--fmed-text-strong) !important;
+  --fmed-d3-muted: var(--fmed-muted) !important;
+  --fmed-d3-border: var(--fmed-border) !important;
+  --fmed-d3-shadow-soft: var(--fmed-shadow-sm) !important;
+  --fmed-d3-shadow: var(--fmed-shadow-md) !important;
+  --fmed-card: var(--fmed-surface) !important;
+  --fmed-soft-panel: var(--fmed-surface-2) !important;
+  --fmed-main-bg: linear-gradient(180deg, #f7f9f9 0%, #f1f5f6 100%) !important;
+  --fmed-title: var(--fmed-text-strong) !important;
+  display: flex !important;
+  width: 100% !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  overflow: hidden !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content,
+.fmed-app-root.fmed-e820-premium .fmed-main-content * {
+  -webkit-text-fill-color: currentColor !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content {
+  flex: 1 1 auto !important;
+  width: auto !important;
+  height: 100vh !important;
+  min-width: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+/* Sidebar: un solo flusso verticale, nessun elemento assoluto o sporgente. */
+.fmed-app-root.fmed-e820-premium aside.fmed-side-rail {
+  position: relative !important;
+  z-index: 20 !important;
+  display: flex !important;
+  flex: 0 0 var(--fmed-sidebar-w) !important;
+  flex-direction: column !important;
+  width: var(--fmed-sidebar-w) !important;
+  min-width: var(--fmed-sidebar-w) !important;
+  max-width: var(--fmed-sidebar-w) !important;
+  box-sizing: border-box !important;
+}
+
+.fmed-app-root.fmed-e820-premium aside.fmed-side-rail > a:first-child {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  flex: 0 0 auto !important;
+  text-decoration: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-controls {
+  display: flex !important;
+  flex: 0 0 auto !important;
+  justify-content: flex-end !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-control-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  width: auto !important;
+  max-width: 100% !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-control-icon,
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-control-icon svg {
+  display: block !important;
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-navigation {
+  display: block !important;
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-group-items {
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-side-menu-btn,
+.fmed-app-root.fmed-e820-premium a.fmed-mover-menu-item {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 27px minmax(0,1fr) !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  text-align: left !important;
+  text-decoration: none !important;
+  overflow: hidden !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-side-menu-icon {
+  display: grid !important;
+  place-items: center !important;
+  flex: 0 0 27px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-side-menu-icon svg {
+  display: block !important;
+  width: 17px !important;
+  height: 17px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-side-menu-label {
+  display: block !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-external-group {
+  margin-top: 10px !important;
+  padding-top: 10px !important;
+  border-top: 1px solid var(--sidebar-line) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mover-menu-item::after {
+  content: "↗";
+  position: absolute;
+  right: 10px;
+  color: var(--sidebar-muted);
+  font-size: 11px;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-footer {
+  position: static !important;
+  inset: auto !important;
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-account {
+  position: static !important;
+  display: grid !important;
+  grid-template-columns: 31px minmax(0,1fr) 29px !important;
+  align-items: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-account-avatar {
+  display: grid !important;
+  place-items: center !important;
+  width: 31px !important;
+  height: 31px !important;
+  min-width: 31px !important;
+  border-radius: 9px !important;
+  background: rgba(112,223,209,.12) !important;
+  color: #dffffa !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-account-copy {
+  display: grid !important;
+  gap: 2px !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-account-copy :is(strong,span) {
+  display: block !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-logout {
+  display: grid !important;
+  place-items: center !important;
+  width: 29px !important;
+  height: 29px !important;
+  min-width: 29px !important;
+  padding: 0 !important;
+  border: 1px solid var(--sidebar-line) !important;
+  border-radius: 8px !important;
+  background: rgba(255,255,255,.04) !important;
+  color: #b9cdd2 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-sidebar-logout svg {
+  width: 15px !important;
+  height: 15px !important;
+}
+
+.fmed-app-root.fmed-e820-premium aside.fmed-side-rail.is-collapsed .fmed-side-menu-btn,
+.fmed-app-root.fmed-e820-premium aside.fmed-side-rail.is-collapsed a.fmed-mover-menu-item {
+  grid-template-columns: 1fr !important;
+  place-items: center !important;
+  width: 48px !important;
+  min-width: 48px !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  margin-inline: auto !important;
+  padding: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium aside.fmed-side-rail.is-collapsed .fmed-mover-menu-item::after {
+  display: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium aside.fmed-side-rail.is-collapsed .fmed-sidebar-account {
+  grid-template-columns: 1fr !important;
+  justify-items: center !important;
+  width: 48px !important;
+  margin-inline: auto !important;
+  padding: 7px 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium aside.fmed-side-rail.is-collapsed .fmed-sidebar-account-avatar {
+  display: none !important;
+}
+
+/* Dashboard: griglie esplicite e contenuti separati. */
+.fmed-app-root.fmed-e820-premium .fmed-e71-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 20px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-title,
+.fmed-app-root.fmed-e820-premium .fmed-e71-header-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-header-actions {
+  justify-content: flex-end !important;
+  flex-wrap: wrap !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-quick-actions {
+  grid-template-columns: repeat(3,minmax(220px,1fr)) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-quick-actions button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 11px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  text-align: left !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-quick-actions button i {
+  display: grid !important;
+  place-items: center !important;
+  flex: 0 0 32px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-quick-actions button span {
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-kpi-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(230px,1fr)) !important;
+  gap: 12px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-kpi {
+  position: relative !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 13px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-kpi-copy {
+  display: grid !important;
+  gap: 4px !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-kpi-copy :is(strong,small,em) {
+  position: static !important;
+  display: block !important;
+  margin-inline: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-kpi-copy small,
+.fmed-app-root.fmed-e820-premium .fmed-e71-kpi-copy em {
+  white-space: normal !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e81-operational-grid,
+.fmed-app-root.fmed-e820-premium .fmed-e71-main-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 14px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-panel-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-priority-list {
+  display: grid !important;
+  gap: 7px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e71-priority-list button {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e81-summary-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(180px,1fr)) !important;
+  gap: 10px !important;
+}
+
+/* Pagine operative: pannelli, KPI e filtri mantengono proporzioni costanti. */
+.fmed-app-root.fmed-e820-premium :is(.fmed-asset-page,.fmed-infrastrutture-page,.fmed-scadenze-enterprise) {
+  display: grid !important;
+  gap: 18px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-module-hero {
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) minmax(180px,230px) !important;
+  align-items: center !important;
+  gap: 24px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  color: var(--fmed-text) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-module-hero-heading {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 14px !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-module-hero-copy {
+  display: grid !important;
+  gap: 7px !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-module-hero :is(.fmed-module-hero-title,.fmed-module-hero-subtitle,.fmed-module-hero-metric-value,.fmed-module-hero-metric-label,.fmed-module-hero-metric-sub) {
+  position: static !important;
+  margin-block: 0 !important;
+  color: var(--fmed-text-strong) !important;
+  text-shadow: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-module-hero .fmed-module-hero-subtitle,
+.fmed-app-root.fmed-e820-premium .fmed-module-hero .fmed-module-hero-metric-sub {
+  color: var(--fmed-muted) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-module-hero-metric {
+  display: grid !important;
+  align-content: center !important;
+  gap: 5px !important;
+  min-width: 0 !important;
+  min-height: 96px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-operational-filters,
+.fmed-app-root.fmed-e820-premium .fmed-e818-deadline-filters,
+.fmed-app-root.fmed-e820-premium .fmed-operational-table-card {
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-lg) !important;
+  background: var(--fmed-surface) !important;
+  box-shadow: var(--fmed-shadow-sm) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-operational-filters {
+  padding: 18px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-operational-filters-head {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  margin-bottom: 14px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-operational-filters-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5,minmax(160px,1fr)) !important;
+  align-items: end !important;
+  gap: 10px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-operational-filters-grid > * {
+  min-width: 0 !important;
+  width: 100% !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-operational-actions,
+.fmed-app-root.fmed-e820-premium .fmed-e818-deadline-actions {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 9px !important;
+  margin-top: 14px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-operational-actions button,
+.fmed-app-root.fmed-e820-premium .fmed-e818-deadline-actions button {
+  min-height: 40px !important;
+  height: auto !important;
+  padding: 8px 14px !important;
+  white-space: nowrap !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-operational-kpi-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4,minmax(190px,1fr)) !important;
+  gap: 12px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-deadline-kpi-grid {
+  grid-template-columns: repeat(5,minmax(170px,1fr)) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-operational-kpi-card {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  gap: 7px !important;
+  min-width: 0 !important;
+  min-height: 112px !important;
+  padding: 16px !important;
+  overflow: hidden !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-md) !important;
+  background: var(--fmed-surface) !important;
+  color: var(--fmed-text) !important;
+  box-shadow: var(--fmed-shadow-xs) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-operational-kpi-card :is(strong,span,div) {
+  position: static !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-deadline-date-field {
+  display: grid !important;
+  gap: 5px !important;
+}
+
+/* Tabelle: larghezza minima e wrapping solo nelle colonne descrittive. */
+.fmed-app-root.fmed-e820-premium .fmed-infrastructure-table-wrap,
+.fmed-app-root.fmed-e820-premium .fmed-operational-table-card [style*="overflow"] {
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: auto !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-infrastructure-table {
+  width: 100% !important;
+  min-width: 1420px !important;
+  table-layout: auto !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-infrastructure-table :is(th,td) {
+  vertical-align: middle !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-infrastructure-table :is(th,td):not(:nth-child(4)):not(:nth-child(10)) {
+  white-space: nowrap !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-infrastructure-table :is(th,td):nth-child(4) {
+  min-width: 250px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-infrastructure-table :is(th,td):nth-child(10) {
+  min-width: 300px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-infrastructure-table td:nth-child(10) > div {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-infrastructure-table td:nth-child(10) button {
+  min-height: 34px !important;
+  height: auto !important;
+  padding: 7px 10px !important;
+  white-space: nowrap !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e818-deadlines-table {
+  width: 100% !important;
+  min-width: 1520px !important;
+  table-layout: auto !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e818-deadlines-table :is(th,td) {
+  vertical-align: middle !important;
+  word-break: normal !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e818-deadlines-table :is(th,td):not(:nth-child(6)) {
+  white-space: nowrap !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e818-deadlines-table :is(th,td):nth-child(6) {
+  min-width: 250px !important;
+}
+
+/* Strumenti: card vere, non pulsanti HTML compressi. */
+.fmed-app-root.fmed-e820-premium .fmed-e81-auto-card {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 20px !important;
+  padding: 20px !important;
+  border: 1px solid color-mix(in srgb, var(--fmed-success) 22%, var(--fmed-border)) !important;
+  border-radius: var(--fmed-radius-lg) !important;
+  background: color-mix(in srgb, var(--fmed-success-soft) 65%, var(--fmed-surface)) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e81-tool-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(220px,1fr)) !important;
+  gap: 12px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e81-tool-grid button {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 86px !important;
+  padding: 14px !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-md) !important;
+  background: var(--fmed-surface) !important;
+  color: var(--fmed-text) !important;
+  box-shadow: var(--fmed-shadow-xs) !important;
+  text-align: left !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e81-tool-grid i {
+  display: grid !important;
+  place-items: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  flex: 0 0 40px !important;
+  border-radius: 11px !important;
+  background: var(--fmed-primary-soft) !important;
+  color: var(--fmed-primary) !important;
+  font-style: normal !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e81-tool-grid button > span {
+  display: grid !important;
+  gap: 3px !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-e81-tool-grid button :is(strong,small) {
+  display: block !important;
+  min-width: 0 !important;
+  white-space: normal !important;
+}
+
+/* Cataloghi: controlli leggibili e colonne stabili. */
+.fmed-app-root.fmed-e820-premium .core-standard-page {
+  display: grid !important;
+  gap: 16px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-standard-head,
+.fmed-app-root.fmed-e820-premium .fmed-settings-head,
+.fmed-app-root.fmed-e820-premium .fmed-process-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 22px !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-banner-heading {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 13px !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-banner-copy {
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-summary-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4,minmax(180px,1fr)) !important;
+  gap: 12px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-summary-grid article {
+  display: grid !important;
+  gap: 5px !important;
+  min-width: 0 !important;
+  min-height: 96px !important;
+  padding: 16px !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-md) !important;
+  background: var(--fmed-surface) !important;
+  box-shadow: var(--fmed-shadow-xs) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-standard-tabs,
+.fmed-app-root.fmed-e820-premium .core-toolbar {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-standard-tabs {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-toolbar {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(240px,1fr)) max-content !important;
+  gap: 10px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-dictionary-layout {
+  display: grid !important;
+  grid-template-columns: minmax(260px,330px) minmax(0,1fr) !important;
+  align-items: start !important;
+  gap: 14px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-dictionary-scroll {
+  display: grid !important;
+  gap: 6px !important;
+  max-height: 620px !important;
+  overflow-y: auto !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-dictionary-scroll button {
+  display: grid !important;
+  gap: 3px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  padding: 10px 11px !important;
+  text-align: left !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-table-head,
+.fmed-app-root.fmed-e820-premium .core-value-row {
+  display: grid !important;
+  grid-template-columns: minmax(150px,.8fr) minmax(220px,1.4fr) 110px minmax(220px,auto) !important;
+  align-items: center !important;
+  gap: 10px !important;
+  min-width: 780px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-value-table {
+  width: 100% !important;
+  overflow-x: auto !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-value-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-sync-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  min-width: 190px !important;
+  min-height: 44px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-sync-icon {
+  display: grid !important;
+  place-items: center !important;
+  width: 27px !important;
+  height: 27px !important;
+  font-size: 18px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .core-sync-copy {
+  display: grid !important;
+  gap: 1px !important;
+  text-align: left !important;
+}
+
+/* Processi: moduli compatti a fisarmonica, card proporzionate. */
+.fmed-app-root.fmed-e820-premium .fmed-process-page {
+  display: grid !important;
+  gap: 16px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-usage {
+  display: grid !important;
+  grid-template-columns: 160px minmax(0,1fr) !important;
+  align-items: center !important;
+  gap: 16px !important;
+  padding: 14px 16px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-usage > div {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 7px 18px !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-controls {
+  display: grid !important;
+  gap: 10px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-control-summary {
+  display: grid !important;
+  grid-template-columns: repeat(4,minmax(170px,1fr)) !important;
+  gap: 10px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-control-summary article {
+  display: grid !important;
+  gap: 4px !important;
+  min-height: 88px !important;
+  padding: 13px 14px !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-md) !important;
+  background: var(--fmed-surface) !important;
+  box-shadow: var(--fmed-shadow-xs) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-control-summary article > span {
+  color: var(--fmed-muted) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-control-summary article > strong {
+  color: var(--fmed-text-strong) !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-control-summary article > small {
+  color: var(--fmed-muted) !important;
+  font-size: 10.5px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-control-bar {
+  display: grid !important;
+  grid-template-columns: minmax(280px,1fr) minmax(190px,240px) max-content !important;
+  align-items: end !important;
+  gap: 10px !important;
+  padding: 13px !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-md) !important;
+  background: var(--fmed-surface) !important;
+}
+
+.fmed-app-root.fmed-e820-premium :is(.fmed-process-search-field,.fmed-process-status-field) {
+  display: grid !important;
+  gap: 5px !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium :is(.fmed-process-search-field,.fmed-process-status-field) > span {
+  color: var(--fmed-muted) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-refresh {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: auto !important;
+  min-width: 150px !important;
+  min-height: var(--fmed-control-h) !important;
+  padding: 0 14px !important;
+  border: 1px solid var(--fmed-primary) !important;
+  border-radius: 10px !important;
+  background: var(--fmed-primary) !important;
+  color: #ffffff !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-refresh svg {
+  display: block !important;
+  width: 18px !important;
+  height: 18px !important;
+  flex: 0 0 18px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-module-filter {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+  padding: 9px !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: var(--fmed-radius-md) !important;
+  background: var(--fmed-surface) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-module-filter button {
+  min-height: 36px !important;
+  padding: 0 12px !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: 9px !important;
+  background: var(--fmed-surface-2) !important;
+  color: var(--fmed-text) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-module-filter button.is-active {
+  border-color: var(--fmed-primary) !important;
+  background: var(--fmed-primary) !important;
+  color: #ffffff !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-groups {
+  display: grid !important;
+  gap: 10px !important;
+}
+
+.fmed-app-root.fmed-e820-premium details.fmed-process-group {
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-group-head {
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) auto 30px !important;
+  align-items: center !important;
+  gap: 14px !important;
+  min-height: 68px !important;
+  margin: 0 !important;
+  padding: 13px 16px !important;
+  cursor: pointer !important;
+  list-style: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-group-head::-webkit-details-marker {
+  display: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-group-head h3 {
+  margin: 3px 0 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-group-head > i {
+  display: grid !important;
+  place-items: center !important;
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 9px !important;
+  background: var(--fmed-primary-soft) !important;
+  color: var(--fmed-primary) !important;
+  font-style: normal !important;
+  font-size: 18px !important;
+  transition: transform .16s var(--fmed-ease) !important;
+}
+
+.fmed-app-root.fmed-e820-premium details.fmed-process-group[open] .fmed-process-group-head {
+  border-bottom: 1px solid var(--fmed-border) !important;
+}
+
+.fmed-app-root.fmed-e820-premium details.fmed-process-group[open] .fmed-process-group-head > i {
+  transform: rotate(180deg) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-catalog {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 12px !important;
+  padding: 14px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-card {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 16px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-card-top,
+.fmed-app-root.fmed-e820-premium .fmed-process-card-footer {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-card-footer {
+  align-items: center !important;
+  margin-top: auto !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-guide {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 8px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-guide > div {
+  min-width: 0 !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  background: var(--fmed-surface-2) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-steps,
+.fmed-app-root.fmed-e820-premium .fmed-process-card-flags {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-process-table {
+  min-width: 1180px !important;
+}
+
+/* ----------------------------- Responsive ----------------------------- */
+@media (max-width: 1400px) {
+  .fmed-app-root.fmed-e820-premium { --fmed-sidebar-w: 238px; }
+  .fmed-app-root.fmed-e820-premium .fmed-main-content { padding-inline: 22px !important; }
+  .fmed-app-root.fmed-e820-premium .fmed-e81-kpi-grid,
+  .fmed-app-root.fmed-e820-premium .fmed-e81-quick-actions { grid-template-columns: repeat(3,minmax(150px,1fr)) !important; }
+}
+
+@media (max-width: 1050px) {
+  .fmed-app-root.fmed-e820-premium .fmed-main-content { padding: 18px 16px 30px !important; }
+  .fmed-app-root.fmed-e820-premium .fmed-e71-header,
+  .fmed-app-root.fmed-e820-premium .fmed-module-hero { padding: 19px !important; }
+  .fmed-app-root.fmed-e820-premium .fmed-e81-kpi-grid,
+  .fmed-app-root.fmed-e820-premium .fmed-e81-quick-actions { grid-template-columns: repeat(2,minmax(145px,1fr)) !important; }
+}
+
+@media (max-width: 720px) {
+  .fmed-app-root.fmed-e820-premium .fmed-main-content { padding: 14px 12px 26px !important; }
+  .fmed-app-root.fmed-e820-premium .fmed-e81-kpi-grid,
+  .fmed-app-root.fmed-e820-premium .fmed-e81-quick-actions { grid-template-columns: 1fr !important; }
+  .fmed-app-root.fmed-e820-premium .fmed-e71-header-actions { width: 100% !important; flex-wrap: wrap !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fmed-app-root.fmed-e820-premium *,
+  .fmed-app-root.fmed-e820-premium *::before,
+  .fmed-app-root.fmed-e820-premium *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+/* ==========================================================================
+   E8.2.3 · Chiusura visuale definitiva
+   Ultimo livello autorizzato: contrasto, icone, tabelle e dialog. Ogni nuova
+   regola sostituisce esplicitamente la variante legacy senza aggiungere temi.
+   ========================================================================== */
+.fmed-app-root.fmed-e820-premium {
+  --fmed-focus-ring: 0 0 0 3px rgba(11,111,120,.18);
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content {
+  color: var(--fmed-text) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(button,a,input,select,textarea) {
+  -webkit-text-fill-color: currentColor !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(h1,h2,h3,h4,strong) {
+  color: var(--fmed-text-strong);
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-main-content :is(p,small) {
+  text-shadow: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium :is(button,a,input,select,textarea):focus-visible {
+  outline: 2px solid var(--fmed-primary) !important;
+  outline-offset: 2px !important;
+  box-shadow: var(--fmed-focus-ring) !important;
+}
+
+.fmed-icon {
+  display: block;
+  flex: 0 0 auto;
+  color: currentColor;
+  stroke: currentColor;
+  pointer-events: none;
+}
+
+.fmed-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-kpi-icon {
+  display: grid !important;
+  place-items: center !important;
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border: 1px solid #b9dcda !important;
+  border-radius: 11px !important;
+  background: var(--fmed-primary-soft) !important;
+  color: var(--fmed-primary) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-kpi-icon .fmed-icon {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* Tabelle operative: testi leggibili, righe compatte, niente parole spezzate. */
+.fmed-app-root.fmed-e820-premium :is(.fmed-asset-table-wrap,.fmed-interventi-table-wrap,.fmed-infrastructure-table-wrap) {
+  width: 100% !important;
+  max-height: 58vh !important;
+  overflow: auto !important;
+  border: 1px solid var(--fmed-border) !important;
+  border-radius: 14px !important;
+  background: var(--fmed-surface) !important;
+  color: var(--fmed-text) !important;
+}
+
+.fmed-app-root.fmed-e820-premium :is(.fmed-asset-table,.fmed-interventi-table,.fmed-infrastructure-table) {
+  width: 100% !important;
+  table-layout: auto !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  background: var(--fmed-surface) !important;
+  color: var(--fmed-text) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-asset-table {
+  min-width: 1480px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-interventi-table {
+  min-width: 1420px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-infrastructure-table {
+  min-width: 1320px !important;
+}
+
+.fmed-app-root.fmed-e820-premium :is(.fmed-asset-table,.fmed-interventi-table,.fmed-infrastructure-table) th {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 3 !important;
+  height: 42px !important;
+  padding: 10px 12px !important;
+  border-bottom: 1px solid var(--fmed-border-strong) !important;
+  background: var(--fmed-surface-3) !important;
+  color: var(--fmed-muted) !important;
+  font-size: 10.5px !important;
+  font-weight: 750 !important;
+  letter-spacing: .025em !important;
+  white-space: nowrap !important;
+}
+
+.fmed-app-root.fmed-e820-premium :is(.fmed-asset-table,.fmed-interventi-table,.fmed-infrastructure-table) td {
+  min-height: 50px !important;
+  padding: 10px 12px !important;
+  border-bottom: 1px solid var(--fmed-border) !important;
+  background: var(--fmed-surface) !important;
+  color: var(--fmed-text) !important;
+  font-size: 11px !important;
+  font-weight: 550 !important;
+  line-height: 1.35 !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  vertical-align: middle !important;
+}
+
+.fmed-app-root.fmed-e820-premium :is(.fmed-asset-table,.fmed-interventi-table,.fmed-infrastructure-table) tbody tr:hover td {
+  background: #f5f9f9 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-asset-table :is(th,td):not(:nth-child(3)):not(:nth-child(6)) {
+  white-space: nowrap !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-asset-table :is(th,td):nth-child(3) {
+  min-width: 180px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-asset-table :is(th,td):nth-child(6) {
+  min-width: 190px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-asset-table :is(th,td):nth-child(10) {
+  width: 112px !important;
+  min-width: 112px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-interventi-table :is(th,td):not(:nth-child(5)) {
+  white-space: nowrap !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-interventi-table :is(th,td):nth-child(5) {
+  min-width: 260px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-interventi-table :is(th,td):nth-child(10) {
+  width: 96px !important;
+  min-width: 96px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-infrastructure-table :is(th,td):nth-child(10) {
+  width: 232px !important;
+  min-width: 232px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-row-action-bar,
+.fmed-app-root.fmed-e820-premium .fmed-infrastructure-table td:nth-child(10) > .fmed-row-action-bar {
+  display: grid !important;
+  grid-template-columns: repeat(6,34px) !important;
+  align-items: center !important;
+  justify-content: end !important;
+  gap: 5px !important;
+  width: max-content !important;
+  min-width: 0 !important;
+  margin-left: auto !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-row-action-bar.is-two-actions {
+  grid-template-columns: repeat(2,36px) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-icon-action,
+.fmed-app-root.fmed-e820-premium .fmed-infrastructure-table td:nth-child(10) .fmed-icon-action,
+.fmed-app-root.fmed-e820-premium .fmed-table-icon-action {
+  display: inline-grid !important;
+  place-items: center !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  border: 1px solid #bfd6d8 !important;
+  border-radius: 9px !important;
+  background: var(--fmed-primary-soft) !important;
+  color: var(--fmed-primary) !important;
+  box-shadow: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-icon-action:hover,
+.fmed-app-root.fmed-e820-premium .fmed-table-icon-action:hover {
+  border-color: var(--fmed-primary) !important;
+  background: #d8ecea !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-icon-action.is-info {
+  border-color: #bfd3e7 !important;
+  background: var(--fmed-info-soft) !important;
+  color: var(--fmed-info) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-icon-action.is-warning {
+  border-color: #e5c889 !important;
+  background: var(--fmed-warning-soft) !important;
+  color: var(--fmed-warning) !important;
+}
+
+.fmed-app-root.fmed-e820-premium :is(.fmed-icon-action.is-danger,.fmed-table-icon-action.is-cancel) {
+  border-color: #e7b7b4 !important;
+  background: var(--fmed-danger-soft) !important;
+  color: var(--fmed-danger) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-table-edit-action {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  min-height: 34px !important;
+  padding: 0 11px !important;
+  border: 1px solid #bfd6d8 !important;
+  border-radius: 9px !important;
+  background: var(--fmed-primary-soft) !important;
+  color: var(--fmed-primary) !important;
+}
+
+/* Scheda asset: occupa sempre il viewport utile anche con zoom ridotto. */
+.fmed-app-root.fmed-e820-premium .fmed-modal-overlay {
+  padding: 16px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-modal-card.fmed-asset-detail-modal {
+  position: relative !important;
+  width: calc(100vw - 32px) !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: min(720px,calc(100vh - 32px)) !important;
+  max-height: calc(100vh - 32px) !important;
+  padding: 20px !important;
+  overflow: auto !important;
+  border: 1px solid var(--fmed-border-strong) !important;
+  border-radius: 20px !important;
+  background: var(--fmed-bg) !important;
+  color: var(--fmed-text) !important;
+  box-shadow: 0 24px 70px rgba(7,34,42,.24) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-asset-detail-close {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  top: 16px !important;
+  right: 16px !important;
+  min-width: 92px !important;
+  min-height: 38px !important;
+  border: 1px solid var(--fmed-border-strong) !important;
+  border-radius: 10px !important;
+  background: var(--fmed-surface) !important;
+  color: var(--fmed-text) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-asset-detail-modal [style*="rgba(8,26,40"] {
+  background: var(--fmed-surface-2) !important;
+  color: var(--fmed-text) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-asset-detail-modal [style*="assetActionIcon"],
+.fmed-app-root.fmed-e820-premium .fmed-asset-detail-modal button > span:first-child {
+  color: currentColor !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-asset-detail-modal button {
+  text-shadow: none !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-asset-detail-grid {
+  display: grid !important;
+  grid-template-columns: minmax(520px,1.08fr) minmax(460px,.92fr) !important;
+  align-items: start !important;
+  gap: 14px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-asset-data-panel,
+.fmed-app-root.fmed-e820-premium .fmed-asset-detail-grid > div {
+  min-width: 0 !important;
+}
+
+/* Wizard Nuovo Asset: codice inventario realmente automatico e visibile. */
+.fmed-app-root.fmed-e820-premium .fmed-inventory-code-control {
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) max-content !important;
+  gap: 8px !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-inventory-code-control input {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-generate-code-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  min-width: 184px !important;
+  min-height: 44px !important;
+  padding: 0 13px !important;
+  border: 1px solid var(--fmed-primary) !important;
+  border-radius: 11px !important;
+  background: var(--fmed-primary-soft) !important;
+  color: var(--fmed-primary) !important;
+  font-size: 11px !important;
+  font-weight: 750 !important;
+  white-space: nowrap !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-generate-code-button:disabled {
+  border-color: var(--fmed-border) !important;
+  background: var(--fmed-surface-3) !important;
+  color: var(--fmed-subtle) !important;
+  cursor: not-allowed !important;
+}
+
+/* Scopo e Missione: presentazione proporzionata, icone SVG, nessun logo Mover. */
+.fmed-app-root.fmed-e820-premium .fmed-mission-page {
+  min-height: 0 !important;
+  padding: 22px !important;
+  border-radius: 20px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-hero {
+  grid-template-columns: minmax(0,1.35fr) minmax(270px,.65fr) !important;
+  gap: 34px !important;
+  min-height: 340px !important;
+  padding: 22px 28px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-copy h1 {
+  max-width: 800px !important;
+  font-size: clamp(36px,3.6vw,56px) !important;
+  line-height: 1.04 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-copy p {
+  max-width: 760px !important;
+  margin-top: 17px !important;
+  color: var(--fmed-muted) !important;
+  font-size: 14px !important;
+  line-height: 1.58 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-actions {
+  margin-top: 21px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-actions button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-actions .is-primary {
+  color: #ffffff !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-core {
+  width: min(300px,100%) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-core-mark {
+  width: 138px !important;
+  border-radius: 34px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-core-mark::before {
+  border-radius: 27px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-core-mark span {
+  width: 48px !important;
+  height: 48px !important;
+  font-size: 26px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-core-mark strong {
+  font-size: 18px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-flow {
+  margin-bottom: 30px !important;
+  padding: 8px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-flow-step {
+  min-height: 50px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-section {
+  margin-top: 18px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-section-head {
+  margin-bottom: 17px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-section-head h2,
+.fmed-app-root.fmed-e820-premium .fmed-mission-ecosystem-copy h2 {
+  font-size: clamp(26px,2.6vw,38px) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-module-grid {
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 10px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-module {
+  min-height: 148px !important;
+  padding: 15px !important;
+  border-radius: 16px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-module-icon {
+  width: 38px !important;
+  height: 38px !important;
+  font-size: inherit !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-module-icon .fmed-icon {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-module h3 {
+  font-size: 15px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-value-grid {
+  margin: 34px 0 !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-value-grid article {
+  padding: 17px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-ecosystem {
+  padding: 28px !important;
+  border-radius: 19px !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-mover-card {
+  border-color: #c2d9dc !important;
+  background: var(--fmed-surface) !important;
+  color: var(--fmed-text) !important;
+  box-shadow: var(--fmed-shadow-sm) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-mover-card :is(strong,span,small) {
+  color: inherit !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-mover-card small {
+  color: var(--fmed-primary) !important;
+}
+
+.fmed-app-root.fmed-e820-premium .fmed-mission-mover-icon {
+  display: grid !important;
+  place-items: center !important;
+  width: 58px !important;
+  height: 58px !important;
+  flex: 0 0 58px !important;
+  border-radius: 16px !important;
+  background: var(--fmed-primary-soft) !important;
+  color: var(--fmed-primary) !important;
+}
+
+@media (max-width: 1280px) {
+  .fmed-app-root.fmed-e820-premium .fmed-asset-detail-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .fmed-app-root.fmed-e820-premium .fmed-mission-module-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  }
+}

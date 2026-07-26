@@ -1,0 +1,29 @@
+{
+  "product": "FMED Enterprise 1.0",
+  "release": "E8.3.1 Master Data Repair",
+  "build": "FMED_ENTERPRISE_1_0_E8_3_1_MASTER_DATA_REPAIR_2026_07_26",
+  "frontend": true,
+  "backend_required": "Enterprise 1.0.2 Master Data Repair",
+  "target_domain": "fmed512clean.vercel.app",
+  "features": [
+    "Una sola cascata CSS runtime con un ultimo livello E8.2.3 per contrasto, icone, tabelle e dialog",
+    "Sidebar petrolio contenuta, senza footer Mover sovrapposto e con Mover tra i collegamenti normali",
+    "Tema chiaro unico senza selettori o logica per il tema scuro",
+    "Login desktop a due pannelli con autenticazione invariata",
+    "Griglie Dashboard, KPI, filtri, tabelle, Strumenti, Cataloghi e Processi riparate e proporzionate",
+    "Pagina Scopo e Missione aperta automaticamente dopo il login",
+    "Codice inventario generato dal backend sul Censimento reale e confermato nel wizard Nuovo Asset",
+    "Tipologie, reparti, locazioni e altri valori operativi reali integrati nei menu anche con cataloghi parziali",
+    "Relazioni Master Data obsolete o basate su alias non bloccano più il processo Nuovo Asset",
+    "Tipologie Asset e Categorie Asset mantenute in cataloghi separati",
+    "Famiglia unica di icone SVG e azioni tabellari compatte e accessibili",
+    "Processi raccolti in pannelli espandibili senza rimuovere funzioni operative",
+    "Registro degli stili inline consolidato senza alterare i valori runtime",
+    "Letture e scritture backend protette da sessione FMED e ruolo",
+    "Menu operativi alimentati dai Master Data senza dati pilota o implementazioni locali obsolete",
+    "Gate di rilascio visuale e funzionale obbligatorio prima di dev e build"
+  ],
+  "description": "Riparazione funzionale del wizard Nuovo Asset: cataloghi parziali integrati con i valori operativi, alias risolti e relazioni obsolete rese non bloccanti.",
+  "version": "E8.3.1",
+  "label": "FMED ENTERPRISE 1.0 · E8.3.1 MASTER DATA REPAIR"
+}
