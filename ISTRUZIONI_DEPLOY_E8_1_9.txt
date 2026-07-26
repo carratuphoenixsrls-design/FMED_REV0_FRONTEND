@@ -1,0 +1,26 @@
+FMED ENTERPRISE 1.0 E8.1.9 - DEPLOY FRONTEND
+
+1. Verificare localmente:
+   npm ci
+   npm run verify:release
+   npm run build
+
+2. Caricare il contenuto del pacchetto nella root del repository frontend:
+   carratuphoenixsrls-design/FMED_FRONTEND_E512_CLEAN
+
+3. Vercel deve usare:
+   Framework: Vite
+   Build command: npm run build
+   Output directory: dist
+   Node.js: 22.x
+
+4. Variabile facoltativa, già dotata di fallback:
+   VITE_MARILAB_MOVER_URL=https://marilab-mover.vercel.app
+
+5. Dopo il deploy aprire:
+   https://fmed512clean.vercel.app
+   e premere Ctrl+F5.
+
+6. Uniformazione cataloghi:
+   Cataloghi > Qualità > 1 Analizza > 2 Prepara anteprima > 3 Unifica duplicati esatti.
+   Applicare solo dopo avere letto l'anteprima. Codice inventario escluso e alias storici conservati.

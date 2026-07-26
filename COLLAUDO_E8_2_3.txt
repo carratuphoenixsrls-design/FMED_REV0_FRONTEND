@@ -1,0 +1,21 @@
+FMED ENTERPRISE 1.0 · E8.2.3 VISUAL FINAL POLISH
+
+AUTOMAZIONI DI REGRESSIONE
+- npm run visual:gate
+- npm run lint
+- npm run build
+- npm run visual:gate dopo la build
+
+VERIFICHE BLOCCANTI
+- una sola cascata CSS runtime;
+- CSS strutturali precedenti non modificati;
+- pagina iniziale Scopo e Missione;
+- generatore inventario collegato al wizard Asset;
+- protezione del codice manuale;
+- nessun pulsante azione vuoto nelle tabelle corrette;
+- icone SVG unificate;
+- dialog Asset a pieno viewport;
+- autenticazione, sessione, ruoli, timeout e API Render preservati.
+
+NOTA
+La build dimostra l’integrità del frontend, non il collaudo end-to-end del backend e di Supabase. Tale collaudo appartiene alla successiva fase di audit funzionale completo.

@@ -1,0 +1,27 @@
+FMED ENTERPRISE 1.0 · E8.2.2 VISUAL REPAIR
+
+PRIMA DEL DEPLOY
+1. Aprire PowerShell nella cartella estratta.
+2. Eseguire:
+   npm ci --no-audit --no-fund
+   npm run check
+3. Proseguire soltanto se tutti i controlli terminano con:
+   FMED E8.2.2 Visual Repair: verifica completa OK
+
+DEPLOY DIRETTO SUL PROGETTO VERCEL GIA COLLEGATO
+   npx vercel --prod
+
+AGGIORNAMENTO DEL REPOSITORY GITHUB ESISTENTE
+1. Conservare la cartella .git.
+2. Usare RESET_FRONTEND_REPOSITORY.bat e indicare il percorso del clone locale.
+3. Lo script elimina dal clone il vecchio frontend, poi copia integralmente E8.2.2.
+4. Aprire GitHub Desktop, controllare le modifiche, eseguire commit e push.
+
+REGOLA VISUALE BLOCCANTE
+- Non aggiungere nuovi file CSS.
+- Non importare CSS dalle pagine o dai componenti.
+- Modificare la regola precedente prima di inserire la sostituzione.
+- Il comando npm run visual:gate blocca sviluppo e build se la cascata non è integra.
+- Il bundle di produzione deve contenere un solo file CSS.
+
+Non modificare VITE_API_BASE_URL, chiavi, Supabase o configurazioni backend.

@@ -3,7 +3,7 @@ setlocal
 chcp 65001 >nul
 cls
 echo ==========================================================
-echo FMED E5.1.2 CLEAN REBUILD - RESET FRONTEND REPOSITORY
+echo FMED E8.2.3 VISUAL FINAL POLISH - SOSTITUZIONE FRONTEND
 echo ==========================================================
 echo.
 echo Questo script elimina il vecchio frontend dal clone locale,
@@ -20,8 +20,10 @@ if not exist "%TARGET%\.git" (
 set "SOURCE=%~dp0"
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^
   "$ErrorActionPreference='Stop'; $source=[IO.Path]::GetFullPath('%SOURCE%'); $target=[IO.Path]::GetFullPath('%TARGET%');" ^
+  "if($source.TrimEnd('\') -eq $target.TrimEnd('\')){throw 'Cartella sorgente e repository non possono coincidere'};" ^
+  "if(-not (Test-Path -LiteralPath (Join-Path $source 'package.json'))){throw 'Pacchetto sorgente non valido'};" ^
   "Get-ChildItem -LiteralPath $target -Force | Where-Object { $_.Name -ne '.git' } | Remove-Item -Recurse -Force;" ^
-  "$exclude=@('RESET_FRONTEND_REPOSITORY.bat','ISTRUZIONI_DEPLOY_E5_1_2.txt','COLLAUDO_E5_1_2.txt','SHA256_E5_1_2.txt');" ^
+  "$exclude=@('RESET_FRONTEND_REPOSITORY.bat','node_modules','dist','.vercel');" ^
   "Get-ChildItem -LiteralPath $source -Force | Where-Object { $exclude -notcontains $_.Name -and $_.Name -notin @('node_modules','dist') } | Copy-Item -Destination $target -Recurse -Force;"
 if errorlevel 1 (
   echo.

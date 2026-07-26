@@ -1,0 +1,17 @@
+FMED ENTERPRISE 1.0 · E8.2.1 VISUAL CLEAN
+
+ESITO COLLAUDO: SUPERATO
+
+- verify:release: OK
+- ESLint: OK, 0 errori
+- build Vite di produzione: OK
+- avvio preview e lettura fmed-build.json: OK
+- 37 file logici confrontati con la E8.2.0: 0 modifiche fuori dal perimetro visuale
+- 1 solo foglio grafico globale caricato
+- 1 sola sidebar JSX
+- 1 sola definizione inline della sidebar
+- vecchi livelli CSS globali rimossi
+- tema scuro rimosso dal runtime
+- login reale, ruoli, sessione e backend preservati
+
+Data collaudo: 26/07/2026

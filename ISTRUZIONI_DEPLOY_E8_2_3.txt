@@ -1,0 +1,19 @@
+FMED ENTERPRISE 1.0 · E8.2.3 VISUAL FINAL POLISH
+
+1. Estrai lo ZIP in una nuova cartella.
+2. Apri PowerShell nella cartella estratta.
+3. Esegui:
+
+   npm ci --no-audit --no-fund
+   npm run check
+   npx vercel --prod
+
+4. Quando Vercel chiede il progetto, scegli fmed_512_clean.
+5. Apri https://fmed512clean.vercel.app
+6. Nel browser premi Ctrl+0 per ripristinare lo zoom al 100%, quindi Ctrl+F5.
+
+Controlli rapidi:
+- dopo il login si apre Scopo e Missione;
+- in Nuovo Asset, selezionando la sede compare il codice inventario;
+- il pulsante “Genera automaticamente” rigenera il codice;
+- tabelle e scheda Asset non presentano sovrapposizioni.
