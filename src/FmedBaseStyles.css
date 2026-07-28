@@ -1210,6 +1210,78 @@
   font-weight: 400;
   cursor: pointer;
 }
+.fmed-export-page {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.fmed-report-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 118px;
+  padding: 20px 22px;
+}
+.fmed-report-hero-heading,
+.fmed-report-audit-head,
+.fmed-report-audit-actions {
+  display: flex;
+  align-items: center;
+}
+.fmed-report-hero-heading {
+  gap: 14px;
+  min-width: 0;
+}
+.fmed-report-hero-copy h2 {
+  margin: 2px 0 6px;
+  font-size: clamp(24px, 2vw, 32px);
+  line-height: 1.08;
+}
+.fmed-report-hero-copy p,
+.fmed-report-hero-copy span {
+  margin: 0;
+  color: var(--fmed-muted);
+}
+.fmed-report-environment {
+  display: grid;
+  gap: 3px;
+  flex: 0 1 340px;
+  min-width: 220px;
+  padding: 12px 14px;
+  border: 1px solid var(--fmed-border);
+  border-radius: 14px;
+  background: var(--fmed-surface-soft);
+}
+.fmed-report-environment strong {
+  overflow-wrap: anywhere;
+}
+.fmed-report-audit {
+  padding: 16px 18px;
+  border: 1px solid var(--fmed-border);
+  border-radius: 18px;
+  background: var(--fmed-surface);
+  box-shadow: var(--fmed-card-shadow-soft);
+}
+.fmed-report-audit-head {
+  justify-content: space-between;
+  gap: 18px;
+}
+.fmed-report-audit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.fmed-report-audit-actions {
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
 .fmed-style-export-accordion-item {
   border: 1px solid var(--fmed-border);
   border-radius: 22px;
@@ -1304,7 +1376,7 @@
 }
 .fmed-style-export-accordion-body {
   border-top: 1px solid var(--fmed-border);
-  padding: 16px;
+  padding: 14px;
   background: var(--fmed-surface-soft);
   color: var(--fmed-text);
   -webkit-text-fill-color: var(--fmed-text);
@@ -1324,9 +1396,17 @@
 .fmed-style-export-action-row {
   display: flex;
   gap: 10px;
-  margin-top: 12px;
+  position: sticky;
+  bottom: 8px;
+  z-index: 4;
+  margin: 14px -4px -4px;
+  padding: 10px;
   align-items: stretch;
   flex-wrap: wrap;
+  border: 1px solid var(--fmed-border);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--fmed-surface-solid) 94%, transparent);
+  box-shadow: 0 8px 24px rgba(15, 56, 65, .12);
 }
 .fmed-style-export-filter-box {
   margin-top: 12px;
@@ -1355,6 +1435,19 @@
   border-radius: 10px;
   padding: 7px 8px;
   cursor: pointer;
+}
+@media (max-width: 900px) {
+  .fmed-report-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .fmed-report-environment {
+    width: 100%;
+    min-width: 0;
+  }
+  .fmed-report-audit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 .fmed-style-mini-action-btn {
   height: 26px;

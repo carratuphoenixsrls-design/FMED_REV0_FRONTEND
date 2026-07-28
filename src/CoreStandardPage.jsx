@@ -290,12 +290,12 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
   const applyAcquire = () => {
     const count = qualityPreview?.data?.totale_candidati || 0;
     if (!window.confirm(`Confermi l'acquisizione di ${count} valori reali nei dizionari FMED? I record operativi non verranno modificati.`)) return;
-    return masterAction("/master-data/acquisisci-valori", { apply: true, conferma: "ACQUISISCI_E5_MASTER_DATA", limit: 6000, max_modifiche: 3000 }, "ACQUISIZIONE");
+    return masterAction("/master-data/acquisisci-valori", { apply: true, conferma: "ACQUISISCI_REV0_MASTER_DATA", limit: 6000, max_modifiche: 3000 }, "ACQUISIZIONE");
   };
   const applyNormalize = () => {
     const count = qualityPreview?.data?.totale_modifiche || 0;
     if (!window.confirm(`Confermi ${count} correzioni Master Data già riconosciute? I valori non censiti resteranno invariati.`)) return;
-    return masterAction("/master-data/normalizza", { apply: true, conferma: "APPLICA_E5_MASTER_DATA", limit: 6000, max_modifiche: 3000 }, "NORMALIZZAZIONE");
+    return masterAction("/master-data/normalizza", { apply: true, conferma: "APPLICA_REV0_MASTER_DATA", limit: 6000, max_modifiche: 3000 }, "NORMALIZZAZIONE");
   };
 
   async function uniformityExactAction(apply = false) {

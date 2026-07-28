@@ -16,7 +16,6 @@ const EMPTY_FILTERS = {
 
 
 function formatInteger(value) { return Number(value || 0).toLocaleString("it-IT"); }
-function formatCurrency(value) { return Number(value || 0).toLocaleString("it-IT", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }); }
 function formatDate(value) {
   if (!value) return "-";
   const date = new Date(value);
@@ -41,14 +40,6 @@ function KpiCard({ label, value, detail, tone, icon, onClick }) {
     <span className="fmed-dashboard-kpi-copy"><strong>{value}</strong><small>{label}</small><em>{detail}</em></span>
   </button>;
 }
-function FilterSelect({ label, value, onChange, children }) {
-  return <label className="fmed-dashboard-filter"><span>{label}</span><select value={value} onChange={(event) => onChange(event.target.value)}>{children}</select></label>;
-}
-function ProgressBar({ value, max, tone = "brand" }) {
-  const percentage = max > 0 ? Math.min(100, Math.max(0, Number(value || 0) / Number(max) * 100)) : 0;
-  return <span className="fmed-dashboard-progress" aria-hidden="true"><i className={`fmed-dashboard-progress-${tone}`} style={{ width: `${percentage}%` }} /></span>;
-}
-
 export default function DashboardPage({
   apiBaseUrl,
   setNuovoInterventoOpen,
@@ -56,20 +47,16 @@ export default function DashboardPage({
   setPagina,
   setImpostazioniTab,
   avviaProcessoGuidatoFmed,
-  openAlertMailPage,
-  openOutlook,
   cespiti = [],
   scadenzeConStatoBase = [],
   scadenzeImminenti = [],
   totaleSpesaDashboard = 0,
 }) {
-  const [filters, setFilters] = useState(EMPTY_FILTERS);
+  const [filters] = useState(EMPTY_FILTERS);
   const [snapshot, setSnapshot] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [drilldown, setDrilldown] = useState(null);
-  const [advancedOpen, setAdvancedOpen] = useState(false);
-  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const loadDashboard = useCallback(async ({ force = false } = {}) => {
     setLoading(true); setError("");
@@ -97,13 +84,6 @@ export default function DashboardPage({
   }), [cespiti, scadenzeConStatoBase, scadenzeImminenti, totaleSpesaDashboard]);
 
   const kpi = snapshot?.kpi || fallbackKpi;
-  const filterOptions = snapshot?.opzioni_filtri || { sedi: [], moduli: [], stati: [], priorita: [], responsabili: [] };
-  const trend = snapshot?.trend_mensile || [];
-  const maxTrend = Math.max(1, ...trend.map((row) => Math.max(Number(row.processi_aperti || 0), Number(row.processi_completati || 0), Number(row.scadenze || 0))));
-  const criticalSites = snapshot?.criticita_per_sede || [];
-  const maxSiteScore = Math.max(1, ...criticalSites.map((row) => Number(row.indice_criticita || 0)));
-  const updateFilter = (key, value) => setFilters((current) => ({ ...current, [key]: value }));
-  const resetFilters = () => setFilters(EMPTY_FILTERS);
   const showRows = (title, rows, page) => setDrilldown({ title, rows: Array.isArray(rows) ? rows : [], page });
   const navigateDeadline = (status = "TUTTE") => { setFiltroScadenze(status); setPagina("Scadenze"); };
 
@@ -116,13 +96,13 @@ export default function DashboardPage({
     { label: "Sicurezza 81/08", action: () => setPagina("Sicurezza 81/08"), module: "Sicurezza" },
   ];
 
-  return <div className={`fmed-dashboard-page fmed-dashboard-dashboard fmed-operational-dashboard ${(advancedOpen || drilldown) ? "is-workspace-open" : ""}`} data-fmed-dashboard="REV0">
+  return <div className={`fmed-dashboard-page fmed-dashboard-dashboard fmed-operational-dashboard ${drilldown ? "is-workspace-open" : ""}`} data-fmed-dashboard="REV0">
     <header className="fmed-dashboard-header fmed-operational-header">
       <div className="fmed-dashboard-title"><FmedModuleIcon module="Dashboard" className="fmed-dashboard-title-icon" /><div><h2>FMED operativo</h2><p>Cosa richiede attenzione e cosa devi fare oggi</p></div></div>
       <div className="fmed-dashboard-header-actions">
         <span className="fmed-dashboard-live"><i /> {loading ? "Aggiornamento…" : "Dati aggiornati"}</span>
         <button type="button" className="fmed-dashboard-button-secondary" onClick={() => loadDashboard({ force: true })} disabled={loading}>Aggiorna</button>
-        <button type="button" className="fmed-dashboard-button-primary" onClick={() => setAdvancedOpen((value) => !value)}>{advancedOpen ? "Nascondi analisi" : "Analisi e report"}</button>
+        <button type="button" className="fmed-dashboard-button-primary" onClick={() => setPagina("Export")}>Analisi e report</button>
       </div>
     </header>
 
@@ -169,36 +149,6 @@ export default function DashboardPage({
         </div>
       </section>
     </div>
-
-    {advancedOpen && <section className="fmed-workspace-page fmed-operational-advanced" aria-label="Analisi avanzate">
-      <header><div><h3>Analisi e amministrazione</h3><p>Strumenti secondari, normalmente nascosti per lasciare pulita l'operatività quotidiana.</p></div><div><button type="button" className="fmed-workspace-back" onClick={() => setAdvancedOpen(false)}>Torna alla dashboard</button><button type="button" onClick={() => setFiltersOpen((value) => !value)}>{filtersOpen ? "Nascondi filtri" : "Filtri"}</button><button type="button" onClick={() => downloadCsv(snapshot?.export_rows || [])}>Esporta CSV</button></div></header>
-      {filtersOpen && <section className="fmed-dashboard-filters">
-        <FilterSelect label="Vista" value={filters.tutto_storico ? "STORICO" : "OPERATIVA"} onChange={(value) => setFilters((current) => value === "STORICO" ? { ...current, tutto_storico: true, dal: "" } : { ...current, tutto_storico: false, dal: "2023-01-01" })}><option value="OPERATIVA">Dal 01/01/2023</option><option value="STORICO">Tutto lo storico</option></FilterSelect>
-        <FilterSelect label="Sede" value={filters.sede} onChange={(value) => updateFilter("sede", value)}><option value="TUTTE">Tutte</option>{filterOptions.sedi.map((value) => <option key={value} value={value}>{value}</option>)}</FilterSelect>
-        <FilterSelect label="Modulo" value={filters.modulo} onChange={(value) => updateFilter("modulo", value)}><option value="TUTTI">Tutti</option>{filterOptions.moduli.map((item) => <option key={item.codice} value={item.codice}>{item.etichetta}</option>)}</FilterSelect>
-        <FilterSelect label="Stato" value={filters.stato} onChange={(value) => updateFilter("stato", value)}><option value="TUTTI">Tutti</option>{filterOptions.stati.map((value) => <option key={value} value={value}>{humanize(value)}</option>)}</FilterSelect>
-        <FilterSelect label="Priorità" value={filters.priorita} onChange={(value) => updateFilter("priorita", value)}><option value="TUTTE">Tutte</option>{filterOptions.priorita.map((value) => <option key={value} value={value}>{humanize(value)}</option>)}</FilterSelect>
-        <FilterSelect label="Responsabile" value={filters.responsabile} onChange={(value) => updateFilter("responsabile", value)}><option value="TUTTI">Tutti</option>{filterOptions.responsabili.map((value) => <option key={value} value={value}>{value}</option>)}</FilterSelect>
-        <button type="button" className="fmed-dashboard-reset" onClick={resetFilters}>Azzera</button>
-      </section>}
-
-      <section className="fmed-operational-summary-grid">
-        <article><span>Processi aperti</span><strong>{formatInteger(kpi.processi_aperti)}</strong></article>
-        <article><span>Infrastrutture</span><strong>{formatInteger(kpi.infrastrutture_totali)}</strong></article>
-        <article><span>Documenti 81/08</span><strong>{formatInteger(kpi.documenti_81_08)}</strong></article>
-        <article><span>Costi tracciati</span><strong>{formatCurrency(kpi.costi_tracciati)}</strong></article>
-        <article><span>Collaudi conservati</span><strong>{formatInteger(kpi.collaudi_sempre_visibili)}</strong></article>
-        <article><span>Archivio pre-2023</span><strong>{formatInteger(kpi.record_archivio_pre_2023)}</strong></article>
-      </section>
-
-      <div className="fmed-dashboard-main-grid">
-        <section className="fmed-dashboard-panel fmed-dashboard-trend-panel"><div className="fmed-dashboard-panel-header"><div><h3>Andamento</h3><p>Ultimi 12 mesi</p></div></div><div className="fmed-dashboard-trend-chart">{trend.map((row) => <div className="fmed-dashboard-month" key={row.mese}><div className="fmed-dashboard-bars"><i className="opened" style={{ height: `${Math.max(3, Number(row.processi_aperti || 0) / maxTrend * 100)}%` }} /><i className="closed" style={{ height: `${Math.max(3, Number(row.processi_completati || 0) / maxTrend * 100)}%` }} /><i className="deadlines" style={{ height: `${Math.max(3, Number(row.scadenze || 0) / maxTrend * 100)}%` }} /></div><span>{row.etichetta}</span></div>)}{!trend.length && <div className="fmed-dashboard-empty">Nessun andamento disponibile.</div>}</div></section>
-        <section className="fmed-dashboard-panel"><div className="fmed-dashboard-panel-header"><div><h3>Criticità per sede</h3><p>Scadenze e ritardi</p></div></div><div className="fmed-dashboard-site-list">{criticalSites.slice(0, 8).map((row) => <button type="button" key={row.sede} onClick={() => updateFilter("sede", row.sede)}><span><strong>{row.sede}</strong><small>{row.processi_aperti} attività · {row.scadenze_scadute} scadute</small></span><span className="fmed-dashboard-site-score"><b>{row.indice_criticita}</b><ProgressBar value={row.indice_criticita} max={maxSiteScore} tone={row.indice_criticita > maxSiteScore * .65 ? "danger" : "warning"} /></span></button>)}{!criticalSites.length && <div className="fmed-dashboard-empty">Nessuna criticità.</div>}</div></section>
-      </div>
-
-      <div className="fmed-operational-advanced-actions"><button type="button" onClick={openAlertMailPage}>Prepara alert email</button><button type="button" onClick={openOutlook}>Apri Outlook</button><button type="button" onClick={() => setPagina("Processi")}>Processi guidati</button><button type="button" onClick={() => { setImpostazioniTab?.("STRUMENTI"); setPagina("Gestione Utenti"); }}>Strumenti e impostazioni</button></div>
-      <section className="fmed-dashboard-governance"><div><span>Dizionari</span><strong>{formatInteger(kpi.dizionari)}</strong><small>cataloghi</small></div><div><span>Valori attivi</span><strong>{formatInteger(kpi.valori_master_attivi)}</strong><small>menu</small></div><div><span>Relazioni</span><strong>{formatInteger(kpi.relazioni_attive)}</strong><small>automatiche</small></div><div><span>Da approvare</span><strong>{formatInteger(kpi.valori_da_approvare)}</strong><small>dati</small></div><button type="button" onClick={() => setPagina("Dizionari")}>Gestisci dati</button></section>
-    </section>}
 
     {drilldown && <section className="fmed-workspace-page fmed-dashboard-drilldown-page" aria-label={drilldown.title}><div className="fmed-workspace-surface fmed-dashboard-drilldown-surface"><div className="fmed-dashboard-drilldown-header"><div><h3>{drilldown.title}</h3><p>{drilldown.rows.length} record</p></div><button type="button" className="fmed-workspace-back" onClick={() => setDrilldown(null)}>Torna alla dashboard</button></div><div className="fmed-dashboard-drilldown-list">{drilldown.rows.slice(0, 100).map((row, index) => <article key={`${row.tipo}-${row.id}-${index}`}><span className={`fmed-dashboard-record-type ${row.tipo === "SCADENZA" ? "deadline" : "process"}`}>{row.tipo}</span><div><strong>{row.titolo}</strong><small>{row.riferimento} · {row.sede} · {row.modulo_label}</small></div><div className="fmed-dashboard-record-status"><b>{humanize(row.stato)}</b><small>{formatDate(row.scadenza)}</small></div></article>)}{!drilldown.rows.length && <div className="fmed-dashboard-empty">Nessun record.</div>}</div><div className="fmed-dashboard-drilldown-footer"><button type="button" className="fmed-dashboard-button-secondary" onClick={() => downloadCsv(drilldown.rows)}>Esporta</button><button type="button" className="fmed-dashboard-button-primary" onClick={() => { setPagina(drilldown.page || "Dashboard"); setDrilldown(null); }}>Apri modulo</button></div></div></section>}
   </div>;

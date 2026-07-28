@@ -2903,8 +2903,8 @@ function AppNuovoCore({
     };
   }, [cespiti, interventi]);
   function exportAuditQualitaDatiFmed() {
-    scaricaExcelFmed({
-      nomeFile: `FMED_AUDIT_QUALITA_DATI_${new Date().toISOString().slice(0, 10)}.xls`,
+    scaricaCsvFmed({
+      nomeFile: `FMED_AUDIT_QUALITA_DATI_${new Date().toISOString().slice(0, 10)}.csv`,
       titolo: "FMED · Audit qualità dati",
       sottotitolo: "Controllo anomalie operative su asset, interventi, branche, locazioni e documentazione.",
       meta: [`Indice qualità dati: ${fmedAuditQualitaDati.indiceQualita}%`, `Anomalie totali: ${fmedAuditQualitaDati.anomalieTotali}`, `Asset: ${(Array.isArray(cespiti) ? cespiti.length : 0).toLocaleString("it-IT")}`, `Interventi: ${(Array.isArray(interventi) ? interventi.length : 0).toLocaleString("it-IT")}`],
@@ -5707,7 +5707,7 @@ ${messaggio}`);
   function pulisciTitoloReportMrdb(testo) {
     return String(testo || "").replace(/\bFMED\s*-\s*/gi, "").replace(/\bFMED\s*3\.0\b/gi, "").replace(/\bFMED\b/gi, "").replace(/\s+[-–—]\s*$/g, "").replace(/\s{2,}/g, " ").trim();
   }
-  function scaricaExcelFmed({
+  function scaricaCsvFmed({
     nomeFile,
     titolo,
     sottotitolo,
@@ -5715,114 +5715,26 @@ ${messaggio}`);
     colonne = [],
     righe = []
   }) {
-    const oggi = formattaData(new Date());
-    const sitoFmed = window.location.origin || "FMED";
-    const numeroColonne = Math.max(colonne.length, 1);
-    const metaHtml = meta.filter(Boolean).map((m) => escapeExcelHtml(m)).join(" · ");
-    const intestazioni = colonne.map((c) => `<th>${escapeExcelHtml(c.label)}</th>`).join("");
-    const corpo = righe.map((r, idx) => {
-      const celle = colonne.map((c) => {
-        const valore = escapeExcelHtml(typeof c.value === "function" ? c.value(r, idx) : r[c.key]);
-        const classe = typeof c.className === "function" ? c.className(r, idx) : c.className || "";
-        return `<td class="${escapeExcelHtml(classe)}">${valore}</td>`;
-      }).join("");
-      return `<tr>${celle}</tr>`;
-    }).join("");
-    const html = `
-    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-      <head>
-        <meta charset="UTF-8" />
-        <!--[if gte mso 9]>
-        <xml>
-          <x:ExcelWorkbook>
-            <x:ExcelWorksheets>
-              <x:ExcelWorksheet>
-                <x:Name>FMED Export</x:Name>
-                <x:WorksheetOptions>
-                  <x:FreezePanes/>
-                  <x:FrozenNoSplit/>
-                  <x:SplitHorizontal>5</x:SplitHorizontal>
-                  <x:TopRowBottomPane>5</x:TopRowBottomPane>
-                  <x:ActivePane>2</x:ActivePane>
-                </x:WorksheetOptions>
-                <x:AutoFilter x:Range="R4C1:R4C${numeroColonne}"/>
-              </x:ExcelWorksheet>
-            </x:ExcelWorksheets>
-          </x:ExcelWorkbook>
-        </xml>
-        <![endif]-->
-        <style>
-          body { font-family: "Arial Nova Light", "Arial Nova", Arial, sans-serif; color: #0E1B42; }
-          table { border-collapse: collapse; width: 100%; }
-          .titleRow td { background: #3F4642; color: white; font-size: 15px; font-weight: 400; padding: 9px 12px; border: 1px solid #3F4642; }
-          .subtitleRow td { background: #EEF3EA; color: #5F6B60; font-size: 10px; font-weight: 400; padding: 6px 12px; border: 1px solid #D8CBB9; }
-          .criteriaRow td { background: #FFFCF6; color: #5F6B60; font-size: 9px; padding: 5px 12px; border: 1px solid #D8CBB9; }
-          .metaRow td { background: #FFFCF6; color: #52627A; font-size: 9px; padding: 5px 12px; border: 1px solid #D8CBB9; }
-          th { background: #3F4642; color: white; font-weight: 400; border: 1px solid #D8CBB9; padding: 8px; mso-number-format:"@"; text-align: left; vertical-align: middle; }
-          td { border: 1px solid #D8CBB9; padding: 7px; mso-number-format:"@"; text-align: left; vertical-align: middle; }
-          tr:nth-child(even) td { background: #F8FBFF; }
-          .semaforoRosso { background: #FFE2E2; color: #9A1111; font-weight: 400; }
-          .semaforoGiallo { background: #FFF2CC; color: #7A5200; font-weight: 400; }
-          .semaforoVerde { background: #DCFCE7; color: #006B3A; font-weight: 400; }
-          .semaforoBlu { background: #EEF3EA; color: #5F6B60; font-weight: 400; }
-          .textLeft { text-align: left; vertical-align: top; white-space: normal; }
-          .note { color: #61718A; font-size: 10px; padding-top: 10px; }
-
-            /* FMED PRINT STANDARD - ripete intestazioni tabella su ogni pagina PDF */
-            thead {
-              display: table-header-group;
-            }
-            tfoot {
-              display: table-footer-group;
-            }
-            table {
-              page-break-inside: auto;
-              break-inside: auto;
-            }
-            tr {
-              page-break-inside: avoid;
-              break-inside: avoid;
-            }
-            th {
-              -webkit-print-color-adjust: exact;
-              print-color-adjust: exact;
-            }
-            @media print {
-              thead {
-                display: table-header-group;
-              }
-              tfoot {
-                display: table-footer-group;
-              }
-              tr {
-                page-break-inside: avoid;
-                break-inside: avoid;
-              }
-              .header, th {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-              }
-            }
-        </style>
-      </head>
-      <body>
-        <table>
-          <tr class="titleRow"><td colspan="${numeroColonne}">FMED Export · ${escapeExcelHtml(pulisciTitoloReportMrdb(titolo))}</td></tr>
-          <tr class="subtitleRow"><td colspan="${numeroColonne}">${escapeExcelHtml(sottotitolo || "Report operativo")}</td></tr>
-          <tr class="metaRow"><td colspan="${numeroColonne}">Sito: ${escapeExcelHtml(sitoFmed)} · Generato il ${escapeExcelHtml(oggi)}${metaHtml ? " · " + metaHtml : ""}</td></tr>
-          <tr>${intestazioni}</tr>
-          ${corpo}
-        </table>
-      </body>
-    </html>
-  `;
-    const blob = new Blob([html], {
-      type: "application/vnd.ms-excel;charset=utf-8"
+    const csvCell = (value) => `"${String(value ?? "").replace(/"/g, "\"\"")}"`;
+    const intestazioni = colonne.map((colonna) => csvCell(colonna.label)).join(";");
+    const corpo = righe.map((riga, indice) => colonne.map((colonna) => csvCell(
+      typeof colonna.value === "function" ? colonna.value(riga, indice) : riga[colonna.key]
+    )).join(";"));
+    const note = [
+      [`FMED REV0 · ${pulisciTitoloReportMrdb(titolo)}`],
+      [sottotitolo || "Report operativo"],
+      [`Sito: ${window.location.origin || "FMED"} · Generato il ${formattaData(new Date())}`],
+      [meta.filter(Boolean).join(" · ")]
+    ].map((riga) => riga.map(csvCell).join(";"));
+    const contenuto = `\ufeff${[...note, intestazioni, ...corpo].join("\r\n")}`;
+    const blob = new Blob([contenuto], {
+      type: "text/csv;charset=utf-8"
     });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = nomeFile.endsWith(".xls") ? nomeFile : `${nomeFile}.xls`;
+    const nomeCsv = String(nomeFile || "FMED_REV0_EXPORT.csv").replace(/\.csv$/i, "");
+    link.download = `${nomeCsv}.csv`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -6089,14 +6001,14 @@ ${messaggio}`);
     }];
     const nomeSede = sedeExport === "TUTTE" ? "TUTTE_LE_SEDI" : nomeFileSicuro(sedeExport);
     const payload = {
-      nomeFile: `EXPORT_INVENTARIO_${nomeSede}_${new Date().toISOString().slice(0, 10)}.${formato === "pdf" ? "pdf" : "xls"}`,
+      nomeFile: `EXPORT_INVENTARIO_${nomeSede}_${new Date().toISOString().slice(0, 10)}.${formato === "pdf" ? "pdf" : "csv"}`,
       titolo: `FMED · Inventario ${sedeExport === "TUTTE" ? "Tutte le sedi" : sedeExport}`,
-      sottotitolo: "Report sintetico inventario con colonne standard e filtri Excel attivi.",
+      sottotitolo: "Report sintetico inventario in CSV compatibile con Excel.",
       meta: [`Sede: ${sedeExport}`, `Stato: ${statoExport}`, `Categoria: ${categoriaExport}`, `Tipologia: ${exportTipologiaInventario}`, `Costruttore: ${exportCostruttoreInventario}`, `Reparto: ${exportRepartoInventario}`, `Branche: ${exportBrancheInventario.length ? exportBrancheInventario.join(", ") : "Tutte"}`, `Società: ${exportSocietaInventario}`, `Stanza/Locazione: ${exportLocazioneInventario}`, `Ordinamento: ${exportOrdineInventario}`, `Cespiti selezionati: ${exportCespitiInventarioSelezionati.length > 0 ? exportCespitiInventarioSelezionati.length : "filtrati"}`, `Attivi: ${righe.filter((c) => statoCespite(c) === "Attivo").length}`, `Dismessi/Non in uso: ${righe.filter((c) => statoCespite(c) !== "Attivo").length}`, `Colonne export: CodiceStrumento, Locazione, Tipologia, Branca, Costruttore, Modello, Matricola, Possesso, Anno fabbricazione`],
       colonne,
       righe
     };
-    if (formato === "pdf") scaricaPdfFmed(payload);else scaricaExcelFmed(payload);
+    if (formato === "pdf") scaricaPdfFmed(payload);else scaricaCsvFmed(payload);
   }
   function labelStatoScadenzaExportInterventi(stato) {
     const labels = {
@@ -6165,16 +6077,16 @@ ${messaggio}`);
     }];
     const nomeSede = sediExport.length > 0 ? `${sediExport.length}_SEDI` : sedeExport === "TUTTE" ? "TUTTE_LE_SEDI" : nomeFileSicuro(sedeExport);
     const payload = {
-      nomeFile: `EXPORT_INTERVENTI_${nomeSede}_${new Date().toISOString().slice(0, 10)}.${formato === "pdf" ? "pdf" : "xls"}`,
+      nomeFile: `EXPORT_INTERVENTI_${nomeSede}_${new Date().toISOString().slice(0, 10)}.${formato === "pdf" ? "pdf" : "csv"}`,
       titolo: `FMED · Interventi ${sediExport.length > 0 ? `${sediExport.length} sedi selezionate` : sedeExport === "TUTTE" ? "Tutte le sedi" : sedeExport}`,
       sottotitolo: "Report sintetico interventi filtrati.",
       meta: [`Sede: ${sedeExport}`, `Codice: ${exportCodiceInterventi}`, `Tipologia: ${exportTipologiaInterventi}`, `Branche: ${exportBrancheInterventi.length ? exportBrancheInterventi.join(", ") : "Tutte"}`, `Ditta esecutrice: ${exportSocietaInterventi}`, `Stato scadenza: ${labelStatoScadenzaExportInterventi(exportScadenzaInterventi)}`, `Anno: ${exportAnnoInterventi}`, `Periodo: ${exportDataInterventiDa || "inizio"} - ${exportDataInterventiA || "fine"}`, `Cespiti selezionati: ${exportCespitiInterventiSelezionati.length > 0 ? exportCespitiInterventiSelezionati.length : "filtrati"}`, "Ordinamento: data ultimo intervento decrescente"],
       colonne,
       righe
     };
-    if (formato === "pdf") scaricaPdfFmed(payload);else scaricaExcelFmed(payload);
+    if (formato === "pdf") scaricaPdfFmed(payload);else scaricaCsvFmed(payload);
   }
-  function exportScadenzeExcelFmed(formato = "excel") {
+  function exportScadenzeFmed(formato = "csv") {
     const righeBase = scadenzeSelezionateVisualizzate.length > 0 ? scadenzeSelezionateVisualizzate : scadenzeVisualizzate;
     const righe = righeBase.filter((s) => filtroBrancheExport(s, exportBrancheScadenze));
     if (righe.length === 0) {
@@ -6219,14 +6131,14 @@ ${messaggio}`);
       value: (s) => (s._statoScadenza || statoScadenza(s._dataScadenza || s.data_prossimo_intervento)).testo
     }];
     const payload = {
-      nomeFile: `EXPORT_SCADENZE_${new Date().toISOString().slice(0, 10)}.${formato === "pdf" ? "pdf" : "xls"}`,
+      nomeFile: `EXPORT_SCADENZE_${new Date().toISOString().slice(0, 10)}.${formato === "pdf" ? "pdf" : "csv"}`,
       titolo: "FMED · Scadenze manutentive",
       sottotitolo: "Report sintetico scadenze filtrate.",
       meta: [`Righe esportate: ${righe.length}`, `Filtro sede: ${filtroScadenzeSede}`, `Filtro codice: ${filtroScadenzeCodice}`, `Filtro tipologia: ${filtroScadenzeTipologia}`, `Filtro branche: ${exportBrancheScadenze.length ? exportBrancheScadenze.join(", ") : "Tutte"}`, `Filtro attività: ${filtroScadenzeAttivita}`, `Filtro ditta: ${filtroScadenzeDitta}`, `Periodo: ${filtroScadenzeProssimaDa || "inizio"} - ${filtroScadenzeProssimaA || "fine"}`],
       colonne,
       righe
     };
-    if (formato === "pdf") scaricaPdfFmed(payload);else scaricaExcelFmed(payload);
+    if (formato === "pdf") scaricaPdfFmed(payload);else scaricaCsvFmed(payload);
   }
   function exportBudgetCriticitaFmed(formato = "excel") {
     function classeSemaforoPunteggio(valore) {
@@ -6361,14 +6273,14 @@ ${messaggio}`);
       value: (r) => r.indicazione
     }];
     const payload = {
-      nomeFile: `EXPORT_BUDGET_CRITICITA_${new Date().toISOString().slice(0, 10)}.${formato === "pdf" ? "pdf" : "xls"}`,
+      nomeFile: `EXPORT_BUDGET_CRITICITA_${new Date().toISOString().slice(0, 10)}.${formato === "pdf" ? "pdf" : "csv"}`,
       titolo: "FMED · Budget criticità",
       sottotitolo: "Report sintetico criticità e priorità manutentive.",
-      meta: [`Asset analizzati: ${righe.length}`, `Sede: ${exportBudgetSede}`, `Stato: ${exportBudgetStato}`, `Tipologia: ${exportBudgetTipologia}`, `Branche: ${exportBrancheBudget.length ? exportBrancheBudget.join(", ") : "Tutte"}`, `Costruttore: ${exportBudgetCostruttore}`, `Criticità: ${exportBudgetCriticita}`, "Semaforo: verde=basso, giallo=medio, rosso=alto", "Filtro Excel attivo sulla riga 5"],
+      meta: [`Asset analizzati: ${righe.length}`, `Sede: ${exportBudgetSede}`, `Stato: ${exportBudgetStato}`, `Tipologia: ${exportBudgetTipologia}`, `Branche: ${exportBrancheBudget.length ? exportBrancheBudget.join(", ") : "Tutte"}`, `Costruttore: ${exportBudgetCostruttore}`, `Criticità: ${exportBudgetCriticita}`, "Semaforo: verde=basso, giallo=medio, rosso=alto"],
       colonne,
       righe
     };
-    if (formato === "pdf") scaricaPdfFmed(payload);else scaricaExcelFmed(payload);
+    if (formato === "pdf") scaricaPdfFmed(payload);else scaricaCsvFmed(payload);
   }
   async function ricaricaDatiInterventi(codice = null) {
     try {
@@ -7646,7 +7558,7 @@ ${messaggio}`);
           setFiltroScadenzeProssimaA,
           exportBrancheScadenze,
           setExportBrancheScadenze,
-          exportScadenzeExcelFmed,
+          exportScadenzeFmed,
           exportBudgetSede,
           setExportBudgetSede,
           exportBudgetStato,

@@ -39,7 +39,7 @@ export default function SystemAuditPage({ apiBaseUrl, canManage = false }) {
       });
       setReport(data);
     } catch (auditError) {
-      setError(String(auditError?.message || auditError || "Audit finale non disponibile"));
+      setError(String(auditError?.message || auditError || "Controllo sistema non disponibile"));
     } finally {
       setLoading(false);
     }
@@ -51,7 +51,7 @@ export default function SystemAuditPage({ apiBaseUrl, canManage = false }) {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = `FMED_E8_AUDIT_FINALE_${new Date().toISOString().slice(0, 10)}.json`;
+    anchor.download = `FMED_REV0_CONTROLLO_SISTEMA_${new Date().toISOString().slice(0, 10)}.json`;
     document.body.appendChild(anchor);
     anchor.click();
     anchor.remove();
@@ -59,7 +59,7 @@ export default function SystemAuditPage({ apiBaseUrl, canManage = false }) {
   }
 
   if (!canManage) {
-    return <div className="fmed-audit-denied">Audit finale disponibile esclusivamente agli amministratori.</div>;
+    return <div className="fmed-audit-denied">Controllo sistema disponibile esclusivamente agli amministratori.</div>;
   }
 
   return (
@@ -67,7 +67,7 @@ export default function SystemAuditPage({ apiBaseUrl, canManage = false }) {
       <header className="fmed-audit-head">
         <div>
           <span className="fmed-module-kicker">FMED REV0</span>
-          <h3>Audit finale e rilascio stabile</h3>
+          <h3>Controllo integrità FMED</h3>
           <p>Controllo non distruttivo di sicurezza, ruoli, dati, cicli, processi, Master Data, SharePoint e finestra operativa.</p>
         </div>
         <div className="fmed-audit-actions">
@@ -79,7 +79,7 @@ export default function SystemAuditPage({ apiBaseUrl, canManage = false }) {
       </header>
 
       <div className="fmed-audit-rule">
-        <strong>Nessuna modifica al database.</strong> Il controllo legge soltanto i dati e segnala gli elementi da verificare prima del rilascio definitivo.
+        <strong>Nessuna modifica al database.</strong> Il controllo legge soltanto i dati e segnala gli elementi da verificare.
       </div>
 
       {error && <div className="fmed-audit-error">{error}</div>}
@@ -107,7 +107,7 @@ export default function SystemAuditPage({ apiBaseUrl, canManage = false }) {
 
           <div className="fmed-audit-toolbar">
             <div>
-              <strong>Controlli di rilascio</strong>
+              <strong>Controlli di integrità</strong>
               <span>Generato il {new Date(report.generato_il).toLocaleString("it-IT")}</span>
             </div>
             <select value={filter} onChange={(event) => setFilter(event.target.value)} aria-label="Filtra esito audit">

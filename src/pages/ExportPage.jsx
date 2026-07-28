@@ -117,7 +117,7 @@ export default function ExportPage(props) {
     setFiltroScadenzeProssimaA,
     exportBrancheScadenze,
     setExportBrancheScadenze,
-    exportScadenzeExcelFmed,
+    exportScadenzeFmed,
     exportBudgetSede,
     setExportBudgetSede,
     exportBudgetStato,
@@ -368,7 +368,7 @@ export default function ExportPage(props) {
                       <button style={{
 
                 flex: 1
-              }} onClick={() => exportInventarioFmed("excel")} className="fmed-style-primary-btn">Excel</button>
+              }} onClick={() => exportInventarioFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
                       <button style={{
 
                 flex: 1
@@ -532,7 +532,7 @@ export default function ExportPage(props) {
                       <button style={{
 
                 flex: 1
-              }} onClick={() => exportInterventiFmed("excel")} className="fmed-style-primary-btn">Excel</button>
+              }} onClick={() => exportInterventiFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
                       <button style={{
 
                 flex: 1
@@ -611,11 +611,11 @@ export default function ExportPage(props) {
                       <button style={{
 
                 flex: 1
-              }} onClick={() => exportScadenzeExcelFmed("excel")} className="fmed-style-primary-btn">Excel</button>
+              }} onClick={() => exportScadenzeFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
                       <button style={{
 
                 flex: 1
-              }} onClick={() => exportScadenzeExcelFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
+              }} onClick={() => exportScadenzeFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
                     </div>
                   </div>}
               </div>
@@ -662,7 +662,7 @@ export default function ExportPage(props) {
                       <button style={{
 
                 flex: 1
-              }} onClick={() => exportBudgetCriticitaFmed("excel")} className="fmed-style-primary-btn">Excel</button>
+              }} onClick={() => exportBudgetCriticitaFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
                       <button style={{
 
                 flex: 1

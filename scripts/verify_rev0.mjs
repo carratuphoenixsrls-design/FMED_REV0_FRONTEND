@@ -18,6 +18,9 @@ const visual = read("src/FmedVisualClean.css");
 const cssFiles = fs.readdirSync(path.join(root, "src"), { recursive: true })
   .filter((file) => file.endsWith(".css"));
 const allCss = cssFiles.map((file) => read(path.join("src", file))).join("\n");
+const sourceFiles = fs.readdirSync(path.join(root, "src"), { recursive: true })
+  .filter((file) => /\.(jsx?|css)$/.test(file));
+const allSource = sourceFiles.map((file) => read(path.join("src", file))).join("\n");
 
 packageJson.version === "0.0.0" ? ok("versione frontend REV0") : fail("versione package non REV0");
 build.release === "REV0" && build.build === "FMED_REV0" ? ok("manifest REV0") : fail("manifest pubblico non REV0");
@@ -41,6 +44,9 @@ index.includes('content="FMED_REV0"') && build.label === "FMED REV0"
 app.includes("VITE_API_BASE_URL") || main.includes("VITE_API_BASE_URL")
   ? ok("API configurabile preservata")
   : fail("configurazione API mancante");
+!/(Analisi e amministrazione|application\/vnd\.ms-excel|\.xls\b|scaricaExcelFmed)/i.test(allSource)
+  ? ok("unico modulo Report e export CSV reale")
+  : fail("residui report duplicato o falso Excel");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");
