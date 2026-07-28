@@ -27,7 +27,7 @@ export default class FmedErrorBoundary extends React.Component {
       <main className="fmed-fatal-error" role="alert">
         <section className="fmed-fatal-error__card">
           <div className="fmed-fatal-error__mark" aria-hidden="true">FM</div>
-          <p className="fmed-fatal-error__eyebrow">FMED Enterprise</p>
+          <p className="fmed-fatal-error__eyebrow">FMED REV0</p>
           <h1>Impossibile caricare questa schermata</h1>
           <p>
             I dati non sono stati modificati. Aggiorna la pagina; se il problema continua,

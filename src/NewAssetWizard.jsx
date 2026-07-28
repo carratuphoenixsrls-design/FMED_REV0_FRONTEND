@@ -67,6 +67,11 @@ const EMPTY = {
   esito_collaudo: "POSITIVO",
 };
 
+const CLASSIFICATION_FIELDS = Object.freeze({
+  tipologia: "TIPOLOGIE_ASSET",
+  categoria: "CATEGORIE_ASSET",
+});
+
 const CRITICAL_DICTIONARIES = [
   ["sedi", "Sedi"],
   ["tipologie", "Tipologie asset"],
@@ -153,6 +158,32 @@ function mergeDictionaries(base = {}, incoming = {}) {
 
 function withCurrent(items, current) {
   return uniqueOptions(items, current ? [toOption(current)] : []);
+}
+
+function initialWizardForm(initialData = {}) {
+  const source = initialData && typeof initialData === "object" ? initialData : {};
+  return Object.keys(EMPTY).reduce((result, key) => {
+    result[key] = source[key] ?? EMPTY[key];
+    return result;
+  }, {});
+}
+
+function preserveClassification(previous, incoming = {}) {
+  const validated = incoming && typeof incoming === "object" ? incoming : {};
+  return {
+    ...previous,
+    ...validated,
+    tipologia: previous.tipologia,
+    categoria: previous.categoria,
+  };
+}
+
+function submissionData(source = {}) {
+  return {
+    ...source,
+    tipologia: String(source.tipologia || "").trim(),
+    categoria: String(source.categoria || "").trim(),
+  };
 }
 
 function selectedCodes(items, value) {
@@ -306,7 +337,7 @@ export default function NewAssetWizard({
   generateInventoryCode,
 }) {
   const [step, setStep] = useState(0);
-  const [form, setForm] = useState(() => ({ ...EMPTY, ...(initialData || {}) }));
+  const [form, setForm] = useState(() => initialWizardForm(initialData));
   const [errors, setErrors] = useState([]);
   const [busy, setBusy] = useState(false);
   const [remoteMasterData, setRemoteMasterData] = useState({});
@@ -414,7 +445,7 @@ export default function NewAssetWizard({
   const options = useMemo(() => ({
     sedi: withCurrent(dictionaryValues(masterData, "sedi"), form.sede),
     societa: withCurrent(dictionaryValues(masterData, "societa"), form.societa),
-    tipologie: withCurrent(dictionaryValues(masterData, "tipologie_asset", "tipologie"), form.tipologia),
+    tipologie: withCurrent(dictionaryValues(masterData, "tipologie_asset"), form.tipologia),
     categorie: withCurrent(dictionaryValues(masterData, "categorie_asset"), form.categoria),
     branche: withCurrent(dictionaryValues(masterData, "branche_mediche", "branche"), form.branca_medica),
     locazioni: withCurrent(dictionaryValues(masterData, "locazioni"), form.locazione),
@@ -476,11 +507,11 @@ export default function NewAssetWizard({
   const activityState = useMemo(() => relationState({
     relations: relazioni,
     sourceDictionary: "CATEGORIE_ASSET",
-    sourceValue: form.categoria || form.tipologia,
+    sourceValue: form.categoria,
     sourceItems: options.categorie,
     destinationDictionaries: ["PIANI_MANUTENTIVI", "ATTIVITA_INTERVENTO"],
     fallbackItems: options.attivita,
-  }), [relazioni, form.categoria, form.tipologia, options.categorie, options.attivita]);
+  }), [relazioni, form.categoria, options.categorie, options.attivita]);
 
   useEffect(() => {
     if (!form.crea_piano_manutentivo || masterLoading) return;
@@ -517,8 +548,8 @@ export default function NewAssetWizard({
         ? labelOf(nextCompanyState.items[0])
         : "";
     }
-    if (key === "categoria" || key === "tipologia") {
-      if (key === "categoria") next.branca_medica = "";
+    if (key === "categoria") {
+      next.branca_medica = "";
       next.attivita_manutentiva = "";
     }
     if (key === "data_di_collaudo" && value) {
@@ -609,7 +640,7 @@ export default function NewAssetWizard({
         setErrors(asList(data?.errori).length ? data.errori : [displayError(data?.detail, "Dati non validi")]);
         return false;
       }
-      setForm((prev) => ({ ...prev, ...(data?.dati || {}) }));
+      setForm((prev) => preserveClassification(prev, data?.dati));
       return true;
     } catch (error) {
       setErrors([`Validazione backend non disponibile: ${displayError(error, "errore di collegamento")}`]);
@@ -627,7 +658,7 @@ export default function NewAssetWizard({
           passo_corrente: STEPS[nextStep]?.[0] || "CONFERMA",
           percentuale: Math.round((nextStep / (STEPS.length - 1)) * 85),
           stato: "IN_CORSO",
-          dati: form,
+          dati: submissionData(form),
           errori: [],
         }),
       });
@@ -669,7 +700,7 @@ export default function NewAssetWizard({
       const response = await fetch(`${apiBaseUrl}/core/processi/nuovo-asset/conferma`, {
         method: "POST",
         headers: fmedAuthHeaders(),
-        body: JSON.stringify({ dati: submissionForm, avviato_da: user || "FMED", esecuzione_id: executionId || null }),
+        body: JSON.stringify({ dati: submissionData(submissionForm), avviato_da: user || "FMED", esecuzione_id: executionId || null }),
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok || data?.status !== "ok") {
@@ -696,7 +727,7 @@ export default function NewAssetWizard({
           <div className="fmed-banner-heading">
             <FmedModuleIcon module="NuovoAsset" />
             <div className="fmed-banner-copy">
-              <span>FMED ENTERPRISE 1.0 · E8.3.1</span>
+              <span>FMED REV0</span>
               <h2>Nuovo Asset</h2>
               <p>Censimento guidato a pagina intera: cataloghi uniformi, controlli anti-duplicato, documenti, QR, collaudo e primo piano manutentivo.</p>
             </div>
@@ -785,7 +816,19 @@ export default function NewAssetWizard({
                 requestAutomaticInventoryCode(value, true);
               }
             }} items={options.sedi} loading={masterLoading} apiBaseUrl={apiBaseUrl} form={form} />
-            <Select label="Tipologia *" dictionary="TIPOLOGIE_ASSET" value={form.tipologia} onChange={(value) => update("tipologia", value)} items={options.tipologie} loading={masterLoading} apiBaseUrl={apiBaseUrl} form={form} />
+            <Select
+              id="fmed-new-asset-tipologia"
+              name="tipologia"
+              field="tipologia"
+              label="Tipologia *"
+              dictionary={CLASSIFICATION_FIELDS.tipologia}
+              value={form.tipologia}
+              onChange={(value) => update("tipologia", value)}
+              items={options.tipologie}
+              loading={masterLoading}
+              apiBaseUrl={apiBaseUrl}
+              form={form}
+            />
             <Select label="Costruttore" dictionary="COSTRUTTORI" value={form.costruttore} onChange={(value) => update("costruttore", value)} items={options.costruttori} emptyText="Seleziona costruttore" loading={masterLoading} apiBaseUrl={apiBaseUrl} form={form} />
             <Select
               label="Modello"
@@ -807,7 +850,18 @@ export default function NewAssetWizard({
 
           {step === 1 && <div className="fmed-wizard-grid">
             <Select label="Società *" dictionary="SOCIETA" value={form.societa} onChange={(value) => update("societa", value)} items={companyState.items.length ? companyState.items : options.societa} hint={form.sede ? relationHint(companyState, "Società") : ""} apiBaseUrl={apiBaseUrl} form={form} restrictToOptions />
-            <Select label="Categoria *" dictionary="CATEGORIE_ASSET" value={form.categoria} onChange={(value) => update("categoria", value)} items={options.categorie} apiBaseUrl={apiBaseUrl} form={form} />
+            <Select
+              id="fmed-new-asset-categoria"
+              name="categoria"
+              field="categoria"
+              label="Categoria *"
+              dictionary={CLASSIFICATION_FIELDS.categoria}
+              value={form.categoria}
+              onChange={(value) => update("categoria", value)}
+              items={options.categorie}
+              apiBaseUrl={apiBaseUrl}
+              form={form}
+            />
             <Select label="Branca medica" dictionary="BRANCHE_MEDICHE" value={form.branca_medica} onChange={(value) => update("branca_medica", value)} items={branchByCategoryState.items.length ? branchByCategoryState.items : options.branche} hint={form.categoria ? relationHint(branchByCategoryState, "Branche") : ""} apiBaseUrl={apiBaseUrl} form={form} restrictToOptions />
             <Select
               label="Reparto"
@@ -873,11 +927,13 @@ export default function NewAssetWizard({
 
           {step === 4 && <div className="fmed-wizard-summary">
             <h3>Controllo finale</h3>
-            <Summary label="Asset" value={[form.costruttore, form.modello].filter(Boolean).join(" · ") || form.tipologia} />
+            <Summary label="Asset" value={[form.costruttore, form.modello].filter(Boolean).join(" · ") || "Dati tecnici non indicati"} />
+            <Summary label="Tipologia" value={form.tipologia} />
+            <Summary label="Categoria" value={form.categoria} />
             <Summary label="Codice inventario" value={form.codicestrumento || "Sarà generato automaticamente alla conferma"} />
             <Summary label="Sede e società" value={[form.sede, form.societa].filter(Boolean).join(" · ")} />
             <Summary label="Matricola" value={form.matricola || "Non indicata"} />
-            <Summary label="Classificazione" value={[form.categoria, form.branca_medica, form.reparto, form.locazione].filter(Boolean).join(" · ")} />
+            <Summary label="Collocazione" value={[form.branca_medica, form.reparto, form.locazione].filter(Boolean).join(" · ")} />
             <Summary label="Documentazione" value={form.link_documento ? "Link esistente collegato" : "Cartella SharePoint automatica"} />
             <Summary label="Collaudo storico" value={form.data_di_collaudo && form.registra_collaudo_storico ? `${form.data_di_collaudo} · ${String(form.esito_collaudo || "POSITIVO").replaceAll("_", " ")}` : "Non registrato"} />
             <Summary label="Piano manutentivo" value={form.crea_piano_manutentivo ? `${form.attivita_manutentiva} · ${form.periodicita}` : "Non creato"} />
@@ -901,13 +957,16 @@ function Field({ label, hint, wide, children }) {
   return <label className={`fmed-wizard-field ${wide ? "wide" : ""}`}><span>{label}</span>{children}{hint && <small>{hint}</small>}</label>;
 }
 
-function Select({ label, value, onChange, items, dictionary, disabled = false, loading = false, emptyText = "Seleziona", hint = "", apiBaseUrl = "", form = {}, restrictToOptions = false }) {
+function Select({ id, name, field = "", label, value, onChange, items, dictionary, disabled = false, loading = false, emptyText = "Seleziona", hint = "", apiBaseUrl = "", form = {}, restrictToOptions = false }) {
   const safeItems = uniqueOptions(items);
   const selected = safeItems.find((item) =>
     normalizedCode(codeOf(item)) === normalizedCode(value) || normalizedLabel(item) === normalizedLabel(value)
   );
   const displayValue = selected ? labelOf(selected) : String(value || "");
   return <CanonicalSelect
+    id={id}
+    name={name}
+    field={field}
     label={label}
     dictionary={dictionary}
     value={displayValue}

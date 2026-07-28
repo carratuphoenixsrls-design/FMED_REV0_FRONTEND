@@ -1,9 +1,0 @@
-FMED E8.1.9.2 - VERIFICA E DEPLOY
-
-1. npm ci
-2. npm run verify:release
-3. npm run build
-4. npx vercel@latest --prod
-
-Progetto Vercel: fmed_512_clean
-Dominio: https://fmed512clean.vercel.app

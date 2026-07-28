@@ -1,23 +1,23 @@
 import FmedModuleIcon from "../FmedModuleIcon.jsx";
 
-export default function InfrastruttureHero({ styles, filteredCount, totalCount }) {
+export default function InfrastruttureHero({ filteredCount, totalCount }) {
   return (
-    <section className="fmed-module-hero fmed-module-hero-infrastrutture" style={styles.assetHeroPanel}>
+    <section className="fmed-module-hero fmed-module-hero-infrastrutture fmed-style-asset-hero-panel">
       <div className="fmed-module-hero-heading">
         <FmedModuleIcon module="Infrastrutture" />
-        <div className="fmed-module-hero-copy" style={styles.assetHeroLeft}>
-          <div className="fmed-module-hero-eyebrow" style={styles.assetHeroEyebrow}>Scadenziario infrastrutture</div>
-          <h2 className="fmed-module-hero-title" style={styles.assetHeroTitle}>Manutenzioni infrastrutturali</h2>
-          <p className="fmed-module-hero-subtitle" style={styles.assetHeroSubtitle}>
+        <div className="fmed-module-hero-copy fmed-style-asset-hero-left">
+          <div className="fmed-module-hero-eyebrow fmed-style-asset-hero-eyebrow">Scadenziario infrastrutture</div>
+          <h2 className="fmed-module-hero-title fmed-style-asset-hero-title">Manutenzioni infrastrutturali</h2>
+          <p className="fmed-module-hero-subtitle fmed-style-asset-hero-subtitle">
             Impianti, contratti e attività tecniche con sedi, documentazione e scadenze integrate.
           </p>
         </div>
       </div>
-      <div className="fmed-module-hero-metric" style={styles.assetHeroRight}>
-        <div className="fmed-module-hero-metric-value" style={styles.assetHeroBadgeNumber}>{filteredCount}</div>
-        <div className="fmed-module-hero-metric-label" style={styles.assetHeroBadgeText}>Attività visibili</div>
-        <div className="fmed-module-hero-metric-sub" style={styles.assetHeroBadgeSub}>Su {totalCount} totali</div>
+      <div className="fmed-module-hero-metric fmed-style-asset-hero-right">
+        <div className="fmed-module-hero-metric-value fmed-style-asset-hero-badge-number">{filteredCount}</div>
+        <div className="fmed-module-hero-metric-label fmed-style-asset-hero-badge-text">Attività visibili</div>
+        <div className="fmed-module-hero-metric-sub fmed-style-asset-hero-badge-sub">Su {totalCount} totali</div>
       </div>
-    </section>
-  );
+    </section>);
+
 }

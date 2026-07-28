@@ -31,7 +31,7 @@ export default function CatalogUniformityPanel({
   return <section className="core-uniformity-panel" aria-label="Uniformità cataloghi Supabase">
     <div className="core-quality-heading">
       <div>
-        <span className="core-standard-kicker">E8.1.9 · PULIZIA E GOVERNANCE SUPABASE</span>
+        <span className="core-standard-kicker">PULIZIA E GOVERNANCE SUPABASE</span>
         <h3>Uniformità dei cataloghi e delle attività</h3>
         <p>Verifica tutti i valori realmente salvati su Supabase, distingue il nome leggibile dal codice tecnico e propone unificazioni conservative. Nessun valore viene cancellato.</p>
       </div>

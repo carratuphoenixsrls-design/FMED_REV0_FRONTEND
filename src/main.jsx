@@ -1,19 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import FmedErrorBoundary from "./FmedErrorBoundary.jsx";
+import "./FmedBaseStyles.css";
 import "./FmedErrorBoundary.css";
-import "./MissionPage.css";
 import "./ProcessiPage.css";
 import "./ImpostazioniPage.css";
 import "./CoreStandardPage.css";
-import "./AuditFinalePage.css";
+import "./SystemAuditPage.css";
 import "./NewAssetWizard.css";
 import "./Sicurezza8108Page.css";
-import "./components/ProcessEngineDialog.css";
+import "./components/ProcessEnginePage.css";
 import "./components/masterdata/CanonicalSelect.css";
 import "./FmedVisualClean.css";
 
-const FMED_APP_CACHE_VERSION = "fmed-enterprise-e8-3-0-functional-restore-20260726-1";
+const FMED_APP_CACHE_VERSION = "fmed-rev0-20260728-1";
 
 const FMED_API_WARMUP_URL = String(
   import.meta.env?.VITE_API_BASE_URL || "https://fmed-backend.onrender.com"
@@ -29,7 +29,7 @@ function warmBackendFmed() {
   }).catch(() => {});
 }
 
-async function clearLegacyPwaCache() {
+async function refreshPwaCache() {
   try {
     const previous = localStorage.getItem("fmed_app_cache_version");
     if (previous === FMED_APP_CACHE_VERSION) return;
@@ -52,9 +52,9 @@ async function clearLegacyPwaCache() {
 
 async function bootstrap() {
   warmBackendFmed();
-  await clearLegacyPwaCache();
+  await refreshPwaCache();
 
-  const module = await import("./App_nuovo.jsx");
+  const module = await import("./FmedApp.jsx");
   const App = module.default;
 
   ReactDOM.createRoot(document.getElementById("root")).render(

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { fmedAuthHeaders, fmedFetchJson, fmedSession } from "../../fmedApiClient.js";
 
 const FIELD_DICTIONARIES = {
@@ -84,6 +84,8 @@ function labelsFromCatalog(catalog, key) {
 }
 
 export default function CanonicalSelect({
+  id = "",
+  name = "",
   label,
   field = "",
   dictionary = "",
@@ -101,6 +103,7 @@ export default function CanonicalSelect({
   form = {},
   restrictToOptions = false,
 }) {
+  const generatedId = useId();
   const [extraOptions, setExtraOptions] = useState([]);
   const [catalog, setCatalog] = useState({});
   const [catalogLoaded, setCatalogLoaded] = useState(false);
@@ -111,6 +114,8 @@ export default function CanonicalSelect({
   const [message, setMessage] = useState("");
   const [confirmDistinct, setConfirmDistinct] = useState(false);
   const dictionaryCode = inferDictionary(field, label, dictionary);
+  const controlId = id || `fmed-canonical-${String(field || dictionaryCode || "select").toLocaleLowerCase("it-IT")}-${generatedId.replace(/:/g, "")}`;
+  const controlName = name || field || dictionaryPayloadKey(dictionaryCode);
   const role = roleInfo();
   const relationContext = relationContextFor(dictionaryCode, form);
 
@@ -229,7 +234,7 @@ export default function CanonicalSelect({
             categoria: draft.categoria || null,
             ambito: draft.ambito || null,
             aliases,
-            origine: "QUICK_ADD_CONTESTUALE_E8_1_9",
+            origine: "QUICK_ADD_CONTESTUALE_REV0",
             stato_governance: active ? "APPROVATO" : "RICHIESTA_APPROVAZIONE",
             richiesto_da: role.actor,
             relazione_contestuale: relationContext ? {
@@ -260,7 +265,7 @@ export default function CanonicalSelect({
                 priorita: 100,
                 obbligatoria: false,
                 attivo: true,
-                metadati: { origine: "QUICK_ADD_CONTESTUALE_E8_1_9", creato_da: role.actor },
+                metadati: { origine: "QUICK_ADD_CONTESTUALE_REV0", creato_da: role.actor },
               }),
             });
           } else {
@@ -283,9 +288,12 @@ export default function CanonicalSelect({
   }
 
   return <div className="fmed-canonical-field" style={style}>
-    {label && <label className="fmed-canonical-label">{label}</label>}
+    {label && <label className="fmed-canonical-label" htmlFor={controlId}>{label}</label>}
     <div className="fmed-canonical-row">
       <select
+        id={controlId}
+        name={controlName}
+        data-dictionary={dictionaryCode}
         className={`fmed-canonical-select ${selectClassName}`.trim()}
         value={String(value || "")}
         disabled={disabled || loading}
@@ -295,13 +303,13 @@ export default function CanonicalSelect({
         {!cleanOptions.length && <option value="" disabled>Nessuna voce disponibile</option>}
         {cleanOptions.map(item => <option key={`${dictionaryCode}-${item}`} value={item}>{item}</option>)}
       </select>
-      {allowQuickAdd && dictionaryCode && <button type="button" className="fmed-canonical-add" onClick={openQuickAdd} disabled={disabled || loading} title={`Aggiungi una voce a ${dictionaryCode}`}>＋</button>}
+      {allowQuickAdd && dictionaryCode && <button type="button" className="fmed-canonical-add" onClick={openQuickAdd} disabled={disabled || loading} title={`Aggiungi una voce a ${dictionaryCode}`} aria-label={`Aggiungi una voce a ${dictionaryCode}`}><span aria-hidden="true">+</span></button>}
     </div>
     {hint && <small className="fmed-canonical-hint">{hint}</small>}
 
-    {open && <div className="fmed-canonical-overlay" role="dialog" aria-modal="true" aria-label={`Nuova voce ${dictionaryCode}`}>
-      <section className="fmed-canonical-dialog">
-        <header className="fmed-canonical-dialog-head">
+    {open && <section className="fmed-canonical-inline-editor" aria-label={`Nuova voce ${dictionaryCode}`}>
+      <div className="fmed-canonical-inline-editor-content">
+        <header className="fmed-canonical-inline-editor-head">
           <div><small>{dictionaryCode}</small><h3>Nuova voce contestuale</h3><p>Il modulo aperto resta invariato. Dopo il salvataggio torni esattamente al punto corrente.</p></div>
           <button type="button" className="fmed-canonical-close" onClick={() => setOpen(false)} aria-label="Chiudi">×</button>
         </header>
@@ -317,7 +325,7 @@ export default function CanonicalSelect({
           {message && <div className="fmed-canonical-message">{message}</div>}
           <div className="fmed-canonical-actions"><button type="button" className="fmed-canonical-cancel" onClick={() => setOpen(false)}>Annulla</button><button type="button" className="fmed-canonical-save" onClick={save} disabled={busy}>{busy ? "Salvataggio…" : role.canApprove ? "Crea e seleziona" : "Invia richiesta"}</button></div>
         </div>
-      </section>
-    </div>}
+      </div>
+    </section>}
   </div>;
 }

@@ -2,13 +2,12 @@ function AssetSelect({ ariaLabel, value, onChange, style, children }) {
   return (
     <select aria-label={ariaLabel} value={value} onChange={onChange} style={style}>
       {children}
-    </select>
-  );
+    </select>);
+
 }
 
 export default function AssetControls(props) {
   const {
-    styles,
     filtrati,
     sede,
     categoriaFiltro,
@@ -55,7 +54,7 @@ export default function AssetControls(props) {
     setCodiceCespiteAutomatico,
     avviaProcessoGuidatoFmed,
     setImpostazioniTab,
-    setPagina,
+    setPagina
   } = props;
 
   const closeAssetList = () => setAssetElencoAperto(false);
@@ -82,23 +81,23 @@ export default function AssetControls(props) {
   };
 
   return (
-    <div className="fmed-operational-filters" style={styles.assetFiltersPanel}>
-      <div className="fmed-operational-filters-head" style={styles.assetFiltersHeader}>
+    <div className="fmed-operational-filters fmed-style-asset-filters-panel">
+      <div className="fmed-operational-filters-head fmed-style-asset-filters-header">
         <div>
-          <h3 style={styles.assetSectionTitle}>Filtri inventario</h3>
-          <p style={styles.assetSectionSubtitle}>Filtri sempre visibili per ricerca rapida in stile gestionale desktop.</p>
+          <h3 className="fmed-style-asset-section-title">Filtri inventario</h3>
+          <p className="fmed-style-asset-section-subtitle">Filtri sempre visibili per ricerca rapida in stile gestionale desktop.</p>
         </div>
-        <div style={styles.assetFilterChips}>
-          <span style={styles.assetChip}>Sede: {sede}</span>
-          <span style={styles.assetChip}>
+        <div className="fmed-style-asset-filter-chips">
+          <span className="fmed-style-asset-chip">Sede: {sede}</span>
+          <span className="fmed-style-asset-chip">
             Categoria: {categoriaFiltro === "TUTTE" ? "TUTTE" : formatCategoria(categoriaFiltro)}
           </span>
-          <span style={styles.assetChip}>Stanza: {assetLocazioneFiltro}</span>
-          <span style={styles.assetChip}>Stato: {assetStatoFiltro}</span>
+          <span className="fmed-style-asset-chip">Stanza: {assetLocazioneFiltro}</span>
+          <span className="fmed-style-asset-chip">Stato: {assetStatoFiltro}</span>
         </div>
       </div>
 
-      <div className="fmed-operational-filters-grid" style={styles.assetFiltersGrid}>
+      <div className="fmed-operational-filters-grid fmed-style-asset-filters-grid">
         <input
           aria-label="Ricerca asset"
           placeholder="Cerca per codice, tipologia, matricola, modello o costruttore..."
@@ -106,9 +105,9 @@ export default function AssetControls(props) {
           onChange={(event) => {
             setRicerca(event.target.value);
             closeAssetList();
-          }}
-          style={styles.assetInputLarge}
-        />
+          }} className="fmed-style-asset-input-large" />
+
+        
 
         <AssetSelect
           ariaLabel="Filtra asset per sede"
@@ -117,9 +116,9 @@ export default function AssetControls(props) {
             setSede(event.target.value);
             setAssetLocazioneFiltro("TUTTE");
             closeAssetList();
-          }}
-          style={styles.assetSelectLarge}
-        >
+          }} className="fmed-style-asset-select-large">
+
+          
           {listaSediAsset.map((item) => <option key={item} value={item}>{item}</option>)}
         </AssetSelect>
 
@@ -129,9 +128,9 @@ export default function AssetControls(props) {
           onChange={(event) => {
             setCategoriaFiltro(event.target.value);
             closeAssetList();
-          }}
-          style={styles.assetSelectLarge}
-        >
+          }} className="fmed-style-asset-select-large">
+
+          
           <option value="TUTTE">Tutte le categorie</option>
           {listaCategorie.map((item) => <option key={item} value={item}>{formatCategoria(item)}</option>)}
         </AssetSelect>
@@ -142,9 +141,9 @@ export default function AssetControls(props) {
           onChange={(event) => {
             setAssetRepartoFiltro(event.target.value);
             closeAssetList();
-          }}
-          style={styles.assetSelectLarge}
-        >
+          }} className="fmed-style-asset-select-large">
+
+          
           <option value="TUTTI">Tutte le branche</option>
           {listaBranche.map((item) => <option key={item} value={item}>{item}</option>)}
         </AssetSelect>
@@ -155,9 +154,9 @@ export default function AssetControls(props) {
           onChange={(event) => {
             setAssetLocazioneFiltro(event.target.value);
             closeAssetList();
-          }}
-          style={styles.assetSelectLarge}
-        >
+          }} className="fmed-style-asset-select-large">
+
+          
           <option value="TUTTE">Tutte le stanze / locazioni</option>
           {listaLocazioniAsset.map((item) => <option key={item} value={item}>{item}</option>)}
         </AssetSelect>
@@ -168,9 +167,9 @@ export default function AssetControls(props) {
           onChange={(event) => {
             setAssetTipologiaFiltro(event.target.value);
             closeAssetList();
-          }}
-          style={styles.assetSelectLarge}
-        >
+          }} className="fmed-style-asset-select-large">
+
+          
           <option value="TUTTE">Tutte le tipologie</option>
           {listaTipologie.map((item) => <option key={item} value={item}>{item}</option>)}
         </AssetSelect>
@@ -181,9 +180,9 @@ export default function AssetControls(props) {
           onChange={(event) => {
             setAssetCostruttoreFiltro(event.target.value);
             closeAssetList();
-          }}
-          style={styles.assetSelectLarge}
-        >
+          }} className="fmed-style-asset-select-large">
+
+          
           <option value="TUTTI">Tutti i costruttori</option>
           {listaCostruttori.map((item) => <option key={item} value={item}>{item}</option>)}
         </AssetSelect>
@@ -194,9 +193,9 @@ export default function AssetControls(props) {
           onChange={(event) => {
             setAssetModelloFiltro(event.target.value);
             closeAssetList();
-          }}
-          style={styles.assetSelectLarge}
-        >
+          }} className="fmed-style-asset-select-large">
+
+          
           <option value="TUTTI">Tutti i modelli</option>
           {listaModelli.map((item) => <option key={item} value={item}>{item}</option>)}
         </AssetSelect>
@@ -209,9 +208,9 @@ export default function AssetControls(props) {
             setSede("TUTTE");
             setAssetLocazioneFiltro("TUTTE");
             closeAssetList();
-          }}
-          style={styles.assetSelectLarge}
-        >
+          }} className="fmed-style-asset-select-large">
+
+          
           <option value="TUTTE">Tutte le società</option>
           {listaSocieta.map((item) => <option key={item} value={item}>{item}</option>)}
         </AssetSelect>
@@ -222,9 +221,9 @@ export default function AssetControls(props) {
           onChange={(event) => {
             setAssetStatoFiltro(event.target.value);
             closeAssetList();
-          }}
-          style={styles.assetSelectLarge}
-        >
+          }} className="fmed-style-asset-select-large">
+
+          
           <option value="TUTTI">Tutti gli stati</option>
           {listaStatiAsset.map((item) => <option key={item} value={item}>{item}</option>)}
         </AssetSelect>
@@ -232,9 +231,9 @@ export default function AssetControls(props) {
         <AssetSelect
           ariaLabel="Ordina elenco asset"
           value={ordineCodiceAsset}
-          onChange={(event) => setOrdineCodiceAsset(event.target.value)}
-          style={styles.assetSelectLarge}
-        >
+          onChange={(event) => setOrdineCodiceAsset(event.target.value)} className="fmed-style-asset-select-large">
+
+          
           <option value="CODICE_ASC">Ordina: codice crescente</option>
           <option value="CODICE_DESC">Ordina: codice decrescente</option>
           <option value="LOCAZIONE_ASC">Ordina: stanza / locazione</option>
@@ -246,39 +245,39 @@ export default function AssetControls(props) {
         </AssetSelect>
       </div>
 
-      <div className="fmed-operational-actions" style={styles.assetActionsBar}>
-        <button style={styles.assetPrimaryAction} onClick={() => setAssetElencoAperto((value) => !value)}>
+      <div className="fmed-operational-actions fmed-style-asset-actions-bar">
+        <button onClick={() => setAssetElencoAperto((value) => !value)} className="fmed-style-asset-primary-action">
           {assetElencoAperto ? "▲ Nascondi elenco" : ` Apri elenco filtrato (${filtrati.length})`}
         </button>
 
-        <button style={styles.assetSecondaryAction} onClick={() => setAssetAnalisiAperta((value) => !value)}>
+        <button onClick={() => setAssetAnalisiAperta((value) => !value)} className="fmed-style-asset-secondary-action">
           {assetAnalisiAperta ? "▲ Nascondi analisi" : " Analizza asset filtrati"}
         </button>
 
-        <button style={styles.assetGhostAction} onClick={resetFilters}>
+        <button onClick={resetFilters} className="fmed-style-asset-ghost-action">
            Reset filtri
         </button>
 
         <button
-          style={styles.assetGhostAction}
+
           onClick={() => {
             setCodiceCespiteAutomatico(true);
             avviaProcessoGuidatoFmed("NUOVO_ASSET");
-          }}
-        >
+          }} className="fmed-style-asset-ghost-action">
+          
            Nuovo asset
         </button>
 
         <button
-          style={styles.assetGhostAction}
+
           onClick={() => {
             setImpostazioniTab("MASTER_DATA");
             setPagina("Gestione Utenti");
-          }}
-        >
+          }} className="fmed-style-asset-ghost-action">
+          
            Master Data
         </button>
       </div>
-    </div>
-  );
+    </div>);
+
 }

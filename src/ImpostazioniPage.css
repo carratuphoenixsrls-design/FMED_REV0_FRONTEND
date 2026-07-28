@@ -1,4 +1,4 @@
-/* FMED Enterprise 1.0 — Impostazioni desktop */
+/* FMED REV0 — Impostazioni desktop */
 .fmed-settings-page {
   display: flex;
   flex-direction: column;
@@ -121,7 +121,7 @@
 .fmed-settings-role-grid article p { margin: 0; color: var(--fmed-muted, #647784); line-height: 1.5; }
 .fmed-settings-role-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .fmed-settings-role-head strong { font-size: 17px; }
-.fmed-settings-role-head span { padding: 5px 8px; border-radius: 999px; background: rgba(8, 127, 134, .10); color: var(--fmed-primary, #087f86); font-size: 10px; font-weight: 800; }
+.fmed-settings-role-head span { padding: 5px 8px; border-radius: 999px; background: rgba(8, 127, 134, .10); color: var(--fmed-primary, #087f86); font-size:11px; font-weight: 800; }
 .fmed-settings-note {
   padding: 14px 16px;
   border-radius: 12px;

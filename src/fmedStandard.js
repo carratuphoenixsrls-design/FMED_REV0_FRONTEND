@@ -1,4 +1,4 @@
-// FMED Enterprise 1.0 - E5.2.1 Data Hygiene.
+// FMED REV0 - Data Hygiene.
 // Il backend /core/dizionari resta la fonte primaria; questi valori garantiscono
 // continuità anche durante cold-start Render o assenza temporanea di rete.
 export const SEDI_STANDARD_DETAILS = {

@@ -1,40 +1,40 @@
 import FmedModuleIcon from "./components/FmedModuleIcon.jsx";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ProcessiControls from "./components/ProcessiControls.jsx";
-import ProcessEngineDialog from "./components/ProcessEngineDialog.jsx";
+import ProcessEnginePage from "./components/ProcessEnginePage.jsx";
 import CanonicalSelect from "./components/masterdata/CanonicalSelect.jsx";
 import { fmedAuthHeaders, fmedFetchJson, fmedSession } from "./fmedApiClient.js";
 
-const normalize = value => String(value || "").trim().toLocaleLowerCase("it-IT");
+const normalize = (value) => String(value || "").trim().toLocaleLowerCase("it-IT");
 
 const STATUS_LABELS = {
   BOZZA: "Bozza", APERTO: "Aperto", ASSEGNATO: "Assegnato", IN_CORSO: "In corso",
   IN_ATTESA: "In attesa", DA_VERIFICARE: "Da verificare", COMPLETATO: "Completato",
-  ANNULLATO: "Annullato", RIAPERTO: "Riaperto", ERRORE: "Errore",
+  ANNULLATO: "Annullato", RIAPERTO: "Riaperto", ERRORE: "Errore"
 };
 const SLA_LABELS = {
   REGOLARE: "Regolare", IN_SCADENZA: "In scadenza", URGENTE: "Urgente", SCADUTO: "In ritardo",
-  CHIUSO: "Chiuso", DA_PIANIFICARE: "Da pianificare",
+  CHIUSO: "Chiuso", DA_PIANIFICARE: "Da pianificare"
 };
 const MODULE_LABELS = {
   ASSET: "Asset e cespiti", INFRASTRUTTURE: "Infrastrutture e impianti",
   SICUREZZA_81_08: "Sicurezza 81/08", FORMAZIONE: "Formazione",
   SORVEGLIANZA_SANITARIA: "Sorveglianza sanitaria", QUALITA: "Qualità e non conformità",
-  CONTRATTI: "Contratti e servizi",
+  CONTRATTI: "Contratti e servizi"
 };
 
 function safeObject(value) {
   if (!value) return {};
   if (typeof value === "object") return value;
-  try { return JSON.parse(value); } catch { return {}; }
+  try {return JSON.parse(value);} catch {return {};}
 }
 function formatDate(value, dateOnly = false) {
   if (!value) return "—";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return String(value);
-  return new Intl.DateTimeFormat("it-IT", dateOnly
-    ? { day: "2-digit", month: "2-digit", year: "numeric" }
-    : { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }
+  return new Intl.DateTimeFormat("it-IT", dateOnly ?
+  { day: "2-digit", month: "2-digit", year: "numeric" } :
+  { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }
   ).format(date);
 }
 function humanizeStep(value) {
@@ -52,7 +52,7 @@ function humanizeStep(value) {
     CONVOCAZIONE: "Convocazione", ESITO_AMMINISTRATIVO: "Esito amministrativo", ANALISI_CAUSA: "Analisi causa",
     AZIONE_CORRETTIVA: "Azione correttiva", ATTUAZIONE: "Attuazione", VERIFICA_EFFICACIA: "Verifica efficacia",
     VERIFICA_CONTRATTO: "Verifica contratto", VALUTAZIONE: "Valutazione", APPROVAZIONE: "Approvazione",
-    RINNOVO: "Rinnovo", IN_ATTESA: "In attesa", RIAPERTURA: "Riapertura", ANNULLATO: "Annullato",
+    RINNOVO: "Rinnovo", IN_ATTESA: "In attesa", RIAPERTURA: "Riapertura", ANNULLATO: "Annullato"
   };
   if (labels[key]) return labels[key];
   const text = key.replaceAll("_", " ").toLocaleLowerCase("it-IT");
@@ -77,63 +77,63 @@ const PROCESS_GUIDANCE = {
   NUOVO_ASSET: {
     when: "Quando entra una nuova apparecchiatura o un bene tecnico che deve essere censito e reso operativo.",
     needs: "Dati anagrafici e tecnici, sede e reparto, documentazione disponibile e piano manutentivo.",
-    result: "Crea il cespite con codice stabile, QR, cartella documentale e primo ciclo di manutenzione.",
+    result: "Crea il cespite con codice stabile, QR, cartella documentale e primo ciclo di manutenzione."
   },
   NUOVO_INTERVENTO: {
     when: "Dopo una manutenzione, riparazione, collaudo, verifica o altra attività eseguita su un cespite già censito.",
     needs: "Cespite, attività, data, ditta, esito, eventuale documento e prossima periodicità.",
-    result: "Aggiorna lo storico del cespite, chiude il ciclo precedente e calcola la nuova scadenza.",
+    result: "Aggiorna lo storico del cespite, chiude il ciclo precedente e calcola la nuova scadenza."
   },
   DISMISSIONE_ASSET: {
     when: "Quando un cespite viene ritirato definitivamente, sostituito, ceduto o non deve più generare attività operative.",
     needs: "Cespite da dismettere, motivazione, data, documentazione e controllo dei cicli ancora aperti.",
-    result: "Imposta lo stato dismesso, chiude le scadenze attive e conserva integralmente storico e documenti.",
+    result: "Imposta lo stato dismesso, chiude le scadenze attive e conserva integralmente storico e documenti."
   },
   GUASTO_INFRASTRUTTURA: {
     when: "Per un guasto improvviso su impianti, locali o componenti che richiede presa in carico e ripristino tracciato.",
     needs: "Sede, impianto interessato, descrizione del problema, priorità, responsabile ed evidenze dell'intervento.",
-    result: "Traccia segnalazione, assegnazione, azione eseguita e verifica finale del ripristino.",
+    result: "Traccia segnalazione, assegnazione, azione eseguita e verifica finale del ripristino."
   },
   MANUTENZIONE_INFRASTRUTTURA: {
     when: "Per manutenzioni programmate o correttive su un'infrastruttura già censita, con rapporto tecnico e nuova data futura.",
     needs: "Impianto, attività, pianificazione, ditta, esito, rapporto e periodicità successiva.",
-    result: "Registra la manutenzione, archivia il rapporto e apre un solo nuovo ciclo di scadenza.",
+    result: "Registra la manutenzione, archivia il rapporto e apre un solo nuovo ciclo di scadenza."
   },
   VERIFICA_PERIODICA_INFRASTRUTTURA: {
     when: "Per verifiche obbligatorie o periodiche, come impianti elettrici, ascensori, antincendio e controlli con verbale.",
     needs: "Elemento verificato, data, organismo o ditta, verbale, prescrizioni ed esito.",
-    result: "Conserva il verbale, chiude il ciclo precedente e genera la prossima verifica senza duplicazioni.",
+    result: "Conserva il verbale, chiude il ciclo precedente e genera la prossima verifica senza duplicazioni."
   },
   ADEMPIMENTO_81_08: {
     when: "Quando deve essere eseguito e documentato un obbligo previsto dalla sicurezza sul lavoro.",
     needs: "Tipologia di adempimento, sede, responsabile, scadenza, evidenze e verifica conclusiva.",
-    result: "Produce un fascicolo tracciato dell'adempimento e, quando previsto, la scadenza successiva.",
+    result: "Produce un fascicolo tracciato dell'adempimento e, quando previsto, la scadenza successiva."
   },
   RINNOVO_DOCUMENTO_81_08: {
     when: "Quando un'autorizzazione, certificazione, valutazione o documento 81/08 sta per scadere o viene sostituito.",
     needs: "Documento precedente, nuova versione, validità, responsabile e controllo di completezza.",
-    result: "Mantiene la versione storica, rende corrente il nuovo documento e aggiorna la scadenza.",
+    result: "Mantiene la versione storica, rende corrente il nuovo documento e aggiorna la scadenza."
   },
   FORMAZIONE_SICUREZZA: {
     when: "Per organizzare un corso iniziale, un aggiornamento o il rinnovo della formazione obbligatoria.",
     needs: "Corso, destinatari, date, docente o ente, attestati e durata della validità.",
-    result: "Registra partecipazione e attestati e pianifica il successivo aggiornamento.",
+    result: "Registra partecipazione e attestati e pianifica il successivo aggiornamento."
   },
   SORVEGLIANZA_SANITARIA: {
     when: "Per gestire convocazioni e scadenze amministrative della sorveglianza sanitaria, senza dati clinici sensibili.",
     needs: "Lavoratore o gruppo, convocazione, esito amministrativo, eventuali prescrizioni e periodicità.",
-    result: "Traccia l'adempimento e programma la visita successiva nel rispetto della riservatezza.",
+    result: "Traccia l'adempimento e programma la visita successiva nel rispetto della riservatezza."
   },
   NON_CONFORMITA: {
     when: "Quando emerge un errore, una deviazione, un rilievo di audit o un problema che richiede un'azione correttiva.",
     needs: "Descrizione, causa, responsabile, azione, tempi, evidenze e verifica di efficacia.",
-    result: "Documenta la correzione dalla causa alla chiusura e dimostra l'efficacia dell'azione intrapresa.",
+    result: "Documenta la correzione dalla causa alla chiusura e dimostra l'efficacia dell'azione intrapresa."
   },
   RINNOVO_CONTRATTO: {
     when: "Quando un contratto tecnico o un servizio si avvicina alla scadenza e deve essere valutato, approvato o rinnovato.",
     needs: "Contratto, fornitore, scadenza, valutazione, costi, approvazione e nuovo periodo.",
-    result: "Conserva la decisione, registra il rinnovo e aggiorna la nuova scadenza contrattuale.",
-  },
+    result: "Conserva la decisione, registra il rinnovo e aggiorna la nuova scadenza contrattuale."
+  }
 };
 
 function processGuidance(process) {
@@ -141,7 +141,7 @@ function processGuidance(process) {
   return PROCESS_GUIDANCE[code] || {
     when: process?.descrizione || "Quando l'attività richiede responsabilità, passaggi e verifiche formalmente tracciati.",
     needs: "Responsabile, dati dell'attività, scadenza, evidenze e informazioni richieste dal processo.",
-    result: "Restituisce un'attività completa, verificabile e collegata ai moduli FMED interessati.",
+    result: "Restituisce un'attività completa, verificabile e collegata ai moduli FMED interessati."
   };
 }
 
@@ -168,14 +168,14 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
     setMessage("");
     try {
       const [catalogData, executionData] = await Promise.all([
-        fmedFetchJson("/process-engine/catalogo", { apiBaseUrl, retries: 1 }),
-        fmedFetchJson(`/process-engine/esecuzioni?limit=300&include_storico=${includeHistory ? "true" : "false"}`, {
-          apiBaseUrl,
-          headers: fmedAuthHeaders(),
-          retries: 1,
-          timeoutMs: 60000,
-        }),
-      ]);
+      fmedFetchJson("/process-engine/catalogo", { apiBaseUrl, retries: 1 }),
+      fmedFetchJson(`/process-engine/esecuzioni?limit=300&include_storico=${includeHistory ? "true" : "false"}`, {
+        apiBaseUrl,
+        headers: fmedAuthHeaders(),
+        retries: 1,
+        timeoutMs: 60000
+      })]
+      );
       setCatalog(Array.isArray(catalogData?.processi) ? catalogData.processi : processes);
       setExecutions(Array.isArray(executionData?.esecuzioni) ? executionData.esecuzioni : []);
     } catch (error) {
@@ -184,27 +184,27 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
         const fallback = await fmedFetchJson("/core/processi/esecuzioni?limit=100", {
           apiBaseUrl,
           headers: fmedAuthHeaders(),
-          retries: 0,
+          retries: 0
         });
         setExecutions(Array.isArray(fallback?.esecuzioni) ? fallback.esecuzioni : []);
         setCatalog(processes);
-      } catch { setExecutions([]); }
-    } finally { setLoading(false); }
+      } catch {setExecutions([]);}
+    } finally {setLoading(false);}
   }, [apiBaseUrl, processes, includeHistory]);
 
-  useEffect(() => { loadData(); }, [loadData]);
+  useEffect(() => {loadData();}, [loadData]);
   useEffect(() => {
     if (!selectedExecution) return;
     setGovernanceForm({
       responsabile: selectedExecution.responsabile || selectedExecution.assegnato_a || "",
       sostituto: selectedExecution.sostituto || "",
       approvatore: selectedExecution.approvatore || "",
-      scadenza: String(selectedExecution.scadenza || "").slice(0, 10),
+      scadenza: String(selectedExecution.scadenza || "").slice(0, 10)
     });
   }, [selectedExecution]);
 
-  const visibleProcesses = useMemo(() => (Array.isArray(catalog) ? catalog : []).filter(item => String(item.codice || "").toUpperCase() !== "NUOVA_SEDE"), [catalog]);
-  const processByCode = useMemo(() => new Map(visibleProcesses.map(item => [String(item.codice || "").toUpperCase(), item])), [visibleProcesses]);
+  const visibleProcesses = useMemo(() => (Array.isArray(catalog) ? catalog : []).filter((item) => String(item.codice || "").toUpperCase() !== "NUOVA_SEDE"), [catalog]);
+  const processByCode = useMemo(() => new Map(visibleProcesses.map((item) => [String(item.codice || "").toUpperCase(), item])), [visibleProcesses]);
   const groupedProcesses = useMemo(() => {
     const groups = new Map();
     for (const item of visibleProcesses) {
@@ -216,9 +216,9 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
   }, [visibleProcesses]);
   const stats = useMemo(() => ({
     available: visibleProcesses.length,
-    running: executions.filter(item => isOpenState(item.stato)).length,
-    overdue: executions.filter(item => String(item?.sla?.codice || item.stato_sla || "").toUpperCase() === "SCADUTO").length,
-    approvals: executions.filter(item => ["DA_RICHIEDERE", "DA_APPROVARE"].includes(String(item.approvazione_stato || "").toUpperCase())).length,
+    running: executions.filter((item) => isOpenState(item.stato)).length,
+    overdue: executions.filter((item) => String(item?.sla?.codice || item.stato_sla || "").toUpperCase() === "SCADUTO").length,
+    approvals: executions.filter((item) => ["DA_RICHIEDERE", "DA_APPROVARE"].includes(String(item.approvazione_stato || "").toUpperCase())).length
   }), [visibleProcesses, executions]);
   const lastByProcess = useMemo(() => {
     const result = new Map();
@@ -230,7 +230,7 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
   }, [executions]);
   const filteredExecutions = useMemo(() => {
     const query = normalize(search);
-    return executions.filter(item => {
+    return executions.filter((item) => {
       const status = String(item.stato || "").toUpperCase();
       const moduleCode = String(item.modulo || item.riferimento_modulo || "PROCESS_ENGINE").toUpperCase();
       if (statusFilter !== "TUTTI" && status !== statusFilter) return false;
@@ -244,7 +244,7 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
 
   function launchProcess(process) {
     if (!canManage) return;
-    if (String(process?.modalita || "").toUpperCase() === "LEGACY") { onLaunchProcess?.(process.codice); return; }
+    if (String(process?.modalita || "").toUpperCase() === "DEDICATO") {onLaunchProcess?.(process.codice);return;}
     setLaunching(process);
   }
   async function refreshSelected(id) {
@@ -255,7 +255,7 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
         apiBaseUrl,
         headers: fmedAuthHeaders(),
         retries: 1,
-        timeoutMs: 60000,
+        timeoutMs: 60000
       });
       setSelectedExecution(data?.esecuzione || null);
       setDetail({
@@ -264,90 +264,90 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
         allegati: Array.isArray(data?.allegati) ? data.allegati : [],
         eventi: Array.isArray(data?.eventi) ? data.eventi : [],
         solleciti: Array.isArray(data?.solleciti) ? data.solleciti : [],
-        requisiti: data?.requisiti || {},
+        requisiti: data?.requisiti || {}
       });
       const missing = data?.requisiti?.allegati_mancanti || [];
-      setAttachmentForm(previous => ({ ...previous, tipo: previous.tipo || missing[0] || "" }));
-    } catch (error) { setMessage(error?.message || "Dettaglio processo non disponibile."); }
-    finally { setDetailBusy(false); }
+      setAttachmentForm((previous) => ({ ...previous, tipo: previous.tipo || missing[0] || "" }));
+    } catch (error) {setMessage(error?.message || "Dettaglio processo non disponibile.");} finally
+    {setDetailBusy(false);}
   }
   async function applyTransition(targetState) {
     if (!selectedExecution?.id || transitionBusy) return;
-    setTransitionBusy(true); setMessage("");
+    setTransitionBusy(true);setMessage("");
     try {
       const data = await fmedFetchJson(`/process-engine/esecuzioni/${selectedExecution.id}/transizioni`, {
         apiBaseUrl, method: "POST", headers: fmedAuthHeaders(), retries: 1, timeoutMs: 60000,
-        body: JSON.stringify({ stato: targetState, nota: transitionNote || null, dati: {}, eseguito_da: actor() }),
+        body: JSON.stringify({ stato: targetState, nota: transitionNote || null, dati: {}, eseguito_da: actor() })
       });
       setTransitionNote("");
       setMessage(data?.warning || `Processo aggiornato: ${STATUS_LABELS[targetState] || targetState}.`);
       await Promise.all([loadData(), refreshSelected(selectedExecution.id)]);
-    } catch (error) { setMessage(error?.message || "Aggiornamento stato non riuscito."); }
-    finally { setTransitionBusy(false); }
+    } catch (error) {setMessage(error?.message || "Aggiornamento stato non riuscito.");} finally
+    {setTransitionBusy(false);}
   }
   async function updateTask(task, state) {
     if (!selectedExecution?.id || detailBusy) return;
-    setDetailBusy(true); setMessage("");
+    setDetailBusy(true);setMessage("");
     try {
       await fmedFetchJson(`/process-engine/esecuzioni/${selectedExecution.id}/attivita/${task.id}`, {
         apiBaseUrl, method: "PATCH", headers: fmedAuthHeaders(), retries: 1, timeoutMs: 60000,
-        body: JSON.stringify({ stato: state, nota: transitionNote || null, aggiornato_da: actor() }),
+        body: JSON.stringify({ stato: state, nota: transitionNote || null, aggiornato_da: actor() })
       });
       await refreshSelected(selectedExecution.id);
       await loadData();
-    } catch (error) { setMessage(error?.message || "Checklist non aggiornata."); }
-    finally { setDetailBusy(false); }
+    } catch (error) {setMessage(error?.message || "Checklist non aggiornata.");} finally
+    {setDetailBusy(false);}
   }
   async function saveGovernance() {
     if (!selectedExecution?.id || detailBusy) return;
-    setDetailBusy(true); setMessage("");
+    setDetailBusy(true);setMessage("");
     try {
       await fmedFetchJson(`/process-engine/esecuzioni/${selectedExecution.id}`, {
         apiBaseUrl, method: "PATCH", headers: fmedAuthHeaders(), retries: 1, timeoutMs: 60000,
-        body: JSON.stringify({ ...governanceForm, assegnato_a: governanceForm.responsabile || null, aggiornato_da: actor() }),
+        body: JSON.stringify({ ...governanceForm, assegnato_a: governanceForm.responsabile || null, aggiornato_da: actor() })
       });
       setMessage("Responsabilità e scadenza aggiornate.");
       await Promise.all([loadData(), refreshSelected(selectedExecution.id)]);
-    } catch (error) { setMessage(error?.message || "Dati di governo non aggiornati."); }
-    finally { setDetailBusy(false); }
+    } catch (error) {setMessage(error?.message || "Dati di governo non aggiornati.");} finally
+    {setDetailBusy(false);}
   }
   async function decideApproval(state) {
     if (!selectedExecution?.id || detailBusy) return;
-    setDetailBusy(true); setMessage("");
+    setDetailBusy(true);setMessage("");
     try {
       await fmedFetchJson(`/process-engine/esecuzioni/${selectedExecution.id}/approvazioni`, {
         apiBaseUrl, method: "POST", headers: fmedAuthHeaders(), retries: 1, timeoutMs: 60000,
-        body: JSON.stringify({ stato: state, nota: transitionNote || `Decisione ${state.toLocaleLowerCase("it-IT")}`, approvatore: governanceForm.approvatore || actor(), eseguito_da: actor() }),
+        body: JSON.stringify({ stato: state, nota: transitionNote || `Decisione ${state.toLocaleLowerCase("it-IT")}`, approvatore: governanceForm.approvatore || actor(), eseguito_da: actor() })
       });
       setMessage(state === "APPROVATA" ? "Processo approvato." : "Processo respinto e da correggere.");
       await Promise.all([loadData(), refreshSelected(selectedExecution.id)]);
-    } catch (error) { setMessage(error?.message || "Approvazione non aggiornata."); }
-    finally { setDetailBusy(false); }
+    } catch (error) {setMessage(error?.message || "Approvazione non aggiornata.");} finally
+    {setDetailBusy(false);}
   }
   async function addAttachment(event) {
     event.preventDefault();
     if (!selectedExecution?.id || detailBusy) return;
-    if (!attachmentForm.tipo || !attachmentForm.nome.trim()) { setMessage("Indicare tipo e nome dell’evidenza."); return; }
-    setDetailBusy(true); setMessage("");
+    if (!attachmentForm.tipo || !attachmentForm.nome.trim()) {setMessage("Indicare tipo e nome dell’evidenza.");return;}
+    setDetailBusy(true);setMessage("");
     try {
       await fmedFetchJson(`/process-engine/esecuzioni/${selectedExecution.id}/allegati`, {
         apiBaseUrl, method: "POST", headers: fmedAuthHeaders(), retries: 1, timeoutMs: 60000,
-        body: JSON.stringify({ ...attachmentForm, obbligatorio: (detail.requisiti?.allegati_obbligatori || []).includes(attachmentForm.tipo), caricato_da: actor() }),
+        body: JSON.stringify({ ...attachmentForm, obbligatorio: (detail.requisiti?.allegati_obbligatori || []).includes(attachmentForm.tipo), caricato_da: actor() })
       });
       setAttachmentForm({ tipo: "", nome: "", url: "" });
       setMessage("Evidenza registrata nel processo.");
       await refreshSelected(selectedExecution.id);
-    } catch (error) { setMessage(error?.message || "Evidenza non registrata."); }
-    finally { setDetailBusy(false); }
+    } catch (error) {setMessage(error?.message || "Evidenza non registrata.");} finally
+    {setDetailBusy(false);}
   }
 
   const approval = detail.approvazioni?.[0];
   const requirements = detail.requisiti || {};
 
   return (
-    <section className="fmed-process-page">
+    <section className={`fmed-process-page ${launching || selectedExecution ? "is-workspace-open" : ""}`}>
       <header className="fmed-process-head"><div className="fmed-banner-heading"><FmedModuleIcon module="Processi" /><div className="fmed-banner-copy">
-        <span className="fmed-process-kicker">FMED ENTERPRISE 1.0 · E8.1.9</span><h2>Processi guidati, spiegati in modo semplice</h2>
+        <span className="fmed-process-kicker">FMED REV0</span><h2>Processi guidati, spiegati in modo semplice</h2>
         <p>Ogni processo indica chiaramente quando usarlo, quali dati richiede e quale risultato produce. Le procedure restano collegate a responsabilità, SLA, evidenze, approvazioni, cicli e audit.</p>
       </div></div></header>
 
@@ -358,9 +358,9 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
         <span><b>Cicli</b> il completamento resta collegato al record operativo e al Motore Cicli.</span>
       </div></aside>
 
-      <div className="fmed-process-message" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+      <div className="fmed-process-message fmed-literal-d87d5ede0c">
         <span>{includeHistory ? "Tutto lo storico processi è visibile." : "Vista operativa dal 01/01/2023. I processi ancora aperti restano sempre visibili."}</span>
-        <button type="button" onClick={() => setIncludeHistory(value => !value)}>
+        <button type="button" onClick={() => setIncludeHistory((value) => !value)}>
           {includeHistory ? "Torna alla vista operativa" : "Apri archivio storico"}
         </button>
       </div>
@@ -377,9 +377,9 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
       <div className="fmed-process-groups">
         {groupedProcesses.filter(([moduleCode]) => moduleFilter === "TUTTI" || moduleFilter === moduleCode).map(([moduleCode, moduleProcesses]) => <details className="fmed-process-group" key={moduleCode}>
           <summary className="fmed-process-group-head"><div><span>Modulo</span><h3>{MODULE_LABELS[moduleCode] || moduleCode.replaceAll("_", " ")}</h3></div><small>{moduleProcesses.length} processi disponibili</small><i aria-hidden="true">⌄</i></summary>
-          <div className="fmed-process-catalog">{moduleProcesses.map(process => {
-            const code = String(process.codice || "").toUpperCase(); const last = lastByProcess.get(code); const guide = processGuidance(process);
-            return <article className="fmed-process-card" key={code}>
+          <div className="fmed-process-catalog">{moduleProcesses.map((process) => {
+              const code = String(process.codice || "").toUpperCase();const last = lastByProcess.get(code);const guide = processGuidance(process);
+              return <article className="fmed-process-card" key={code}>
               <div className="fmed-process-card-top"><div><span className="fmed-process-code">{code.replaceAll("_", " ")}</span><h3>{process.titolo}</h3></div>{last && <span className={`fmed-process-status is-${String(last.stato || "APERTO").toLowerCase()}`}>{STATUS_LABELS[String(last.stato || "").toUpperCase()] || last.stato}</span>}</div>
               <p className="fmed-process-purpose">{process.descrizione}</p>
               <div className="fmed-process-guide">
@@ -387,23 +387,23 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
                 <div><span>Cosa serve</span><p>{guide.needs}</p></div>
                 <div className="is-result"><span>Risultato finale</span><p>{guide.result}</p></div>
               </div>
-              <div className="fmed-process-card-flags"><span>{String(process.modalita || "GENERICO").toUpperCase() === "LEGACY" ? "Procedura dedicata" : "Workflow completo"}</span>{process.governa_ciclo && <span>Collegato ai cicli</span>}{process.approvazione_obbligatoria && <span>Approvazione richiesta</span>}{process.allegati_obbligatori?.length > 0 && <span>{process.allegati_obbligatori.length} evidenze</span>}</div>
+              <div className="fmed-process-card-flags"><span>{String(process.modalita || "GENERICO").toUpperCase() === "DEDICATO" ? "Procedura dedicata" : "Workflow completo"}</span>{process.governa_ciclo && <span>Collegato ai cicli</span>}{process.approvazione_obbligatoria && <span>Approvazione richiesta</span>}{process.allegati_obbligatori?.length > 0 && <span>{process.allegati_obbligatori.length} evidenze</span>}</div>
               <div className="fmed-process-steps">{(process.passi || []).map((step, index) => <span key={step}><b>{index + 1}</b>{humanizeStep(step)}</span>)}</div>
               <div className="fmed-process-card-footer"><small>{last ? `Ultimo aggiornamento: ${formatDate(last.aggiornato_il || last.created_at)}` : "Nessuna esecuzione registrata"}</small><button type="button" onClick={() => launchProcess(process)} disabled={!canManage}>{processActionLabel(process)}</button></div>
             </article>;
-          })}</div>
+            })}</div>
         </details>)}
       </div>
 
       <section className="fmed-process-history"><div className="fmed-process-history-head"><div><h3>Registro processi</h3><p>Stato, SLA, responsabilità, approvazione e avanzamento delle esecuzioni.</p></div></div>
         <div className="fmed-process-table-wrap"><table className="fmed-process-table"><thead><tr><th>Processo</th><th>Modulo</th><th>Stato</th><th>SLA</th><th>Responsabile</th><th>Scadenza</th><th>Checklist</th><th>Approvazione</th><th /></tr></thead><tbody>
           {!loading && filteredExecutions.length === 0 && <tr><td colSpan="9" className="fmed-process-empty">Nessuna esecuzione corrispondente.</td></tr>}
-          {filteredExecutions.map(item => {
-            const config = processByCode.get(String(item.processo || "").toUpperCase());
-            const percentage = Math.max(0, Math.min(100, Number(item.percentuale || 0)));
-            const moduleCode = String(item.modulo || item.riferimento_modulo || "PROCESS_ENGINE").toUpperCase();
-            const slaCode = String(item?.sla?.codice || item.stato_sla || "REGOLARE").toUpperCase();
-            return <tr key={item.id || `${item.processo}-${item.aggiornato_il}`}>
+          {filteredExecutions.map((item) => {
+                const config = processByCode.get(String(item.processo || "").toUpperCase());
+                const percentage = Math.max(0, Math.min(100, Number(item.percentuale || 0)));
+                const moduleCode = String(item.modulo || item.riferimento_modulo || "PROCESS_ENGINE").toUpperCase();
+                const slaCode = String(item?.sla?.codice || item.stato_sla || "REGOLARE").toUpperCase();
+                return <tr key={item.id || `${item.processo}-${item.aggiornato_il}`}>
               <td><strong>{item.titolo || config?.titolo || String(item.processo || "").replaceAll("_", " ")}</strong><small>{item.sede || "Sede non indicata"}{item.riferimento_id ? ` · ${item.riferimento_id}` : ""}</small>{item._archivio_storico && <small>Archivio pre-2023</small>}</td>
               <td>{MODULE_LABELS[moduleCode] || moduleCode.replaceAll("_", " ")}</td>
               <td><span className={`fmed-process-status is-${String(item.stato || "APERTO").toLowerCase()}`}>{STATUS_LABELS[String(item.stato || "").toUpperCase()] || item.stato}</span></td>
@@ -414,15 +414,15 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
               <td>{humanizeStep(item.approvazione_stato || "NON_RICHIESTA")}</td>
               <td><button type="button" className="fmed-process-row-open" onClick={() => refreshSelected(item.id)}>Gestisci</button></td>
             </tr>;
-          })}
+              })}
         </tbody></table></div>
       </section>
 
-      {launching && <ProcessEngineDialog process={launching} apiBaseUrl={apiBaseUrl} onClose={() => setLaunching(null)} onCreated={(execution, warning) => { setLaunching(null); setMessage(warning || "Processo aperto correttamente."); if (execution?.id) refreshSelected(execution.id); loadData(); }} />}
+      {launching && <ProcessEnginePage process={launching} apiBaseUrl={apiBaseUrl} onClose={() => setLaunching(null)} onCreated={(execution, warning) => {setLaunching(null);setMessage(warning || "Processo aperto correttamente.");if (execution?.id) refreshSelected(execution.id);loadData();}} />}
 
-      {selectedExecution && <div className="fmed-process-detail-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget && !transitionBusy && !detailBusy) setSelectedExecution(null); }}>
-        <section className="fmed-process-detail is-complete" role="dialog" aria-modal="true">
-          <header><div><span>{MODULE_LABELS[String(selectedExecution.modulo || selectedExecution.riferimento_modulo || "").toUpperCase()] || "Process Engine"}</span><h3>{selectedExecution.titolo || processByCode.get(String(selectedExecution.processo || "").toUpperCase())?.titolo || selectedExecution.processo}</h3><p>{selectedExecution.sede || "Sede non indicata"}{selectedExecution.riferimento_id ? ` · ${selectedExecution.riferimento_id}` : ""}</p></div><button type="button" onClick={() => setSelectedExecution(null)}>×</button></header>
+      {selectedExecution && <section className="fmed-workspace-page fmed-process-detail-page">
+        <div className="fmed-workspace-surface fmed-process-detail is-complete">
+          <header><div><span>{MODULE_LABELS[String(selectedExecution.modulo || selectedExecution.riferimento_modulo || "").toUpperCase()] || "Process Engine"}</span><h3>{selectedExecution.titolo || processByCode.get(String(selectedExecution.processo || "").toUpperCase())?.titolo || selectedExecution.processo}</h3><p>{selectedExecution.sede || "Sede non indicata"}{selectedExecution.riferimento_id ? ` · ${selectedExecution.riferimento_id}` : ""}</p></div><button type="button" onClick={() => setSelectedExecution(null)}>Torna ai processi</button></header>
 
           <div className="fmed-process-detail-grid">
             <article><span>Stato</span><strong>{STATUS_LABELS[String(selectedExecution.stato || "").toUpperCase()] || selectedExecution.stato}</strong></article>
@@ -433,41 +433,41 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
 
           <section className="fmed-process-detail-section"><div className="fmed-process-detail-section-head"><div><span>Governance</span><h4>Responsabilità e tempi</h4></div><button type="button" onClick={saveGovernance} disabled={detailBusy}>Salva</button></div>
             <div className="fmed-process-governance-grid">
-              <CanonicalSelect label="Responsabile" field="responsabile" dictionary="RESPONSABILI" value={governanceForm.responsabile} onChange={value => setGovernanceForm(prev => ({ ...prev, responsabile: value }))} apiBaseUrl={apiBaseUrl} form={governanceForm} allowQuickAdd />
-              <CanonicalSelect label="Sostituto" field="sostituto" dictionary="RESPONSABILI" value={governanceForm.sostituto} onChange={value => setGovernanceForm(prev => ({ ...prev, sostituto: value }))} apiBaseUrl={apiBaseUrl} form={governanceForm} allowQuickAdd />
-              <CanonicalSelect label="Approvatore" field="approvatore" dictionary="RESPONSABILI" value={governanceForm.approvatore} onChange={value => setGovernanceForm(prev => ({ ...prev, approvatore: value }))} apiBaseUrl={apiBaseUrl} form={governanceForm} allowQuickAdd />
-              <label className="fmed-process-inline-field"><span>Scadenza</span><input type="date" value={governanceForm.scadenza} onChange={event => setGovernanceForm(prev => ({ ...prev, scadenza: event.target.value }))} /></label>
+              <CanonicalSelect label="Responsabile" field="responsabile" dictionary="RESPONSABILI" value={governanceForm.responsabile} onChange={(value) => setGovernanceForm((prev) => ({ ...prev, responsabile: value }))} apiBaseUrl={apiBaseUrl} form={governanceForm} allowQuickAdd />
+              <CanonicalSelect label="Sostituto" field="sostituto" dictionary="RESPONSABILI" value={governanceForm.sostituto} onChange={(value) => setGovernanceForm((prev) => ({ ...prev, sostituto: value }))} apiBaseUrl={apiBaseUrl} form={governanceForm} allowQuickAdd />
+              <CanonicalSelect label="Approvatore" field="approvatore" dictionary="RESPONSABILI" value={governanceForm.approvatore} onChange={(value) => setGovernanceForm((prev) => ({ ...prev, approvatore: value }))} apiBaseUrl={apiBaseUrl} form={governanceForm} allowQuickAdd />
+              <label className="fmed-process-inline-field"><span>Scadenza</span><input type="date" value={governanceForm.scadenza} onChange={(event) => setGovernanceForm((prev) => ({ ...prev, scadenza: event.target.value }))} /></label>
             </div>
           </section>
 
           <section className="fmed-process-detail-section"><div className="fmed-process-detail-section-head"><div><span>Controlli obbligatori</span><h4>Checklist del processo</h4></div><small>{requirements.checklist_completa ? "Completa" : "Da completare"}</small></div>
-            <div className="fmed-process-checklist">{detail.attivita.map(task => <article key={task.id} className={String(task.stato).toUpperCase() === "COMPLETATA" ? "is-done" : ""}>
+            <div className="fmed-process-checklist">{detail.attivita.map((task) => <article key={task.id} className={String(task.stato).toUpperCase() === "COMPLETATA" ? "is-done" : ""}>
               <button type="button" aria-label="Cambia stato" onClick={() => updateTask(task, String(task.stato).toUpperCase() === "COMPLETATA" ? "PENDENTE" : "COMPLETATA")} disabled={detailBusy}>{String(task.stato).toUpperCase() === "COMPLETATA" ? "✓" : ""}</button>
               <div><strong>{task.titolo}</strong><small>{humanizeStep(task.fase)}{task.obbligatoria ? " · obbligatoria" : ""}</small></div>
             </article>)}{!detailBusy && detail.attivita.length === 0 && <p>Nessuna checklist configurata per questa procedura.</p>}</div>
           </section>
 
           <section className="fmed-process-detail-section"><div className="fmed-process-detail-section-head"><div><span>Evidenze</span><h4>Allegati e documenti richiesti</h4></div><small>{requirements.allegati_completi ? "Completi" : `${requirements.allegati_mancanti?.length || 0} mancanti`}</small></div>
-            <div className="fmed-process-required-tags">{(requirements.allegati_obbligatori || []).map(type => <span key={type} className={(requirements.allegati_mancanti || []).includes(type) ? "is-missing" : "is-present"}>{humanizeStep(type)}</span>)}</div>
+            <div className="fmed-process-required-tags">{(requirements.allegati_obbligatori || []).map((type) => <span key={type} className={(requirements.allegati_mancanti || []).includes(type) ? "is-missing" : "is-present"}>{humanizeStep(type)}</span>)}</div>
             <form className="fmed-process-attachment-form" onSubmit={addAttachment}>
-              <select value={attachmentForm.tipo} onChange={event => setAttachmentForm(prev => ({ ...prev, tipo: event.target.value }))}><option value="">Tipo evidenza</option>{[...(requirements.allegati_obbligatori || []), "ALTRO_DOCUMENTO"].filter((value, index, arr) => arr.indexOf(value) === index).map(type => <option key={type} value={type}>{humanizeStep(type)}</option>)}</select>
-              <input value={attachmentForm.nome} onChange={event => setAttachmentForm(prev => ({ ...prev, nome: event.target.value }))} placeholder="Nome documento" />
-              <input value={attachmentForm.url} onChange={event => setAttachmentForm(prev => ({ ...prev, url: event.target.value }))} placeholder="Link SharePoint o archivio" />
+              <select value={attachmentForm.tipo} onChange={(event) => setAttachmentForm((prev) => ({ ...prev, tipo: event.target.value }))}><option value="">Tipo evidenza</option>{[...(requirements.allegati_obbligatori || []), "ALTRO_DOCUMENTO"].filter((value, index, arr) => arr.indexOf(value) === index).map((type) => <option key={type} value={type}>{humanizeStep(type)}</option>)}</select>
+              <input value={attachmentForm.nome} onChange={(event) => setAttachmentForm((prev) => ({ ...prev, nome: event.target.value }))} placeholder="Nome documento" />
+              <input value={attachmentForm.url} onChange={(event) => setAttachmentForm((prev) => ({ ...prev, url: event.target.value }))} placeholder="Link SharePoint o archivio" />
               <button type="submit" disabled={detailBusy}>Registra</button>
             </form>
-            <div className="fmed-process-attachment-list">{detail.allegati.map(item => <article key={item.id}><strong>{humanizeStep(item.tipo)}</strong><span>{item.nome}</span>{item.url && <a href={item.url} target="_blank" rel="noreferrer">Apri</a>}</article>)}</div>
+            <div className="fmed-process-attachment-list">{detail.allegati.map((item) => <article key={item.id}><strong>{humanizeStep(item.tipo)}</strong><span>{item.nome}</span>{item.url && <a href={item.url} target="_blank" rel="noreferrer">Apri</a>}</article>)}</div>
           </section>
 
           {requirements.approvazione_obbligatoria && <section className="fmed-process-detail-section"><div className="fmed-process-detail-section-head"><div><span>Controllo finale</span><h4>Approvazione</h4></div><small>{humanizeStep(approval?.stato || selectedExecution.approvazione_stato)}</small></div>
             <div className="fmed-process-approval-actions"><button type="button" onClick={() => decideApproval("APPROVATA")} disabled={detailBusy}>Approva</button><button type="button" className="is-danger" onClick={() => decideApproval("RESPINTA")} disabled={detailBusy}>Respingi</button></div>
           </section>}
 
-          <label className="fmed-process-transition-note"><span>Nota della transizione o decisione</span><textarea rows="3" value={transitionNote} onChange={event => setTransitionNote(event.target.value)} placeholder="Motivazione, esito o informazione utile per l’audit." /></label>
-          <div className="fmed-process-transition-actions">{(selectedExecution.transizioni_disponibili || []).map(option => <button type="button" key={option.codice} onClick={() => applyTransition(option.codice)} disabled={transitionBusy || detailBusy}>{transitionBusy ? "Aggiornamento…" : option.etichetta}</button>)}{(selectedExecution.transizioni_disponibili || []).length === 0 && <p>Nessuna transizione disponibile per lo stato corrente.</p>}</div>
+          <label className="fmed-process-transition-note"><span>Nota della transizione o decisione</span><textarea rows="3" value={transitionNote} onChange={(event) => setTransitionNote(event.target.value)} placeholder="Motivazione, esito o informazione utile per l’audit." /></label>
+          <div className="fmed-process-transition-actions">{(selectedExecution.transizioni_disponibili || []).map((option) => <button type="button" key={option.codice} onClick={() => applyTransition(option.codice)} disabled={transitionBusy || detailBusy}>{transitionBusy ? "Aggiornamento…" : option.etichetta}</button>)}{(selectedExecution.transizioni_disponibili || []).length === 0 && <p>Nessuna transizione disponibile per lo stato corrente.</p>}</div>
 
-          <section className="fmed-process-detail-section is-timeline"><div className="fmed-process-detail-section-head"><div><span>Audit</span><h4>Storico del processo</h4></div><small>{detail.eventi.length} eventi</small></div><div className="fmed-process-timeline">{detail.eventi.slice().reverse().map(event => <article key={event.id}><span>{formatDate(event.creato_il)}</span><strong>{humanizeStep(event.evento)}</strong><p>{event.nota || `${humanizeStep(event.stato_da)} → ${humanizeStep(event.stato_a)}`}</p></article>)}</div></section>
-        </section>
-      </div>}
-    </section>
-  );
+          <section className="fmed-process-detail-section is-timeline"><div className="fmed-process-detail-section-head"><div><span>Audit</span><h4>Storico del processo</h4></div><small>{detail.eventi.length} eventi</small></div><div className="fmed-process-timeline">{detail.eventi.slice().reverse().map((event) => <article key={event.id}><span>{formatDate(event.creato_il)}</span><strong>{humanizeStep(event.evento)}</strong><p>{event.nota || `${humanizeStep(event.stato_da)} → ${humanizeStep(event.stato_a)}`}</p></article>)}</div></section>
+        </div>
+      </section>}
+    </section>);
+
 }

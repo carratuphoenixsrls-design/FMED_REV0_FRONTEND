@@ -4,7 +4,6 @@ import FmedIcon from "../components/ui/FmedIcon.jsx";
 
 export default function InterventiPage(props) {
   const {
-    styles,
     interventiFiltrati,
     interventi,
     interventiIncludeStorico,
@@ -25,43 +24,42 @@ export default function InterventiPage(props) {
     apriModificaIntervento,
     eliminaIntervento,
     setInterventiRenderLimit,
-    FMED_RENDER_BATCH_INTERVENTI,
+    FMED_RENDER_BATCH_INTERVENTI
   } = props;
 
   return (
-    <div className="fmed-interventi-enterprise" style={styles.interventiPageShell}>
+    <div className="fmed-interventi-operativi fmed-style-interventi-page-shell">
       <InterventiHero
-        styles={styles}
         filteredCount={interventiFiltrati.length}
-        totalCount={interventi.length}
-      />
+        totalCount={interventi.length} />
+      
 
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: 14,
-        flexWrap: "wrap",
-        padding: "12px 14px",
-        margin: "0 0 14px",
-        border: "1px solid var(--fmed-border)",
-        borderRadius: 14,
-        background: "var(--fmed-surface)",
-        color: "var(--fmed-text)",
-      }}>
+      <div className="fmed-interventi-archive-bar fmed-literal-f62c9b066f">
+
+
+
+
+
+
+
+
+
+
+
+        
         <div>
-          <strong style={{ display: "block", fontSize: 13 }}>Finestra operativa E7.2</strong>
-          <span style={{ display: "block", marginTop: 3, fontSize: 12, color: "var(--fmed-muted)" }}>
-            {interventiIncludeStorico
-              ? "Tutto lo storico visibile. I record precedenti al 01/01/2023 sono marcati come archivio."
-              : "Attività dal 01/01/2023 a oggi. Tutti i collaudi restano sempre visibili."}
+          <strong className="fmed-literal-7b8fa4e074">Archivio interventi</strong>
+          <span className="fmed-literal-7ba2ebb4ac">
+            {interventiIncludeStorico ?
+            "Tutto lo storico visibile. I record precedenti al 01/01/2023 sono marcati come archivio." :
+            "Attività dal 01/01/2023 a oggi. Tutti i collaudi restano sempre visibili."}
           </span>
         </div>
         <button
           type="button"
-          style={interventiIncludeStorico ? styles.interventiSecondaryAction : styles.interventiPrimaryAction}
-          onClick={() => cambiaVistaStoricoInterventi?.(!interventiIncludeStorico)}
-        >
+          className={interventiIncludeStorico ? "fmed-style-interventi-secondary-action" : "fmed-style-interventi-primary-action"}
+          onClick={() => cambiaVistaStoricoInterventi?.(!interventiIncludeStorico)}>
+          
           {interventiIncludeStorico ? "Torna alla vista operativa" : "Apri archivio storico"}
         </button>
       </div>
@@ -69,76 +67,76 @@ export default function InterventiPage(props) {
       <InterventiControls {...props} />
 
     <div style={{
-          ...styles.interventiKpiGrid,
-          ...{}
-        }}>
-      <div style={styles.interventiKpiCard}><div style={styles.interventiKpiTop}><span className="fmed-kpi-icon" style={styles.interventiKpiIcon}><FmedIcon name="euro" /></span><span style={styles.interventiKpiLabel}>Totale spesa</span></div><strong style={styles.interventiKpiValue}>{formatCurrency(totaleSpesaInterventiFiltrati)}</strong><span style={styles.interventiKpiHint}>{labelPeriodoContabileInterventi()}</span></div>
-      <div style={styles.interventiKpiCard}><div style={styles.interventiKpiTop}><span className="fmed-kpi-icon" style={styles.interventiKpiIcon}><FmedIcon name="activity" /></span><span style={styles.interventiKpiLabel}>Interventi</span></div><strong style={{
-              ...styles.interventiKpiValue,
-              color: "#169C8F"
-            }}>{interventiFiltrati.length}</strong><span style={styles.interventiKpiHint}>su {interventi.length} totali</span></div>
-      <div style={styles.interventiKpiCard}><div style={styles.interventiKpiTop}><span className="fmed-kpi-icon" style={styles.interventiKpiIcon}><FmedIcon name="box" /></span><span style={styles.interventiKpiLabel}>Cespiti</span></div><strong style={{
-              ...styles.interventiKpiValue,
-              color: "#2FD37D"
-            }}>{codiciCoinvoltiInterventi.size}</strong><span style={styles.interventiKpiHint}>coinvolti</span></div>
-      <div style={styles.interventiKpiCard}><div style={styles.interventiKpiTop}><span className="fmed-kpi-icon" style={styles.interventiKpiIcon}><FmedIcon name="users" /></span><span style={styles.interventiKpiLabel}>Ditte/Società</span></div><strong style={{
-              ...styles.interventiKpiValue,
-              color: "#D99A00"
-            }}>{ditteCoinvolteInterventi.size}</strong><span style={styles.interventiKpiHint}>coinvolte</span></div>
+
+        ...{}
+      }} className="fmed-style-interventi-kpi-grid">
+      <div className="fmed-style-interventi-kpi-card"><div className="fmed-style-interventi-kpi-top"><span className="fmed-kpi-icon fmed-style-interventi-kpi-icon"><FmedIcon name="euro" /></span><span className="fmed-style-interventi-kpi-label">Totale spesa</span></div><strong className="fmed-style-interventi-kpi-value">{formatCurrency(totaleSpesaInterventiFiltrati)}</strong><span className="fmed-style-interventi-kpi-hint">{labelPeriodoContabileInterventi()}</span></div>
+      <div className="fmed-style-interventi-kpi-card"><div className="fmed-style-interventi-kpi-top"><span className="fmed-kpi-icon fmed-style-interventi-kpi-icon"><FmedIcon name="activity" /></span><span className="fmed-style-interventi-kpi-label">Interventi</span></div><strong style={{
+
+            color: "#169C8F"
+          }} className="fmed-style-interventi-kpi-value">{interventiFiltrati.length}</strong><span className="fmed-style-interventi-kpi-hint">su {interventi.length} totali</span></div>
+      <div className="fmed-style-interventi-kpi-card"><div className="fmed-style-interventi-kpi-top"><span className="fmed-kpi-icon fmed-style-interventi-kpi-icon"><FmedIcon name="box" /></span><span className="fmed-style-interventi-kpi-label">Cespiti</span></div><strong style={{
+
+            color: "#2FD37D"
+          }} className="fmed-style-interventi-kpi-value">{codiciCoinvoltiInterventi.size}</strong><span className="fmed-style-interventi-kpi-hint">coinvolti</span></div>
+      <div className="fmed-style-interventi-kpi-card"><div className="fmed-style-interventi-kpi-top"><span className="fmed-kpi-icon fmed-style-interventi-kpi-icon"><FmedIcon name="users" /></span><span className="fmed-style-interventi-kpi-label">Ditte/Società</span></div><strong style={{
+
+            color: "#D99A00"
+          }} className="fmed-style-interventi-kpi-value">{ditteCoinvolteInterventi.size}</strong><span className="fmed-style-interventi-kpi-hint">coinvolte</span></div>
     </div>
 
     {interventiElencoAperto && <div style={{
-          ...styles.interventiTableCard,
-          ...{}
-        }}>
+
+        ...{}
+      }} className="fmed-style-interventi-table-card">
         <div style={{
-            ...styles.interventiListHeader,
-            ...{}
-          }}>
+
+          ...{}
+        }} className="fmed-style-interventi-list-header">
           <div>
-            <h3 style={styles.interventiTableTitle}>Elenco interventi filtrati</h3>
-            <p style={styles.interventiTableSubtitle}>{interventiFiltrati.length} risultati su {interventi.length}. Clicca il codice per aprire la scheda cespite.</p>
+            <h3 className="fmed-style-interventi-table-title">Elenco interventi filtrati</h3>
+            <p className="fmed-style-interventi-table-subtitle">{interventiFiltrati.length} risultati su {interventi.length}. Clicca il codice per aprire la scheda cespite.</p>
           </div>
-          <button style={styles.interventiCloseBtn} onClick={() => setInterventiElencoAperto(false)}>Chiudi</button>
+          <button onClick={() => setInterventiElencoAperto(false)} className="fmed-style-interventi-close-btn">Chiudi</button>
         </div>
-        {<div className="fmed-interventi-table-wrap" style={styles.interventiTableWrap}>
-            <table className="fmed-interventi-table" style={styles.interventiTable}>
+        {<div className="fmed-interventi-table-wrap fmed-style-interventi-table-wrap">
+            <table className="fmed-interventi-table fmed-style-interventi-table">
               <thead>
                 <tr>
-                  <th style={styles.interventiTh}>Codice</th><th style={styles.interventiTh}>Sede</th><th style={styles.interventiTh}>Ditta esecutrice</th><th style={styles.interventiTh}>Tipologia</th><th style={styles.interventiTh}>Attività</th><th style={styles.interventiTh}>Ultimo</th><th style={styles.interventiTh}>Prossimo</th><th style={styles.interventiTh}>Costo</th><th style={styles.interventiTh}>Documento</th><th style={styles.interventiTh}>Azioni</th>
+                  <th className="fmed-style-interventi-th">Codice</th><th className="fmed-style-interventi-th">Sede</th><th className="fmed-style-interventi-th">Ditta esecutrice</th><th className="fmed-style-interventi-th">Tipologia</th><th className="fmed-style-interventi-th">Attività</th><th className="fmed-style-interventi-th">Ultimo</th><th className="fmed-style-interventi-th">Prossimo</th><th className="fmed-style-interventi-th">Costo</th><th className="fmed-style-interventi-th">Documento</th><th className="fmed-style-interventi-th">Azioni</th>
                 </tr>
               </thead>
               <tbody>
-                {interventiFiltratiRenderizzati.map((i, idx) => <tr key={i.id_intervento || idx} style={styles.interventiTr}>
-                    <td style={styles.interventiTdCode} onClick={() => apriSchedaDaCodice(i.codice_strumento || i.codicestrumento)} title="Apri scheda cespite">{i.codice_strumento || i.codicestrumento}</td>
-                    <td style={styles.interventiTd}>{i.sede}</td>
-                    <td style={styles.interventiTd}>{normalizzaSocietaDitta(i.ditta_esecutrice || i.ditta)}</td>
-                    <td style={styles.interventiTd}>{i.tipologia}</td>
-                    <td style={styles.interventiTd}>
+                {interventiFiltratiRenderizzati.map((i, idx) => <tr key={i.id_intervento || idx} className="fmed-style-interventi-tr">
+                    <td onClick={() => apriSchedaDaCodice(i.codice_strumento || i.codicestrumento)} title="Apri scheda cespite" className="fmed-style-interventi-td-code">{i.codice_strumento || i.codicestrumento}</td>
+                    <td className="fmed-style-interventi-td">{i.sede}</td>
+                    <td className="fmed-style-interventi-td">{normalizzaSocietaDitta(i.ditta_esecutrice || i.ditta)}</td>
+                    <td className="fmed-style-interventi-td">{i.tipologia}</td>
+                    <td className="fmed-style-interventi-td">
                       <div>{i.attivita}</div>
-                      {i._eccezione_collaudo && <small style={{ display: "block", marginTop: 3, fontWeight: 700, color: "var(--fmed-brand)" }}>Collaudo sempre conservato</small>}
-                      {i._archivio_storico && <small style={{ display: "block", marginTop: 3, color: "var(--fmed-muted)" }}>Archivio pre-2023</small>}
+                      {i._eccezione_collaudo && <small className="fmed-literal-cbdc22081e">Collaudo sempre conservato</small>}
+                      {i._archivio_storico && <small className="fmed-literal-cd264f0832">Archivio pre-2023</small>}
                     </td>
-                    <td style={styles.interventiTd}>{formattaData(i.data_ultimo_intervento)}</td>
-                    <td style={styles.interventiTd}>{formattaData(i.data_prossimo_intervento)}</td>
-                    <td style={styles.interventiTd}>{formatCurrency(importoIntervento(i))}</td>
-                    <td style={styles.interventiTd}><BottoneJobReport intervento={i} /></td>
-                    <td style={styles.interventiTd}>
-                      <div className="fmed-row-action-bar is-two-actions" style={styles.rowActionGroup}>
-                        <button type="button" className="fmed-icon-action" style={styles.actionBtnEdit} onClick={() => apriModificaIntervento(i)} aria-label="Modifica intervento" title="Modifica intervento"><FmedIcon name="edit" /></button>
-                        <button type="button" className="fmed-icon-action is-danger" style={styles.actionBtnDelete} onClick={() => eliminaIntervento(i)} aria-label="Elimina intervento" title="Elimina intervento"><FmedIcon name="trash" /></button>
+                    <td className="fmed-style-interventi-td">{formattaData(i.data_ultimo_intervento)}</td>
+                    <td className="fmed-style-interventi-td">{formattaData(i.data_prossimo_intervento)}</td>
+                    <td className="fmed-style-interventi-td">{formatCurrency(importoIntervento(i))}</td>
+                    <td className="fmed-style-interventi-td"><BottoneJobReport intervento={i} /></td>
+                    <td className="fmed-style-interventi-td">
+                      <div className="fmed-row-action-bar is-two-actions fmed-style-row-action-group">
+                        <button type="button" className="fmed-icon-action fmed-style-action-btn-edit" onClick={() => apriModificaIntervento(i)} aria-label="Modifica intervento" title="Modifica intervento"><FmedIcon name="edit" /></button>
+                        <button type="button" className="fmed-icon-action is-danger fmed-style-action-btn-delete" onClick={() => eliminaIntervento(i)} aria-label="Elimina intervento" title="Elimina intervento"><FmedIcon name="trash" /></button>
                       </div>
                     </td>
                   </tr>)}
               </tbody>
             </table>
           </div>}
-        {interventiFiltrati.length > interventiFiltratiRenderizzati.length && <div style={styles.loadMoreRow}>
-            <button type="button" style={styles.interventiSecondaryAction} onClick={() => setInterventiRenderLimit(v => v + FMED_RENDER_BATCH_INTERVENTI)}>
+        {interventiFiltrati.length > interventiFiltratiRenderizzati.length && <div className="fmed-style-load-more-row">
+            <button type="button" onClick={() => setInterventiRenderLimit((v) => v + FMED_RENDER_BATCH_INTERVENTI)} className="fmed-style-interventi-secondary-action">
               Mostra altri interventi ({interventiFiltratiRenderizzati.length}/{interventiFiltrati.length})
             </button>
           </div>}
       </div>}
-  </div>
-  );
+  </div>);
+
 }

@@ -5,7 +5,6 @@ import FmedIcon from "../components/ui/FmedIcon.jsx";
 
 export default function AssetPage(props) {
   const {
-    styles,
     filtrati,
     cespiti,
     setAssetElencoAperto,
@@ -15,6 +14,7 @@ export default function AssetPage(props) {
     setOrdineCodiceAsset,
     assetElencoAperto,
     assetAnalisiAperta,
+    setAssetAnalisiAperta,
     setAssetBulkBranca,
     setAssetBulkSede,
     setAssetBulkLocazione,
@@ -62,233 +62,244 @@ export default function AssetPage(props) {
     listaModelli
   } = props;
   return (
-<div className="fmed-asset-page">
+    <div className={`fmed-asset-page ${assetAnalisiAperta ? "is-workspace-open" : ""}`}>
             <AssetHero
-              styles={styles}
-              filteredCount={filtrati.length}
-              totalCount={cespiti.length}
-            />
+        filteredCount={filtrati.length}
+        totalCount={cespiti.length} />
+      
 
             <AssetControls {...props} />
 
-            <div className="fmed-operational-kpi-grid" style={{
-          ...styles.assetKpiGrid,
-          ...{}
-        }}>
-              <div className="fmed-operational-kpi-card" style={styles.assetKpiCard}>
-                <div style={styles.assetKpiTop}><span className="fmed-kpi-icon" style={styles.assetKpiIcon}><FmedIcon name="box" /></span><span style={styles.assetKpiLabel}>Asset filtrati</span></div>
-                <strong style={styles.assetKpiValue}>{assetKpiFiltrati.totale}</strong>
-                <span style={styles.assetKpiHint}>su {cespiti.length} totali</span>
+            <div className="fmed-operational-kpi-grid fmed-style-asset-kpi-grid" style={{
+
+        ...{}
+      }}>
+              <div className="fmed-operational-kpi-card fmed-style-asset-kpi-card">
+                <div className="fmed-style-asset-kpi-top"><span className="fmed-kpi-icon fmed-style-asset-kpi-icon"><FmedIcon name="box" /></span><span className="fmed-style-asset-kpi-label">Asset filtrati</span></div>
+                <strong className="fmed-style-asset-kpi-value">{assetKpiFiltrati.totale}</strong>
+                <span className="fmed-style-asset-kpi-hint">su {cespiti.length} totali</span>
               </div>
-              <div className="fmed-operational-kpi-card" style={styles.assetKpiCard}>
-                <div style={styles.assetKpiTop}><span className="fmed-kpi-icon" style={styles.assetKpiIcon}><FmedIcon name="check" /></span><span style={styles.assetKpiLabel}>Attivi</span></div>
+              <div className="fmed-operational-kpi-card fmed-style-asset-kpi-card">
+                <div className="fmed-style-asset-kpi-top"><span className="fmed-kpi-icon fmed-style-asset-kpi-icon"><FmedIcon name="check" /></span><span className="fmed-style-asset-kpi-label">Attivi</span></div>
                 <strong style={{
-              ...styles.assetKpiValue,
-              color: "#2FD37D"
-            }}>{assetKpiFiltrati.attivi}</strong>
-                <span style={styles.assetKpiHint}>operativi</span>
+
+            color: "#2FD37D"
+          }} className="fmed-style-asset-kpi-value">{assetKpiFiltrati.attivi}</strong>
+                <span className="fmed-style-asset-kpi-hint">operativi</span>
               </div>
-              <div className="fmed-operational-kpi-card" style={styles.assetKpiCard}>
-                <div style={styles.assetKpiTop}><span className="fmed-kpi-icon" style={styles.assetKpiIcon}><FmedIcon name="archive" /></span><span style={styles.assetKpiLabel}>Dismessi</span></div>
+              <div className="fmed-operational-kpi-card fmed-style-asset-kpi-card">
+                <div className="fmed-style-asset-kpi-top"><span className="fmed-kpi-icon fmed-style-asset-kpi-icon"><FmedIcon name="archive" /></span><span className="fmed-style-asset-kpi-label">Dismessi</span></div>
                 <strong style={{
-              ...styles.assetKpiValue,
-              color: "#FF4D5E"
-            }}>{assetKpiFiltrati.dismessi}</strong>
-                <span style={styles.assetKpiHint}>fuori inventario attivo</span>
+
+            color: "#FF4D5E"
+          }} className="fmed-style-asset-kpi-value">{assetKpiFiltrati.dismessi}</strong>
+                <span className="fmed-style-asset-kpi-hint">fuori inventario attivo</span>
               </div>
-              <div className="fmed-operational-kpi-card" style={styles.assetKpiCard}>
-                <div style={styles.assetKpiTop}><span className="fmed-kpi-icon" style={styles.assetKpiIcon}><FmedIcon name="pause" /></span><span style={styles.assetKpiLabel}>Non in uso</span></div>
+              <div className="fmed-operational-kpi-card fmed-style-asset-kpi-card">
+                <div className="fmed-style-asset-kpi-top"><span className="fmed-kpi-icon fmed-style-asset-kpi-icon"><FmedIcon name="pause" /></span><span className="fmed-style-asset-kpi-label">Non in uso</span></div>
                 <strong style={{
-              ...styles.assetKpiValue,
-              color: "#D99A00"
-            }}>{assetKpiFiltrati.nonInUso}</strong>
-                <span style={styles.assetKpiHint}>da verificare</span>
+
+            color: "#D99A00"
+          }} className="fmed-style-asset-kpi-value">{assetKpiFiltrati.nonInUso}</strong>
+                <span className="fmed-style-asset-kpi-hint">da verificare</span>
               </div>
             </div>
 
-            {assetAnalisiAperta && <div style={{
-          ...styles.assetAnalysisGrid,
+            {assetAnalisiAperta && <section className="fmed-workspace-page fmed-asset-analysis-page">
+              <header className="fmed-workspace-header">
+                <div>
+                  <span>Analisi asset filtrati</span>
+                  <h2>Distribuzione e indicatori dell’inventario</h2>
+                  <p>I dati rispettano i filtri impostati nell’elenco Asset. Tornando indietro ritroverai ricerca, filtri e selezioni invariati.</p>
+                </div>
+                <button type="button" className="fmed-workspace-back" onClick={() => setAssetAnalisiAperta(false)}>
+                  <FmedIcon name="close" /> Torna agli asset
+                </button>
+              </header>
+              <div className="fmed-workspace-surface fmed-asset-analysis-grid fmed-style-asset-analysis-grid" style={{
+
           ...{}
         }}>
-                <div style={styles.assetAnalysisCard}>
-                  <h3 style={styles.assetAnalysisTitle}> Distribuzione per sede</h3>
-                  <div style={styles.assetRankList}>{assetPerSedeFiltrati.map(r => <div key={r.nome} style={styles.assetRankRow}><span>{r.nome}</span><strong>{r.totale}</strong></div>)}</div>
+                <div className="fmed-style-asset-analysis-card">
+                  <h3 className="fmed-style-asset-analysis-title"> Distribuzione per sede</h3>
+                  <div className="fmed-style-asset-rank-list">{assetPerSedeFiltrati.map((r) => <div key={r.nome} className="fmed-style-asset-rank-row"><span>{r.nome}</span><strong>{r.totale}</strong></div>)}</div>
                 </div>
 
-                <div style={styles.assetAnalysisCard}>
-                  <h3 style={styles.assetAnalysisTitle}> Distribuzione per branca</h3>
-                  <div style={styles.assetRankList}>{assetPerRepartoFiltrati.map(r => <div key={r.nome} style={styles.assetRankRow}><span>{r.nome}</span><strong>{r.totale}</strong></div>)}</div>
+                <div className="fmed-style-asset-analysis-card">
+                  <h3 className="fmed-style-asset-analysis-title"> Distribuzione per branca</h3>
+                  <div className="fmed-style-asset-rank-list">{assetPerRepartoFiltrati.map((r) => <div key={r.nome} className="fmed-style-asset-rank-row"><span>{r.nome}</span><strong>{r.totale}</strong></div>)}</div>
                 </div>
 
-                <div style={styles.assetAnalysisCard}>
-                  <h3 style={styles.assetAnalysisTitle}> Costruttori principali</h3>
-                  <div style={styles.assetRankList}>{assetPerCostruttoreFiltrati.map(r => <div key={r.nome} style={styles.assetRankRow}><span>{r.nome}</span><strong>{r.totale}</strong></div>)}</div>
+                <div className="fmed-style-asset-analysis-card">
+                  <h3 className="fmed-style-asset-analysis-title"> Costruttori principali</h3>
+                  <div className="fmed-style-asset-rank-list">{assetPerCostruttoreFiltrati.map((r) => <div key={r.nome} className="fmed-style-asset-rank-row"><span>{r.nome}</span><strong>{r.totale}</strong></div>)}</div>
                 </div>
 
-                <div style={styles.assetAnalysisCard}>
-                  <h3 style={styles.assetAnalysisTitle}> Stato asset</h3>
-                  <div style={styles.assetRankList}>{assetPerStatoFiltrati.map(r => <div key={r.nome} style={styles.assetRankRow}><span>{r.nome}</span><strong>{r.totale}</strong></div>)}</div>
+                <div className="fmed-style-asset-analysis-card">
+                  <h3 className="fmed-style-asset-analysis-title"> Stato asset</h3>
+                  <div className="fmed-style-asset-rank-list">{assetPerStatoFiltrati.map((r) => <div key={r.nome} className="fmed-style-asset-rank-row"><span>{r.nome}</span><strong>{r.totale}</strong></div>)}</div>
                 </div>
-              </div>}
+              </div>
+            </section>}
 
-            {assetElencoAperto && <div className="fmed-operational-table-card" style={{
-          ...styles.assetTableCard,
-          ...{}
-        }}>
+            {assetElencoAperto && <div className="fmed-operational-table-card fmed-style-asset-table-card" style={{
+
+        ...{}
+      }}>
                 <div style={{
-            ...styles.assetListHeader,
-            ...{}
-          }}>
+
+          ...{}
+        }} className="fmed-style-asset-list-header">
                   <div>
-                    <h3 style={styles.assetTableTitle}>Elenco asset filtrati</h3>
-                    <p style={styles.assetTableSubtitle}>{filtrati.length} risultati su {cespiti.length}. Puoi modificare i campi principali direttamente dalla riga senza aprire la scheda.</p>
+                    <h3 className="fmed-style-asset-table-title">Elenco asset filtrati</h3>
+                    <p className="fmed-style-asset-table-subtitle">{filtrati.length} risultati su {cespiti.length}. Puoi modificare i campi principali direttamente dalla riga senza aprire la scheda.</p>
                   </div>
-                  <button style={styles.assetCloseBtn} onClick={() => setAssetElencoAperto(false)}>Chiudi</button>
+                  <button onClick={() => setAssetElencoAperto(false)} className="fmed-style-asset-close-btn">Chiudi</button>
                 </div>
 
-                <div className="fmed-asset-bulk-toolbar" style={{
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            gap: 10,
-            padding: "12px 14px",
-            margin: "10px 0 14px",
-            border: "1px solid var(--fmed-bulk-panel-border, rgba(31,174,156,.22))",
-            borderRadius: 16,
-            background: "var(--fmed-bulk-panel-bg, rgba(255,255,255,.72))",
-            boxShadow: "var(--fmed-bulk-panel-shadow, 0 10px 24px rgba(15, 23, 42, 0.06))"
-          }} onClick={e => e.stopPropagation()}>
-                  <strong className="fmed-asset-bulk-title" style={{
-              color: "var(--fmed-bulk-title, #0F4C5C)",
-              fontSize: 14
-            }}>✓ MODIFICA MULTIPLA ASSET</strong>
-                  <span className="fmed-asset-bulk-count" style={{
-              color: "var(--fmed-bulk-muted, #475569)",
-              fontSize: 13
-            }}>{assetSelezionatiBulk.length} SELEZIONATI</span>
-                  <CanonicalSelect label="" dictionary="BRANCHE_MEDICHE" value={assetBulkBranca} disabled={assetBulkSaving} onChange={setAssetBulkBranca} options={listaBranche} placeholder="BRANCA: NON MODIFICARE" apiBaseUrl={apiBaseUrl} style={{ minWidth: 260, maxWidth: 340 }} />
-                  <CanonicalSelect label="" dictionary="SOCIETA" value={assetBulkSocieta} disabled={assetBulkSaving} onChange={setAssetBulkSocieta} options={listaSocieta} placeholder="SOCIETÀ: NON MODIFICARE" apiBaseUrl={apiBaseUrl} style={{ minWidth: 230, maxWidth: 300 }} />
-                  <CanonicalSelect label="" dictionary="SEDI" value={assetBulkSede} disabled={assetBulkSaving} onChange={(value) => { setAssetBulkSede(value); setAssetBulkLocazione(""); }} options={listaSedi} placeholder="SEDE: NON MODIFICARE" apiBaseUrl={apiBaseUrl} style={{ minWidth: 260, maxWidth: 380 }} />
-                  <CanonicalSelect label="" dictionary="LOCAZIONI" value={assetBulkLocazione} disabled={assetBulkSaving || !assetBulkSede} onChange={setAssetBulkLocazione} options={getListaLocazioniPerSede(assetBulkSede || "TUTTE", assetBulkLocazione, true)} placeholder="LOCAZIONE: NON MODIFICARE" apiBaseUrl={apiBaseUrl} restrictToOptions style={{ minWidth: 240, maxWidth: 340 }} />
-                  <CanonicalSelect label="" dictionary="STATI_ASSET" value={assetBulkStato} disabled={assetBulkSaving} onChange={setAssetBulkStato} options={STATI_ASSET_STANDARD} placeholder="STATO: NON MODIFICARE" apiBaseUrl={apiBaseUrl} style={{ minWidth: 210, maxWidth: 280 }} />
+                <div className="fmed-asset-bulk-toolbar fmed-literal-fa894ec0f3"
+
+
+
+
+
+
+
+
+
+
+        onClick={(e) => e.stopPropagation()}>
+                  <strong className="fmed-asset-bulk-title fmed-literal-4e7f276551">
+
+
+            ✓ MODIFICA MULTIPLA ASSET</strong>
+                  <span className="fmed-asset-bulk-count fmed-literal-e8b2a0c170">
+
+
+            {assetSelezionatiBulk.length} SELEZIONATI</span>
+                  <CanonicalSelect label="" dictionary="BRANCHE_MEDICHE" value={assetBulkBranca} disabled={assetBulkSaving} onChange={setAssetBulkBranca} options={listaBranche} placeholder="BRANCA: NON MODIFICARE" apiBaseUrl={apiBaseUrl} className="fmed-literal-ce00a8596c" />
+                  <CanonicalSelect label="" dictionary="SOCIETA" value={assetBulkSocieta} disabled={assetBulkSaving} onChange={setAssetBulkSocieta} options={listaSocieta} placeholder="SOCIETÀ: NON MODIFICARE" apiBaseUrl={apiBaseUrl} className="fmed-literal-c19bde92bd" />
+                  <CanonicalSelect label="" dictionary="SEDI" value={assetBulkSede} disabled={assetBulkSaving} onChange={(value) => {setAssetBulkSede(value);setAssetBulkLocazione("");}} options={listaSedi} placeholder="SEDE: NON MODIFICARE" apiBaseUrl={apiBaseUrl} className="fmed-literal-ec7da2fb95" />
+                  <CanonicalSelect label="" dictionary="LOCAZIONI" value={assetBulkLocazione} disabled={assetBulkSaving || !assetBulkSede} onChange={setAssetBulkLocazione} options={getListaLocazioniPerSede(assetBulkSede || "TUTTE", assetBulkLocazione, true)} placeholder="LOCAZIONE: NON MODIFICARE" apiBaseUrl={apiBaseUrl} restrictToOptions className="fmed-literal-e77da17ecd" />
+                  <CanonicalSelect label="" dictionary="STATI_ASSET" value={assetBulkStato} disabled={assetBulkSaving} onChange={setAssetBulkStato} options={STATI_ASSET_STANDARD} placeholder="STATO: NON MODIFICARE" apiBaseUrl={apiBaseUrl} className="fmed-literal-9b2a561810" />
                   <button type="button" style={{
-              ...styles.assetQuickSaveBtn,
-              padding: "9px 14px",
-              borderRadius: 12
-            }} disabled={assetBulkSaving || assetSelezionatiBulk.length === 0 || !(assetBulkBranca || assetBulkSede || assetBulkLocazione || assetBulkStato || assetBulkSocieta)} onClick={salvaModificaMultiplaBrancaAsset}>
+
+            padding: "9px 14px",
+            borderRadius: 12
+          }} disabled={assetBulkSaving || assetSelezionatiBulk.length === 0 || !(assetBulkBranca || assetBulkSede || assetBulkLocazione || assetBulkStato || assetBulkSocieta)} onClick={salvaModificaMultiplaBrancaAsset} className="fmed-style-asset-quick-save-btn">
                     {assetBulkSaving ? "SALVATAGGIO..." : " APPLICA MODIFICHE"}
                   </button>
                   <button type="button" style={{
-              ...styles.assetQuickEditBtn,
-              padding: "9px 12px"
-            }} disabled={assetBulkSaving} onClick={selezionaTuttiAssetFiltratiBulk}>
+
+            padding: "9px 12px"
+          }} disabled={assetBulkSaving} onClick={selezionaTuttiAssetFiltratiBulk} className="fmed-style-asset-quick-edit-btn">
                     SELEZIONA TUTTI I FILTRATI
                   </button>
                   <button type="button" style={{
-              ...styles.assetQuickCancelBtn,
-              padding: "9px 12px",
-              borderRadius: 12
-            }} disabled={assetBulkSaving || assetSelezionatiBulk.length === 0} onClick={() => setAssetSelezionatiBulk([])}>
+
+            padding: "9px 12px",
+            borderRadius: 12
+          }} disabled={assetBulkSaving || assetSelezionatiBulk.length === 0} onClick={() => setAssetSelezionatiBulk([])} className="fmed-style-asset-quick-cancel-btn">
                     PULISCI SELEZIONE
                   </button>
                 </div>
 
-                {<div className="fmed-asset-table-wrap" style={styles.tableWrap}>
-                    <table className="fmed-asset-table" style={styles.tableLarge}>
+                {<div className="fmed-asset-table-wrap fmed-style-table-wrap">
+                    <table className="fmed-asset-table fmed-style-table-large">
                       <thead>
                         <tr>
-                          <th style={styles.thLarge}>
-                            <input type="checkbox" aria-label="Seleziona asset visibili" checked={filtratiRenderizzati.length > 0 && filtratiRenderizzati.every(c => assetSelezionatiBulk.includes(getCodiceAssetBulk(c)))} onChange={e => toggleSelezioneAssetVisibiliBulk(e.target.checked)} />
+                          <th className="fmed-style-th-large">
+                            <input type="checkbox" aria-label="Seleziona asset visibili" checked={filtratiRenderizzati.length > 0 && filtratiRenderizzati.every((c) => assetSelezionatiBulk.includes(getCodiceAssetBulk(c)))} onChange={(e) => toggleSelezioneAssetVisibiliBulk(e.target.checked)} />
                           </th>
                           <th style={{
-                    ...styles.thLarge,
-                    ...styles.assetStickyCol,
-                    cursor: "pointer"
-                  }} onClick={() => setOrdineCodiceAsset(ordineCodiceAsset === "CODICE_ASC" ? "CODICE_DESC" : "CODICE_ASC")}>CODICE ↕</th>
+
+
+                  cursor: "pointer"
+                }} onClick={() => setOrdineCodiceAsset(ordineCodiceAsset === "CODICE_ASC" ? "CODICE_DESC" : "CODICE_ASC")} className="fmed-style-th-large fmed-style-asset-sticky-col">CODICE ↕</th>
                           <th style={{
-                    ...styles.thLarge,
-                    cursor: "pointer"
-                  }} onClick={() => setOrdineCodiceAsset("TIPOLOGIA_ASC")}>TIPOLOGIA ↕</th>
+
+                  cursor: "pointer"
+                }} onClick={() => setOrdineCodiceAsset("TIPOLOGIA_ASC")} className="fmed-style-th-large">TIPOLOGIA ↕</th>
                           <th style={{
-                    ...styles.thLarge,
-                    cursor: "pointer"
-                  }} onClick={() => setOrdineCodiceAsset("SEDE_ASC")}>SEDE ↕</th>
+
+                  cursor: "pointer"
+                }} onClick={() => setOrdineCodiceAsset("SEDE_ASC")} className="fmed-style-th-large">SEDE ↕</th>
                           <th style={{
-                    ...styles.thLarge,
-                    cursor: "pointer"
-                  }} onClick={() => setOrdineCodiceAsset("REPARTO_ASC")}>BRANCA ↕</th>
+
+                  cursor: "pointer"
+                }} onClick={() => setOrdineCodiceAsset("REPARTO_ASC")} className="fmed-style-th-large">BRANCA ↕</th>
                           <th style={{
-                    ...styles.thLarge,
-                    cursor: "pointer"
-                  }} onClick={() => setOrdineCodiceAsset("LOCAZIONE_ASC")}>LOCAZIONE ↕</th>
+
+                  cursor: "pointer"
+                }} onClick={() => setOrdineCodiceAsset("LOCAZIONE_ASC")} className="fmed-style-th-large">LOCAZIONE ↕</th>
                           <th style={{
-                    ...styles.thLarge,
-                    cursor: "pointer"
-                  }} onClick={() => setOrdineCodiceAsset("COSTRUTTORE_ASC")}>COSTRUTTORE ↕</th>
-                          <th style={styles.thLarge}>MODELLO</th>
+
+                  cursor: "pointer"
+                }} onClick={() => setOrdineCodiceAsset("COSTRUTTORE_ASC")} className="fmed-style-th-large">COSTRUTTORE ↕</th>
+                          <th className="fmed-style-th-large">MODELLO</th>
                           <th style={{
-                    ...styles.thLarge,
-                    cursor: "pointer"
-                  }} onClick={() => setOrdineCodiceAsset("STATO_ASC")}>STATO ↕</th>
-                          <th style={styles.thLarge}>AZIONI</th>
+
+                  cursor: "pointer"
+                }} onClick={() => setOrdineCodiceAsset("STATO_ASC")} className="fmed-style-th-large">STATO ↕</th>
+                          <th className="fmed-style-th-large">AZIONI</th>
                         </tr>
                       </thead>
                       <tbody>
                         {filtratiRenderizzati.map((c, i) => {
-                  const codiceRiga = String(c?.codicestrumento || c?.codice_strumento || c?.codice || "").trim();
-                  const inEdit = assetQuickEditCodice === codiceRiga;
-                  return <tr key={codiceRiga || i} style={styles.trClickable} onClick={() => !inEdit && apriSchedaCespite(c)}>
-                              <td style={styles.tdLarge} onClick={e => e.stopPropagation()}>
-                                <input type="checkbox" aria-label={`Seleziona asset ${codiceRiga}`} checked={assetSelezionatiBulk.includes(codiceRiga)} onChange={e => toggleSelezioneAssetBulk(codiceRiga, e.target.checked)} />
+                const codiceRiga = String(c?.codicestrumento || c?.codice_strumento || c?.codice || "").trim();
+                const inEdit = assetQuickEditCodice === codiceRiga;
+                return <tr key={codiceRiga || i} onClick={() => !inEdit && apriSchedaCespite(c)} className="fmed-style-tr-clickable">
+                              <td onClick={(e) => e.stopPropagation()} className="fmed-style-td-large">
+                                <input type="checkbox" aria-label={`Seleziona asset ${codiceRiga}`} checked={assetSelezionatiBulk.includes(codiceRiga)} onChange={(e) => toggleSelezioneAssetBulk(codiceRiga, e.target.checked)} />
                               </td>
-                              <td style={{
-                      ...styles.tdCodeLarge,
-                      ...styles.assetStickyColBody
-                    }}>{codiceRiga}</td>
-                              <td style={styles.tdLarge}>
-                                {inEdit ? <div onClick={e => e.stopPropagation()}><CanonicalSelect dictionary="TIPOLOGIE_ASSET" value={assetQuickEditForm.tipologia || ""} onChange={(value) => aggiornaCampoModificaRapidaAsset("tipologia", value)} options={listaTipologie} apiBaseUrl={apiBaseUrl} /></div> : c.tipologia}
+                              <td className="fmed-style-td-code-large fmed-style-asset-sticky-col-body">
+
+
+                    {codiceRiga}</td>
+                              <td className="fmed-style-td-large">
+                                {inEdit ? <div onClick={(e) => e.stopPropagation()}><CanonicalSelect dictionary="TIPOLOGIE_ASSET" value={assetQuickEditForm.tipologia || ""} onChange={(value) => aggiornaCampoModificaRapidaAsset("tipologia", value)} options={listaTipologie} apiBaseUrl={apiBaseUrl} /></div> : c.tipologia}
                               </td>
-                              <td style={styles.tdLarge}>
-                                {inEdit ? <div onClick={e => e.stopPropagation()}><CanonicalSelect dictionary="SEDI" value={assetQuickEditForm.sede || c.sede || ""} onChange={(value) => { aggiornaCampoModificaRapidaAsset("sede", value); aggiornaCampoModificaRapidaAsset("locazione", ""); }} options={listaSedi} apiBaseUrl={apiBaseUrl} /></div> : c.sede}
+                              <td className="fmed-style-td-large">
+                                {inEdit ? <div onClick={(e) => e.stopPropagation()}><CanonicalSelect dictionary="SEDI" value={assetQuickEditForm.sede || c.sede || ""} onChange={(value) => {aggiornaCampoModificaRapidaAsset("sede", value);aggiornaCampoModificaRapidaAsset("locazione", "");}} options={listaSedi} apiBaseUrl={apiBaseUrl} /></div> : c.sede}
                               </td>
-                              <td style={styles.tdLarge}>
-                                {inEdit ? <div onClick={e => e.stopPropagation()}><CanonicalSelect dictionary="BRANCHE_MEDICHE" value={assetQuickEditForm.branca_medica || ""} onChange={(value) => aggiornaCampoModificaRapidaAsset("branca_medica", value)} options={listaBranche} apiBaseUrl={apiBaseUrl} /></div> : getBrancaAsset(c) || "-"}
+                              <td className="fmed-style-td-large">
+                                {inEdit ? <div onClick={(e) => e.stopPropagation()}><CanonicalSelect dictionary="BRANCHE_MEDICHE" value={assetQuickEditForm.branca_medica || ""} onChange={(value) => aggiornaCampoModificaRapidaAsset("branca_medica", value)} options={listaBranche} apiBaseUrl={apiBaseUrl} /></div> : getBrancaAsset(c) || "-"}
                               </td>
-                              <td style={styles.tdLarge}>
-                                {inEdit ? <div onClick={e => e.stopPropagation()}><CanonicalSelect dictionary="LOCAZIONI" value={assetQuickEditForm.locazione || ""} onChange={(value) => aggiornaCampoModificaRapidaAsset("locazione", value)} options={getListaLocazioniPerSede(assetQuickEditForm.sede || c.sede || "TUTTE", assetQuickEditForm.locazione || getLocazioneFmed(c), true)} apiBaseUrl={apiBaseUrl} restrictToOptions /></div> : getLocazioneFmed(c) || "-"}
+                              <td className="fmed-style-td-large">
+                                {inEdit ? <div onClick={(e) => e.stopPropagation()}><CanonicalSelect dictionary="LOCAZIONI" value={assetQuickEditForm.locazione || ""} onChange={(value) => aggiornaCampoModificaRapidaAsset("locazione", value)} options={getListaLocazioniPerSede(assetQuickEditForm.sede || c.sede || "TUTTE", assetQuickEditForm.locazione || getLocazioneFmed(c), true)} apiBaseUrl={apiBaseUrl} restrictToOptions /></div> : getLocazioneFmed(c) || "-"}
                               </td>
-                              <td style={styles.tdLarge}>
-                                {inEdit ? <div onClick={e => e.stopPropagation()}><CanonicalSelect dictionary="COSTRUTTORI" value={assetQuickEditForm.costruttore || ""} onChange={(value) => aggiornaCampoModificaRapidaAsset("costruttore", value)} options={listaCostruttori} apiBaseUrl={apiBaseUrl} /></div> : c.costruttore}
+                              <td className="fmed-style-td-large">
+                                {inEdit ? <div onClick={(e) => e.stopPropagation()}><CanonicalSelect dictionary="COSTRUTTORI" value={assetQuickEditForm.costruttore || ""} onChange={(value) => aggiornaCampoModificaRapidaAsset("costruttore", value)} options={listaCostruttori} apiBaseUrl={apiBaseUrl} /></div> : c.costruttore}
                               </td>
-                              <td style={styles.tdLarge}>
-                                {inEdit ? <div onClick={e => e.stopPropagation()}><CanonicalSelect dictionary="MODELLI" value={assetQuickEditForm.modello || ""} onChange={(value) => aggiornaCampoModificaRapidaAsset("modello", value)} options={listaModelli} apiBaseUrl={apiBaseUrl} /></div> : c.modello}
+                              <td className="fmed-style-td-large">
+                                {inEdit ? <div onClick={(e) => e.stopPropagation()}><CanonicalSelect dictionary="MODELLI" value={assetQuickEditForm.modello || ""} onChange={(value) => aggiornaCampoModificaRapidaAsset("modello", value)} options={listaModelli} apiBaseUrl={apiBaseUrl} /></div> : c.modello}
                               </td>
-                              <td style={styles.tdLarge}>
-                                {inEdit ? <div onClick={e => e.stopPropagation()}><CanonicalSelect dictionary="STATI_ASSET" value={assetQuickEditForm.stato_asset || statoCespite(c)} onChange={(value) => aggiornaCampoModificaRapidaAsset("stato_asset", value)} options={STATI_ASSET_STANDARD} apiBaseUrl={apiBaseUrl} /></div> : <>
+                              <td className="fmed-style-td-large">
+                                {inEdit ? <div onClick={(e) => e.stopPropagation()}><CanonicalSelect dictionary="STATI_ASSET" value={assetQuickEditForm.stato_asset || statoCespite(c)} onChange={(value) => aggiornaCampoModificaRapidaAsset("stato_asset", value)} options={STATI_ASSET_STANDARD} apiBaseUrl={apiBaseUrl} /></div> : <>
                                     <span style={{
-                          ...styles.statusDot,
-                          background: coloreStatoAsset(statoCespite(c))
-                        }} />
+
+                        background: coloreStatoAsset(statoCespite(c))
+                      }} className="fmed-style-status-dot" />
                                     {statoCespite(c)}
                                   </>}
                               </td>
-                              <td style={styles.tdLarge} onClick={e => e.stopPropagation()}>
-                                {inEdit ? <div style={styles.assetQuickActions}>
-                                    <button type="button" className="fmed-table-icon-action is-save" style={styles.assetQuickSaveBtn} disabled={assetQuickEditSaving} onClick={() => salvaModificaRapidaAsset(c)} aria-label="Salva modifiche" title="Salva modifiche"><FmedIcon name="save" /></button>
-                                    <button type="button" className="fmed-table-icon-action is-cancel" style={styles.assetQuickCancelBtn} disabled={assetQuickEditSaving} onClick={annullaModificaRapidaAsset} aria-label="Annulla modifiche" title="Annulla modifiche"><FmedIcon name="close" /></button>
-                                  </div> : <button type="button" className="fmed-table-edit-action" style={styles.assetQuickEditBtn} onClick={() => apriModificaRapidaAsset(c)}><FmedIcon name="edit" /> Modifica</button>}
+                              <td onClick={(e) => e.stopPropagation()} className="fmed-style-td-large">
+                                {inEdit ? <div className="fmed-style-asset-quick-actions">
+                                    <button type="button" className="fmed-table-icon-action is-save fmed-style-asset-quick-save-btn" disabled={assetQuickEditSaving} onClick={() => salvaModificaRapidaAsset(c)} aria-label="Salva modifiche" title="Salva modifiche"><FmedIcon name="save" /></button>
+                                    <button type="button" className="fmed-table-icon-action is-cancel fmed-style-asset-quick-cancel-btn" disabled={assetQuickEditSaving} onClick={annullaModificaRapidaAsset} aria-label="Annulla modifiche" title="Annulla modifiche"><FmedIcon name="close" /></button>
+                                  </div> : <button type="button" className="fmed-table-edit-action fmed-style-asset-quick-edit-btn" onClick={() => apriModificaRapidaAsset(c)}><FmedIcon name="edit" /> Modifica</button>}
                               </td>
                             </tr>;
-                })}
+              })}
                       </tbody>
                     </table>
                   </div>}
-                {filtrati.length > filtratiRenderizzati.length && <div style={styles.loadMoreRow}>
-                    <button type="button" style={styles.assetSecondaryAction} onClick={() => setAssetRenderLimit(v => v + FMED_RENDER_BATCH_ASSET)}>
+                {filtrati.length > filtratiRenderizzati.length && <div className="fmed-style-load-more-row">
+                    <button type="button" onClick={() => setAssetRenderLimit((v) => v + FMED_RENDER_BATCH_ASSET)} className="fmed-style-asset-secondary-action">
                       Mostra altri asset ({filtratiRenderizzati.length}/{filtrati.length})
                     </button>
                   </div>}
               </div>}
-          </div>
-  );
+          </div>);
+
 }

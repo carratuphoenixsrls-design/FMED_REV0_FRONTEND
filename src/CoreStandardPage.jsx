@@ -22,7 +22,7 @@ function MasterDataQualityPanel({ quality, loading, busy, preview, canManage, on
   return <section className="core-quality-panel" aria-label="Qualità Master Data">
     <div className="core-quality-heading">
       <div>
-        <span className="core-standard-kicker">CONTROLLO MASTER DATA E5</span>
+        <span className="core-standard-kicker">CONTROLLO MASTER DATA</span>
         <h3>Qualità e normalizzazione dei dati</h3>
         <p>Confronta Asset, Interventi e Infrastrutture con i dizionari centrali. Nessuna modifica viene applicata senza anteprima e conferma esplicita.</p>
       </div>
@@ -98,7 +98,7 @@ function SiteHygienePanel({ audit, loading, busy, preview, canManage, onRefresh,
   return <section className="core-site-hygiene-panel" aria-label="Pulizia e normalizzazione sedi">
     <div className="core-quality-heading">
       <div>
-        <span className="core-standard-kicker">DATA HYGIENE E5.2.1</span>
+        <span className="core-standard-kicker">DATA HYGIENE</span>
         <h3>Pulizia controllata delle sedi</h3>
         <p>Riconduce Asset, Interventi, Infrastrutture e Sicurezza 81/08 alle sei sedi ufficiali. Conserva il valore precedente nello storico e non modifica valori sconosciuti.</p>
       </div>
@@ -323,7 +323,7 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
       } else {
         setUniformityMergePreview(null);
         await Promise.all([load(), loadUniformity(true), loadQuality(true)]);
-        await onDataChanged?.({ tipo: "MASTER_DATA_UNIFORMITA_E8_1_8", risultato: data });
+        await onDataChanged?.({ tipo: "MASTER_DATA_UNIFORMITA_REV0", risultato: data });
         setMessage(`Uniformazione completata: ${data.gruppi_applicati || 0} gruppi; ${data.alias_conservati || 0} alias storici conservati; ${data.errori?.length || 0} errori.`);
       }
       return data;
@@ -364,7 +364,7 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
         headers: apiHeaders(),
         body: JSON.stringify({
           apply,
-          conferma: apply ? "APPLICA_E5_2_1_DATA_HYGIENE" : null,
+          conferma: apply ? "APPLICA_REV0_DATA_HYGIENE" : null,
           limit: 10000,
           max_modifiche: 10000,
           eseguito_da: actor,
@@ -378,7 +378,7 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
       } else {
         setSiteHygienePreview(null);
         await Promise.all([load(), loadQuality(true), loadSiteHygiene(true)]);
-        await onDataChanged?.({ tipo: "DATA_HYGIENE_SEDI_E5_2_1", risultato: data });
+        await onDataChanged?.({ tipo: "DATA_HYGIENE_SEDI_REV0", risultato: data });
         setMessage(`Pulizia sedi completata: ${data.campi_aggiornati || 0} campi aggiornati; ${data.errori?.length || 0} errori.`);
       }
       return data;
@@ -553,7 +553,7 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
         apiBaseUrl, method: "POST", headers: apiHeaders(), retries: apply ? 0 : 1, timeoutMs: 120000,
         body: JSON.stringify({
           apply,
-          conferma: apply ? "ACQUISISCI_RELAZIONI_E5_2_2" : null,
+          conferma: apply ? "ACQUISISCI_RELAZIONI_REV0" : null,
           limite: 10000,
           utente: actor,
         }),
@@ -564,7 +564,7 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
       } else {
         setRelationHistoryPreview(null);
         await load();
-        await onDataChanged?.({ tipo: "RELAZIONI_STORICHE_E5_2_2", risultato: data });
+        await onDataChanged?.({ tipo: "RELAZIONI_STORICHE_REV0", risultato: data });
         setMessage(`Relazioni storiche acquisite: ${data.totale_create || 0}. Errori: ${data.errori?.length || 0}.`);
       }
     } catch (error) {
@@ -614,7 +614,7 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
         <div className="fmed-banner-heading">
           <FmedModuleIcon module="Dizionari" />
           <div className="fmed-banner-copy">
-            <span className="core-standard-kicker">CATALOGO CANONICO GLOBALE E5.2.2</span>
+            <span className="core-standard-kicker">CATALOGO CANONICO GLOBALE</span>
             <h2>Dizionari FMED</h2>
             <p>Aggiungi e modifica i valori utilizzati nei menu a tendina di Asset, Interventi, Infrastrutture, Sicurezza 81/08 e degli altri moduli. Le modifiche restano centralizzate e sincronizzate.</p>
           </div>
