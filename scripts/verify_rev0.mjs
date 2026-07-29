@@ -51,6 +51,9 @@ app.includes("VITE_API_BASE_URL") || main.includes("VITE_API_BASE_URL")
 !settings.includes('activeTab === "MASTER_DATA" && <CoreStandardPage')
   ? ok("Cataloghi non duplicati in Dati avanzati")
   : fail("Cataloghi duplicati in Dati avanzati");
+!visual.includes(".fmed-main-content *")
+  ? ok("nessuna forzatura colore universale")
+  : fail("forzatura colore universale presente");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");

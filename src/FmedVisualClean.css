@@ -1559,8 +1559,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   overflow: hidden;
 }
 
-.fmed-app-root.fmed-shell-premium .fmed-main-content,
-.fmed-app-root.fmed-shell-premium .fmed-main-content * {
+.fmed-app-root.fmed-shell-premium .fmed-main-content {
   -webkit-text-fill-color: currentColor;
 }
 
