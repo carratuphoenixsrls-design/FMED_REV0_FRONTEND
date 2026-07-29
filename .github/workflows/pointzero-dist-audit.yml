@@ -18,8 +18,9 @@ concurrency:
 
 jobs:
   audit-distribuzione:
-    name: 4 · Audit indipendente artefatto Punto 0
+    name: 4 · Audit build e browser Punto 0
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - name: Checkout completo
         uses: actions/checkout@v4
@@ -35,7 +36,7 @@ jobs:
       - name: Dipendenze pulite
         run: npm ci
 
-      - name: Build candidata
+      - name: Build candidata reale
         run: npm run build
 
       - name: Verifica strutturale della distribuzione
@@ -55,9 +56,56 @@ jobs:
           path: |
             src
             scripts
+            qa
             public
             index.html
             package.json
             package-lock.json
             vite.config.*
           retention-days: 7
+
+      - name: Rende univoco il controllo Nuovo asset
+        shell: bash
+        run: sed -i 's/{ name: "Nuovo asset" }/{ name: "Nuovo asset", exact: true }/' qa/pointzero_e2e.mjs
+
+      - name: Playwright isolato
+        run: npm install --no-save playwright@1.54.2
+
+      - name: Browser Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build browser con backend simulato
+        env:
+          VITE_API_BASE_URL: https://qa.fmed.invalid
+        run: npm run build
+
+      - name: Avvia Preview QA
+        shell: bash
+        run: |
+          nohup npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/fmed-preview.log 2>&1 &
+          for attempt in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:4173 > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/fmed-preview.log
+          exit 1
+
+      - name: Collaudo browser completo su tre risoluzioni
+        env:
+          FMED_QA_URL: http://127.0.0.1:4173
+          FMED_QA_OUTPUT: qa-results
+        run: node qa/pointzero_e2e.mjs
+
+      - name: Conserva screenshot e rapporto browser
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: FMED_REV0_PUNTO0_FINAL_BROWSER_QA
+          path: qa-results
+          retention-days: 7
+
+      - name: Log Preview in caso di errore
+        if: failure()
+        run: cat /tmp/fmed-preview.log || true
