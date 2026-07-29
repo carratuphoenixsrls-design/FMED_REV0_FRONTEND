@@ -14,6 +14,7 @@ const build = JSON.parse(read("public/fmed-build.json"));
 const index = read("index.html");
 const main = read("src/main.jsx");
 const app = read("src/FmedApp.jsx");
+const settings = read("src/ImpostazioniPage.jsx");
 const visual = read("src/FmedVisualClean.css");
 const cssFiles = fs.readdirSync(path.join(root, "src"), { recursive: true })
   .filter((file) => file.endsWith(".css"));
@@ -47,6 +48,9 @@ app.includes("VITE_API_BASE_URL") || main.includes("VITE_API_BASE_URL")
 !/(Analisi e amministrazione|application\/vnd\.ms-excel|\.xls\b|scaricaExcelFmed)/i.test(allSource)
   ? ok("unico modulo Report e export CSV reale")
   : fail("residui report duplicato o falso Excel");
+!settings.includes('activeTab === "MASTER_DATA" && <CoreStandardPage')
+  ? ok("Cataloghi non duplicati in Dati avanzati")
+  : fail("Cataloghi duplicati in Dati avanzati");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");

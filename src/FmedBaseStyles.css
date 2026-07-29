@@ -1397,9 +1397,9 @@
   display: flex;
   gap: 10px;
   position: sticky;
-  bottom: 8px;
+  top: 8px;
   z-index: 4;
-  margin: 14px -4px -4px;
+  margin: 10px -4px 14px;
   padding: 10px;
   align-items: stretch;
   flex-wrap: wrap;
@@ -1407,6 +1407,9 @@
   border-radius: 14px;
   background: color-mix(in srgb, var(--fmed-surface-solid) 94%, transparent);
   box-shadow: 0 8px 24px rgba(15, 56, 65, .12);
+}
+.fmed-style-export-action-row > button {
+  flex: 1 1 180px;
 }
 .fmed-style-export-filter-box {
   margin-top: 12px;

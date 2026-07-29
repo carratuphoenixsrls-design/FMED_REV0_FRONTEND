@@ -235,6 +235,10 @@ export default function ExportPage(props) {
                         <option value="STATO_ASC">Ordina per stato</option>
                       </select>
                     </div>
+                    <div className="fmed-style-export-action-row">
+                      <button type="button" onClick={() => exportInventarioFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
+                      <button type="button" onClick={() => exportInventarioFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
+                    </div>
 
                     {renderFiltroBrancheExport("Filtro multiplo branca", exportBrancheInventario, setExportBrancheInventario)}
 
@@ -364,16 +368,6 @@ export default function ExportPage(props) {
                     <div className="fmed-style-export-info-line">
                       Filtri: {exportSedeInventario} · {exportStatoInventario} · {exportCategoriaInventario === "TUTTE" ? "Tutte le categorie" : formatCategoria(exportCategoriaInventario)} · {exportTipologiaInventario} · Branche: {exportBrancheInventario.length ? exportBrancheInventario.length : "tutte"} · {exportCostruttoreInventario} · {exportRepartoInventario} · {exportSocietaInventario} · {exportLocazioneInventario} · {exportOrdineInventario}
                     </div>
-                    <div className="fmed-style-export-action-row">
-                      <button style={{
-
-                flex: 1
-              }} onClick={() => exportInventarioFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
-                      <button style={{
-
-                flex: 1
-              }} onClick={() => exportInventarioFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
-                    </div>
                   </div>}
               </div>
 
@@ -424,6 +418,10 @@ export default function ExportPage(props) {
                       </select>
                       <input type="date" value={exportDataInterventiDa} onChange={(e) => setExportDataInterventiDa(e.target.value)} className="fmed-style-input" />
                       <input type="date" value={exportDataInterventiA} onChange={(e) => setExportDataInterventiA(e.target.value)} className="fmed-style-input" />
+                    </div>
+                    <div className="fmed-style-export-action-row">
+                      <button type="button" onClick={() => exportInterventiFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
+                      <button type="button" onClick={() => exportInterventiFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
                     </div>
 
                     {renderFiltroSediInterventiExport()}
@@ -528,16 +526,6 @@ export default function ExportPage(props) {
                       </div>
                     </div>
 
-                    <div className="fmed-style-export-action-row">
-                      <button style={{
-
-                flex: 1
-              }} onClick={() => exportInterventiFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
-                      <button style={{
-
-                flex: 1
-              }} onClick={() => exportInterventiFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
-                    </div>
                   </div>}
               </div>
 
@@ -606,17 +594,11 @@ export default function ExportPage(props) {
                       <input type="date" value={filtroScadenzeProssimaDa} onChange={(e) => setFiltroScadenzeProssimaDa(e.target.value)} className="fmed-style-input" />
                       <input type="date" value={filtroScadenzeProssimaA} onChange={(e) => setFiltroScadenzeProssimaA(e.target.value)} className="fmed-style-input" />
                     </div>
-                    {renderFiltroBrancheExport("Filtro multiplo branca", exportBrancheScadenze, setExportBrancheScadenze)}
                     <div className="fmed-style-export-action-row">
-                      <button style={{
-
-                flex: 1
-              }} onClick={() => exportScadenzeFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
-                      <button style={{
-
-                flex: 1
-              }} onClick={() => exportScadenzeFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
+                      <button type="button" onClick={() => exportScadenzeFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
+                      <button type="button" onClick={() => exportScadenzeFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
                     </div>
+                    {renderFiltroBrancheExport("Filtro multiplo branca", exportBrancheScadenze, setExportBrancheScadenze)}
                   </div>}
               </div>
 
@@ -657,17 +639,11 @@ export default function ExportPage(props) {
                         <option value="VERDE">VERDE</option>
                       </select>
                     </div>
-                    {renderFiltroBrancheExport("Filtro multiplo branca", exportBrancheBudget, setExportBrancheBudget)}
                     <div className="fmed-style-export-action-row">
-                      <button style={{
-
-                flex: 1
-              }} onClick={() => exportBudgetCriticitaFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
-                      <button style={{
-
-                flex: 1
-              }} onClick={() => exportBudgetCriticitaFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
+                      <button type="button" onClick={() => exportBudgetCriticitaFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
+                      <button type="button" onClick={() => exportBudgetCriticitaFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
                     </div>
+                    {renderFiltroBrancheExport("Filtro multiplo branca", exportBrancheBudget, setExportBrancheBudget)}
                   </div>}
               </div>
             </div>

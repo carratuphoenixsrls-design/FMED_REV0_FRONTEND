@@ -33,7 +33,8 @@ export default function ImpostazioniPage({ apiBaseUrl, canManage = false, active
 
     {activeTab === "UTENTI" && <div className="fmed-settings-users"><div className="fmed-settings-copy"><span className="fmed-module-kicker">Controllo accessi</span><h3>Utenti e permessi</h3><p>Gestisci chi può consultare o modificare FMED. Questa sezione non cambia i dati tecnici.</p></div><div className="fmed-settings-role-grid"><article><div className="fmed-settings-role-head"><strong>Admin</strong><span>Completo</span></div><p>Accesso a tutte le funzioni operative e amministrative.</p></article><article><div className="fmed-settings-role-head"><strong>Service</strong><span>Operativo</span></div><p>Gestione tecnica autorizzata.</p></article><article><div className="fmed-settings-role-head"><strong>User</strong><span>Consultazione</span></div><p>Visualizzazione delle informazioni assegnate.</p></article></div></div>}
 
-    {activeTab === "MASTER_DATA" && <CoreStandardPage apiBaseUrl={apiBaseUrl} canManage={canManage} onDataChanged={onDataChanged} initialTab="DIZIONARI" />}
+    {dictionariesOnly && <CoreStandardPage apiBaseUrl={apiBaseUrl} canManage={canManage} onDataChanged={onDataChanged} initialTab="DIZIONARI" />}
+    {activeTab === "MASTER_DATA" && !dictionariesOnly && <section className="fmed-settings-users"><div className="fmed-settings-copy"><span className="fmed-module-kicker">Dati centralizzati</span><h3>I dizionari hanno una sola pagina</h3><p>La gestione di valori, relazioni e qualità dati è disponibile esclusivamente nel modulo Cataloghi, senza copie dentro Strumenti.</p></div><button type="button" className="fmed-style-primary-btn" onClick={() => onNavigate?.("Dizionari")}>Apri Cataloghi</button></section>}
     {activeTab === "AUDIT" && !dictionariesOnly && <SystemAuditPage apiBaseUrl={apiBaseUrl} canManage={canManage} />}
   </section>;
 }
