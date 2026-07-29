@@ -36,7 +36,8 @@ const forbidRegex = (label, source, regex) => {
 const app = requireFile("src/FmedApp.jsx", "shell applicativa");
 const main = requireFile("src/main.jsx", "bootstrap applicativo");
 const baseCss = requireFile("src/FmedBaseStyles.css", "stili base");
-const visualCss = requireFile("src/FmedVisualClean.css", "sistema visuale");
+const visualCss = requireFile("src/FmedVisualClean.css", "sistema visuale stabile");
+const regola0Css = requireFile("src/Regola0VisualSystem.css", "sistema visuale Regola 0");
 const errorBoundary = requireFile("src/FmedErrorBoundary.jsx", "error boundary");
 
 const pageContracts = [
@@ -117,6 +118,11 @@ requireTokens("error boundary con recupero visibile", errorBoundary, [
   "componentDidCatch",
   "Ricarica FMED",
 ]);
+requireTokens("sistema grafico Regola 0 caricato per ultimo", main, [
+  "import \"./FmedVisualClean.css\";",
+  "import \"./Regola0VisualSystem.css\";",
+  "fmed-rev0-regola0-",
+]);
 
 requireTokens("menu principale completo", app, [
   "Asset",
@@ -187,7 +193,35 @@ requireTokens("caricamento on demand preservato", app, [
   "caricaInfrastruttureOnDemand",
 ]);
 
-const allCss = `${baseCss}\n${visualCss}`;
+requireTokens("grafica integrale su tutti i moduli principali", regola0Css, [
+  ".fmed-dashboard-page",
+  ".fmed-asset-page",
+  ".fmed-interventi-operativi",
+  ".fmed-scadenze-operative",
+  ".fmed-infrastructure-root",
+  ".s8108-page",
+  ".fmed-process-page",
+  ".core-standard-page",
+  ".fmed-settings-page",
+  ".fmed-costi-page",
+  ".fmed-export-page",
+  ".fmed-sharepoint-page",
+  ".fmed-audit-page",
+  ".fmed-wizard-page",
+]);
+
+requireTokens("grafica primaria secondaria e terziaria coperta", regola0Css, [
+  ".fmed-module-hero",
+  ".fmed-operational-filters",
+  ".fmed-operational-kpi-card",
+  "[class*=\"table-wrap\"]",
+  "[role=\"dialog\"]",
+  ".fmed-workspace-page",
+  ".fmed-wizard-page",
+  ":focus-visible",
+]);
+
+const allCss = `${baseCss}\n${visualCss}\n${regola0Css}`;
 forbidRegex(
   "nessun oscuramento globale del contenuto principale",
   allCss,
@@ -208,15 +242,25 @@ forbidRegex(
   allCss,
   /!important/i,
 );
+forbidRegex(
+  "nessuna larghezza rigida per modali e pannelli terziari",
+  regola0Css,
+  /(?:\[role=\"dialog\"\]|modal-content|dialog-content)[\s\S]{0,900}\bwidth\s*:\s*\d{4,}px/i,
+);
 
-requireTokens("sistema responsive notebook-desktop-monitor", visualCss, [
+requireTokens("sistema responsive notebook-desktop-monitor", `${visualCss}\n${regola0Css}`, [
   "@media (max-width: 1440px)",
+  "@media (max-width: 1180px)",
   "@media (min-width: 1800px)",
+]);
+requireTokens("accessibilità movimento ridotto", regola0Css, [
+  "@media (prefers-reduced-motion: reduce)",
 ]);
 
 const requiredCssFiles = [
   "src/FmedBaseStyles.css",
   "src/FmedVisualClean.css",
+  "src/Regola0VisualSystem.css",
   "src/NewAssetWizard.css",
   "src/ProcessiPage.css",
   "src/Sicurezza8108Page.css",
