@@ -132,6 +132,14 @@ const appShell = read("src/FmedApp.jsx");
 !/#12b76a|#eaf8f0/i.test(read("src/NewAssetWizard.css"))
   ? ok("verde decorativo eliminato dal wizard")
   : fail("verde decorativo residuo nel wizard");
+(/grid-template-columns:\s*30px minmax\(0,1fr\)/i.test(visual)
+  && /fmed-module-hero-copy[\s\S]{0,180}margin:\s*0/i.test(visual))
+  ? ok("testate modulo riallineate")
+  : fail("allineamento testate modulo incompleto");
+(/fmed-side-menu-btn \.fmed-side-menu-icon[\s\S]{0,260}background:\s*color-mix/i.test(visual)
+  && /fmed-side-menu-btn\.is-active \.fmed-side-menu-icon[\s\S]{0,300}transform:\s*translateX\(1px\)/i.test(visual))
+  ? ok("icone moduli sempre riconoscibili")
+  : fail("identità cromatica icone laterali incompleta");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");

@@ -3423,12 +3423,18 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-module-hero-heading {
+  display: grid;
+  grid-template-columns: 30px minmax(0,1fr);
+  align-items: center;
+  gap: 14px;
   width: 100%;
   justify-self: start;
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-module-hero-copy {
   align-items: start;
+  width: 100%;
+  margin: 0;
   text-align: left;
 }
 
@@ -3465,7 +3471,10 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 .fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Marilab Mover"] { --menu-accent: #58b6e7; }
 
 .fmed-app-root.fmed-shell-premium .fmed-side-menu-btn .fmed-side-menu-icon {
+  border: 1px solid color-mix(in srgb, var(--menu-accent) 36%, transparent);
+  background: color-mix(in srgb, var(--menu-accent) 13%, transparent);
   color: var(--menu-accent);
+  transition: background .18s ease, border-color .18s ease, color .18s ease, transform .18s ease;
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-side-menu-btn.is-active {
@@ -3475,8 +3484,10 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-side-menu-btn.is-active .fmed-side-menu-icon {
-  background: color-mix(in srgb, var(--menu-accent) 20%, transparent);
+  border-color: color-mix(in srgb, var(--menu-accent) 70%, transparent);
+  background: color-mix(in srgb, var(--menu-accent) 76%, #172a43);
   color: #ffffff;
+  transform: translateX(1px);
 }
 
 /* Densità adattiva: notebook 15" (1366px) → monitor 27" (1920px e oltre). */
@@ -3541,8 +3552,17 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   }
 
   .fmed-app-root.fmed-shell-premium .fmed-operational-kpi-card {
-    min-height: 126px;
-    padding: 16px;
+    min-height: 142px;
+    padding: 18px;
+  }
+
+  .fmed-app-root.fmed-shell-premium :is(
+    .fmed-asset-page,
+    .fmed-interventi-operativi,
+    .fmed-scadenze-operative,
+    .fmed-infrastructure-root
+  ) {
+    gap: 12px;
   }
 
   .fmed-app-root.fmed-shell-premium .fmed-main-content :is(p,li,td,input,select,textarea) {
