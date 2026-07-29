@@ -1,5 +1,6 @@
 name: FMED Punto 0 Rebuild
 
+# Pipeline isolata: non modifica main e non distribuisce in produzione.
 on:
   push:
     branches:
