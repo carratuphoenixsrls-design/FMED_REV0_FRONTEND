@@ -67,6 +67,11 @@ jobs:
         if: steps.marker.outputs.done != 'true'
         run: node scripts/apply_pointzero_rebuild.mjs
 
+      - name: Mantiene la firma Regola 0 nella cache
+        if: steps.marker.outputs.done != 'true'
+        shell: bash
+        run: sed -i 's/fmed-rev0-punto0-rebuild/fmed-rev0-regola0-punto0-rebuild/' src/main.jsx
+
       - name: Marca la ricostruzione
         if: steps.marker.outputs.done != 'true'
         run: touch .fmed_pointzero_applied
