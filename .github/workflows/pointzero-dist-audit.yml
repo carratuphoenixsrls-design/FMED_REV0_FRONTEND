@@ -47,3 +47,17 @@ jobs:
           name: FMED_REV0_PUNTO0_AUDITED_DIST
           path: dist
           retention-days: 7
+
+      - name: Conserva sorgente candidata per audit profondo
+        uses: actions/upload-artifact@v4
+        with:
+          name: FMED_REV0_PUNTO0_SOURCE_SNAPSHOT
+          path: |
+            src
+            scripts
+            public
+            index.html
+            package.json
+            package-lock.json
+            vite.config.*
+          retention-days: 7
