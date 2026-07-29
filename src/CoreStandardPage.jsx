@@ -159,6 +159,49 @@ function SiteHygienePanel({ audit, loading, busy, preview, canManage, onRefresh,
   </section>;
 }
 
+function InterventionLocationHygienePanel({ audit, loading, busy, preview, canManage, onRefresh, onPreview, onApply }) {
+  const summary = audit?.riepilogo || {};
+  const plan = Array.isArray(preview?.piano) ? preview.piano : [];
+  return <section className="core-site-hygiene-panel" aria-label="Bonifica locazioni interventi">
+    <div className="core-quality-heading">
+      <div>
+        <span className="core-standard-kicker">DATA HYGIENE · INTERVENTI</span>
+        <h3>Bonifica locazioni mancanti</h3>
+        <p>Recupera la locazione dal cespite collegato tramite codice esatto. Compila solo campi vuoti; non sovrascrive dati presenti e non applica corrispondenze ambigue.</p>
+      </div>
+      <button type="button" className="core-primary-button" onClick={onRefresh} disabled={loading || busy}>{loading ? "Analisi…" : "Aggiorna analisi"}</button>
+    </div>
+    {loading && !audit ? <div className="core-quality-loading">Confronto interventi e cespiti tramite codice inventario…</div> : <>
+      <div className="core-quality-summary">
+        <article className={Number(summary.locazioni_vuote || 0) ? "is-warning" : "is-ok"}><span>Locazioni vuote</span><strong>{formatCount(summary.locazioni_vuote)}</strong><small>interventi da verificare</small></article>
+        <article className="is-ok"><span>Proposte certe</span><strong>{formatCount(summary.proposte_certe)}</strong><small>codice asset esatto</small></article>
+        <article><span>Esclusi</span><strong>{formatCount(summary.esclusi)}</strong><small>nessuna modifica automatica</small></article>
+        <article className={Number(summary.ambigui || 0) ? "is-warning" : "is-ok"}><span>Ambigui</span><strong>{formatCount(summary.ambigui)}</strong><small>richiedono controllo umano</small></article>
+        <article><span>Asset non trovati</span><strong>{formatCount(summary.asset_non_trovato)}</strong><small>codice senza corrispondenza</small></article>
+      </div>
+      <div className="core-quality-actions">
+        <div><strong>Anteprima obbligatoria, storico preventivo</strong><span>Ogni modifica conserva origine, valore precedente, operatore e identificativo dell'operazione.</span></div>
+        <button type="button" onClick={onPreview} disabled={busy || audit?.applicabile === false}>Prepara anteprima</button>
+        {canManage && preview && <button type="button" className="core-danger-safe-button" onClick={onApply} disabled={busy || !plan.length}>Applica {plan.length} completamenti certi</button>}
+      </div>
+      {audit?.applicabile === false && <div className="core-quality-loading">Schema non compatibile: nessuna modifica può essere applicata.</div>}
+      {preview && <div className="core-quality-preview">
+        <div className="core-section-heading"><h3>Locazioni proposte</h3><span>{plan.length}</span></div>
+        <p>{preview.criterio}</p>
+        <div className="core-quality-preview-list">
+          {plan.slice(0, 150).map((item, index) => <div key={`${item.chiave_valore}-${index}`}>
+            <code>Intervento {String(item.chiave_valore)}</code>
+            <strong>Vuoto → {item.a}</strong>
+            <span>Asset {item.codice_asset} · {item.fonte} · affidabilità {item.affidabilita}</span>
+          </div>)}
+          {!plan.length && <div className="core-empty-state">Nessun completamento certo disponibile.</div>}
+        </div>
+        {plan.length > 150 && <small>Mostrate le prime 150 proposte su {plan.length}.</small>}
+      </div>}
+    </>}
+  </section>;
+}
+
 
 export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage = false, initialTab = "DIZIONARI" }) {
   const [catalogo, setCatalogo] = useState([]);
@@ -188,6 +231,10 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
   const [siteHygieneLoading, setSiteHygieneLoading] = useState(false);
   const [siteHygieneBusy, setSiteHygieneBusy] = useState(false);
   const [siteHygienePreview, setSiteHygienePreview] = useState(null);
+  const [locationHygiene, setLocationHygiene] = useState(null);
+  const [locationHygieneLoading, setLocationHygieneLoading] = useState(false);
+  const [locationHygieneBusy, setLocationHygieneBusy] = useState(false);
+  const [locationHygienePreview, setLocationHygienePreview] = useState(null);
   const [uniformity, setUniformity] = useState(null);
   const [uniformityLoading, setUniformityLoading] = useState(false);
   const [uniformityBusy, setUniformityBusy] = useState(false);
@@ -244,6 +291,18 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
     }
   }, [apiBaseUrl]);
 
+  const loadLocationHygiene = useCallback(async () => {
+    setLocationHygieneLoading(true);
+    try {
+      const data = await fmedFetchJson("/data-hygiene/interventi/locazioni/audit?limit=10000", { apiBaseUrl, retries: 2, timeoutMs: 90000 });
+      setLocationHygiene(data);
+    } catch (error) {
+      setMessage(`Data Hygiene locazioni interventi: ${error.message}`);
+    } finally {
+      setLocationHygieneLoading(false);
+    }
+  }, [apiBaseUrl]);
+
   const loadUniformity = useCallback(async (force = true) => {
     setUniformityLoading(true);
     try {
@@ -261,7 +320,8 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
     if (!uniformity && !uniformityLoading) loadUniformity(false);
     if (!quality && !qualityLoading) loadQuality(false);
     if (!siteHygiene && !siteHygieneLoading) loadSiteHygiene(false);
-  }, [tab, uniformity, uniformityLoading, loadUniformity, quality, qualityLoading, loadQuality, siteHygiene, siteHygieneLoading, loadSiteHygiene]);
+    if (!locationHygiene && !locationHygieneLoading) loadLocationHygiene();
+  }, [tab, uniformity, uniformityLoading, loadUniformity, quality, qualityLoading, loadQuality, siteHygiene, siteHygieneLoading, loadSiteHygiene, locationHygiene, locationHygieneLoading, loadLocationHygiene]);
 
   async function masterAction(endpoint, payload, type) {
     setQualityBusy(true); setMessage("");
@@ -395,6 +455,50 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
     const count = Number(siteHygienePreview?.totale_modifiche || 0);
     if (!window.confirm(`Confermi la normalizzazione di ${count} campi sede? Il valore precedente verrà conservato nello storico e nessun record sarà eliminato.`)) return;
     return siteHygieneAction(true);
+  };
+
+  async function locationHygieneAction(apply = false) {
+    setLocationHygieneBusy(true); setMessage("");
+    try {
+      const session = fmedSession();
+      const actor = String(session?.email || session?.nome || "FMED_ADMIN");
+      const data = await fmedFetchJson("/data-hygiene/interventi/locazioni/normalizza", {
+        apiBaseUrl,
+        method: "POST",
+        headers: apiHeaders(),
+        body: JSON.stringify({
+          apply,
+          conferma: apply ? "APPLICA_REV0_LOCAZIONI_INTERVENTI" : null,
+          limit: 10000,
+          max_modifiche: 10000,
+          eseguito_da: actor,
+        }),
+        retries: apply ? 0 : 1,
+        timeoutMs: 180000,
+      });
+      if (!apply) {
+        setLocationHygienePreview(data);
+        setMessage(`Anteprima locazioni pronta: ${data.totale_modifiche || 0} completamenti certi; nessuna sovrascrittura.`);
+      } else {
+        setLocationHygienePreview(null);
+        await Promise.all([load(), loadQuality(true), loadLocationHygiene()]);
+        await onDataChanged?.({ tipo: "DATA_HYGIENE_LOCAZIONI_INTERVENTI_REV0", risultato: data });
+        setMessage(`Bonifica locazioni completata: ${data.campi_aggiornati || 0} campi compilati; ${data.saltati?.length || 0} saltati; ${data.errori?.length || 0} errori.`);
+      }
+      return data;
+    } catch (error) {
+      setMessage(error.message || "Bonifica locazioni interventi non riuscita");
+      return null;
+    } finally {
+      setLocationHygieneBusy(false);
+    }
+  }
+
+  const previewLocationHygiene = () => locationHygieneAction(false);
+  const applyLocationHygiene = () => {
+    const count = Number(locationHygienePreview?.totale_modifiche || 0);
+    if (!window.confirm(`Confermi ${count} completamenti certi delle locazioni interventi? Saranno compilati esclusivamente campi ancora vuoti; nessun valore esistente verrà sovrascritto.`)) return;
+    return locationHygieneAction(true);
   };
 
   const loadNextCode = useCallback(async (dictionaryCode) => {
@@ -757,6 +861,16 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
           onRefresh={() => loadSiteHygiene(true)}
           onPreview={previewSiteHygiene}
           onApply={applySiteHygiene}
+        />
+        <InterventionLocationHygienePanel
+          audit={locationHygiene}
+          loading={locationHygieneLoading}
+          busy={locationHygieneBusy}
+          preview={locationHygienePreview}
+          canManage={canManage}
+          onRefresh={loadLocationHygiene}
+          onPreview={previewLocationHygiene}
+          onApply={applyLocationHygiene}
         />
         <MasterDataQualityPanel
           quality={quality}

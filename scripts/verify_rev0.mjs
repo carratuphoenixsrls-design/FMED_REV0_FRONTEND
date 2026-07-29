@@ -73,6 +73,12 @@ exportPage.includes("fmedAuditQualitaDati.righe.map")
   && !app.includes('titolo: "FMED · Audit qualità dati"')
   ? ok("Audit unico e coerente tra schermata e CSV")
   : fail("Audit schermata e CSV non condividono la stessa sorgente");
+allSource.includes("/data-hygiene/interventi/locazioni/audit")
+  && allSource.includes("/data-hygiene/interventi/locazioni/normalizza")
+  && allSource.includes("APPLICA_REV0_LOCAZIONI_INTERVENTI")
+  && allSource.includes("non sovrascrive dati presenti")
+  ? ok("bonifica locazioni integrata nel Data Hygiene unico")
+  : fail("bonifica locazioni duplicata o incompleta");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");
