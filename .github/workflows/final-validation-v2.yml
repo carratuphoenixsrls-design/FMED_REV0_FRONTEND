@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: fmed-final-v2-${{ github.ref }}
@@ -94,3 +94,36 @@ jobs:
       - name: Log errore Preview
         if: failure()
         run: cat /tmp/fmed-preview.log || true
+
+      - name: Registra esito sul branch isolato
+        if: always()
+        env:
+          VALIDATION_STATUS: ${{ job.status }}
+          VALIDATED_SHA: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+        shell: bash
+        run: |
+          mkdir -p docs
+          PASSED="n.d."
+          FAILED="n.d."
+          if [ -f qa-results/report.json ]; then
+            PASSED=$(node -p "require('./qa-results/report.json').passed ?? 'n.d.'")
+            FAILED=$(node -p "require('./qa-results/report.json').failed ?? 'n.d.'")
+          fi
+          cat > docs/FINAL_VALIDATION_RESULT.md <<EOF
+          # FMED REV0 · Esito validazione finale
+
+          - Esito workflow: **${VALIDATION_STATUS}**
+          - Commit verificato: \`${VALIDATED_SHA}\`
+          - Run GitHub Actions: \`${RUN_ID}\`
+          - Controlli browser superati: **${PASSED}**
+          - Controlli browser falliti: **${FAILED}**
+          - Data UTC: **$(date -u +'%Y-%m-%d %H:%M:%S')**
+
+          Il risultato è stato generato automaticamente dal workflow isolato. Main e Production non sono stati modificati.
+          EOF
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/FINAL_VALIDATION_RESULT.md
+          git commit -m "FMED REV0: esito validazione finale ${VALIDATION_STATUS}" || exit 0
+          git push origin HEAD:repair/rev0-regola0
