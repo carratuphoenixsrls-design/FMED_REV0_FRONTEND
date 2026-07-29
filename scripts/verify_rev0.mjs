@@ -73,16 +73,13 @@ exportPage.includes("fmedAuditQualitaDati.righe.map")
   && !app.includes('titolo: "FMED · Audit qualità dati"')
   ? ok("Audit unico e coerente tra schermata e CSV")
   : fail("Audit schermata e CSV non condividono la stessa sorgente");
-allSource.includes("/data-hygiene/cespiti/locazioni/audit")
-  && allSource.includes("/data-hygiene/cespiti/locazioni/normalizza")
-  && allSource.includes("APPLICA_REV0_LOCAZIONI_CESPITI")
-  && allSource.includes("Bonifica locazioni cespiti")
-  ? ok("bonifica locazioni cespiti unica")
-  : fail("bonifica locazioni cespiti duplicata o incompleta");
-allSource.includes("locationHygieneAttempted")
-  && allSource.includes("!locationHygieneAttempted")
-  ? ok("bonifica locazioni senza ciclo automatico di errore")
-  : fail("bonifica locazioni può ripetere richieste fallite");
+allSource.includes("/data-quality/audit")
+  && allSource.includes("function DataQualityPanel")
+  ? ok("Qualità dati unica")
+  : fail("Qualità dati non unificata");
+(allSource.match(/function DataQualityPanel/g) || []).length === 1
+  ? ok("un solo pannello Qualità dati")
+  : fail("pannello Qualità dati duplicato");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");

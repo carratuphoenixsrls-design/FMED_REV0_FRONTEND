@@ -491,7 +491,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   .fmed-sharepoint-controls,.fmed-sharepoint-table-wrap,.fmed-interventi-panel,
   .fmed-process-group,.fmed-process-card,.fmed-process-detail-section,
   .core-standard-head,.core-dictionary-panel,.core-relations-panel,.core-quality-panel,
-  .core-site-hygiene-panel,.core-uniformity-panel,.fmed-settings-head,.fmed-settings-users,
+  .fmed-settings-head,.fmed-settings-users,
   .fmed-wizard-card,.fmed-asset-data-panel,.fmed-predictive-card,.s8108-panel,
   .fmed-audit-head,.fmed-audit-toolbar,.fmed-audit-list
 ) {
