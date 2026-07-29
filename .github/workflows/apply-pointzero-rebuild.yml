@@ -1,0 +1,123 @@
+name: FMED Punto 0 Rebuild
+
+on:
+  push:
+    branches:
+      - repair/rev0-regola0
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pointzero-rebuild-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  rebuild-punto-zero:
+    name: Ricostruzione Punto 0 sulla base stabile
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout branch di riparazione
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: repair/rev0-regola0
+
+      - name: Verifica marcatore applicazione
+        id: marker
+        shell: bash
+        run: |
+          if [ -f .fmed_pointzero_applied ]; then
+            echo "done=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "done=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Recupera la sorgente grafica Punto 0 preservata
+        if: steps.marker.outputs.done != 'true'
+        shell: bash
+        run: git fetch origin backup/rev0-punto0-0566931
+
+      - name: Trasferisce soltanto pagine e componenti visuali controllati
+        if: steps.marker.outputs.done != 'true'
+        shell: bash
+        run: |
+          git checkout origin/backup/rev0-punto0-0566931 -- \
+            src/pages/AssetPage.jsx \
+            src/components/asset/AssetControls.jsx \
+            src/pages/AssetPointZero.css \
+            src/pages/InterventiPage.jsx \
+            src/components/interventi/InterventiControls.jsx \
+            src/pages/ScadenzePage.jsx \
+            src/components/scadenze/ScadenzeControls.jsx \
+            src/pages/InfrastrutturePage.jsx \
+            src/components/infrastrutture/InfrastruttureControls.jsx \
+            src/components/infrastrutture/InfrastrutturaEditor.jsx \
+            src/pages/OperationsPointZero.css \
+            src/Sicurezza8108Page.jsx \
+            src/components/sicurezza8108/Sicurezza8108Controls.jsx \
+            src/ProcessiPage.jsx \
+            src/ImpostazioniPage.jsx \
+            src/pages/GovernancePointZero.css
+
+      - name: Applica protezioni e compatibilità con la base stabile
+        if: steps.marker.outputs.done != 'true'
+        run: node scripts/apply_pointzero_rebuild.mjs
+
+      - name: Marca la ricostruzione come applicata
+        if: steps.marker.outputs.done != 'true'
+        shell: bash
+        run: touch .fmed_pointzero_applied
+
+      - name: Node 22
+        if: steps.marker.outputs.done != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Dipendenze pulite
+        if: steps.marker.outputs.done != 'true'
+        run: npm ci
+
+      - name: Controllo completo prima del commit
+        if: steps.marker.outputs.done != 'true'
+        run: npm run check
+
+      - name: Registra la candidata isolata
+        if: steps.marker.outputs.done != 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            .fmed_pointzero_applied \
+            src/main.jsx \
+            src/PointZeroCompatibility.css \
+            src/pages/AssetPage.jsx \
+            src/components/asset/AssetControls.jsx \
+            src/pages/AssetPointZero.css \
+            src/pages/InterventiPage.jsx \
+            src/components/interventi/InterventiControls.jsx \
+            src/pages/ScadenzePage.jsx \
+            src/components/scadenze/ScadenzeControls.jsx \
+            src/pages/InfrastrutturePage.jsx \
+            src/components/infrastrutture/InfrastruttureControls.jsx \
+            src/components/infrastrutture/InfrastrutturaEditor.jsx \
+            src/pages/OperationsPointZero.css \
+            src/Sicurezza8108Page.jsx \
+            src/components/sicurezza8108/Sicurezza8108Controls.jsx \
+            src/ProcessiPage.jsx \
+            src/ImpostazioniPage.jsx \
+            src/pages/GovernancePointZero.css \
+            scripts/apply_pointzero_rebuild.mjs \
+            scripts/verify_regola0.mjs
+          git commit -m "FMED REV0: ricostruzione Punto 0 integrale e sicura"
+          git push origin HEAD:repair/rev0-regola0
+
+      - name: Nessuna modifica necessaria
+        if: steps.marker.outputs.done == 'true'
+        run: echo "La ricostruzione Punto 0 è già stata applicata. Nessun file modificato."
