@@ -13,7 +13,7 @@ import "./components/ProcessEnginePage.css";
 import "./components/masterdata/CanonicalSelect.css";
 import "./FmedVisualClean.css";
 
-const FMED_APP_CACHE_VERSION = "fmed-rev0-20260729-2";
+const FMED_APP_CACHE_VERSION = "fmed-rev0-20260729-3";
 
 const FMED_API_WARMUP_URL = String(
   import.meta.env?.VITE_API_BASE_URL || "https://fmed-backend.onrender.com"

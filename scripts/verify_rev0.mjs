@@ -54,6 +54,9 @@ app.includes("VITE_API_BASE_URL") || main.includes("VITE_API_BASE_URL")
 !visual.includes(".fmed-main-content *")
   ? ok("nessuna forzatura colore universale")
   : fail("forzatura colore universale presente");
+!/\.fmed-main-content button:disabled\s*\{[^}]*opacity/i.test(visual)
+  ? ok("nessuna opacità disabled universale")
+  : fail("opacità disabled universale presente");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");

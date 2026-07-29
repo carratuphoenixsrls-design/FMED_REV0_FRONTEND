@@ -809,7 +809,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 .fmed-app-root.fmed-shell-premium .fmed-main-content button:hover:not(:disabled) { transform: translateY(-1px); }
 .fmed-app-root.fmed-shell-premium .fmed-main-content button:active:not(:disabled) { transform: translateY(0) scale(.99); }
-.fmed-app-root.fmed-shell-premium .fmed-main-content button:disabled { opacity: .52; cursor: not-allowed; box-shadow: none; }
+.fmed-app-root.fmed-shell-premium .fmed-main-content button:disabled { cursor: not-allowed; box-shadow: none; }
 
 .fmed-app-root.fmed-shell-premium :is(button,a,input,select,textarea):focus-visible {
   outline: 3px solid color-mix(in srgb, var(--fmed-primary) 28%, transparent);

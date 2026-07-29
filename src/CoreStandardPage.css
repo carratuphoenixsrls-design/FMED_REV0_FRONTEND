@@ -74,13 +74,18 @@
   transform: translateY(-1px);
   box-shadow: 0 10px 22px rgba(13, 118, 110, .18);
 }
-.core-primary-button:disabled,
+.core-primary-button:not(.core-sync-button):disabled,
 .core-add-value button:disabled,
 .core-add-relation button:disabled {
   opacity: .55;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+}
+.core-sync-button:disabled {
+  opacity: 1;
+  cursor: wait;
+  transform: none;
 }
 .core-sync-button {
   flex: 0 0 auto;
