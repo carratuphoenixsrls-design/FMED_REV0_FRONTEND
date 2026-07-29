@@ -1,0 +1,79 @@
+name: FMED Punto 0 Browser E2E
+
+on:
+  push:
+    branches:
+      - repair/rev0-regola0
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pointzero-browser-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  collaudo-browser:
+    name: 5 · Collaudo browser primario secondario terziario
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout completo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Dipendenze progetto
+        run: npm ci
+
+      - name: Playwright isolato
+        run: npm install --no-save playwright@1.54.2
+
+      - name: Browser Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build QA con backend simulato
+        env:
+          VITE_API_BASE_URL: https://qa.fmed.invalid
+        run: npm run build
+
+      - name: Avvia Preview locale
+        shell: bash
+        run: |
+          nohup npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/fmed-preview.log 2>&1 &
+          for attempt in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:4173 > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/fmed-preview.log
+          exit 1
+
+      - name: Collaudo completo Punto 0
+        env:
+          FMED_QA_URL: http://127.0.0.1:4173
+          FMED_QA_OUTPUT: qa-results
+        run: node qa/pointzero_e2e.mjs
+
+      - name: Conserva screenshot e rapporto
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: FMED_REV0_PUNTO0_BROWSER_QA
+          path: qa-results
+          retention-days: 7
+
+      - name: Log Preview in caso di errore
+        if: failure()
+        run: cat /tmp/fmed-preview.log || true
