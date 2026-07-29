@@ -176,7 +176,6 @@ requireTokens("API operative preservate", app, [
   "/alert/scadenze-uniche",
   "/core/processi",
   "/core/dizionari",
-  "/data-quality/audit",
 ]);
 
 requireTokens("render lazy delle pagine preservato", app, [
