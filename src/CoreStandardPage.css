@@ -105,8 +105,18 @@
   line-height: 1;
 }
 .core-sync-copy { display: grid; gap: 3px; min-width: 0; }
-.core-sync-copy strong { color: #fff; font-size: 13px; line-height: 1.1; }
-.core-sync-copy small { color: rgba(255, 255, 255, .82); font-size:11px; line-height: 1.2; }
+.core-sync-copy strong {
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  font-size: 13px;
+  line-height: 1.1;
+}
+.core-sync-copy small {
+  color: rgba(255, 255, 255, .82);
+  -webkit-text-fill-color: rgba(255, 255, 255, .82);
+  font-size:11px;
+  line-height: 1.2;
+}
 
 .core-summary-grid {
   display: grid;
