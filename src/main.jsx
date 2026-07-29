@@ -18,8 +18,9 @@ import "./pages/OperationsPointZero.css";
 import "./pages/GovernancePointZero.css";
 import "./PointZeroCompatibility.css";
 import "./PointZeroPolish.css";
+import "./PointZeroFinalFix.css";
 
-const FMED_APP_CACHE_VERSION = "fmed-rev0-regola0-punto0-polish-20260729-2";
+const FMED_APP_CACHE_VERSION = "fmed-rev0-regola0-punto0-final-20260730-1";
 
 const FMED_API_WARMUP_URL = String(
   import.meta.env?.VITE_API_BASE_URL || "https://fmed-backend.onrender.com"
