@@ -79,6 +79,10 @@ allSource.includes("/data-hygiene/interventi/locazioni/audit")
   && allSource.includes("non sovrascrive dati presenti")
   ? ok("bonifica locazioni integrata nel Data Hygiene unico")
   : fail("bonifica locazioni duplicata o incompleta");
+allSource.includes("locationHygieneAttempted")
+  && allSource.includes("!locationHygieneAttempted")
+  ? ok("bonifica locazioni senza ciclo automatico di errore")
+  : fail("bonifica locazioni può ripetere richieste fallite");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");

@@ -235,6 +235,7 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
   const [locationHygieneLoading, setLocationHygieneLoading] = useState(false);
   const [locationHygieneBusy, setLocationHygieneBusy] = useState(false);
   const [locationHygienePreview, setLocationHygienePreview] = useState(null);
+  const [locationHygieneAttempted, setLocationHygieneAttempted] = useState(false);
   const [uniformity, setUniformity] = useState(null);
   const [uniformityLoading, setUniformityLoading] = useState(false);
   const [uniformityBusy, setUniformityBusy] = useState(false);
@@ -292,6 +293,7 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
   }, [apiBaseUrl]);
 
   const loadLocationHygiene = useCallback(async () => {
+    setLocationHygieneAttempted(true);
     setLocationHygieneLoading(true);
     try {
       const data = await fmedFetchJson("/data-hygiene/interventi/locazioni/audit?limit=10000", { apiBaseUrl, retries: 2, timeoutMs: 90000 });
@@ -320,8 +322,8 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
     if (!uniformity && !uniformityLoading) loadUniformity(false);
     if (!quality && !qualityLoading) loadQuality(false);
     if (!siteHygiene && !siteHygieneLoading) loadSiteHygiene(false);
-    if (!locationHygiene && !locationHygieneLoading) loadLocationHygiene();
-  }, [tab, uniformity, uniformityLoading, loadUniformity, quality, qualityLoading, loadQuality, siteHygiene, siteHygieneLoading, loadSiteHygiene, locationHygiene, locationHygieneLoading, loadLocationHygiene]);
+    if (!locationHygiene && !locationHygieneLoading && !locationHygieneAttempted) loadLocationHygiene();
+  }, [tab, uniformity, uniformityLoading, loadUniformity, quality, qualityLoading, loadQuality, siteHygiene, siteHygieneLoading, loadSiteHygiene, locationHygiene, locationHygieneLoading, locationHygieneAttempted, loadLocationHygiene]);
 
   async function masterAction(endpoint, payload, type) {
     setQualityBusy(true); setMessage("");
