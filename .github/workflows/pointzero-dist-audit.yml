@@ -1,0 +1,49 @@
+name: FMED Punto 0 Dist Audit
+
+on:
+  push:
+    branches:
+      - repair/rev0-regola0
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pointzero-dist-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit-distribuzione:
+    name: 4 · Audit indipendente artefatto Punto 0
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout completo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Dipendenze pulite
+        run: npm ci
+
+      - name: Build candidata
+        run: npm run build
+
+      - name: Verifica strutturale della distribuzione
+        run: node scripts/verify_dist_pointzero.mjs
+
+      - name: Conserva distribuzione verificata
+        uses: actions/upload-artifact@v4
+        with:
+          name: FMED_REV0_PUNTO0_AUDITED_DIST
+          path: dist
+          retention-days: 7
