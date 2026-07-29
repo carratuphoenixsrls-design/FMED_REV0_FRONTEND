@@ -1,40 +1,81 @@
-import FmedModuleIcon from "./components/FmedModuleIcon.jsx";
+import FmedIcon from "./components/ui/FmedIcon.jsx";
 import CoreStandardPage from "./CoreStandardPage.jsx";
 import SystemAuditPage from "./SystemAuditPage.jsx";
 
-const SETTINGS_SECTIONS = [
-  { key: "STRUMENTI", title: "Strumenti", description: "Report, costi, documenti e procedure guidate." },
-  { key: "UTENTI", title: "Accesso", description: "Utenti e permessi del gestionale." },
-  { key: "MASTER_DATA", title: "Dati avanzati", description: "Dizionari e valori dei menu, da usare solo quando serve." },
-  { key: "AUDIT", title: "Controllo sistema", description: "Audit tecnico e verifica della release." },
+const SECTIONS = [
+  { key: "STRUMENTI", title: "Panoramica" },
+  { key: "UTENTI", title: "Accessi" },
+  { key: "MASTER_DATA", title: "Cataloghi" },
+  { key: "AUDIT", title: "Controllo sistema" }
 ];
 
-const TOOL_CARDS = [
-  { page: "Costi", title: "Costi", description: "Spese, fornitori e storico economico.", icon: "€" },
-  { page: "Export", title: "Report e analisi", description: "Esportazioni e report filtrati.", icon: "R" },
-  { page: "SharePoint", title: "Documenti SharePoint", description: "Archivio tecnico centralizzato.", icon: "S" },
-  { page: "Processi", title: "Procedure guidate", description: "Operazioni complesse, dismissioni e controlli.", icon: "P" },
-  { page: "Dizionari", title: "Dizionari", description: "Aggiungi una voce quando manca nei menu.", icon: "D" },
+const TOOLS = [
+  { page: "Costi", title: "Costi", text: "Spese, fornitori e andamento economico.", icon: "euro", color: "amber" },
+  { page: "Export", title: "Report", text: "Esportazioni e analisi filtrate.", icon: "chart", color: "blue" },
+  { page: "SharePoint", title: "Documenti", text: "Archivio tecnico SharePoint.", icon: "folder", color: "cyan" },
+  { page: "Processi", title: "Processi", text: "Procedure, responsabilità e controlli.", icon: "process", color: "violet" },
+  { page: "Dizionari", title: "Cataloghi", text: "Valori canonici dei menu FMED.", icon: "book", color: "rose" }
 ];
 
-export default function ImpostazioniPage({ apiBaseUrl, canManage = false, activeTab = "STRUMENTI", onTabChange, onDataChanged, dictionariesOnly = false, onNavigate }) {
-  const activeSection = SETTINGS_SECTIONS.find((section) => section.key === activeTab) || SETTINGS_SECTIONS[0];
-  return <section className="fmed-settings-page fmed-operational-tools-page">
-    {!dictionariesOnly && <>
-      <header className="fmed-settings-head"><div className="fmed-banner-heading"><FmedModuleIcon module="Impostazioni" /><div className="fmed-banner-copy"><span className="fmed-module-kicker">Funzioni secondarie</span><h2>Strumenti e impostazioni</h2><p>L'uso quotidiano resta nelle pagine principali. Qui trovi soltanto report, documenti e controlli occasionali.</p></div></div><div className="fmed-settings-status"><small>Sezione</small><strong>{activeSection.title}</strong></div></header>
-      <nav className="fmed-settings-tabs" aria-label="Sezioni strumenti">{SETTINGS_SECTIONS.map((section) => <button type="button" key={section.key} className={activeTab === section.key ? "active" : ""} onClick={() => onTabChange?.(section.key)}>{section.title}</button>)}</nav>
-    </>}
+export default function ImpostazioniPage({
+  apiBaseUrl, canManage = false, activeTab = "STRUMENTI", onTabChange,
+  onDataChanged, dictionariesOnly = false, onNavigate
+}) {
+  if (dictionariesOnly) {
+    return (
+      <main className="p0-governance p0-governance--catalogs">
+        <header className="p0-governance__head">
+          <div><span className="p0-governance__icon"><FmedIcon name="book" /></span><div><span>Conoscenza condivisa</span><h1>Cataloghi</h1><p>Una sola fonte per valori, regole operative e qualità dei dati.</p></div></div>
+        </header>
+        <CoreStandardPage apiBaseUrl={apiBaseUrl} canManage={canManage} onDataChanged={onDataChanged} initialTab="DIZIONARI" />
+      </main>
+    );
+  }
 
-    {activeTab === "STRUMENTI" && !dictionariesOnly && <>
-      <section className="fmed-operational-auto-card"><div><span className="fmed-module-kicker">Lavoro automatico</span><h3>FMED aggiorna il sistema dietro le quinte</h3><p>Quando registri un intervento o chiudi un'attività, vengono aggiornati automaticamente ciclo precedente, prossima scadenza, dashboard, storico, codici e alert.</p></div><span className="fmed-operational-auto-status">Attivo</span></section>
-      <div className="fmed-operational-tool-grid">{TOOL_CARDS.map((tool) => <button type="button" key={tool.page} onClick={() => onNavigate?.(tool.page)}><i>{tool.icon}</i><span><strong>{tool.title}</strong><small>{tool.description}</small></span><b>›</b></button>)}</div>
-      <section className="fmed-settings-users"><div className="fmed-settings-copy"><span className="fmed-module-kicker">Uso normale</span><h3>Non servono operazioni tecniche periodiche</h3><p>Motore Cicli, Catalogo Canonico, Regole operative e Process Engine lavorano automaticamente. Entra nelle sezioni avanzate solo per correggere un dato ambiguo o aggiungere una nuova voce.</p></div></section>
-    </>}
+  return (
+    <main className="p0-governance p0-governance--tools">
+      <header className="p0-governance__head">
+        <div><span className="p0-governance__icon"><FmedIcon name="settings" /></span><div><span>Amministrazione</span><h1>Strumenti</h1><p>Accessi, report, archivi e controlli occasionali, separati dal lavoro operativo.</p></div></div>
+        <span className="p0-governance__role">{canManage ? "Amministrazione abilitata" : "Consultazione"}</span>
+      </header>
 
-    {activeTab === "UTENTI" && <div className="fmed-settings-users"><div className="fmed-settings-copy"><span className="fmed-module-kicker">Controllo accessi</span><h3>Utenti e permessi</h3><p>Gestisci chi può consultare o modificare FMED. Questa sezione non cambia i dati tecnici.</p></div><div className="fmed-settings-role-grid"><article><div className="fmed-settings-role-head"><strong>Admin</strong><span>Completo</span></div><p>Accesso a tutte le funzioni operative e amministrative.</p></article><article><div className="fmed-settings-role-head"><strong>Service</strong><span>Operativo</span></div><p>Gestione tecnica autorizzata.</p></article><article><div className="fmed-settings-role-head"><strong>User</strong><span>Consultazione</span></div><p>Visualizzazione delle informazioni assegnate.</p></article></div></div>}
+      <nav className="p0-governance__tabs" aria-label="Sezioni strumenti">
+        {SECTIONS.map((section) => <button type="button" key={section.key} className={activeTab === section.key ? "is-active" : ""} onClick={() => onTabChange?.(section.key)}>{section.title}</button>)}
+      </nav>
 
-    {dictionariesOnly && <CoreStandardPage apiBaseUrl={apiBaseUrl} canManage={canManage} onDataChanged={onDataChanged} initialTab="DIZIONARI" />}
-    {activeTab === "MASTER_DATA" && !dictionariesOnly && <section className="fmed-settings-users"><div className="fmed-settings-copy"><span className="fmed-module-kicker">Dati centralizzati</span><h3>I dizionari hanno una sola pagina</h3><p>Valori, regole operative e qualità dati sono disponibili esclusivamente nel modulo Cataloghi, senza copie dentro Strumenti.</p></div><button type="button" className="fmed-style-primary-btn" onClick={() => onNavigate?.("Dizionari")}>Apri Cataloghi</button></section>}
-    {activeTab === "AUDIT" && !dictionariesOnly && <SystemAuditPage apiBaseUrl={apiBaseUrl} canManage={canManage} />}
-  </section>;
+      {activeTab === "STRUMENTI" && (
+        <>
+          <section className="p0-tools-intro">
+            <div><span className="p0-kicker">Sistema coordinato</span><h2>Il lavoro tecnico resta nelle pagine operative</h2><p>Qui sono raccolte soltanto le funzioni trasversali. Cicli, cataloghi e processi si aggiornano attraverso le operazioni già registrate in FMED.</p></div>
+            <span><i /> Motori attivi</span>
+          </section>
+          <section className="p0-tool-grid">
+            {TOOLS.map((tool) => (
+              <button type="button" key={tool.page} className={`is-${tool.color}`} onClick={() => onNavigate?.(tool.page)}>
+                <span><FmedIcon name={tool.icon} /></span><div><strong>{tool.title}</strong><small>{tool.text}</small></div><b>→</b>
+              </button>
+            ))}
+          </section>
+          <section className="p0-tools-note"><FmedIcon name="info" /><div><b>Nessuna manutenzione tecnica periodica richiesta</b><span>Accedi alle sezioni avanzate solo per correggere un dato, aggiungere un valore o verificare il sistema.</span></div></section>
+        </>
+      )}
+
+      {activeTab === "UTENTI" && (
+        <section className="p0-access">
+          <header><span className="p0-kicker">Controllo accessi</span><h2>Ruoli chiari, funzioni proporzionate</h2><p>La configurazione degli accessi non modifica il patrimonio tecnico.</p></header>
+          <div>
+            <article><span>A</span><div><b>Admin</b><small>Tutte le funzioni operative e amministrative.</small></div><em>Completo</em></article>
+            <article><span>S</span><div><b>Service</b><small>Gestione tecnica delle attività autorizzate.</small></div><em>Operativo</em></article>
+            <article><span>U</span><div><b>User</b><small>Consultazione delle informazioni assegnate.</small></div><em>Lettura</em></article>
+          </div>
+        </section>
+      )}
+
+      {activeTab === "MASTER_DATA" && (
+        <section className="p0-tools-callout"><div><span className="p0-kicker">Fonte unica</span><h2>I dati centralizzati vivono nei Cataloghi</h2><p>Nessuna copia dentro Strumenti: valori, regole operative e qualità dati hanno una sola destinazione.</p></div><button type="button" className="p0-btn p0-btn--tools" onClick={() => onNavigate?.("Dizionari")}>Apri Cataloghi</button></section>
+      )}
+
+      {activeTab === "AUDIT" && <SystemAuditPage apiBaseUrl={apiBaseUrl} canManage={canManage} />}
+    </main>
+  );
 }

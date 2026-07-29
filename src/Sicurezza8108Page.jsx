@@ -1,5 +1,6 @@
 import { Component, useCallback, useEffect, useMemo, useState } from "react";
 import Sicurezza8108Controls from "./components/sicurezza8108/Sicurezza8108Controls.jsx";
+import FmedIcon from "./components/ui/FmedIcon.jsx";
 import { fmedAuthHeaders } from "./fmedApiClient.js";
 
 const FALLBACK_SEDI = [
@@ -104,11 +105,11 @@ class Sicurezza8108ErrorBoundary extends Component {
   render() {
     if (this.state.error) {
       return (
-        <section className="s8108-page s8108-fatal">
+        <section className="p0-safety-error">
           <h2>Sicurezza 81/08</h2>
           <p>La sezione ha rilevato un errore di visualizzazione, ma FMED resta operativo.</p>
           <code>{String(this.state.error?.message || this.state.error)}</code>
-          <button type="button" onClick={() => this.setState({ error: null })}>Riprova</button>
+          <button className="p0-btn p0-btn--safety" type="button" onClick={() => this.setState({ error: null })}>Riprova</button>
         </section>
       );
     }
@@ -221,7 +222,15 @@ function Sicurezza8108PageInner({ apiBaseUrl }) {
   const unclassifiedCount = documenti.filter((doc) => !doc?.sede || !doc?.categoria).length;
 
   return (
-    <section className="s8108-page">
+    <main className="p0-operations p0-operations--safety">
+      <header className="p0-operations__head">
+        <div className="p0-operations__identity">
+          <span className="p0-operations__icon"><FmedIcon name="shield" /></span>
+          <div><span>Conformità · D.Lgs. 81/08</span><h1>Sicurezza</h1><p>Documenti, sedi e categorie in una struttura riconoscibile, verificabile e sempre raggiungibile.</p></div>
+        </div>
+        <div className="p0-operations__metric"><strong>{documentCount}</strong><span>documenti indicizzati</span></div>
+      </header>
+
       <Sicurezza8108Controls
         buildOpenUrl={buildOpenUrl}
         load={load}
@@ -238,78 +247,70 @@ function Sicurezza8108PageInner({ apiBaseUrl }) {
         filteredCount={documentiFiltrati.length}
       />
 
-      <div className="s8108-notice info">
-        <strong>Archivio documentale centralizzato</strong>
-        <span>{sourceMessage || "Power Automate indicizza i documenti in FMED; i file originali restano su SharePoint."}</span>
+      <div className="p0-safety-notice">
+        <FmedIcon name="info" /><div><strong>Archivio centralizzato</strong><span>{sourceMessage || "Power Automate indicizza i documenti in FMED; i file originali restano su SharePoint."}</span></div>
       </div>
-      {error && <div className="s8108-notice error"><strong>Verifica necessaria</strong><span>{error}</span></div>}
+      {error && <div className="p0-safety-notice is-error"><FmedIcon name="alert" /><div><strong>Verifica necessaria</strong><span>{error}</span></div></div>}
 
-      <div className="s8108-kpi-grid s8108-kpi-grid-documental">
-        <article><div className="s8108-kpi-icon"></div><div><span>Documenti</span><strong>{documentCount}</strong><small>file indicizzati in FMED</small></div></article>
-        <article><div className="s8108-kpi-icon"></div><div><span>Cartelle</span><strong>{folderCount || sedi.length * categorie.length}</strong><small>struttura documentale</small></div></article>
-        <article className={unclassifiedCount ? "warning" : ""}><div className="s8108-kpi-icon">?</div><div><span>Da classificare</span><strong>{unclassifiedCount}</strong><small>documenti senza sede o categoria</small></div></article>
-      </div>
+      <section className="p0-metric-strip p0-safety-metrics">
+        <article><span className="p0-metric-strip__icon"><FmedIcon name="file" /></span><div><small>Documenti</small><strong>{documentCount}</strong><span>indicizzati in FMED</span></div></article>
+        <article><span className="p0-metric-strip__icon"><FmedIcon name="folder" /></span><div><small>Cartelle</small><strong>{folderCount || sedi.length * categorie.length}</strong><span>struttura documentale</span></div></article>
+        <article><span className="p0-metric-strip__icon"><FmedIcon name="alert" /></span><div><small>Da classificare</small><strong>{unclassifiedCount}</strong><span>senza sede o categoria</span></div></article>
+      </section>
 
-      <div className="s8108-panel">
-        <div className="s8108-panel-head">
-          <div><h2>Struttura SharePoint 81/08</h2><p>Sette categorie uniformi per ogni sede.</p></div>
-          {selectedSite && <a className="s8108-btn" href={buildOpenUrl(selectedSite.codice)} target="_blank" rel="noreferrer">Apri {selectedSite.label}</a>}
-        </div>
-        <div className="s8108-folder-grid">
+      <section className="p0-safety-library">
+        <header>
+          <div><span className="p0-kicker">Mappa documentale</span><h2>Struttura SharePoint 81/08</h2><p>Le stesse sette categorie, organizzate per ogni sede.</p></div>
+          {selectedSite && <a className="p0-btn p0-btn--safety" href={buildOpenUrl(selectedSite.codice)} target="_blank" rel="noreferrer">Apri {selectedSite.label}</a>}
+        </header>
+        <div className="p0-safety-sites">
           {visibleSites.map((site) => (
-            <article className="s8108-site-card" key={site.codice}>
-              <div className="s8108-site-head">
-                <div><strong>{site.label}</strong><small>{site.cartella}</small></div>
-                <a href={buildOpenUrl(site.codice)} target="_blank" rel="noreferrer">Apri sede</a>
-              </div>
-              <div className="s8108-category-links">
+            <article className="p0-safety-site" key={site.codice}>
+              <header><div><strong>{site.label}</strong><small>{site.cartella}</small></div><a href={buildOpenUrl(site.codice)} target="_blank" rel="noreferrer">Apri sede →</a></header>
+              <div className="p0-safety-categories">
                 {(site.categorie?.length ? site.categorie : categorie)
                   .filter((cat) => categoria === "TUTTE" || cat.codice === categoria)
                   .map((cat) => cat.disponibile ? (
                     <a key={cat.codice} href={buildOpenUrl(site.codice, cat.codice)} target="_blank" rel="noreferrer">
-                      <span>{cat.codice.slice(0, 2)}</span>
-                      <b>{cat.label}</b>
-                      <small>Apri</small>
+                      <span>{cat.codice.slice(0, 2)}</span><b>{cat.label}</b><small>Apri →</small>
                     </a>
                   ) : (
-                    <div key={cat.codice} className="s8108-category-missing" title="Cartella non ancora presente in SharePoint">
-                      <span>{cat.codice.slice(0, 2)}</span>
-                      <b>{cat.label}</b>
-                      <small>Da creare</small>
+                    <div key={cat.codice} className="is-missing" title="Cartella non ancora presente in SharePoint">
+                      <span>{cat.codice.slice(0, 2)}</span><b>{cat.label}</b><small>Da creare</small>
                     </div>
                   ))}
               </div>
             </article>
           ))}
         </div>
-      </div>
+      </section>
 
-      <div className="s8108-panel s8108-list-panel">
-        <div className="s8108-panel-head"><div><h2>Documenti indicizzati in FMED</h2><p>{loading ? "Lettura archivio in corso…" : `${documentiFiltrati.length} elementi visibili.`}</p></div></div>
-        {loading ? <div className="s8108-empty">Caricamento documentazione…</div> : documentiFiltrati.length ? (
-          <div className="s8108-doc-list">{documentiFiltrati.map((doc, index) => (
-            <article className="s8108-doc-card" key={doc.id || `${doc.nome}-${index}`}>
-              <div className="s8108-doc-main">
-                <span className="s8108-file-type">{doc.is_cartella ? "CARTELLA" : doc.estensione || "FILE"}</span>
-                <div className="s8108-doc-title"><strong title={doc.nome}>{doc.nome}</strong><small title={doc.percorso_relativo}>{doc.percorso_relativo || "Percorso non disponibile"}</small></div>
+      <section className="p0-safety-documents">
+        <header><div><span className="p0-kicker">Indice FMED</span><h2>Documenti indicizzati</h2><p>{loading ? "Lettura archivio in corso…" : `${documentiFiltrati.length} elementi visibili.`}</p></div></header>
+        {loading ? <div className="p0-empty">Caricamento documentazione…</div> : documentiFiltrati.length ? (
+          <div className="p0-safety-doc-list">{documentiFiltrati.map((doc, index) => (
+            <article className="p0-safety-doc" key={doc.id || `${doc.nome}-${index}`}>
+              <div className="p0-safety-doc__main">
+                <span>{doc.is_cartella ? "CARTELLA" : doc.estensione || "FILE"}</span>
+                <div><strong title={doc.nome}>{doc.nome}</strong><small title={doc.percorso_relativo}>{doc.percorso_relativo || "Percorso non disponibile"}</small></div>
               </div>
-              <dl className="s8108-doc-meta">
+              <dl>
                 <div><dt>Sede</dt><dd>{doc.sede_label || "Non classificato"}</dd></div>
                 <div><dt>Categoria</dt><dd>{doc.categoria_label || "Non classificata"}</dd></div>
                 <div><dt>Modificato</dt><dd>{formatDate(doc.data_modifica)}</dd></div>
                 <div><dt>Dimensione</dt><dd>{doc.is_cartella ? `${doc.numero_elementi ?? "—"} elementi` : formatSize(doc.dimensione)}</dd></div>
               </dl>
-              <div className="s8108-doc-actions">
-                {doc.web_url ? <a className="s8108-open-link" href={doc.web_url} target="_blank" rel="noreferrer">Apri</a> : <span>—</span>}
-                <button type="button" className="s8108-delete-index" onClick={() => eliminaDocumentoIndice(doc)} disabled={deletingId === doc.id}>{deletingId === doc.id ? "Rimozione…" : "Rimuovi da FMED"}</button>
+              <div className="p0-safety-doc__actions">
+                {doc.web_url ? <a className="p0-btn p0-btn--safety" href={doc.web_url} target="_blank" rel="noreferrer">Apri</a> : <span>—</span>}
+                <button type="button" className="p0-btn" onClick={() => eliminaDocumentoIndice(doc)} disabled={deletingId === doc.id}>{deletingId === doc.id ? "Rimozione…" : "Rimuovi dall’indice"}</button>
               </div>
             </article>
           ))}</div>
         ) : (
-          <div className="s8108-empty"><strong>Nessun documento indicizzato.</strong><span>Aggiungi o modifica un file nella cartella 81/08 oppure avvia il flusso iniziale di indicizzazione.</span></div>
+          <div className="p0-empty"><strong>Nessun documento indicizzato.</strong><span>Aggiungi o modifica un file nella cartella 81/08 oppure avvia il flusso iniziale di indicizzazione.</span></div>
         )}
-      </div>
-    </section>
+      </section>
+    </main>
   );
 }
 

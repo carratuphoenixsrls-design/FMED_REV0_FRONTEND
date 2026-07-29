@@ -37,7 +37,15 @@ const app = requireFile("src/FmedApp.jsx", "shell applicativa");
 const main = requireFile("src/main.jsx", "bootstrap applicativo");
 const baseCss = requireFile("src/FmedBaseStyles.css", "stili base");
 const visualCss = requireFile("src/FmedVisualClean.css", "sistema visuale stabile");
-const regola0Css = requireFile("src/Regola0VisualSystem.css", "sistema visuale Regola 0");
+const regola0Css = requireFile("src/Regola0VisualSystem.css",
+  "src/PointZeroCompatibility.css",
+  "src/pages/AssetPointZero.css",
+  "src/pages/OperationsPointZero.css",
+  "src/pages/GovernancePointZero.css", "sistema visuale Regola 0");
+const pointZeroCss = requireFile("src/PointZeroCompatibility.css", "compatibilità Punto 0");
+const assetPointZeroCss = requireFile("src/pages/AssetPointZero.css", "Asset Punto 0");
+const operationsPointZeroCss = requireFile("src/pages/OperationsPointZero.css", "moduli operativi Punto 0");
+const governancePointZeroCss = requireFile("src/pages/GovernancePointZero.css", "governance Punto 0");
 const errorBoundary = requireFile("src/FmedErrorBoundary.jsx", "error boundary");
 
 const pageContracts = [
@@ -209,7 +217,15 @@ requireTokens("grafica integrale su tutti i moduli principali", regola0Css, [
   ".fmed-wizard-page",
 ]);
 
-requireTokens("grafica primaria secondaria e terziaria coperta", regola0Css, [
+requireTokens("ricostruzione reale Punto 0 caricata", `${assetPointZeroCss}\n${operationsPointZeroCss}\n${governancePointZeroCss}\n${pointZeroCss}`, [
+  ".p0-asset-page",
+  ".p0-operations",
+  ".p0-governance",
+  ".fmed-asset-detail-workspace",
+  ".fmed-intervention-workspace",
+]);
+
+requireTokens("grafica primaria secondaria e terziaria coperta", `${regola0Css}\n${pointZeroCss}`, [
   ".fmed-module-hero",
   ".fmed-operational-filters",
   ".fmed-operational-kpi-card",
@@ -220,7 +236,7 @@ requireTokens("grafica primaria secondaria e terziaria coperta", regola0Css, [
   ":focus-visible",
 ]);
 
-const allCss = `${baseCss}\n${visualCss}\n${regola0Css}`;
+const allCss = `${baseCss}\n${visualCss}\n${regola0Css}\n${pointZeroCss}\n${assetPointZeroCss}\n${operationsPointZeroCss}\n${governancePointZeroCss}`;
 forbidRegex(
   "nessun oscuramento globale del contenuto principale",
   allCss,

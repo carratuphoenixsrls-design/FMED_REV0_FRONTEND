@@ -1,223 +1,85 @@
-function InfrastruttureSelect({ ariaLabel, value, onChange, style, children }) {
-  return (
-    <select aria-label={ariaLabel} value={value} onChange={onChange} style={style}>
-      {children}
-    </select>);
-
-}
-
-function InfrastruttureDateField({ ariaLabel, title, value, onChange, style }) {
-  return (
-    <input
-      aria-label={ariaLabel}
-      type="date"
-      value={value}
-      onChange={onChange}
-      style={style}
-      title={title} />);
-
-
+function SelectField({ label, value, onChange, children }) {
+  return <label className="p0-field"><span>{label}</span><select value={value} onChange={onChange}>{children}</select></label>;
 }
 
 export default function InfrastruttureControls(props) {
   const {
-    infraOk,
-    infraInScadenza,
-    infraScadute,
-    ricercaInfra,
-    setRicercaInfra,
+    infrastruttureFiltrate = [],
+    ricercaInfra = '',
+    setRicercaInfra = () => {},
     filtroInfraSede,
     setFiltroInfraSede,
-    listaInfraSedi,
+    listaInfraSedi = [],
     filtroInfraCategoria,
     setFiltroInfraCategoria,
-    listaInfraCategorie,
+    listaInfraCategorie = [],
     filtroInfraStato,
     setFiltroInfraStato,
     filtroInfraDitta,
     setFiltroInfraDitta,
-    listaInfraDitte,
+    listaInfraDitte = [],
     filtroInfraPeriodicita,
     setFiltroInfraPeriodicita,
-    listaInfraPeriodicita,
+    listaInfraPeriodicita = [],
     filtroInfraPriorita,
     setFiltroInfraPriorita,
-    listaInfraPriorita,
+    listaInfraPriorita = [],
     filtroInfraResponsabile,
     setFiltroInfraResponsabile,
-    listaInfraResponsabili,
+    listaInfraResponsabili = [],
     filtroInfraCentroCosto,
     setFiltroInfraCentroCosto,
-    listaInfraCentriCosto,
+    listaInfraCentriCosto = [],
     filtroInfraSocieta,
     setFiltroInfraSocieta,
-    listaInfraSocieta,
+    listaInfraSocieta = [],
     filtroInfraProssimaDa,
     setFiltroInfraProssimaDa,
     filtroInfraProssimaA,
     setFiltroInfraProssimaA,
-    permessiRuoloFmed,
-    apriNuovaInfrastruttura,
-    caricaInfrastruttureOnDemand,
+    permessiRuoloFmed = {},
+    apriNuovaInfrastruttura = () => {},
+    caricaInfrastruttureOnDemand = () => {},
     infrastruttureLoading,
-    resetFiltriInfrastrutture
-  } = props;
-
-  const refreshInfrastrutture = () => caricaInfrastruttureOnDemand({ force: true });
+    resetFiltriInfrastrutture = () => {}
+  } = props || {};
+  const refresh = () => caricaInfrastruttureOnDemand({ force: true });
 
   return (
-    <div className="fmed-operational-filters fmed-style-asset-filters-panel">
-      <div className="fmed-operational-filters-head fmed-style-asset-filters-header">
-        <div>
-          <h3 className="fmed-style-asset-section-title">Filtri infrastrutture</h3>
-          <p className="fmed-style-asset-section-subtitle">
-            Ricerca e filtri operativi per sede, categoria, stato, ditta, periodicità e prossima scadenza.
-          </p>
+    <section className="p0-command p0-command--infrastructure">
+      <div className="p0-command__primary">
+        <div className="p0-command__intro">
+          <div><span className="p0-kicker">Patrimonio impiantistico</span><h2>Trova impianto, servizio o attività</h2></div>
+          {permessiRuoloFmed.canEdit && <button type="button" className="p0-btn p0-btn--infrastructure" onClick={apriNuovaInfrastruttura}>+ Nuova infrastruttura</button>}
         </div>
-        <div className="fmed-style-asset-filter-chips">
-          <span className="fmed-style-asset-chip">OK: {infraOk.length}</span>
-          <span className="fmed-style-asset-chip">In scadenza: {infraInScadenza.length}</span>
-          <span className="fmed-style-asset-chip">Scadute: {infraScadute.length}</span>
+        <div className="p0-search">
+          <span className="p0-search__mark" aria-hidden="true">⌕</span>
+          <input aria-label="Ricerca infrastrutture" value={ricercaInfra} onChange={(e) => setRicercaInfra(e.target.value)} placeholder="Impianto, ditta, attività, codice o nota" />
+          <span className="p0-search__meta">{infrastruttureFiltrate.length} risultati</span>
         </div>
       </div>
 
-      <div className="fmed-operational-filters-grid fmed-style-asset-filters-grid">
-        <input
-          aria-label="Ricerca infrastrutture"
-          value={ricercaInfra}
-          onChange={(event) => setRicercaInfra(event.target.value)}
-          placeholder="Cerca impianto, ditta, attività, note..."
-          className="fmed-style-asset-input-large" />
-        
+      <details className="p0-advanced">
+        <summary><span><b>Affina patrimonio</b><small>Sede, categoria, gestione e scadenza</small></span><span className="p0-advanced__summary">{infrastruttureFiltrate.length} elementi</span></summary>
+        <div className="p0-filter-grid">
+          <SelectField label="Sede" value={filtroInfraSede} onChange={(e) => setFiltroInfraSede(e.target.value)}><option value="TUTTE">Tutte le sedi</option>{listaInfraSedi.map((v) => <option key={v}>{v}</option>)}</SelectField>
+          <SelectField label="Categoria" value={filtroInfraCategoria} onChange={(e) => setFiltroInfraCategoria(e.target.value)}><option value="TUTTE">Tutte le categorie</option>{listaInfraCategorie.map((v) => <option key={v}>{v}</option>)}</SelectField>
+          <SelectField label="Stato" value={filtroInfraStato} onChange={(e) => setFiltroInfraStato(e.target.value)}><option value="TUTTE">Tutti gli stati</option><option value="SCADUTA">Scadute</option><option value="30_GIORNI">In scadenza</option><option value="OK">Programmate</option><option value="DA_VERIFICARE">Da verificare</option></SelectField>
+          <SelectField label="Ditta" value={filtroInfraDitta} onChange={(e) => setFiltroInfraDitta(e.target.value)}><option value="TUTTE">Tutte le ditte</option>{listaInfraDitte.map((v) => <option key={v}>{v}</option>)}</SelectField>
+          <SelectField label="Periodicità" value={filtroInfraPeriodicita} onChange={(e) => setFiltroInfraPeriodicita(e.target.value)}><option value="TUTTE">Tutte le periodicità</option>{listaInfraPeriodicita.map((v) => <option key={v}>{v}</option>)}</SelectField>
+          <SelectField label="Priorità" value={filtroInfraPriorita} onChange={(e) => setFiltroInfraPriorita(e.target.value)}><option value="TUTTE">Tutte le priorità</option>{listaInfraPriorita.map((v) => <option key={v}>{v}</option>)}</SelectField>
+          <SelectField label="Responsabile" value={filtroInfraResponsabile} onChange={(e) => setFiltroInfraResponsabile(e.target.value)}><option value="TUTTE">Tutti i responsabili</option>{listaInfraResponsabili.map((v) => <option key={v}>{v}</option>)}</SelectField>
+          <SelectField label="Centro di costo" value={filtroInfraCentroCosto} onChange={(e) => setFiltroInfraCentroCosto(e.target.value)}><option value="TUTTE">Tutti i centri</option>{listaInfraCentriCosto.map((v) => <option key={v}>{v}</option>)}</SelectField>
+          <SelectField label="Società" value={filtroInfraSocieta} onChange={(e) => setFiltroInfraSocieta(e.target.value)}><option value="TUTTE">Tutte le società</option>{listaInfraSocieta.map((v) => <option key={v}>{v}</option>)}</SelectField>
+          <label className="p0-field"><span>Scadenza dal</span><input type="date" value={filtroInfraProssimaDa} onChange={(e) => setFiltroInfraProssimaDa(e.target.value)} /></label>
+          <label className="p0-field"><span>Scadenza al</span><input type="date" value={filtroInfraProssimaA} onChange={(e) => setFiltroInfraProssimaA(e.target.value)} /></label>
+        </div>
+      </details>
 
-        <InfrastruttureSelect
-          ariaLabel="Filtra infrastrutture per sede"
-          value={filtroInfraSede}
-          onChange={(event) => setFiltroInfraSede(event.target.value)} className="fmed-style-asset-select-large">
-
-          
-          <option value="TUTTE">Tutte le sedi</option>
-          {listaInfraSedi.map((item) => <option key={item} value={item}>{item}</option>)}
-        </InfrastruttureSelect>
-
-        <InfrastruttureSelect
-          ariaLabel="Filtra infrastrutture per categoria"
-          value={filtroInfraCategoria}
-          onChange={(event) => setFiltroInfraCategoria(event.target.value)} className="fmed-style-asset-select-large">
-
-          
-          <option value="TUTTE">Tutte le categorie</option>
-          {listaInfraCategorie.map((item) => <option key={item} value={item}>{item}</option>)}
-        </InfrastruttureSelect>
-
-        <InfrastruttureSelect
-          ariaLabel="Filtra infrastrutture per stato"
-          value={filtroInfraStato}
-          onChange={(event) => setFiltroInfraStato(event.target.value)} className="fmed-style-asset-select-large">
-
-          
-          <option value="TUTTE">Tutti gli stati</option>
-          <option value="SCADUTA">Scadute</option>
-          <option value="30_GIORNI">In scadenza</option>
-          <option value="OK">OK</option>
-          <option value="DA_VERIFICARE">Da verificare</option>
-        </InfrastruttureSelect>
-
-        <InfrastruttureSelect
-          ariaLabel="Filtra infrastrutture per ditta"
-          value={filtroInfraDitta}
-          onChange={(event) => setFiltroInfraDitta(event.target.value)} className="fmed-style-asset-select-large">
-
-          
-          <option value="TUTTE">Tutte le ditte</option>
-          {listaInfraDitte.map((item) => <option key={item} value={item}>{item}</option>)}
-        </InfrastruttureSelect>
-
-        <InfrastruttureSelect
-          ariaLabel="Filtra infrastrutture per periodicità"
-          value={filtroInfraPeriodicita}
-          onChange={(event) => setFiltroInfraPeriodicita(event.target.value)} className="fmed-style-asset-select-large">
-
-          
-          <option value="TUTTE">Tutte le periodicità</option>
-          {listaInfraPeriodicita.map((item) => <option key={item} value={item}>{item}</option>)}
-        </InfrastruttureSelect>
-
-        <InfrastruttureSelect
-          ariaLabel="Filtra infrastrutture per priorità"
-          value={filtroInfraPriorita}
-          onChange={(event) => setFiltroInfraPriorita(event.target.value)} className="fmed-style-asset-select-large">
-
-          
-          <option value="TUTTE">Tutte le priorità</option>
-          {listaInfraPriorita.map((item) => <option key={item} value={item}>{item}</option>)}
-        </InfrastruttureSelect>
-
-        <InfrastruttureSelect
-          ariaLabel="Filtra infrastrutture per responsabile"
-          value={filtroInfraResponsabile}
-          onChange={(event) => setFiltroInfraResponsabile(event.target.value)} className="fmed-style-asset-select-large">
-
-          
-          <option value="TUTTE">Tutti i responsabili</option>
-          {listaInfraResponsabili.map((item) => <option key={item} value={item}>{item}</option>)}
-        </InfrastruttureSelect>
-
-        <InfrastruttureSelect
-          ariaLabel="Filtra infrastrutture per centro di costo"
-          value={filtroInfraCentroCosto}
-          onChange={(event) => setFiltroInfraCentroCosto(event.target.value)} className="fmed-style-asset-select-large">
-
-          
-          <option value="TUTTE">Tutti i centri di costo</option>
-          {listaInfraCentriCosto.map((item) => <option key={item} value={item}>{item}</option>)}
-        </InfrastruttureSelect>
-
-        <InfrastruttureSelect
-          ariaLabel="Filtra infrastrutture per società"
-          value={filtroInfraSocieta}
-          onChange={(event) => setFiltroInfraSocieta(event.target.value)} className="fmed-style-asset-select-large">
-
-          
-          <option value="TUTTE">Tutte le società</option>
-          {listaInfraSocieta.map((item) => <option key={item} value={item}>{item}</option>)}
-        </InfrastruttureSelect>
-
-        <InfrastruttureDateField
-          ariaLabel="Prossima scadenza infrastruttura da"
-          title="Prossima scadenza da"
-          value={filtroInfraProssimaDa}
-          onChange={(event) => setFiltroInfraProssimaDa(event.target.value)} className="fmed-style-input" />
-
-        
-
-        <InfrastruttureDateField
-          ariaLabel="Prossima scadenza infrastruttura a"
-          title="Prossima scadenza a"
-          value={filtroInfraProssimaA}
-          onChange={(event) => setFiltroInfraProssimaA(event.target.value)} className="fmed-style-input" />
-
-        
+      <div className="p0-command__actions">
+        <button type="button" className="p0-btn p0-btn--infrastructure" onClick={refresh} disabled={infrastruttureLoading}>{infrastruttureLoading ? "Aggiornamento…" : "Aggiorna dati"}</button>
+        <button type="button" className="p0-btn p0-btn--quiet" onClick={resetFiltriInfrastrutture}>Azzera filtri</button>
       </div>
-
-      <div className="fmed-operational-actions fmed-style-asset-actions-bar">
-        {permessiRuoloFmed.canEdit &&
-        <button type="button" onClick={apriNuovaInfrastruttura} className="fmed-style-asset-primary-action">
-             Nuova infrastruttura
-          </button>
-        }
-        <button
-          type="button"
-
-          onClick={refreshInfrastrutture}
-          disabled={infrastruttureLoading} className="fmed-style-asset-secondary-action">
-          
-          {infrastruttureLoading ? "⏳ Aggiornamento..." : " Aggiorna da backend"}
-        </button>
-        <button type="button" onClick={resetFiltriInfrastrutture} className="fmed-style-asset-ghost-action">
-           Reset filtri
-        </button>
-      </div>
-    </div>);
-
+    </section>
+  );
 }

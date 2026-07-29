@@ -1,48 +1,49 @@
-function InterventiSelect({ ariaLabel, value, onChange, style, children }) {
+function SelectField({ label, value, onChange, children }) {
   return (
-    <select className="fmed-interventi-select" aria-label={ariaLabel} value={value} onChange={onChange} style={style}>
-      {children}
-    </select>);
-
+    <label className="p0-field">
+      <span>{label}</span>
+      <select value={value} onChange={onChange}>{children}</select>
+    </label>
+  );
 }
 
-function InterventiDateField({ label, value, onChange }) {
+function DateField({ label, value, onChange }) {
   return (
-    <div className="fmed-interventi-date-field fmed-style-interventi-date-filter-group">
-      <span className="fmed-style-interventi-date-filter-label">{label}</span>
-      <input type="date" value={value} onChange={onChange} className="fmed-style-input" />
-    </div>);
-
+    <label className="p0-field">
+      <span>{label}</span>
+      <input type="date" value={value} onChange={onChange} />
+    </label>
+  );
 }
 
 export default function InterventiControls(props) {
   const {
-    interventiFiltrati,
-    apriNuovoIntervento,
-    ricercaCespiteIntervento,
-    setRicercaCespiteIntervento,
-    cespitiPerNuovoIntervento,
-    apriSchedaCespite,
-    labelPeriodoContabileInterventi,
+    interventiFiltrati = [],
+    apriNuovoIntervento = () => {},
+    ricercaCespiteIntervento = '',
+    setRicercaCespiteIntervento = () => {},
+    cespitiPerNuovoIntervento = [],
+    apriSchedaCespite = () => {},
+    labelPeriodoContabileInterventi = () => 'Periodo corrente',
     filtroInterventiCodice,
     setFiltroInterventiCodice,
-    setInterventiElencoAperto,
-    listaCodiciFiltroInterventi,
+    setInterventiElencoAperto = () => {},
+    listaCodiciFiltroInterventi = [],
     filtroInterventiSede,
     setFiltroInterventiSede,
-    listaSediInterventi,
+    listaSediInterventi = [],
     filtroInterventiSocieta,
     setFiltroInterventiSocieta,
-    listaSocietaInterventi,
+    listaSocietaInterventi = [],
     filtroInterventiTipologia,
     setFiltroInterventiTipologia,
-    listaTipologieFiltroInterventi,
+    listaTipologieFiltroInterventi = [],
     filtroInterventiAttivita,
     setFiltroInterventiAttivita,
-    listaAttivitaFiltroInterventi,
+    listaAttivitaFiltroInterventi = [],
     filtroInterventiAnnoContabile,
     setFiltroInterventiAnnoContabile,
-    listaAnniContabiliInterventi,
+    listaAnniContabiliInterventi = [],
     filtroInterventiPeriodoContabile,
     setFiltroInterventiPeriodoContabile,
     ordineInterventi,
@@ -60,260 +61,124 @@ export default function InterventiControls(props) {
     filtroInterventiProssimoA,
     setFiltroInterventiProssimoA,
     interventiElencoAperto,
-    permessiRuoloFmed,
-    setPagina,
-    resetFiltriInterventi,
-    esportaInterventiFiltratiPdf
-  } = props;
+    permessiRuoloFmed = {},
+    setPagina = () => {},
+    resetFiltriInterventi = () => {},
+    esportaInterventiFiltratiPdf = () => {}
+  } = props || {};
 
-  const closeInterventiList = () => setInterventiElencoAperto(false);
+  const closeList = () => setInterventiElencoAperto(false);
+  const update = (setter) => (event) => {
+    setter(event.target.value);
+    closeList();
+  };
 
   return (
-    <>
-      <div className="fmed-interventi-panel fmed-style-interventi-panel">
-        <div className="fmed-interventi-panel-head fmed-style-interventi-panel-header">
+    <section className="p0-command p0-command--maintenance" aria-label="Comandi interventi">
+      <div className="p0-command__primary">
+        <div className="p0-command__intro">
           <div>
-            <h3 className="fmed-style-interventi-section-title">Cerca cespite</h3>
-            <p className="fmed-style-interventi-section-subtitle">
-              Cerca un cespite e apri la scheda già pronta per aggiungere un intervento precompilato.
-            </p>
+            <span className="p0-kicker">Avvia un’attività</span>
+            <h2>Trova il bene da manutenere</h2>
           </div>
-          <button
-            type="button"
-
-            onClick={() => apriNuovoIntervento(null)}
-            title="Inserimento manuale senza preselezionare il cespite" className="fmed-style-interventi-ghost-action">
-            
-             Inserimento manuale
+          <button className="p0-btn p0-btn--maintenance" type="button" onClick={() => apriNuovoIntervento(null)}>
+            + Intervento manuale
           </button>
         </div>
 
-        <div className="fmed-interventi-search-row fmed-style-interventi-search-row">
+        <div className="p0-search">
+          <span className="p0-search__mark" aria-hidden="true">⌕</span>
           <input
             aria-label="Cerca cespite per nuovo intervento"
-            placeholder="Cerca cespite per codice, tipologia, modello, matricola o sede..."
+            placeholder="Codice, matricola, modello, tipologia o sede"
             value={ricercaCespiteIntervento}
-            onChange={(event) => setRicercaCespiteIntervento(event.target.value)} className="fmed-style-interventi-input-wide" />
-
-          
-          <button
-            type="button"
-
-            onClick={() => {}}
-            title="La ricerca si aggiorna automaticamente mentre scrivi" className="fmed-style-interventi-search-button">
-            
-             Cerca
-          </button>
+            onChange={(event) => setRicercaCespiteIntervento(event.target.value)}
+          />
+          <span className="p0-search__meta">Ricerca immediata</span>
         </div>
 
-        {ricercaCespiteIntervento.trim() &&
-        <div className="fmed-interventi-smart-results fmed-style-interventi-smart-results-box">
-            {cespitiPerNuovoIntervento.length === 0 ?
-          <p className="fmed-style-muted">Nessun cespite trovato.</p> :
-
-          cespitiPerNuovoIntervento.map((cespite) =>
-          <div
-            key={cespite.codicestrumento}
-            className="fmed-interventi-smart-row fmed-style-interventi-smart-result-row"
-
-            onClick={() => {
-              apriSchedaCespite(cespite);
-              setRicercaCespiteIntervento("");
-            }}
-            title="Apri scheda cespite per aggiungere un intervento precompilato">
-            
-                  <strong className="fmed-style-interventi-smart-result-code">{cespite.codicestrumento}</strong>
-                  <span>{cespite.tipologia || "-"}</span>
-                  <span>{cespite.sede || "-"}</span>
-                  <span>{cespite.reparto || "-"}</span>
-                  <span>{cespite.costruttore || "-"}</span>
-                  <span>{cespite.modello || "-"}</span>
-                </div>
-          )
-          }
+        {ricercaCespiteIntervento.trim() && (
+          <div className="p0-smart-results">
+            {cespitiPerNuovoIntervento.length === 0 ? (
+              <p className="p0-empty">Nessun cespite corrisponde alla ricerca.</p>
+            ) : cespitiPerNuovoIntervento.map((cespite) => (
+              <button
+                type="button"
+                key={cespite.codicestrumento}
+                className="p0-smart-row"
+                onClick={() => {
+                  apriSchedaCespite(cespite);
+                  setRicercaCespiteIntervento("");
+                }}
+              >
+                <strong>{cespite.codicestrumento}</strong>
+                <span>{cespite.tipologia || "Tipologia non indicata"}</span>
+                <span>{cespite.sede || "Sede non indicata"}</span>
+                <span>{cespite.costruttore || "-"} · {cespite.modello || "-"}</span>
+                <b>Apri →</b>
+              </button>
+            ))}
           </div>
-        }
+        )}
       </div>
 
-      <div className="fmed-interventi-panel fmed-style-interventi-panel">
-        <div className="fmed-interventi-panel-head fmed-style-interventi-panel-header">
-          <div>
-            <h3 className="fmed-style-interventi-section-title">Filtri interventi</h3>
-            <p className="fmed-style-interventi-section-subtitle">
-              Filtri sempre visibili per consultare rapidamente lo storico interventi.
-            </p>
-          </div>
-          <div className="fmed-style-interventi-filter-chips">
-            <span className="fmed-style-interventi-chip">Periodo: {labelPeriodoContabileInterventi()}</span>
-            <span className="fmed-style-interventi-chip">Interventi: {interventiFiltrati.length}</span>
-          </div>
-        </div>
-
-        <div className="fmed-interventi-filter-grid fmed-style-interventi-filters-grid">
-          <InterventiSelect
-            ariaLabel="Filtra interventi per codice cespite"
-            value={filtroInterventiCodice}
-            onChange={(event) => {
-              setFiltroInterventiCodice(event.target.value);
-              closeInterventiList();
-            }} className="fmed-style-interventi-select-large">
-
-            
+      <details className="p0-advanced">
+        <summary>
+          <span><b>Affina registro</b><small>Periodo, cespite, attività e date</small></span>
+          <span className="p0-advanced__summary">{labelPeriodoContabileInterventi()} · {interventiFiltrati.length} risultati</span>
+        </summary>
+        <div className="p0-filter-grid">
+          <SelectField label="Cespite" value={filtroInterventiCodice} onChange={update(setFiltroInterventiCodice)}>
             <option value="TUTTE">Tutti i codici</option>
-            {listaCodiciFiltroInterventi.map((codice) => <option key={codice} value={codice}>{codice}</option>)}
-          </InterventiSelect>
-
-          <InterventiSelect
-            ariaLabel="Filtra interventi per sede"
-            value={filtroInterventiSede}
-            onChange={(event) => {
-              setFiltroInterventiSede(event.target.value);
-              closeInterventiList();
-            }} className="fmed-style-interventi-select-large">
-
-            
+            {listaCodiciFiltroInterventi.map((v) => <option key={v} value={v}>{v}</option>)}
+          </SelectField>
+          <SelectField label="Sede" value={filtroInterventiSede} onChange={update(setFiltroInterventiSede)}>
             <option value="TUTTE">Tutte le sedi</option>
-            {listaSediInterventi.map((sede) => <option key={sede} value={sede}>{sede}</option>)}
-          </InterventiSelect>
-
-          <InterventiSelect
-            ariaLabel="Filtra interventi per società o ditta"
-            value={filtroInterventiSocieta}
-            onChange={(event) => {
-              setFiltroInterventiSocieta(event.target.value);
-              closeInterventiList();
-            }} className="fmed-style-interventi-select-large">
-
-            
-            <option value="TUTTE">Tutte le società/ditte</option>
-            {listaSocietaInterventi.map((societa) => <option key={societa} value={societa}>{societa}</option>)}
-          </InterventiSelect>
-
-          <InterventiSelect
-            ariaLabel="Filtra interventi per tipologia"
-            value={filtroInterventiTipologia}
-            onChange={(event) => {
-              setFiltroInterventiTipologia(event.target.value);
-              closeInterventiList();
-            }} className="fmed-style-interventi-select-large">
-
-            
+            {listaSediInterventi.map((v) => <option key={v} value={v}>{v}</option>)}
+          </SelectField>
+          <SelectField label="Società / ditta" value={filtroInterventiSocieta} onChange={update(setFiltroInterventiSocieta)}>
+            <option value="TUTTE">Tutte le società e ditte</option>
+            {listaSocietaInterventi.map((v) => <option key={v} value={v}>{v}</option>)}
+          </SelectField>
+          <SelectField label="Tipologia" value={filtroInterventiTipologia} onChange={update(setFiltroInterventiTipologia)}>
             <option value="TUTTE">Tutte le tipologie</option>
-            {listaTipologieFiltroInterventi.map((tipologia) => <option key={tipologia} value={tipologia}>{tipologia}</option>)}
-          </InterventiSelect>
-
-          <InterventiSelect
-            ariaLabel="Filtra interventi per attività"
-            value={filtroInterventiAttivita}
-            onChange={(event) => {
-              setFiltroInterventiAttivita(event.target.value);
-              closeInterventiList();
-            }} className="fmed-style-interventi-select-large">
-
-            
+            {listaTipologieFiltroInterventi.map((v) => <option key={v} value={v}>{v}</option>)}
+          </SelectField>
+          <SelectField label="Attività" value={filtroInterventiAttivita} onChange={update(setFiltroInterventiAttivita)}>
             <option value="TUTTE">Tutte le attività</option>
-            {listaAttivitaFiltroInterventi.map((attivita) => <option key={attivita} value={attivita}>{attivita}</option>)}
-          </InterventiSelect>
-
-          <InterventiSelect
-            ariaLabel="Filtra interventi per anno contabile"
-            value={filtroInterventiAnnoContabile}
-            onChange={(event) => {
-              setFiltroInterventiAnnoContabile(event.target.value);
-              closeInterventiList();
-            }} className="fmed-style-interventi-select-large">
-
-            
-            {listaAnniContabiliInterventi.map((anno) => <option key={anno} value={anno}>Anno contabile {anno}</option>)}
-          </InterventiSelect>
-
-          <InterventiSelect
-            ariaLabel="Filtra interventi per periodo contabile"
-            value={filtroInterventiPeriodoContabile}
-            onChange={(event) => {
-              setFiltroInterventiPeriodoContabile(event.target.value);
-              closeInterventiList();
-            }} className="fmed-style-interventi-select-large">
-
-            
-            <option value="ANNO">Tutto l&apos;anno</option>
-            <option value="T1">1° trimestre</option>
-            <option value="T2">2° trimestre</option>
-            <option value="T3">3° trimestre</option>
-            <option value="T4">4° trimestre</option>
-            <option value="S1">1° semestre</option>
-            <option value="S2">2° semestre</option>
-            <option value="PERSONALIZZATO">Periodo personalizzato</option>
-          </InterventiSelect>
-
-          <InterventiSelect
-            ariaLabel="Ordina interventi"
-            value={ordineInterventi}
-            onChange={(event) => setOrdineInterventi(event.target.value)} className="fmed-style-interventi-select-large">
-
-            
-            <option value="RECENTI">Data più recente</option>
-            <option value="VECCHI">Data meno recente</option>
-          </InterventiSelect>
-
-          {filtroInterventiPeriodoContabile === "PERSONALIZZATO" &&
-          <>
-              <InterventiDateField
-              label="Periodo da"
-              value={filtroInterventiPeriodoDa}
-              onChange={(event) => setFiltroInterventiPeriodoDa(event.target.value)} />
-            
-              <InterventiDateField
-              label="Periodo a"
-              value={filtroInterventiPeriodoA}
-              onChange={(event) => setFiltroInterventiPeriodoA(event.target.value)} />
-            
-            </>
-          }
-
-          <InterventiDateField
-            label="Ultimo intervento da"
-            value={filtroInterventiUltimoDa}
-            onChange={(event) => setFiltroInterventiUltimoDa(event.target.value)} />
-          
-          <InterventiDateField
-            label="Ultimo intervento a"
-            value={filtroInterventiUltimoA}
-            onChange={(event) => setFiltroInterventiUltimoA(event.target.value)} />
-          
-          <InterventiDateField
-            label="Prossimo intervento da"
-            value={filtroInterventiProssimoDa}
-            onChange={(event) => setFiltroInterventiProssimoDa(event.target.value)} />
-          
-          <InterventiDateField
-            label="Prossimo intervento a"
-            value={filtroInterventiProssimoA}
-            onChange={(event) => setFiltroInterventiProssimoA(event.target.value)} />
-          
+            {listaAttivitaFiltroInterventi.map((v) => <option key={v} value={v}>{v}</option>)}
+          </SelectField>
+          <SelectField label="Anno contabile" value={filtroInterventiAnnoContabile} onChange={update(setFiltroInterventiAnnoContabile)}>
+            {listaAnniContabiliInterventi.map((v) => <option key={v} value={v}>{v}</option>)}
+          </SelectField>
+          <SelectField label="Periodo" value={filtroInterventiPeriodoContabile} onChange={update(setFiltroInterventiPeriodoContabile)}>
+            <option value="ANNO">Intero anno</option><option value="T1">1° trimestre</option>
+            <option value="T2">2° trimestre</option><option value="T3">3° trimestre</option>
+            <option value="T4">4° trimestre</option><option value="S1">1° semestre</option>
+            <option value="S2">2° semestre</option><option value="PERSONALIZZATO">Periodo personalizzato</option>
+          </SelectField>
+          <SelectField label="Ordinamento" value={ordineInterventi} onChange={(e) => setOrdineInterventi(e.target.value)}>
+            <option value="RECENTI">Più recenti</option><option value="VECCHI">Meno recenti</option>
+          </SelectField>
+          {filtroInterventiPeriodoContabile === "PERSONALIZZATO" && <>
+            <DateField label="Periodo dal" value={filtroInterventiPeriodoDa} onChange={(e) => setFiltroInterventiPeriodoDa(e.target.value)} />
+            <DateField label="Periodo al" value={filtroInterventiPeriodoA} onChange={(e) => setFiltroInterventiPeriodoA(e.target.value)} />
+          </>}
+          <DateField label="Ultimo intervento dal" value={filtroInterventiUltimoDa} onChange={(e) => setFiltroInterventiUltimoDa(e.target.value)} />
+          <DateField label="Ultimo intervento al" value={filtroInterventiUltimoA} onChange={(e) => setFiltroInterventiUltimoA(e.target.value)} />
+          <DateField label="Prossimo intervento dal" value={filtroInterventiProssimoDa} onChange={(e) => setFiltroInterventiProssimoDa(e.target.value)} />
+          <DateField label="Prossimo intervento al" value={filtroInterventiProssimoA} onChange={(e) => setFiltroInterventiProssimoA(e.target.value)} />
         </div>
+      </details>
 
-        <div className="fmed-style-interventi-actions-bar">
-          <button
-            type="button"
-
-            onClick={() => setInterventiElencoAperto((value) => !value)} className="fmed-style-interventi-primary-action">
-            
-            {interventiElencoAperto ? "▲ Nascondi elenco" : ` Apri elenco filtrato (${interventiFiltrati.length})`}
-          </button>
-          {permessiRuoloFmed.canSeeCosts &&
-          <button type="button" onClick={() => setPagina("Costi")} className="fmed-style-interventi-secondary-action">
-               Analizza costi
-            </button>
-          }
-          <button type="button" onClick={resetFiltriInterventi} className="fmed-style-interventi-ghost-action">
-             Reset filtri
-          </button>
-          <button type="button" onClick={esportaInterventiFiltratiPdf} className="fmed-style-interventi-ghost-action">
-             Esporta PDF
-          </button>
-        </div>
+      <div className="p0-command__actions">
+        <button className="p0-btn p0-btn--maintenance" type="button" onClick={() => setInterventiElencoAperto((v) => !v)}>
+          {interventiElencoAperto ? "Chiudi registro" : `Apri registro · ${interventiFiltrati.length}`}
+        </button>
+        {permessiRuoloFmed.canSeeCosts && <button className="p0-btn" type="button" onClick={() => setPagina("Costi")}>Analizza costi</button>}
+        <button className="p0-btn" type="button" onClick={esportaInterventiFiltratiPdf}>Esporta PDF</button>
+        <button className="p0-btn p0-btn--quiet" type="button" onClick={resetFiltriInterventi}>Azzera filtri</button>
       </div>
-    </>);
-
+    </section>
+  );
 }

@@ -1,154 +1,83 @@
 import ScadenzeControls from "../components/scadenze/ScadenzeControls";
-import ScadenzeHero from "../components/scadenze/ScadenzeHero";
 import FmedIcon from "../components/ui/FmedIcon.jsx";
 
 export default function ScadenzePage(props) {
   const {
-    scadenzeVisualizzate,
-    scadenzeConStatoBase,
-    scadenzeSelezionateVisualizzate,
+    scadenzeVisualizzate = [],
+    scadenzeConStatoBase = [],
+    scadenzeSelezionateVisualizzate = [],
     scadenzeElencoAperto,
-    setScadenzeElencoAperto,
-    scadenzeScadute,
-    scadenzeImminenti,
-    scadenzeRenderizzate,
-    chiaveScadenzaExport,
-    scadenzeSelezionateExport,
-    statoScadenza,
-    toggleScadenzaExport,
-    chiudiScadenzaSingolaComeSostituita,
-    apriSchedaDaCodice,
-    normalizzaSocietaDitta,
-    formattaData,
-    setScadenzeRenderLimit,
+    setScadenzeElencoAperto = () => {},
+    scadenzeScadute = [],
+    scadenzeImminenti = [],
+    scadenzeRenderizzate = [],
+    chiaveScadenzaExport = (row) => String(row?.id || row?.codice_strumento || row?.codicestrumento || ''),
+    scadenzeSelezionateExport = [],
+    statoScadenza = () => ({ codice: 'NON_DISPONIBILE', testo: 'Da verificare', colore: '#7d8da3', giorni: null }),
+    toggleScadenzaExport = () => {},
+    chiudiScadenzaSingolaComeSostituita = () => {},
+    apriSchedaDaCodice = () => {},
+    normalizzaSocietaDitta = (value) => value || '-',
+    formattaData = (value) => value || '-',
+    setScadenzeRenderLimit = () => {},
     FMED_RENDER_BATCH_SCADENZE
-  } = props;
-
-  const etichettaModulo = (modulo) => ({
-    ASSET: "Asset",
-    INFRASTRUTTURE: "Infrastrutture",
-    SICUREZZA_81_08: "Sicurezza 81/08"
-  })[String(modulo || "").toUpperCase()] || String(modulo || "Altro").replaceAll("_", " ");
+  } = props || {};
   const daPianificare = scadenzeConStatoBase.filter((row) => row?._statoScadenza?.codice === "DA_PIANIFICARE");
-  const isCollaudoStorico = (row) => /COLLAUDO/i.test([
-  row?.famiglia_codice,
-  row?.famiglia_label,
-  row?.attivita,
-  row?.attivita_originale].
-  filter(Boolean).join(" "));
+  const moduleLabel = (value) => ({ ASSET: "Asset", INFRASTRUTTURE: "Infrastrutture", SICUREZZA_81_08: "Sicurezza 81/08" })[String(value || "").toUpperCase()] || String(value || "Altro").replaceAll("_", " ");
+  const isCollaudo = (row) => /COLLAUDO/i.test([row?.famiglia_codice, row?.famiglia_label, row?.attivita, row?.attivita_originale].filter(Boolean).join(" "));
+  const metrics = [
+    ["Nel perimetro", scadenzeVisualizzate.length, "calendar"],
+    ["Scadute", scadenzeScadute.length, "alert"],
+    ["Entro 30 giorni", scadenzeImminenti.length, "clock"],
+    ["Da pianificare", daPianificare.length, "plus"],
+    ["Selezionate", scadenzeSelezionateVisualizzate.length, "check"]
+  ];
 
   return (
-    <div className="fmed-scadenze-operative fmed-style-scadenze-page-shell">
-      <ScadenzeHero
-        filteredCount={scadenzeVisualizzate.length}
-        totalCount={scadenzeConStatoBase.length} />
-      
+    <main className="p0-operations p0-operations--deadline">
+      <header className="p0-operations__head">
+        <div className="p0-operations__identity">
+          <span className="p0-operations__icon"><FmedIcon name="calendar" /></span>
+          <div><span>Controllo temporale</span><h1>Scadenze</h1><p>Un’unica agenda per capire cosa è urgente, cosa arriva e cosa deve essere pianificato.</p></div>
+        </div>
+        <div className="p0-operations__metric"><strong>{scadenzeScadute.length}</strong><span>scadenze da recuperare</span></div>
+      </header>
 
       <ScadenzeControls {...props} />
 
-    <div className="fmed-operational-kpi-grid fmed-deadline-kpi-grid fmed-style-scadenze-kpi-grid" style={{
+      <section className="p0-metric-strip p0-metric-strip--five" aria-label="Sintesi scadenze">
+        {metrics.map(([label, value, icon]) => <article key={label}><span className="p0-metric-strip__icon"><FmedIcon name={icon} /></span><div><small>{label}</small><strong>{value}</strong></div></article>)}
+      </section>
 
-        ...{}
-      }}>
-      <div className="fmed-operational-kpi-card fmed-style-scadenze-kpi-card"><div className="fmed-style-scadenze-kpi-top"><span className="fmed-kpi-icon fmed-style-scadenze-kpi-icon"><FmedIcon name="calendar" /></span><span className="fmed-style-scadenze-kpi-label">Scadenze filtrate</span></div><strong className="fmed-style-scadenze-kpi-value">{scadenzeVisualizzate.length}</strong><span className="fmed-style-scadenze-kpi-hint">visualizzate</span></div>
-      <div className="fmed-operational-kpi-card fmed-style-scadenze-kpi-card"><div className="fmed-style-scadenze-kpi-top"><span className="fmed-kpi-icon fmed-style-scadenze-kpi-icon"><FmedIcon name="alert" /></span><span className="fmed-style-scadenze-kpi-label">Scadute</span></div><strong style={{
-
-            color: "#FF4D5E"
-          }} className="fmed-style-scadenze-kpi-value">{scadenzeScadute.length}</strong><span className="fmed-style-scadenze-kpi-hint">da recuperare</span></div>
-      <div className="fmed-operational-kpi-card fmed-style-scadenze-kpi-card"><div className="fmed-style-scadenze-kpi-top"><span className="fmed-kpi-icon fmed-style-scadenze-kpi-icon"><FmedIcon name="clock" /></span><span className="fmed-style-scadenze-kpi-label">Entro 30 giorni</span></div><strong style={{
-
-            color: "#D99A00"
-          }} className="fmed-style-scadenze-kpi-value">{scadenzeImminenti.length}</strong><span className="fmed-style-scadenze-kpi-hint">imminenti</span></div>
-      <div className="fmed-operational-kpi-card fmed-style-scadenze-kpi-card"><div className="fmed-style-scadenze-kpi-top"><span className="fmed-kpi-icon fmed-style-scadenze-kpi-icon"><FmedIcon name="plus" /></span><span className="fmed-style-scadenze-kpi-label">Da pianificare</span></div><strong style={{
-
-            color: "#8A6D1D"
-          }} className="fmed-style-scadenze-kpi-value">{daPianificare.length}</strong><span className="fmed-style-scadenze-kpi-hint">senza data futura</span></div>
-      <div className="fmed-operational-kpi-card fmed-style-scadenze-kpi-card"><div className="fmed-style-scadenze-kpi-top"><span className="fmed-kpi-icon fmed-style-scadenze-kpi-icon"><FmedIcon name="check" /></span><span className="fmed-style-scadenze-kpi-label">Selezionate</span></div><strong style={{
-
-            color: "#169C8F"
-          }} className="fmed-style-scadenze-kpi-value">{scadenzeSelezionateVisualizzate.length}</strong><span className="fmed-style-scadenze-kpi-hint">per azioni o PDF</span></div>
-    </div>
-
-    {scadenzeElencoAperto && <div className="fmed-operational-table-card fmed-style-scadenze-table-card" style={{
-
-        ...{}
-      }}>
-        <div style={{
-
-          ...{}
-        }} className="fmed-style-scadenze-list-header">
-          <div>
-            <h3 className="fmed-style-scadenze-table-title">Elenco scadenze filtrate</h3>
-            <p className="fmed-style-scadenze-table-subtitle">Selezionate: {scadenzeSelezionateVisualizzate.length} / {scadenzeVisualizzate.length}. Per i cicli Asset puoi cliccare sull’elemento per aprire la scheda cespite.</p>
-          </div>
-          <button onClick={() => setScadenzeElencoAperto(false)} className="fmed-style-scadenze-close-btn">Chiudi</button>
-        </div>
-        {<div className="fmed-style-scadenze-table-wrap">
-            <table className="fmed-operational8-deadlines-table fmed-style-scadenze-table">
-              <thead>
-                <tr>
-                  <th className="fmed-style-scadenze-th">Sel.</th><th className="fmed-style-scadenze-th">Modulo</th><th className="fmed-style-scadenze-th">Elemento</th><th className="fmed-style-scadenze-th">Sede</th><th className="fmed-style-scadenze-th">Ambito</th><th className="fmed-style-scadenze-th">Famiglia attività</th><th className="fmed-style-scadenze-th">Ditta / ente</th><th className="fmed-style-scadenze-th">Ultima esecuzione</th><th className="fmed-style-scadenze-th">Prossima scadenza</th><th className="fmed-style-scadenze-th">Giorni</th><th className="fmed-style-scadenze-th">Stato</th><th className="fmed-style-scadenze-th">Azione</th>
-                </tr>
-              </thead>
+      {scadenzeElencoAperto && (
+        <section className="p0-register">
+          <header><div><span className="p0-kicker">Agenda filtrata</span><h2>{scadenzeVisualizzate.length} scadenze</h2><p>Seleziona le righe da esportare o gestire.</p></div><button className="p0-btn p0-btn--quiet" onClick={() => setScadenzeElencoAperto(false)}>Chiudi</button></header>
+          <div className="p0-table-wrap">
+            <table>
+              <thead><tr><th aria-label="Seleziona">Sel.</th><th>Elemento</th><th>Contesto</th><th>Attività</th><th>Ultima / prossima</th><th>Stato</th><th>Azione</th></tr></thead>
               <tbody>
-                {scadenzeRenderizzate.map((s, idx) => {
-                const chiave = chiaveScadenzaExport(s);
-                const selezionata = scadenzeSelezionateExport.includes(chiave);
-                const stato = s._statoScadenza || statoScadenza(s._dataScadenza);
-                return <tr key={chiave || idx} className={[`${selezionata ? "is-selected" : ""} ${stato.codice === "SCADUTA" ? "is-expired" : ""}`, "fmed-style-tr"].filter(Boolean).join(" ")} onClick={() => toggleScadenzaExport(s)}>
-                      <td className="fmed-style-scadenze-td"><input type="checkbox" checked={selezionata} onChange={() => toggleScadenzaExport(s)} onClick={(e) => e.stopPropagation()} /></td>
-                      <td className="fmed-style-scadenze-td">{etichettaModulo(s.modulo)}</td>
-                      <td className={s.modulo === "ASSET" ? "fmed-style-scadenze-td-code" : "fmed-style-scadenze-td"} onClick={(e) => {
-                    e.stopPropagation();
-                    if (s.modulo === "ASSET") apriSchedaDaCodice(s.codice_strumento || s.codicestrumento);
-                  }}>{s.codice_strumento || s.codicestrumento || s.entita_chiave || "-"}</td>
-                      <td className="fmed-style-scadenze-td">{s.sede || "-"}</td>
-                      <td className="fmed-style-scadenze-td">{s.tipologia || "-"}</td>
-                      <td className="fmed-style-scadenze-td">
-                        <span>{s.attivita}</span>
-                        {isCollaudoStorico(s) && <span className="fmed-operational8-history-badge" title="Il collaudo resta conservato nello storico; viene archiviato soltanto il falso ciclo operativo">Storico protetto</span>}
-                      </td>
-                      <td className="fmed-style-scadenze-td">{normalizzaSocietaDitta(s.ditta_esecutrice || s.ditta || "")}</td>
-                      <td className="fmed-style-scadenze-td">{formattaData(s._dataUltimoIntervento || s.data_ultimo_intervento)}</td>
-                      <td className="fmed-style-scadenze-td">{formattaData(s._dataScadenza || s.data_prossimo_intervento || s.prossima_scadenza || s.data_scadenza)}</td>
-                      <td className="fmed-style-scadenze-td">{stato.giorni == null ? "-" : `${stato.giorni} gg`}</td>
-                      <td className="fmed-style-scadenze-td"><span style={{
-
-                      background: stato.colore
-                    }} className="fmed-style-scadenze-status-dot" />{stato.testo}</td>
-                      <td onClick={(event) => event.stopPropagation()} className="fmed-style-scadenze-td">
-                        {["SCADUTA", "DA_PIANIFICARE"].includes(stato.codice) && typeof chiudiScadenzaSingolaComeSostituita === "function" ? <button
-                      type="button"
-                      className="fmed-operational8-row-close-btn fmed-literal-fcd9f2776b"
-                      onClick={() => chiudiScadenzaSingolaComeSostituita(s)}
-
-
-
-
-
-
-
-
-
-
-
-
-                      title={stato.codice === "DA_PIANIFICARE" ? "Archivia il ciclo come non applicabile" : "Archivia il vecchio ciclo come chiuso e sostituito"}>
-                      
-                          {stato.codice === "DA_PIANIFICARE" ? "Archivia ciclo" : "Chiudi e sostituisci"}
-                        </button> : <span className="fmed-literal-f76be64972">—</span>}
-                      </td>
-                    </tr>;
-              })}
+                {scadenzeRenderizzate.map((row, index) => {
+                  const key = chiaveScadenzaExport(row);
+                  const selected = scadenzeSelezionateExport.includes(key);
+                  const state = row?._statoScadenza || statoScadenza?.(row?._dataScadenza) || { codice: 'NON_DISPONIBILE', testo: 'Da verificare', colore: '#7d8da3', giorni: null };
+                  return (
+                    <tr key={key || index} className={`${selected ? "is-selected" : ""} ${state.codice === "SCADUTA" ? "is-expired" : ""}`} onClick={() => toggleScadenzaExport(row)}>
+                      <td><input aria-label="Seleziona scadenza" type="checkbox" checked={selected} onChange={() => toggleScadenzaExport(row)} onClick={(e) => e.stopPropagation()} /></td>
+                      <td>{row.modulo === "ASSET" ? <button className="p0-table-link" onClick={(e) => { e.stopPropagation(); apriSchedaDaCodice(row.codice_strumento || row.codicestrumento); }}>{row.codice_strumento || row.codicestrumento}</button> : <b>{row.entita_chiave || "-"}</b>}<small>{moduleLabel(row.modulo)}</small></td>
+                      <td><b>{row.sede || "-"}</b><small>{row.tipologia || "-"}</small></td>
+                      <td><b>{row.attivita || "-"}</b><small>{normalizzaSocietaDitta(row.ditta_esecutrice || row.ditta || "")}</small>{isCollaudo(row) && <span className="p0-tag">Storico protetto</span>}</td>
+                      <td><span>{formattaData(row._dataUltimoIntervento || row.data_ultimo_intervento)}</span><small>Prossima: {formattaData(row._dataScadenza || row.data_prossimo_intervento || row.prossima_scadenza || row.data_scadenza)}</small></td>
+                      <td><span className={`p0-state p0-state--${String(state.codice || "").toLowerCase()}`}><i style={{ background: state.colore }} />{state.testo}</span><small>{state.giorni == null ? "" : `${state.giorni} giorni`}</small></td>
+                      <td onClick={(e) => e.stopPropagation()}>{["SCADUTA", "DA_PIANIFICARE"].includes(state.codice) && typeof chiudiScadenzaSingolaComeSostituita === "function" ? <button className="p0-btn p0-btn--small" onClick={() => chiudiScadenzaSingolaComeSostituita(row)}>{state.codice === "DA_PIANIFICARE" ? "Non applicabile" : "Chiudi ciclo"}</button> : "—"}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
-          </div>}
-        {scadenzeVisualizzate.length > scadenzeRenderizzate.length && <div className="fmed-style-load-more-row">
-            <button type="button" onClick={() => setScadenzeRenderLimit((v) => v + FMED_RENDER_BATCH_SCADENZE)} className="fmed-style-scadenze-secondary-action">
-              Mostra altre scadenze ({scadenzeRenderizzate.length}/{scadenzeVisualizzate.length})
-            </button>
-          </div>}
-      </div>}
-  </div>);
-
+          </div>
+          {scadenzeVisualizzate.length > scadenzeRenderizzate.length && <button className="p0-btn p0-register__more" onClick={() => setScadenzeRenderLimit((v) => v + FMED_RENDER_BATCH_SCADENZE)}>Mostra altre · {scadenzeRenderizzate.length}/{scadenzeVisualizzate.length}</button>}
+        </section>
+      )}
+    </main>
+  );
 }
