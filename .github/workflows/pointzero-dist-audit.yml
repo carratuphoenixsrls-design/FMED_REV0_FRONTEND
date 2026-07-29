@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - repair/rev0-regola0
+      - validation/rev0-punto0-final
   pull_request:
     branches:
       - main
