@@ -10,16 +10,122 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: regola0-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  ricostruzione-punto-zero:
+    name: 0 · Ricostruzione Punto 0 controllata
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch candidata
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: repair/rev0-regola0
+
+      - name: Verifica ricostruzione già applicata
+        id: marker
+        shell: bash
+        run: |
+          if [ -f .fmed_pointzero_applied ]; then
+            echo "done=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "done=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Recupera il Punto 0 preservato
+        if: steps.marker.outputs.done != 'true'
+        run: git fetch origin backup/rev0-punto0-0566931
+
+      - name: Trasferisce soltanto moduli visuali approvati
+        if: steps.marker.outputs.done != 'true'
+        shell: bash
+        run: |
+          git checkout origin/backup/rev0-punto0-0566931 -- \
+            src/pages/AssetPage.jsx \
+            src/components/asset/AssetControls.jsx \
+            src/pages/AssetPointZero.css \
+            src/pages/InterventiPage.jsx \
+            src/components/interventi/InterventiControls.jsx \
+            src/pages/ScadenzePage.jsx \
+            src/components/scadenze/ScadenzeControls.jsx \
+            src/pages/InfrastrutturePage.jsx \
+            src/components/infrastrutture/InfrastruttureControls.jsx \
+            src/components/infrastrutture/InfrastrutturaEditor.jsx \
+            src/pages/OperationsPointZero.css \
+            src/Sicurezza8108Page.jsx \
+            src/components/sicurezza8108/Sicurezza8108Controls.jsx \
+            src/ProcessiPage.jsx \
+            src/ImpostazioniPage.jsx \
+            src/pages/GovernancePointZero.css
+
+      - name: Applica protezioni alla base funzionale stabile
+        if: steps.marker.outputs.done != 'true'
+        run: node scripts/apply_pointzero_rebuild.mjs
+
+      - name: Marca la ricostruzione
+        if: steps.marker.outputs.done != 'true'
+        run: touch .fmed_pointzero_applied
+
+      - name: Node 22
+        if: steps.marker.outputs.done != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Dipendenze pulite
+        if: steps.marker.outputs.done != 'true'
+        run: npm ci
+
+      - name: Gate completo prima del salvataggio
+        if: steps.marker.outputs.done != 'true'
+        run: npm run check
+
+      - name: Salva esclusivamente sul branch isolato
+        if: steps.marker.outputs.done != 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            .fmed_pointzero_applied \
+            src/main.jsx \
+            src/PointZeroCompatibility.css \
+            src/pages/AssetPage.jsx \
+            src/components/asset/AssetControls.jsx \
+            src/pages/AssetPointZero.css \
+            src/pages/InterventiPage.jsx \
+            src/components/interventi/InterventiControls.jsx \
+            src/pages/ScadenzePage.jsx \
+            src/components/scadenze/ScadenzeControls.jsx \
+            src/pages/InfrastrutturePage.jsx \
+            src/components/infrastrutture/InfrastruttureControls.jsx \
+            src/components/infrastrutture/InfrastrutturaEditor.jsx \
+            src/pages/OperationsPointZero.css \
+            src/Sicurezza8108Page.jsx \
+            src/components/sicurezza8108/Sicurezza8108Controls.jsx \
+            src/ProcessiPage.jsx \
+            src/ImpostazioniPage.jsx \
+            src/pages/GovernancePointZero.css \
+            scripts/apply_pointzero_rebuild.mjs \
+            scripts/verify_regola0.mjs
+          git commit -m "FMED REV0: ricostruzione Punto 0 integrale e sicura"
+          git push origin HEAD:repair/rev0-regola0
+
+      - name: Conferma isolamento
+        run: |
+          echo "Ricostruzione applicata o già presente sul solo branch repair/rev0-regola0."
+          echo "Main e Production non sono stati modificati."
+
   controllo-1-integrita-funzionale:
     name: 1 · Integrità funzionale e struttura
     runs-on: ubuntu-latest
+    needs: ricostruzione-punto-zero
     steps:
       - name: Checkout completo
         uses: actions/checkout@v4
@@ -104,4 +210,4 @@ jobs:
         run: |
           echo "La pipeline valida soltanto la candidata."
           echo "Nessun merge su main e nessuna promozione Production sono eseguiti automaticamente."
-          echo "Il rilascio resta subordinato al collaudo manuale completo previsto da docs/REGOLA_0.md."
+          echo "Il rilascio resta subordinato al collaudo completo previsto da docs/REGOLA_0.md."
