@@ -6865,7 +6865,7 @@ ${messaggio}`);
                 {visibleItems.map((item) => {
                 const active = pagina === item || pagina === "Nuovo Asset" && nuovoAssetWizardReturnPage === item;
                 const help = fmedMenuHelp(item);
-                return <button key={item} className={[`fmed-side-menu-btn ${active ? "is-active" : ""}`, "fmed-style-menu-btn", active && "fmed-style-menu-btn-active"].filter(Boolean).join(" ")} title={help} data-help={help} aria-current={active ? "page" : undefined} aria-label={`${fmedMenuLabel(item)}. ${help}`} onClick={() => {
+                return <button key={item} className={[`fmed-side-menu-btn ${active ? "is-active" : ""}`, "fmed-style-menu-btn", active && "fmed-style-menu-btn-active"].filter(Boolean).join(" ")} title={help} data-help={help} data-module={item} aria-current={active ? "page" : undefined} aria-label={`${fmedMenuLabel(item)}. ${help}`} onClick={() => {
                   if (!puoAccederePaginaFmed(sessioneFmed, item)) {
                     setPagina("Dashboard");
                     return;
@@ -6891,6 +6891,7 @@ ${messaggio}`);
             <div className="fmed-sidebar-group-items">
               <a
               className="fmed-side-menu-btn fmed-mover-menu-item"
+              data-module="Marilab Mover"
               href={MARILAB_MOVER_URL}
               target="_blank"
               rel="noreferrer"

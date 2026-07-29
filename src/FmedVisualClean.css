@@ -3371,3 +3371,185 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
     grid-template-columns: 1fr;
   }
 }
+
+/* FMED REV0 Patch 16 · identità cromatica controllata dei moduli */
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-dashboard-page,
+  .fmed-asset-page,
+  .fmed-interventi-operativi,
+  .fmed-scadenze-operative,
+  .fmed-infrastructure-root,
+  .s8108-page,
+  .fmed-process-page,
+  .core-standard-page,
+  .fmed-settings-page,
+  .fmed-costi-page,
+  .fmed-export-page,
+  .fmed-sharepoint-page,
+  .fmed-audit-page,
+  .fmed-wizard-page
+) {
+  --fmed-primary: var(--module-accent, #315f8c);
+  --fmed-primary-strong: color-mix(in srgb, var(--module-accent, #315f8c) 78%, #101828);
+  --fmed-primary-soft: color-mix(in srgb, var(--module-accent, #315f8c) 10%, #ffffff);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-dashboard-page { --module-accent: #4f46e5; }
+.fmed-app-root.fmed-shell-premium .fmed-asset-page,
+.fmed-app-root.fmed-shell-premium .fmed-wizard-page { --module-accent: #2563eb; }
+.fmed-app-root.fmed-shell-premium .fmed-interventi-operativi { --module-accent: #d97706; }
+.fmed-app-root.fmed-shell-premium .fmed-scadenze-operative { --module-accent: #dc4c64; }
+.fmed-app-root.fmed-shell-premium .fmed-infrastructure-root { --module-accent: #7c3aed; }
+.fmed-app-root.fmed-shell-premium .s8108-page { --module-accent: #b7791f; }
+.fmed-app-root.fmed-shell-premium .fmed-process-page { --module-accent: #0f7490; }
+.fmed-app-root.fmed-shell-premium .core-standard-page { --module-accent: #475569; }
+.fmed-app-root.fmed-shell-premium .fmed-settings-page,
+.fmed-app-root.fmed-shell-premium .fmed-audit-page { --module-accent: #a23b72; }
+.fmed-app-root.fmed-shell-premium .fmed-costi-page { --module-accent: #8b5cf6; }
+.fmed-app-root.fmed-shell-premium .fmed-export-page { --module-accent: #176b87; }
+.fmed-app-root.fmed-shell-premium .fmed-sharepoint-page { --module-accent: #2878b8; }
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-dashboard-header,
+  .fmed-module-hero,
+  .fmed-process-head,
+  .core-standard-head,
+  .fmed-settings-head,
+  .fmed-audit-head,
+  .fmed-costi-hero,
+  .fmed-report-hero
+) {
+  border-top: 3px solid var(--module-accent, var(--fmed-primary));
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-module-hero-heading {
+  width: 100%;
+  justify-self: start;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-module-hero-copy {
+  align-items: start;
+  text-align: left;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-module-hero-metric {
+  border-left: 4px solid var(--module-accent, var(--fmed-primary));
+  background: color-mix(in srgb, var(--module-accent, var(--fmed-primary)) 6%, #ffffff);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-operational-kpi-card {
+  position: relative;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-operational-kpi-card::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  border-radius: inherit;
+  background: var(--module-accent, var(--fmed-primary));
+  content: "";
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn {
+  --menu-accent: #8391a5;
+}
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Dashboard"] { --menu-accent: #8178ff; }
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Asset"] { --menu-accent: #5b9cff; }
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Interventi"] { --menu-accent: #f2a33b; }
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Scadenze"] { --menu-accent: #f2768b; }
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Infrastrutture"] { --menu-accent: #a77cf3; }
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Sicurezza 81/08"] { --menu-accent: #e0ad51; }
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Processi"] { --menu-accent: #4bb4ce; }
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Dizionari"] { --menu-accent: #98a6ba; }
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Gestione Utenti"] { --menu-accent: #d276aa; }
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Marilab Mover"] { --menu-accent: #58b6e7; }
+
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn .fmed-side-menu-icon {
+  color: var(--menu-accent);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn.is-active {
+  border-color: color-mix(in srgb, var(--menu-accent) 58%, transparent);
+  background: color-mix(in srgb, var(--menu-accent) 17%, transparent);
+  box-shadow: inset 3px 0 0 var(--menu-accent);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn.is-active .fmed-side-menu-icon {
+  background: color-mix(in srgb, var(--menu-accent) 20%, transparent);
+  color: #ffffff;
+}
+
+/* Densità adattiva: notebook 15" (1366px) → monitor 27" (1920px e oltre). */
+@media (max-width: 1440px) {
+  .fmed-app-root.fmed-shell-premium {
+    --fmed-sidebar-w: 190px;
+    --fmed-control-h: 36px;
+    font-size: 14px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-main-content {
+    padding: 10px 11px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-module-hero {
+    grid-template-columns: minmax(0,1fr) 150px;
+    min-height: 72px;
+    padding: 10px 12px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-operational-filters {
+    padding: 10px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-operational-kpi-card {
+    min-height: 102px;
+    padding: 12px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-main-content :is(p,li,td,input,select,textarea) {
+    font-size: 13px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-main-content :is(small,.fmed-banner-copy,.fmed-module-hero-subtitle) {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 1800px) {
+  .fmed-app-root.fmed-shell-premium {
+    --fmed-sidebar-w: 224px;
+    --fmed-control-h: 42px;
+    font-size: 16px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-main-content {
+    padding: 14px 16px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-module-hero {
+    grid-template-columns: minmax(0,1fr) 184px;
+    min-height: 98px;
+    padding: 16px 18px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-module-hero-title {
+    font-size: 30px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-operational-filters {
+    padding: 14px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-operational-kpi-card {
+    min-height: 126px;
+    padding: 16px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-main-content :is(p,li,td,input,select,textarea) {
+    font-size: 14px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-main-content :is(small,.fmed-banner-copy,.fmed-module-hero-subtitle) {
+    font-size: 13px;
+  }
+}

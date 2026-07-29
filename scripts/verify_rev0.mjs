@@ -115,5 +115,23 @@ const patch15Visual = [
   ? ok("contrasto e leggibilità KPI ripristinati")
   : fail("contrasto KPI testata Asset non corretto");
 
+const appShell = read("src/FmedApp.jsx");
+(/data-module=\{item\}/.test(appShell)
+  && /data-module="Marilab Mover"/.test(appShell)
+  && /--module-accent:\s*#2563eb/i.test(visual)
+  && /--module-accent:\s*#d97706/i.test(visual)
+  && /--module-accent:\s*#dc4c64/i.test(visual)
+  && /--module-accent:\s*#7c3aed/i.test(visual))
+  ? ok("identità cromatica univoca dei moduli")
+  : fail("identità cromatica Patch 16 incompleta");
+(/@media\s*\(max-width:\s*1440px\)/i.test(visual)
+  && /@media\s*\(min-width:\s*1800px\)/i.test(visual)
+  && /notebook 15"/i.test(visual))
+  ? ok("layout adattivo da notebook 15 a monitor 27")
+  : fail("densità adattiva 15-27 pollici assente");
+!/#12b76a|#eaf8f0/i.test(read("src/NewAssetWizard.css"))
+  ? ok("verde decorativo eliminato dal wizard")
+  : fail("verde decorativo residuo nel wizard");
+
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");
