@@ -1865,11 +1865,7 @@ function AppNuovoCore({
           </div>
         </div>
 
-        <div style={{
-
-        maxHeight: 180,
-        overflowY: "auto"
-      }} className="fmed-style-export-checkbox-grid">
+        <div className="fmed-style-export-checkbox-grid">
           {listaBranche.map((branca) => <label key={branca} className="fmed-style-export-check-label">
               <input type="checkbox" checked={brancheSelezionate.includes(branca)} onChange={() => toggleFiltroBrancaExport(setter, branca)} />
               <span>{branca}</span>
@@ -1911,11 +1907,7 @@ function AppNuovoCore({
           </div>
         </div>
 
-        <div style={{
-
-        maxHeight: 180,
-        overflowY: "auto"
-      }} className="fmed-style-export-checkbox-grid">
+        <div className="fmed-style-export-checkbox-grid">
           {listaSediInterventi.map((sede) => <label key={sede} className="fmed-style-export-check-label">
               <input type="checkbox" checked={sediSelezionate.includes(sede)} onChange={() => toggleFiltroValoreExport(setExportSediInterventi, sede)} />
               <span>{sede}</span>

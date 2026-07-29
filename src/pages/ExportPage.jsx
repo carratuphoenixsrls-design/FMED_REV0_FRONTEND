@@ -1,4 +1,17 @@
 import FmedModuleIcon from "../components/FmedModuleIcon.jsx";
+
+function ReportAdvancedSection({ title, summary, children }) {
+  return (
+    <details className="fmed-report-advanced">
+      <summary>
+        <span>{title}</span>
+        <small>{summary}</small>
+      </summary>
+      <div className="fmed-report-advanced-body">{children}</div>
+    </details>
+  );
+}
+
 export default function ExportPage(props) {
   const {
     fmedAuditQualitaDati,
@@ -174,7 +187,7 @@ export default function ExportPage(props) {
               </div>
             </div>
 
-            <div className="fmed-literal-2a57fba0b1">
+            <div className="fmed-report-modules">
 
 
         
@@ -240,26 +253,18 @@ export default function ExportPage(props) {
                       <button type="button" onClick={() => exportInventarioFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
                     </div>
 
-                    {renderFiltroBrancheExport("Filtro multiplo branca", exportBrancheInventario, setExportBrancheInventario)}
+                    <ReportAdvancedSection title="Branche" summary={exportBrancheInventario.length ? `${exportBrancheInventario.length} selezionate` : "Tutte"}>
+                      {renderFiltroBrancheExport("Filtro multiplo branca", exportBrancheInventario, setExportBrancheInventario)}
+                    </ReportAdvancedSection>
 
-                    <div style={{
-
-              justifyContent: "flex-start",
-              marginTop: 10
-            }} className="fmed-style-export-action-row">
-                      <button type="button" style={{
-
-                flex: "0 1 220px"
-              }} onClick={() => {
+                    <div className="fmed-report-quick-actions">
+                      <button type="button" onClick={() => {
                 setExportStatoInventario("Attivo");
                 setExportCespitiInventarioSelezionati([]);
-              }} className="fmed-style-primary-btn">
-                        Esporta solo asset attivi
+              }} className="fmed-style-secondary-btn">
+                        Imposta solo asset attivi
                       </button>
-                      <button type="button" style={{
-
-                flex: "0 1 180px"
-              }} onClick={() => {
+                      <button type="button" onClick={() => {
                 setExportSedeInventario("TUTTE");
                 setExportStatoInventario("TUTTI");
                 setExportCategoriaInventario("TUTTE");
@@ -276,6 +281,7 @@ export default function ExportPage(props) {
                       </button>
                     </div>
 
+                    <ReportAdvancedSection title="Colonne opzionali" summary="Export sintetico predefinito">
                     <div className="fmed-style-export-filter-box">
                       <div className="fmed-literal-d1380c0341">
 
@@ -306,7 +312,9 @@ export default function ExportPage(props) {
                         Di default l'export resta sintetico. Accessori/Sistema primario resta nella scheda cespite e non viene esportato.
                       </div>
                     </div>
+                    </ReportAdvancedSection>
 
+                    <ReportAdvancedSection title="Cespiti specifici" summary={exportCespitiInventarioSelezionati.length ? `${exportCespitiInventarioSelezionati.length} selezionati` : "Tutti i cespiti filtrati"}>
                     <div className="fmed-style-export-filter-box">
                       <div className="fmed-literal-d1380c0341">
 
@@ -330,29 +338,22 @@ export default function ExportPage(props) {
                         </div>
                       </div>
 
-                      <input style={{
+                      <input value={exportRicercaCespiteInventario} onChange={(e) => setExportRicercaCespiteInventario(e.target.value)} placeholder="Cerca codice cespite da esportare..." className="fmed-style-input fmed-report-search-input" />
 
-                marginBottom: 5
-              }} value={exportRicercaCespiteInventario} onChange={(e) => setExportRicercaCespiteInventario(e.target.value)} placeholder="Cerca codice cespite da esportare..." className="fmed-style-input" />
-
-                      <div style={{
-
-                maxHeight: 170,
-                overflowY: "auto"
-              }} className="fmed-style-export-checkbox-grid">
-                        {codiciInventarioExportVisibili.slice(0, 300).map((codice) => <label key={codice} className="fmed-style-export-check-label">
+                      <div className="fmed-style-export-checkbox-grid">
+                        {codiciInventarioExportVisibili.slice(0, 60).map((codice) => <label key={codice} className="fmed-style-export-check-label">
                             <input type="checkbox" checked={exportCespitiInventarioSelezionati.includes(codice)} onChange={() => toggleCespiteExportInventario(codice)} />
                             <span>{codice}</span>
                           </label>)}
                       </div>
 
-                      {codiciInventarioExportVisibili.length > 300 && <div className="fmed-literal-1212093a3b">
+                      {codiciInventarioExportVisibili.length > 60 && <div className="fmed-literal-1212093a3b">
 
 
 
 
                 
-                          Mostrati i primi 300 codici: usa la ricerca per trovare gli altri.
+                          Mostrati i primi 60 codici: usa la ricerca per trovare gli altri.
                         </div>}
 
                       <div className="fmed-literal-14fdc86419">
@@ -364,6 +365,7 @@ export default function ExportPage(props) {
                         Disponibili: {codiciInventarioExport.length} · Visibili: {codiciInventarioExportVisibili.length} · Selezionati: {exportCespitiInventarioSelezionati.length}. Se non selezioni nulla, esporta tutti i cespiti filtrati.
                       </div>
                     </div>
+                    </ReportAdvancedSection>
 
                     <div className="fmed-style-export-info-line">
                       Filtri: {exportSedeInventario} · {exportStatoInventario} · {exportCategoriaInventario === "TUTTE" ? "Tutte le categorie" : formatCategoria(exportCategoriaInventario)} · {exportTipologiaInventario} · Branche: {exportBrancheInventario.length ? exportBrancheInventario.length : "tutte"} · {exportCostruttoreInventario} · {exportRepartoInventario} · {exportSocietaInventario} · {exportLocazioneInventario} · {exportOrdineInventario}
@@ -424,10 +426,15 @@ export default function ExportPage(props) {
                       <button type="button" onClick={() => exportInterventiFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
                     </div>
 
-                    {renderFiltroSediInterventiExport()}
+                    <ReportAdvancedSection title="Sedi multiple" summary="Facoltativo">
+                      {renderFiltroSediInterventiExport()}
+                    </ReportAdvancedSection>
 
-                    {renderFiltroBrancheExport("Filtro multiplo branca", exportBrancheInterventi, setExportBrancheInterventi)}
+                    <ReportAdvancedSection title="Branche" summary={exportBrancheInterventi.length ? `${exportBrancheInterventi.length} selezionate` : "Tutte"}>
+                      {renderFiltroBrancheExport("Filtro multiplo branca", exportBrancheInterventi, setExportBrancheInterventi)}
+                    </ReportAdvancedSection>
 
+                    <ReportAdvancedSection title="Attività" summary={`${attivitaExportIncluse.length} incluse`}>
                     <div className="fmed-style-export-filter-box">
                       <div className="fmed-literal-d1380c0341">
 
@@ -467,7 +474,9 @@ export default function ExportPage(props) {
                         Incluse: {attivitaExportIncluse.length} / {listaAttivitaExportInterventi.length}
                       </div>
                     </div>
+                    </ReportAdvancedSection>
 
+                    <ReportAdvancedSection title="Cespiti specifici" summary={exportCespitiInterventiSelezionati.length ? `${exportCespitiInterventiSelezionati.length} selezionati` : "Tutti gli interventi filtrati"}>
                     <div className="fmed-style-export-filter-box">
                       <div className="fmed-literal-d1380c0341">
 
@@ -491,29 +500,22 @@ export default function ExportPage(props) {
                         </div>
                       </div>
 
-                      <input style={{
+                      <input value={exportRicercaCespiteInterventi} onChange={(e) => setExportRicercaCespiteInterventi(e.target.value)} placeholder="Cerca codice cespite da esportare..." className="fmed-style-input fmed-report-search-input" />
 
-                marginBottom: 5
-              }} value={exportRicercaCespiteInterventi} onChange={(e) => setExportRicercaCespiteInterventi(e.target.value)} placeholder="Cerca codice cespite da esportare..." className="fmed-style-input" />
-
-                      <div style={{
-
-                maxHeight: 170,
-                overflowY: "auto"
-              }} className="fmed-style-export-checkbox-grid">
-                        {codiciInterventiExportVisibili.slice(0, 300).map((codice) => <label key={codice} className="fmed-style-export-check-label">
+                      <div className="fmed-style-export-checkbox-grid">
+                        {codiciInterventiExportVisibili.slice(0, 60).map((codice) => <label key={codice} className="fmed-style-export-check-label">
                             <input type="checkbox" checked={exportCespitiInterventiSelezionati.includes(codice)} onChange={() => toggleCespiteExportInterventi(codice)} />
                             <span>{codice}</span>
                           </label>)}
                       </div>
 
-                      {codiciInterventiExportVisibili.length > 300 && <div className="fmed-literal-1212093a3b">
+                      {codiciInterventiExportVisibili.length > 60 && <div className="fmed-literal-1212093a3b">
 
 
 
 
                 
-                          Mostrati i primi 300 codici: usa la ricerca per trovare gli altri.
+                          Mostrati i primi 60 codici: usa la ricerca per trovare gli altri.
                         </div>}
 
                       <div className="fmed-literal-14fdc86419">
@@ -525,6 +527,7 @@ export default function ExportPage(props) {
                         Disponibili: {codiciInterventiExport.length} · Visibili: {codiciInterventiExportVisibili.length} · Selezionati: {exportCespitiInterventiSelezionati.length}. Se non selezioni nulla, esporta tutti gli interventi filtrati.
                       </div>
                     </div>
+                    </ReportAdvancedSection>
 
                   </div>}
               </div>
@@ -598,7 +601,9 @@ export default function ExportPage(props) {
                       <button type="button" onClick={() => exportScadenzeFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
                       <button type="button" onClick={() => exportScadenzeFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
                     </div>
-                    {renderFiltroBrancheExport("Filtro multiplo branca", exportBrancheScadenze, setExportBrancheScadenze)}
+                    <ReportAdvancedSection title="Branche" summary={exportBrancheScadenze.length ? `${exportBrancheScadenze.length} selezionate` : "Tutte"}>
+                      {renderFiltroBrancheExport("Filtro multiplo branca", exportBrancheScadenze, setExportBrancheScadenze)}
+                    </ReportAdvancedSection>
                   </div>}
               </div>
 
@@ -643,7 +648,9 @@ export default function ExportPage(props) {
                       <button type="button" onClick={() => exportBudgetCriticitaFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
                       <button type="button" onClick={() => exportBudgetCriticitaFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
                     </div>
-                    {renderFiltroBrancheExport("Filtro multiplo branca", exportBrancheBudget, setExportBrancheBudget)}
+                    <ReportAdvancedSection title="Branche" summary={exportBrancheBudget.length ? `${exportBrancheBudget.length} selezionate` : "Tutte"}>
+                      {renderFiltroBrancheExport("Filtro multiplo branca", exportBrancheBudget, setExportBrancheBudget)}
+                    </ReportAdvancedSection>
                   </div>}
               </div>
             </div>

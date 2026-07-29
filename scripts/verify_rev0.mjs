@@ -15,6 +15,7 @@ const index = read("index.html");
 const main = read("src/main.jsx");
 const app = read("src/FmedApp.jsx");
 const settings = read("src/ImpostazioniPage.jsx");
+const exportPage = read("src/pages/ExportPage.jsx");
 const visual = read("src/FmedVisualClean.css");
 const cssFiles = fs.readdirSync(path.join(root, "src"), { recursive: true })
   .filter((file) => file.endsWith(".css"));
@@ -57,6 +58,11 @@ app.includes("VITE_API_BASE_URL") || main.includes("VITE_API_BASE_URL")
 !/\.fmed-main-content button:disabled\s*\{[^}]*opacity/i.test(visual)
   ? ok("nessuna opacità disabled universale")
   : fail("opacità disabled universale presente");
+exportPage.includes("fmed-report-advanced")
+  && !exportPage.includes("slice(0, 300)")
+  && !exportPage.includes("fmed-literal-2a57fba0b1")
+  ? ok("Report compatto con filtri avanzati richiudibili")
+  : fail("struttura Report estesa o legacy presente");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");

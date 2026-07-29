@@ -1224,8 +1224,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: 118px;
-  padding: 20px 22px;
+  min-height: 96px;
+  padding: 16px 18px;
 }
 .fmed-report-hero-heading,
 .fmed-report-audit-head,
@@ -1261,7 +1261,7 @@
   overflow-wrap: anywhere;
 }
 .fmed-report-audit {
-  padding: 16px 18px;
+  padding: 14px 16px;
   border: 1px solid var(--fmed-border);
   border-radius: 18px;
   background: var(--fmed-surface);
@@ -1411,6 +1411,69 @@
 .fmed-style-export-action-row > button {
   flex: 1 1 180px;
 }
+.fmed-report-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 10px;
+}
+.fmed-report-quick-actions > button {
+  min-height: 38px;
+}
+.fmed-report-advanced {
+  margin-top: 9px;
+  border: 1px solid var(--fmed-border);
+  border-radius: 12px;
+  background: var(--fmed-surface-solid);
+  overflow: clip;
+}
+.fmed-report-advanced > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 42px;
+  padding: 9px 12px;
+  color: var(--fmed-text);
+  cursor: pointer;
+  list-style: none;
+}
+.fmed-report-advanced > summary::-webkit-details-marker {
+  display: none;
+}
+.fmed-report-advanced > summary::after {
+  content: "+";
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-left: auto;
+  border-radius: 999px;
+  background: var(--fmed-surface-soft);
+  color: var(--fmed-primary);
+  font-size: 17px;
+  font-weight: 800;
+}
+.fmed-report-advanced[open] > summary::after {
+  content: "−";
+}
+.fmed-report-advanced > summary span {
+  font-weight: 800;
+}
+.fmed-report-advanced > summary small {
+  color: var(--fmed-muted);
+  font-size: 11px;
+}
+.fmed-report-advanced-body {
+  padding: 0 10px 10px;
+  border-top: 1px solid var(--fmed-border);
+}
+.fmed-report-advanced-body > .fmed-style-export-filter-box {
+  margin-top: 10px;
+}
+.fmed-report-search-input {
+  margin-bottom: 7px;
+}
 .fmed-style-export-filter-box {
   margin-top: 12px;
   border: 1px solid var(--fmed-border);
@@ -1422,9 +1485,8 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 7px 10px;
-  max-height: 116px;
-  overflow-y: auto;
-  padding-right: 4px;
+  max-height: none;
+  overflow: visible;
 }
 .fmed-style-export-check-label {
   display: flex;
@@ -3037,7 +3099,7 @@
   gap: 10px;
   margin-top: 18px;
 }
-.fmed-literal-2a57fba0b1 {
+.fmed-report-modules {
   display: grid;
   gap: 12px;
 }
