@@ -159,25 +159,25 @@ function SiteHygienePanel({ audit, loading, busy, preview, canManage, onRefresh,
   </section>;
 }
 
-function InterventionLocationHygienePanel({ audit, loading, busy, preview, canManage, onRefresh, onPreview, onApply }) {
+function AssetLocationHygienePanel({ audit, loading, busy, preview, canManage, onRefresh, onPreview, onApply }) {
   const summary = audit?.riepilogo || {};
   const plan = Array.isArray(preview?.piano) ? preview.piano : [];
-  return <section className="core-site-hygiene-panel" aria-label="Bonifica locazioni interventi">
+  return <section className="core-site-hygiene-panel" aria-label="Bonifica locazioni cespiti">
     <div className="core-quality-heading">
       <div>
-        <span className="core-standard-kicker">DATA HYGIENE · INTERVENTI</span>
-        <h3>Bonifica locazioni mancanti</h3>
-        <p>Recupera la locazione dal cespite collegato tramite codice esatto. Compila solo campi vuoti; non sovrascrive dati presenti e non applica corrispondenze ambigue.</p>
+        <span className="core-standard-kicker">DATA HYGIENE · CESPITI</span>
+        <h3>Bonifica locazioni cespiti</h3>
+        <p>Recupera la locazione dagli interventi collegati tramite codice esatto. Compila solo cespiti con campo vuoto; non sovrascrive dati presenti e non applica corrispondenze ambigue.</p>
       </div>
       <button type="button" className="core-primary-button" onClick={onRefresh} disabled={loading || busy}>{loading ? "Analisi…" : "Aggiorna analisi"}</button>
     </div>
-    {loading && !audit ? <div className="core-quality-loading">Confronto interventi e cespiti tramite codice inventario…</div> : <>
+    {loading && !audit ? <div className="core-quality-loading">Ricerca delle locazioni certe negli interventi tramite codice inventario…</div> : <>
       <div className="core-quality-summary">
-        <article className={Number(summary.locazioni_vuote || 0) ? "is-warning" : "is-ok"}><span>Locazioni vuote</span><strong>{formatCount(summary.locazioni_vuote)}</strong><small>interventi da verificare</small></article>
-        <article className="is-ok"><span>Proposte certe</span><strong>{formatCount(summary.proposte_certe)}</strong><small>codice asset esatto</small></article>
+        <article className={Number(summary.locazioni_vuote || 0) ? "is-warning" : "is-ok"}><span>Locazioni vuote</span><strong>{formatCount(summary.locazioni_vuote)}</strong><small>cespiti da verificare</small></article>
+        <article className="is-ok"><span>Proposte certe</span><strong>{formatCount(summary.proposte_certe)}</strong><small>interventi concordanti</small></article>
         <article><span>Esclusi</span><strong>{formatCount(summary.esclusi)}</strong><small>nessuna modifica automatica</small></article>
         <article className={Number(summary.ambigui || 0) ? "is-warning" : "is-ok"}><span>Ambigui</span><strong>{formatCount(summary.ambigui)}</strong><small>richiedono controllo umano</small></article>
-        <article><span>Asset non trovati</span><strong>{formatCount(summary.asset_non_trovato)}</strong><small>codice senza corrispondenza</small></article>
+        <article><span>Senza riferimento</span><strong>{formatCount(summary.senza_riferimento_interventi)}</strong><small>nessun intervento utilizzabile</small></article>
       </div>
       <div className="core-quality-actions">
         <div><strong>Anteprima obbligatoria, storico preventivo</strong><span>Ogni modifica conserva origine, valore precedente, operatore e identificativo dell'operazione.</span></div>
@@ -190,9 +190,9 @@ function InterventionLocationHygienePanel({ audit, loading, busy, preview, canMa
         <p>{preview.criterio}</p>
         <div className="core-quality-preview-list">
           {plan.slice(0, 150).map((item, index) => <div key={`${item.chiave_valore}-${index}`}>
-            <code>Intervento {String(item.chiave_valore)}</code>
+            <code>Cespite {String(item.chiave_valore)}</code>
             <strong>Vuoto → {item.a}</strong>
-            <span>Asset {item.codice_asset} · {item.fonte} · affidabilità {item.affidabilita}</span>
+            <span>Codice {item.codice_asset} · {item.fonte} · affidabilità {item.affidabilita}</span>
           </div>)}
           {!plan.length && <div className="core-empty-state">Nessun completamento certo disponibile.</div>}
         </div>
@@ -296,10 +296,10 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
     setLocationHygieneAttempted(true);
     setLocationHygieneLoading(true);
     try {
-      const data = await fmedFetchJson("/data-hygiene/interventi/locazioni/audit?limit=10000", { apiBaseUrl, retries: 2, timeoutMs: 90000 });
+      const data = await fmedFetchJson("/data-hygiene/cespiti/locazioni/audit?limit=10000", { apiBaseUrl, retries: 2, timeoutMs: 90000 });
       setLocationHygiene(data);
     } catch (error) {
-      setMessage(`Data Hygiene locazioni interventi: ${error.message}`);
+      setMessage(`Data Hygiene locazioni cespiti: ${error.message}`);
     } finally {
       setLocationHygieneLoading(false);
     }
@@ -464,13 +464,13 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
     try {
       const session = fmedSession();
       const actor = String(session?.email || session?.nome || "FMED_ADMIN");
-      const data = await fmedFetchJson("/data-hygiene/interventi/locazioni/normalizza", {
+      const data = await fmedFetchJson("/data-hygiene/cespiti/locazioni/normalizza", {
         apiBaseUrl,
         method: "POST",
         headers: apiHeaders(),
         body: JSON.stringify({
           apply,
-          conferma: apply ? "APPLICA_REV0_LOCAZIONI_INTERVENTI" : null,
+          conferma: apply ? "APPLICA_REV0_LOCAZIONI_CESPITI" : null,
           limit: 10000,
           max_modifiche: 10000,
           eseguito_da: actor,
@@ -484,12 +484,12 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
       } else {
         setLocationHygienePreview(null);
         await Promise.all([load(), loadQuality(true), loadLocationHygiene()]);
-        await onDataChanged?.({ tipo: "DATA_HYGIENE_LOCAZIONI_INTERVENTI_REV0", risultato: data });
+        await onDataChanged?.({ tipo: "DATA_HYGIENE_LOCAZIONI_CESPITI_REV0", risultato: data });
         setMessage(`Bonifica locazioni completata: ${data.campi_aggiornati || 0} campi compilati; ${data.saltati?.length || 0} saltati; ${data.errori?.length || 0} errori.`);
       }
       return data;
     } catch (error) {
-      setMessage(error.message || "Bonifica locazioni interventi non riuscita");
+      setMessage(error.message || "Bonifica locazioni cespiti non riuscita");
       return null;
     } finally {
       setLocationHygieneBusy(false);
@@ -499,7 +499,7 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
   const previewLocationHygiene = () => locationHygieneAction(false);
   const applyLocationHygiene = () => {
     const count = Number(locationHygienePreview?.totale_modifiche || 0);
-    if (!window.confirm(`Confermi ${count} completamenti certi delle locazioni interventi? Saranno compilati esclusivamente campi ancora vuoti; nessun valore esistente verrà sovrascritto.`)) return;
+    if (!window.confirm(`Confermi ${count} completamenti certi delle locazioni cespiti? Saranno compilati esclusivamente campi ancora vuoti; nessun valore esistente verrà sovrascritto.`)) return;
     return locationHygieneAction(true);
   };
 
@@ -864,7 +864,7 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
           onPreview={previewSiteHygiene}
           onApply={applySiteHygiene}
         />
-        <InterventionLocationHygienePanel
+        <AssetLocationHygienePanel
           audit={locationHygiene}
           loading={locationHygieneLoading}
           busy={locationHygieneBusy}
