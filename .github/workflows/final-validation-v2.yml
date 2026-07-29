@@ -1,0 +1,96 @@
+name: FMED Final Validation V2
+
+on:
+  push:
+    branches:
+      - repair/rev0-regola0
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fmed-final-v2-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  final-validation:
+    name: Regola 0 · Build · Browser · Screenshot
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout candidata
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Dipendenze pulite
+        run: npm ci
+
+      - name: Gate funzionale e grafico
+        run: npm run gate:regola0
+
+      - name: Build reale
+        run: npm run build
+
+      - name: Audit distribuzione reale
+        run: node scripts/verify_dist_pointzero.mjs
+
+      - name: Conserva build reale
+        uses: actions/upload-artifact@v4
+        with:
+          name: FMED_REV0_FINAL_REAL_DIST
+          path: dist
+          retention-days: 7
+
+      - name: Rende univoco Nuovo asset nel collaudo
+        shell: bash
+        run: sed -i 's/{ name: "Nuovo asset" }/{ name: "Nuovo asset", exact: true }/' qa/pointzero_e2e.mjs
+
+      - name: Playwright
+        run: npm install --no-save playwright@1.54.2
+
+      - name: Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build QA isolata
+        env:
+          VITE_API_BASE_URL: https://qa.fmed.invalid
+        run: npm run build
+
+      - name: Preview QA
+        shell: bash
+        run: |
+          nohup npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/fmed-preview.log 2>&1 &
+          for attempt in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:4173 > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/fmed-preview.log
+          exit 1
+
+      - name: Browser su tre risoluzioni e funzioni complete
+        env:
+          FMED_QA_URL: http://127.0.0.1:4173
+          FMED_QA_OUTPUT: qa-results
+        run: node qa/pointzero_e2e.mjs
+
+      - name: Conserva audit browser
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: FMED_REV0_FINAL_BROWSER_QA
+          path: qa-results
+          retention-days: 7
+
+      - name: Log errore Preview
+        if: failure()
+        run: cat /tmp/fmed-preview.log || true
