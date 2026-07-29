@@ -8,14 +8,16 @@
   },
   "scripts": {
     "verify:rev0": "node scripts/verify_rev0.mjs",
-    "predev": "npm run verify:rev0",
+    "verify:regola0": "node scripts/verify_regola0.mjs",
+    "predev": "npm run verify:rev0 && npm run verify:regola0",
     "dev": "vite",
-    "prebuild": "npm run verify:rev0",
+    "prebuild": "npm run verify:rev0 && npm run verify:regola0",
     "build": "vite build --configLoader runner",
     "postbuild": "node scripts/verify_dist_rev0.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
-    "check": "npm run verify:rev0 && npm run lint && npm run build && npm run verify:rev0"
+    "check": "npm run verify:rev0 && npm run verify:regola0 && npm run lint && npm run build && npm run verify:regola0",
+    "gate:regola0": "npm run verify:rev0 && npm run verify:regola0 && npm run lint && npm run build && npm run verify:regola0"
   },
   "dependencies": {
     "react": "19.2.6",
