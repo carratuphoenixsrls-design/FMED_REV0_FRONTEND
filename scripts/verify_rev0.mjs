@@ -16,6 +16,7 @@ const main = read("src/main.jsx");
 const app = read("src/FmedApp.jsx");
 const settings = read("src/ImpostazioniPage.jsx");
 const exportPage = read("src/pages/ExportPage.jsx");
+const baseStyles = read("src/FmedBaseStyles.css");
 const visual = read("src/FmedVisualClean.css");
 const cssFiles = fs.readdirSync(path.join(root, "src"), { recursive: true })
   .filter((file) => file.endsWith(".css"));
@@ -63,6 +64,9 @@ exportPage.includes("fmed-report-advanced")
   && !exportPage.includes("fmed-literal-2a57fba0b1")
   ? ok("Report compatto con filtri avanzati richiudibili")
   : fail("struttura Report estesa o legacy presente");
+/\.fmed-export-page\s*\{[^}]*flex:\s*0 0 auto[^}]*grid-template-rows:\s*max-content max-content max-content[^}]*overflow:\s*visible/is.test(baseStyles)
+  ? ok("Report non comprimibile e audit integro")
+  : fail("contenitore Report ancora comprimibile");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");

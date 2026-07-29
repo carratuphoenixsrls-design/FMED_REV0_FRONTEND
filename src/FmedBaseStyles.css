@@ -1212,12 +1212,18 @@
 }
 .fmed-export-page {
   display: grid;
+  flex: 0 0 auto;
   gap: 12px;
+  grid-template-rows: max-content max-content max-content;
+  align-content: start;
+  height: auto;
+  min-height: auto;
   min-width: 0;
   padding: 0;
   border: 0;
   background: transparent;
   box-shadow: none;
+  overflow: visible;
 }
 .fmed-report-hero {
   display: flex;
