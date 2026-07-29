@@ -1,0 +1,107 @@
+name: FMED REV0 Regola 0
+
+on:
+  push:
+    branches:
+      - repair/rev0-regola0
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: regola0-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  controllo-1-integrita-funzionale:
+    name: 1 · Integrità funzionale e struttura
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout completo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Dipendenze pulite
+        run: npm ci
+
+      - name: Gate REV0
+        run: npm run verify:rev0
+
+      - name: Gate Regola 0
+        run: npm run verify:regola0
+
+      - name: Lint completo
+        run: npm run lint
+
+  controllo-2-integrita-grafica-build:
+    name: 2 · Integrità grafica e build distribuibile
+    runs-on: ubuntu-latest
+    needs: controllo-1-integrita-funzionale
+    steps:
+      - name: Checkout completo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Dipendenze pulite
+        run: npm ci
+
+      - name: Build completa con prebuild e postbuild
+        run: npm run build
+
+      - name: Seconda verifica Regola 0 dopo la build
+        run: npm run verify:regola0
+
+      - name: Conserva build candidata
+        uses: actions/upload-artifact@v4
+        with:
+          name: FMED_REV0_REGOLA0_DIST
+          path: dist
+          retention-days: 7
+
+  controllo-3-rilascio-bloccante:
+    name: 3 · Ricontrollo completo e blocco rilascio
+    runs-on: ubuntu-latest
+    needs:
+      - controllo-1-integrita-funzionale
+      - controllo-2-integrita-grafica-build
+    steps:
+      - name: Checkout completo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Dipendenze pulite
+        run: npm ci
+
+      - name: Gate finale completo
+        run: npm run gate:regola0
+
+      - name: Conferma produzione non modificata
+        run: |
+          echo "La pipeline valida soltanto la candidata."
+          echo "Nessun merge su main e nessuna promozione Production sono eseguiti automaticamente."
+          echo "Il rilascio resta subordinato al collaudo manuale completo previsto da docs/REGOLA_0.md."
