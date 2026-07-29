@@ -1,0 +1,58 @@
+name: REV0 Repair Audit
+
+on:
+  push:
+    branches:
+      - repair/rev0-punto0-integrale
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repair branch
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Static REV0 verification
+        run: npm run verify:rev0
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Package complete source
+        if: always()
+        shell: bash
+        run: |
+          tar \
+            --exclude='.git' \
+            --exclude='node_modules' \
+            --exclude='dist' \
+            -czf /tmp/FMED_REV0_PUNTO0_REPAIR_SOURCE.tar.gz .
+
+      - name: Upload source package
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: FMED_REV0_PUNTO0_REPAIR_SOURCE
+          path: /tmp/FMED_REV0_PUNTO0_REPAIR_SOURCE.tar.gz
+          retention-days: 7
+
+      - name: Upload built frontend
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: FMED_REV0_PUNTO0_REPAIR_DIST
+          path: dist
+          retention-days: 7
