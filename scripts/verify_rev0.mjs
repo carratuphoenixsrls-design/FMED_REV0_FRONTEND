@@ -67,6 +67,12 @@ exportPage.includes("fmed-report-advanced")
 /\.fmed-export-page\s*\{[^}]*flex:\s*0 0 auto[^}]*grid-template-rows:\s*max-content max-content max-content[^}]*overflow:\s*visible/is.test(baseStyles)
   ? ok("Report non comprimibile e audit integro")
   : fail("contenitore Report ancora comprimibile");
+exportPage.includes("fmedAuditQualitaDati.righe.map")
+  && !exportPage.includes("fmedAuditQualitaDati.assetSenzaBranca")
+  && app.includes('titolo: "Audit qualità dati"')
+  && !app.includes('titolo: "FMED · Audit qualità dati"')
+  ? ok("Audit unico e coerente tra schermata e CSV")
+  : fail("Audit schermata e CSV non condividono la stessa sorgente");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");

@@ -2838,48 +2838,56 @@ function AppNuovoCore({
     const righe = [{
       sezione: "ASSET",
       controllo: "ASSET SENZA BRANCA",
+      etichetta: "Asset senza branca",
       valore: assetSenzaBranca,
       totale: listaCespiti.length,
       priorita: assetSenzaBranca ? "ALTA" : "OK"
     }, {
       sezione: "ASSET",
       controllo: "ASSET SENZA LOCAZIONE",
+      etichetta: "Asset senza locazione",
       valore: assetSenzaLocazione,
       totale: listaCespiti.length,
       priorita: assetSenzaLocazione ? "ALTA" : "OK"
     }, {
       sezione: "ASSET",
       controllo: "ASSET SENZA MATRICOLA",
+      etichetta: "Asset senza matricola",
       valore: assetSenzaMatricola,
       totale: listaCespiti.length,
       priorita: assetSenzaMatricola ? "MEDIA" : "OK"
     }, {
       sezione: "ASSET",
       controllo: "ASSET SENZA MODELLO",
+      etichetta: "Asset senza modello",
       valore: assetSenzaModello,
       totale: listaCespiti.length,
       priorita: assetSenzaModello ? "MEDIA" : "OK"
     }, {
       sezione: "ASSET",
       controllo: "ASSET SENZA COSTRUTTORE",
+      etichetta: "Asset senza costruttore",
       valore: assetSenzaCostruttore,
       totale: listaCespiti.length,
       priorita: assetSenzaCostruttore ? "MEDIA" : "OK"
     }, {
       sezione: "SHAREPOINT",
       controllo: "ASSET SENZA LINK DOCUMENTALE",
+      etichetta: "Asset senza SharePoint",
       valore: assetSenzaSharePoint,
       totale: listaCespiti.length,
       priorita: assetSenzaSharePoint ? "MEDIA" : "OK"
     }, {
       sezione: "INTERVENTI",
       controllo: "INTERVENTI SENZA BRANCA",
+      etichetta: "Interventi senza branca",
       valore: interventiSenzaBranca,
       totale: listaInterventi.length,
       priorita: interventiSenzaBranca ? "MEDIA" : "OK"
     }, {
       sezione: "INTERVENTI",
       controllo: "INTERVENTI SENZA LOCAZIONE",
+      etichetta: "Interventi senza locazione",
       valore: interventiSenzaLocazione,
       totale: listaInterventi.length,
       priorita: interventiSenzaLocazione ? "MEDIA" : "OK"
@@ -2887,17 +2895,13 @@ function AppNuovoCore({
     return {
       indiceQualita,
       anomalieTotali,
-      assetSenzaBranca,
-      assetSenzaLocazione,
-      assetSenzaSharePoint,
-      interventiSenzaBranca,
       righe
     };
   }, [cespiti, interventi]);
   function exportAuditQualitaDatiFmed() {
     scaricaCsvFmed({
       nomeFile: `FMED_AUDIT_QUALITA_DATI_${new Date().toISOString().slice(0, 10)}.csv`,
-      titolo: "FMED · Audit qualità dati",
+      titolo: "Audit qualità dati",
       sottotitolo: "Controllo anomalie operative su asset, interventi, branche, locazioni e documentazione.",
       meta: [`Indice qualità dati: ${fmedAuditQualitaDati.indiceQualita}%`, `Anomalie totali: ${fmedAuditQualitaDati.anomalieTotali}`, `Asset: ${(Array.isArray(cespiti) ? cespiti.length : 0).toLocaleString("it-IT")}`, `Interventi: ${(Array.isArray(interventi) ? interventi.length : 0).toLocaleString("it-IT")}`],
       colonne: [{

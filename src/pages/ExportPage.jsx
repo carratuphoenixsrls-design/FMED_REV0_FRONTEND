@@ -176,10 +176,12 @@ export default function ExportPage(props) {
                 </div>
               </div>
               <div className="fmed-report-audit-grid fmed-style-fmed-audit-metric-grid">
-                <div className="fmed-style-fmed-audit-metric"><strong className="fmed-style-fmed-audit-metric-main">{fmedAuditQualitaDati.assetSenzaBranca}</strong><span>Asset senza branca</span></div>
-                <div className="fmed-style-fmed-audit-metric"><strong className="fmed-style-fmed-audit-metric-main">{fmedAuditQualitaDati.assetSenzaLocazione}</strong><span>Asset senza locazione</span></div>
-                <div className="fmed-style-fmed-audit-metric"><strong className="fmed-style-fmed-audit-metric-main">{fmedAuditQualitaDati.assetSenzaSharePoint}</strong><span>Senza SharePoint</span></div>
-                <div className="fmed-style-fmed-audit-metric"><strong className="fmed-style-fmed-audit-metric-main">{fmedAuditQualitaDati.interventiSenzaBranca}</strong><span>Interventi senza branca</span></div>
+                {fmedAuditQualitaDati.righe.map((controllo) => (
+                  <div className="fmed-style-fmed-audit-metric" key={`${controllo.sezione}-${controllo.controllo}`}>
+                    <strong className="fmed-style-fmed-audit-metric-main">{controllo.valore}</strong>
+                    <span>{controllo.etichetta}</span>
+                  </div>
+                ))}
               </div>
               <div className="fmed-report-audit-actions fmed-style-fmed-audit-actions">
                 <button type="button" onClick={exportAuditQualitaDatiFmed} className="fmed-style-primary-btn">Esporta audit qualità dati</button>
