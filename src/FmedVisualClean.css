@@ -490,7 +490,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   .fmed-costi-hero,.fmed-report-hero,.fmed-sharepoint-sync-panel,
   .fmed-sharepoint-controls,.fmed-sharepoint-table-wrap,.fmed-interventi-panel,
   .fmed-process-group,.fmed-process-card,.fmed-process-detail-section,
-  .core-standard-head,.core-dictionary-panel,.core-relations-panel,.core-quality-panel,
+  .core-standard-head,.core-dictionary-panel,.core-operational-rules,.core-quality-panel,
   .fmed-settings-head,.fmed-settings-users,
   .fmed-wizard-card,.fmed-asset-data-panel,.fmed-predictive-card,.s8108-panel,
   .fmed-audit-head,.fmed-audit-toolbar,.fmed-audit-list
@@ -846,7 +846,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 
 /* ----------------------------- Tables ----------------------------- */
-.fmed-app-root.fmed-shell-premium .fmed-main-content :is(table,.fmed-process-table,.core-quality-table,.core-value-table,.core-relations-table,.fmed-sharepoint-table) {
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(table,.fmed-process-table,.core-quality-table,.core-value-table,.fmed-sharepoint-table) {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
@@ -854,7 +854,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   font-size: 12.5px;
   font-variant-numeric: tabular-nums lining-nums;
 }
-.fmed-app-root.fmed-shell-premium .fmed-main-content :is(table,.fmed-process-table,.core-quality-table,.core-value-table,.core-relations-table,.fmed-sharepoint-table) thead th {
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(table,.fmed-process-table,.core-quality-table,.core-value-table,.fmed-sharepoint-table) thead th {
   min-height: 42px;
   padding: 11px 12px;
   border: 0;
@@ -868,7 +868,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   text-align: left;
   text-transform: none;
 }
-.fmed-app-root.fmed-shell-premium .fmed-main-content :is(table,.fmed-process-table,.core-quality-table,.core-value-table,.core-relations-table,.fmed-sharepoint-table) tbody td {
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(table,.fmed-process-table,.core-quality-table,.core-value-table,.fmed-sharepoint-table) tbody td {
   padding: 12px;
   border: 0;
   border-bottom: 1px solid var(--fmed-border);
@@ -877,7 +877,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   font-size: 12.5px;
   line-height: 1.42;
 }
-.fmed-app-root.fmed-shell-premium .fmed-main-content :is(table,.fmed-process-table,.core-quality-table,.core-value-table,.core-relations-table,.fmed-sharepoint-table) tbody tr:hover td {
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(table,.fmed-process-table,.core-quality-table,.core-value-table,.fmed-sharepoint-table) tbody tr:hover td {
   background: color-mix(in srgb, var(--fmed-primary-soft) 35%, var(--fmed-surface));
 }
 .fmed-app-root.fmed-shell-premium .fmed-main-content :is(.fmed-process-table-wrap,.fmed-sharepoint-table-wrap,[class*="table-wrap"]) {

@@ -35,7 +35,7 @@ const STEP_CONTEXT = [
   },
   {
     title: "Controlla e crea in sicurezza",
-    text: "Rivedi i dati prima della conferma. Il backend ripete validazioni, relazioni e controlli di coerenza.",
+    text: "Rivedi i dati prima della conferma. Il backend ripete validazioni, regole e controlli di coerenza.",
     outcome: "Cespite, documenti, QR, storico e piano manutentivo creati in modo tracciato.",
   },
 ];
@@ -204,17 +204,8 @@ function includesValue(items, value) {
   );
 }
 
-function relationOrigin(row) {
-  return normalizedCode(row?.origine || row?.metadati?.origine || row?.source || "MASTER_DATA");
-}
-
-function relationIsBlocking(row) {
-  const type = normalizedCode(row?.tipo);
-  return row?.obbligatoria === true || ["VINCOLA", "OBBLIGA", "RICHIEDE"].includes(type);
-}
-
-function relationState({
-  relations,
+function operationalRuleState({
+  rules,
   sourceDictionary,
   sourceValue,
   sourceItems,
@@ -223,11 +214,11 @@ function relationState({
 }) {
   const destinations = asList(destinationDictionaries).map(normalizedCode);
   if (!sourceValue) {
-    return { items: [], mode: "WAITING", restricted: false, relationCount: 0 };
+    return { items: [], mode: "WAITING", restricted: false, ruleCount: 0 };
   }
 
   const sourceCodes = selectedCodes(sourceItems, sourceValue);
-  const family = asList(relations).filter((row) =>
+  const family = asList(rules).filter((row) =>
     row?.attivo !== false &&
     normalizedCode(row?.sorgente_dizionario) === normalizedCode(sourceDictionary) &&
     destinations.includes(normalizedCode(row?.destinazione_dizionario))
@@ -239,22 +230,11 @@ function relationState({
       items: fallbackItems,
       mode: family.length ? "UNMAPPED" : "FALLBACK",
       restricted: false,
-      relationCount: family.length,
+      ruleCount: family.length,
     };
   }
 
-  const blocking = matching.filter(relationIsBlocking);
-  const historicalOnly = matching.every((row) => relationOrigin(row) === "STORICO");
-  if (!blocking.length) {
-    return {
-      items: fallbackItems,
-      mode: historicalOnly ? "HISTORICAL" : "SUGGESTED",
-      restricted: false,
-      relationCount: matching.length,
-    };
-  }
-
-  const allowed = new Set(blocking.map((row) => normalizedCode(row?.destinazione_codice)));
+  const allowed = new Set(matching.map((row) => normalizedCode(row?.destinazione_codice)));
   const filtered = asList(fallbackItems).filter((item) =>
     [...optionCodes(item)].some((code) => allowed.has(code))
   );
@@ -263,28 +243,26 @@ function relationState({
       items: fallbackItems,
       mode: "STALE",
       restricted: false,
-      relationCount: matching.length,
+      ruleCount: matching.length,
     };
   }
   return {
     items: filtered,
-    mode: historicalOnly ? "HISTORICAL" : "MASTER",
+    mode: "MASTER",
     restricted: true,
-    relationCount: matching.length,
+    ruleCount: matching.length,
   };
 }
 
-function relationHint(state, label) {
-  if (state.mode === "MASTER") return `${label} filtrati dalle relazioni ufficiali del Master Data.`;
-  if (state.mode === "HISTORICAL") return `${label} proposti in base alle associazioni già presenti nel database.`;
-  if (state.mode === "SUGGESTED") return `${label} collegati dal Master Data; tutte le opzioni attive restano disponibili.`;
-  if (state.mode === "STALE") return `Relazione storica non più risolvibile: sono mostrate tutte le opzioni attive.`;
-  if (state.mode === "UNMAPPED") return `Nessuna relazione specifica configurata: sono mostrate tutte le opzioni attive.`;
-  if (state.mode === "FALLBACK") return `Relazione non ancora configurata: sono mostrate tutte le opzioni attive.`;
+function operationalRuleHint(state, label) {
+  if (state.mode === "MASTER") return `${label} filtrati da una regola operativa esplicita.`;
+  if (state.mode === "STALE") return `Regola non più risolvibile: sono mostrate tutte le opzioni attive.`;
+  if (state.mode === "UNMAPPED") return `Nessuna regola operativa specifica: sono mostrate tutte le opzioni attive.`;
+  if (state.mode === "FALLBACK") return `Nessun vincolo configurato: sono mostrate tutte le opzioni attive.`;
   return "";
 }
 
-function relationError(state, selectedValue, label) {
+function operationalRuleError(state, selectedValue, label) {
   if (!selectedValue || !state.restricted) return "";
   return includesValue(state.items, selectedValue) ? "" : `${label} non compatibile con la selezione principale`;
 }
@@ -341,7 +319,7 @@ export default function NewAssetWizard({
   const [errors, setErrors] = useState([]);
   const [busy, setBusy] = useState(false);
   const [remoteMasterData, setRemoteMasterData] = useState({});
-  const [relazioni, setRelazioni] = useState([]);
+  const [regole, setRegole] = useState([]);
   const [masterLoading, setMasterLoading] = useState(true);
   const [masterError, setMasterError] = useState("");
   const [masterStatus, setMasterStatus] = useState(null);
@@ -411,25 +389,25 @@ export default function NewAssetWizard({
         const data = await response.json();
         if (!active) return;
         setRemoteMasterData(data?.dizionari || {});
-        setRelazioni(asList(data?.relazioni));
+        setRegole(asList(data?.regole));
         setMasterStatus(data?.stato || null);
       } catch (primaryError) {
         try {
-          const [dictionaryResponse, relationsResponse] = await Promise.all([
+          const [dictionaryResponse, rulesResponse] = await Promise.all([
             fetch(`${apiBaseUrl}/core/dizionari`, { headers: fmedAuthHeaders() }),
-            fetch(`${apiBaseUrl}/core/relazioni?solo_attive=true`, { headers: fmedAuthHeaders() }),
+            fetch(`${apiBaseUrl}/core/regole-operative`, { headers: fmedAuthHeaders() }),
           ]);
           if (!dictionaryResponse.ok) throw primaryError;
           const dictionaryData = await dictionaryResponse.json();
-          const relationsData = relationsResponse.ok ? await relationsResponse.json() : {};
+          const rulesData = rulesResponse.ok ? await rulesResponse.json() : {};
           if (!active) return;
           setRemoteMasterData(dictionaryData?.dizionari || {});
-          setRelazioni(asList(relationsData?.relazioni));
+          setRegole(asList(rulesData?.regole));
           setMasterStatus({ origine: "CORE_STANDARD", fallback: true });
         } catch (fallbackError) {
           if (!active) return;
           setMasterError(displayError(fallbackError, "Master Data non raggiungibile"));
-          setRelazioni([]);
+          setRegole([]);
         }
       } finally {
         if (active) setMasterLoading(false);
@@ -459,59 +437,59 @@ export default function NewAssetWizard({
     esiti: withCurrent(dictionaryValues(masterData, "esiti_intervento", "esiti"), form.esito_collaudo),
   }), [masterData, form]);
 
-  const modelState = useMemo(() => relationState({
-    relations: relazioni,
+  const modelState = useMemo(() => operationalRuleState({
+    rules: regole,
     sourceDictionary: "COSTRUTTORI",
     sourceValue: form.costruttore,
     sourceItems: options.costruttori,
     destinationDictionaries: ["MODELLI"],
     fallbackItems: options.modelli,
-  }), [relazioni, form.costruttore, options.costruttori, options.modelli]);
+  }), [regole, form.costruttore, options.costruttori, options.modelli]);
 
-  const departmentState = useMemo(() => relationState({
-    relations: relazioni,
+  const departmentState = useMemo(() => operationalRuleState({
+    rules: regole,
     sourceDictionary: "SEDI",
     sourceValue: form.sede,
     sourceItems: options.sedi,
     destinationDictionaries: ["REPARTI"],
     fallbackItems: options.reparti,
-  }), [relazioni, form.sede, options.sedi, options.reparti]);
+  }), [regole, form.sede, options.sedi, options.reparti]);
 
-  const locationState = useMemo(() => relationState({
-    relations: relazioni,
+  const locationState = useMemo(() => operationalRuleState({
+    rules: regole,
     sourceDictionary: "SEDI",
     sourceValue: form.sede,
     sourceItems: options.sedi,
     destinationDictionaries: ["LOCAZIONI"],
     fallbackItems: options.locazioni,
-  }), [relazioni, form.sede, options.sedi, options.locazioni]);
+  }), [regole, form.sede, options.sedi, options.locazioni]);
 
-  const companyState = useMemo(() => relationState({
-    relations: relazioni,
+  const companyState = useMemo(() => operationalRuleState({
+    rules: regole,
     sourceDictionary: "SEDI",
     sourceValue: form.sede,
     sourceItems: options.sedi,
     destinationDictionaries: ["SOCIETA"],
     fallbackItems: options.societa,
-  }), [relazioni, form.sede, options.sedi, options.societa]);
+  }), [regole, form.sede, options.sedi, options.societa]);
 
-  const branchByCategoryState = useMemo(() => relationState({
-    relations: relazioni,
+  const branchByCategoryState = useMemo(() => operationalRuleState({
+    rules: regole,
     sourceDictionary: "CATEGORIE_ASSET",
     sourceValue: form.categoria,
     sourceItems: options.categorie,
     destinationDictionaries: ["BRANCHE_MEDICHE"],
     fallbackItems: options.branche,
-  }), [relazioni, form.categoria, options.categorie, options.branche]);
+  }), [regole, form.categoria, options.categorie, options.branche]);
 
-  const activityState = useMemo(() => relationState({
-    relations: relazioni,
+  const activityState = useMemo(() => operationalRuleState({
+    rules: regole,
     sourceDictionary: "CATEGORIE_ASSET",
     sourceValue: form.categoria,
     sourceItems: options.categorie,
     destinationDictionaries: ["PIANI_MANUTENTIVI", "ATTIVITA_INTERVENTO"],
     fallbackItems: options.attivita,
-  }), [relazioni, form.categoria, options.categorie, options.attivita]);
+  }), [regole, form.categoria, options.categorie, options.attivita]);
 
   useEffect(() => {
     if (!form.crea_piano_manutentivo || masterLoading) return;
@@ -536,8 +514,8 @@ export default function NewAssetWizard({
     if (key === "sede") {
       next.reparto = "";
       next.locazione = "";
-      const nextCompanyState = relationState({
-        relations: relazioni,
+      const nextCompanyState = operationalRuleState({
+        rules: regole,
         sourceDictionary: "SEDI",
         sourceValue: value,
         sourceItems: options.sedi,
@@ -573,7 +551,7 @@ export default function NewAssetWizard({
       if (!includesValue(options.sedi, form.sede)) out.push("Sede non presente nel Master Data");
       if (!includesValue(options.tipologie, form.tipologia)) out.push("Tipologia non presente nel Master Data");
       if (!includesValue(options.costruttori, form.costruttore)) out.push("Costruttore non presente nel Master Data");
-      const modelError = relationError(modelState, form.modello, "Modello");
+      const modelError = operationalRuleError(modelState, form.modello, "Modello");
       if (modelError) out.push(modelError);
       if (form.anno_di_fabbricazione) {
         const year = Number(form.anno_di_fabbricazione);
@@ -589,10 +567,10 @@ export default function NewAssetWizard({
       if (!includesValue(options.categorie, form.categoria)) out.push("Categoria non presente nel Master Data");
       if (!includesValue(options.societa, form.societa)) out.push("Società non presente nel Master Data");
       [
-        relationError(companyState, form.societa, "Società"),
-        relationError(departmentState, form.reparto, "Reparto"),
-        relationError(locationState, form.locazione, "Locazione"),
-        relationError(branchByCategoryState, form.branca_medica, "Branca medica"),
+        operationalRuleError(companyState, form.societa, "Società"),
+        operationalRuleError(departmentState, form.reparto, "Reparto"),
+        operationalRuleError(locationState, form.locazione, "Locazione"),
+        operationalRuleError(branchByCategoryState, form.branca_medica, "Branca medica"),
       ].filter(Boolean).forEach((error) => out.push(error));
     }
 
@@ -612,7 +590,7 @@ export default function NewAssetWizard({
       if (!form.periodicita) out.push("Periodicità obbligatoria per il piano manutentivo");
       if (!form.data_ultimo_intervento) out.push("Data iniziale obbligatoria per il piano manutentivo");
       if (isFutureDate(form.data_ultimo_intervento)) out.push("La data iniziale del piano non può essere futura");
-      const activityError = relationError(activityState, form.attivita_manutentiva, "Attività manutentiva");
+      const activityError = operationalRuleError(activityState, form.attivita_manutentiva, "Attività manutentiva");
       if (activityError) out.push(activityError);
     }
 
@@ -738,17 +716,17 @@ export default function NewAssetWizard({
         <div className="fmed-wizard-hero-facts" aria-label="Caratteristiche del processo Nuovo Asset">
           <article><span>01</span><div><strong>5 passaggi guidati</strong><small>Un dato alla volta, senza finestre compresse.</small></div></article>
           <article><span>02</span><div><strong>Cataloghi governati</strong><small>Nomi uniformi e nuove varianti sotto controllo.</small></div></article>
-          <article><span>03</span><div><strong>Storico preservato</strong><small>Nessuna perdita di documenti, collaudi o relazioni.</small></div></article>
+          <article><span>03</span><div><strong>Storico preservato</strong><small>Nessuna perdita di documenti, collaudi o regole.</small></div></article>
         </div>
 
         <div className={`fmed-wizard-master-status ${masterError ? "error" : masterLoading ? "loading" : "ready"}`}>
           <div>
             <strong>{masterLoading ? "Sincronizzazione Master Data…" : masterError ? "Master Data non sincronizzato" : `${sourceLabel} sincronizzato`}</strong>
             <span>{masterLoading
-              ? "FMED sta caricando dizionari e relazioni attive."
+              ? "FMED sta caricando dizionari e regole attive."
               : masterError
                 ? masterError
-                : `${relazioni.length} relazioni disponibili${masterStatus?.valori_storici_integrati
+                : `${regole.length} regole disponibili${masterStatus?.valori_storici_integrati
                   ? ` · ${masterStatus.valori_storici_integrati} valori operativi recuperati`
                   : masterStatus?.fallback_dizionari?.length
                     ? ` · fallback controllato: ${masterStatus.fallback_dizionari.join(", ")}`
@@ -837,7 +815,7 @@ export default function NewAssetWizard({
               items={modelState.items}
               disabled={!form.costruttore || masterLoading}
               emptyText={!form.costruttore ? "Prima seleziona il costruttore" : "Seleziona modello"}
-              hint={form.costruttore ? relationHint(modelState, "Modelli") : ""}
+              hint={form.costruttore ? operationalRuleHint(modelState, "Modelli") : ""}
               dictionary="MODELLI"
               apiBaseUrl={apiBaseUrl}
               form={form}
@@ -849,7 +827,7 @@ export default function NewAssetWizard({
           </div>}
 
           {step === 1 && <div className="fmed-wizard-grid">
-            <Select label="Società *" dictionary="SOCIETA" value={form.societa} onChange={(value) => update("societa", value)} items={companyState.items.length ? companyState.items : options.societa} hint={form.sede ? relationHint(companyState, "Società") : ""} apiBaseUrl={apiBaseUrl} form={form} restrictToOptions />
+            <Select label="Società *" dictionary="SOCIETA" value={form.societa} onChange={(value) => update("societa", value)} items={companyState.items.length ? companyState.items : options.societa} hint={form.sede ? operationalRuleHint(companyState, "Società") : ""} apiBaseUrl={apiBaseUrl} form={form} restrictToOptions />
             <Select
               id="fmed-new-asset-categoria"
               name="categoria"
@@ -862,7 +840,7 @@ export default function NewAssetWizard({
               apiBaseUrl={apiBaseUrl}
               form={form}
             />
-            <Select label="Branca medica" dictionary="BRANCHE_MEDICHE" value={form.branca_medica} onChange={(value) => update("branca_medica", value)} items={branchByCategoryState.items.length ? branchByCategoryState.items : options.branche} hint={form.categoria ? relationHint(branchByCategoryState, "Branche") : ""} apiBaseUrl={apiBaseUrl} form={form} restrictToOptions />
+            <Select label="Branca medica" dictionary="BRANCHE_MEDICHE" value={form.branca_medica} onChange={(value) => update("branca_medica", value)} items={branchByCategoryState.items.length ? branchByCategoryState.items : options.branche} hint={form.categoria ? operationalRuleHint(branchByCategoryState, "Branche") : ""} apiBaseUrl={apiBaseUrl} form={form} restrictToOptions />
             <Select
               label="Reparto"
               value={form.reparto}
@@ -870,7 +848,7 @@ export default function NewAssetWizard({
               items={departmentState.items}
               disabled={!form.sede || masterLoading}
               emptyText={!form.sede ? "Prima seleziona la sede" : "Seleziona reparto"}
-              hint={form.sede ? relationHint(departmentState, "Reparti") : ""}
+              hint={form.sede ? operationalRuleHint(departmentState, "Reparti") : ""}
               dictionary="REPARTI"
               apiBaseUrl={apiBaseUrl}
               form={form}
@@ -883,7 +861,7 @@ export default function NewAssetWizard({
               items={locationState.items}
               disabled={!form.sede || masterLoading}
               emptyText={!form.sede ? "Prima seleziona la sede" : "Seleziona locazione"}
-              hint={form.sede ? relationHint(locationState, "Locazioni") : ""}
+              hint={form.sede ? operationalRuleHint(locationState, "Locazioni") : ""}
               dictionary="LOCAZIONI"
               apiBaseUrl={apiBaseUrl}
               form={form}
@@ -914,7 +892,7 @@ export default function NewAssetWizard({
                 onChange={(value) => update("attivita_manutentiva", value)}
                 items={activityState.items.length ? activityState.items : options.attivita}
                 emptyText="Seleziona attività"
-                hint={relationHint(activityState, "Attività") || (!options.attivita.length ? "Configurare attività o piani manutentivi nel Master Data." : "")}
+                hint={operationalRuleHint(activityState, "Attività") || (!options.attivita.length ? "Configurare attività o piani manutentivi nel Master Data." : "")}
                 dictionary="ATTIVITA_INTERVENTO"
                 apiBaseUrl={apiBaseUrl}
                 form={form}
@@ -937,7 +915,7 @@ export default function NewAssetWizard({
             <Summary label="Documentazione" value={form.link_documento ? "Link esistente collegato" : "Cartella SharePoint automatica"} />
             <Summary label="Collaudo storico" value={form.data_di_collaudo && form.registra_collaudo_storico ? `${form.data_di_collaudo} · ${String(form.esito_collaudo || "POSITIVO").replaceAll("_", " ")}` : "Non registrato"} />
             <Summary label="Piano manutentivo" value={form.crea_piano_manutentivo ? `${form.attivita_manutentiva} · ${form.periodicita}` : "Non creato"} />
-            <div className="fmed-wizard-info">Alla conferma il backend ripete validazioni e relazioni, blocca duplicati evidenti e registra il processo nel Registro Eventi.</div>
+            <div className="fmed-wizard-info">Alla conferma il backend ripete validazioni e regole, blocca duplicati evidenti e registra il processo nel Registro Eventi.</div>
           </div>}
         </main>
 

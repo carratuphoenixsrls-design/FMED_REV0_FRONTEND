@@ -84,6 +84,18 @@ allSource.includes("cataloghi_vuoti_richiesti")
   && allSource.includes("Non utilizzato nei dati analizzati")
   ? ok("cataloghi vuoti classificati per uso reale")
   : fail("cataloghi vuoti non classificati");
+allSource.includes("/core/regole-operative")
+  && allSource.includes("function OperationalRulesPanel")
+  && allSource.includes("Solo vincoli espliciti e verificati")
+  ? ok("motore unico Regole operative")
+  : fail("Regole operative non sostitutive o incomplete");
+!/(\/core\/relazioni|acquisisci-storico|Relazioni intelligenti|Anteprima relazioni storiche|Passato → futuro|relationContextFor|core-relations-panel|core-relations-table|core-relation-row|core-add-relation|core-historical-relations|core-relation-preview)/i.test(allSource)
+  ? ok("vecchio sistema Relazioni completamente assente")
+  : fail("residui del vecchio sistema Relazioni");
+allSource.includes("Nessun vincolo configurato: sono mostrate tutte le opzioni attive.")
+  && !allSource.includes("relazioni_storiche_controllate")
+  ? ok("wizard sicuro senza deduzioni storiche")
+  : fail("wizard ancora dipendente dal vecchio storico");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");

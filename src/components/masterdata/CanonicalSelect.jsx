@@ -60,24 +60,6 @@ function roleInfo() {
   };
 }
 
-function relationContextFor(dictionaryCode, form = {}) {
-  const contexts = {
-    MODELLI: ["COSTRUTTORI", form?.costruttore],
-    REPARTI: ["SEDI", form?.sede],
-    LOCAZIONI: ["SEDI", form?.sede],
-    SOCIETA: ["SEDI", form?.sede],
-    BRANCHE_MEDICHE: ["CATEGORIE_ASSET", form?.categoria],
-    ATTIVITA_INTERVENTO: form?.categoria ? ["CATEGORIE_ASSET", form.categoria] : ["TIPOLOGIE_ASSET", form?.tipologia],
-    PIANI_MANUTENTIVI: form?.categoria ? ["CATEGORIE_ASSET", form.categoria] : ["TIPOLOGIE_ASSET", form?.tipologia],
-    ITEM_INFRASTRUTTURE: ["CATEGORIE_INFRASTRUTTURE", form?.categoria],
-    ATTIVITA_INFRASTRUTTURE: ["ITEM_INFRASTRUTTURE", form?.descrizione],
-    ATTIVITA_8108: ["TIPOLOGIE_DOCUMENTO_8108", form?.tipologia_documento],
-  };
-  const context = contexts[String(dictionaryCode || "").toUpperCase()];
-  if (!context || !String(context[1] || "").trim()) return null;
-  return { sourceDictionary: context[0], sourceValue: String(context[1]).trim() };
-}
-
 function labelsFromCatalog(catalog, key) {
   const rows = Array.isArray(catalog?.[dictionaryPayloadKey(key)]) ? catalog[dictionaryPayloadKey(key)] : [];
   return rows.map(optionLabel).filter(Boolean);
@@ -117,7 +99,6 @@ export default function CanonicalSelect({
   const controlId = id || `fmed-canonical-${String(field || dictionaryCode || "select").toLocaleLowerCase("it-IT")}-${generatedId.replace(/:/g, "")}`;
   const controlName = name || field || dictionaryPayloadKey(dictionaryCode);
   const role = roleInfo();
-  const relationContext = relationContextFor(dictionaryCode, form);
 
   useEffect(() => {
     let cancelled = false;
@@ -237,11 +218,6 @@ export default function CanonicalSelect({
             origine: "QUICK_ADD_CONTESTUALE_REV0",
             stato_governance: active ? "APPROVATO" : "RICHIESTA_APPROVAZIONE",
             richiesto_da: role.actor,
-            relazione_contestuale: relationContext ? {
-              sorgente_dizionario: relationContext.sourceDictionary,
-              sorgente_valore: relationContext.sourceValue,
-              destinazione_dizionario: dictionaryCode,
-            } : null,
           },
         }),
       });
@@ -249,36 +225,9 @@ export default function CanonicalSelect({
         setMessage("Richiesta registrata. La voce sarà disponibile dopo l'approvazione dell'amministratore.");
         return;
       }
-      let relationWarning = "";
-      if (relationContext && data?.codice) {
-        try {
-          const source = await fmedFetchJson(`/core/dizionari/risolvi?dizionario=${encodeURIComponent(relationContext.sourceDictionary)}&valore=${encodeURIComponent(relationContext.sourceValue)}`, { apiBaseUrl, retries: 1 });
-          if (source?.codice) {
-            await fmedFetchJson("/core/relazioni", {
-              apiBaseUrl, method: "POST", retries: 1, headers: fmedAuthHeaders(),
-              body: JSON.stringify({
-                tipo: "CONSENTE",
-                sorgente_dizionario: relationContext.sourceDictionary,
-                sorgente_codice: source.codice,
-                destinazione_dizionario: dictionaryCode,
-                destinazione_codice: data.codice,
-                priorita: 100,
-                obbligatoria: false,
-                attivo: true,
-                metadati: { origine: "QUICK_ADD_CONTESTUALE_REV0", creato_da: role.actor },
-              }),
-            });
-          } else {
-            relationWarning = "Voce creata; relazione contestuale non applicata perché il valore sorgente non è ancora canonico.";
-          }
-        } catch (relationError) {
-          relationWarning = "Voce creata e selezionata; la relazione contestuale potrà essere completata da Dizionari.";
-          console.warn("FMED Quick Add: relazione contestuale non salvata", relationError);
-        }
-      }
       setExtraOptions(prev => [...prev, etichetta]);
-      onChange?.(etichetta, { codice: data?.codice, dizionario: dictionaryCode, relationWarning });
-      window.dispatchEvent(new CustomEvent("fmed:master-data-updated", { detail: { dizionario: dictionaryCode, codice: data?.codice, etichetta, relazione: relationContext, relationWarning } }));
+      onChange?.(etichetta, { codice: data?.codice, dizionario: dictionaryCode });
+      window.dispatchEvent(new CustomEvent("fmed:master-data-updated", { detail: { dizionario: dictionaryCode, codice: data?.codice, etichetta } }));
       setOpen(false);
     } catch (error) {
       setMessage(error?.message || "Impossibile salvare la nuova voce.");

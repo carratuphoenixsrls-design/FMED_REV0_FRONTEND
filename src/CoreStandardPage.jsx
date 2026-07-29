@@ -4,8 +4,6 @@ import DizionariControls from "./components/DizionariControls.jsx";
 import { fmedAuthHeaders, fmedFetchJson, fmedSession } from "./fmedApiClient.js";
 
 const emptyValue = { dizionario: "", codice: "", etichetta: "", ordine: 100, attivo: true, metadati: {} };
-const emptyRelation = { tipo: "CONSENTE", sorgente_dizionario: "SEDI", sorgente_codice: "", destinazione_dizionario: "REPARTI", destinazione_codice: "", priorita: 100, obbligatoria: false, attivo: true, metadati: {} };
-
 const apiHeaders = () => fmedAuthHeaders();
 const normalizeText = (value) => String(value || "").toLocaleLowerCase("it-IT").trim();
 
@@ -71,6 +69,64 @@ function DataQualityPanel({ audit, loading, onRefresh }) {
   </section>;
 }
 
+function OperationalRulesPanel({ audit, catalog, search }) {
+  const rules = Array.isArray(audit?.regole) ? audit.regole : [];
+  const summary = audit?.riepilogo || {};
+  const query = normalizeText(search);
+  const labels = new Map();
+  (catalog || []).forEach((dictionary) => {
+    (dictionary?.valori || []).forEach((value) => {
+      labels.set(`${dictionary.codice}:${value.codice}`, value.etichetta || value.codice);
+    });
+  });
+  const dictionaryLabels = new Map((catalog || []).map((dictionary) => [dictionary.codice, dictionary.descrizione || dictionary.codice]));
+  const visible = rules.filter((rule) => !query || normalizeText([
+    rule.sorgente_dizionario,
+    labels.get(`${rule.sorgente_dizionario}:${rule.sorgente_codice}`),
+    rule.destinazione_dizionario,
+    labels.get(`${rule.destinazione_dizionario}:${rule.destinazione_codice}`),
+  ].join(" ")).includes(query));
+  const groups = visible.reduce((result, rule) => {
+    const key = `${rule.sorgente_dizionario} → ${rule.destinazione_dizionario}`;
+    if (!result.has(key)) result.set(key, []);
+    result.get(key).push(rule);
+    return result;
+  }, new Map());
+
+  return <section className="core-operational-rules" aria-label="Regole operative FMED">
+    <header className="core-rules-heading">
+      <div>
+        <span className="core-standard-kicker">FMED REV0 · MOTORE UNICO</span>
+        <h3>Regole operative</h3>
+        <p>Solo vincoli espliciti e verificati possono guidare i menu. Lo storico non crea automatismi.</p>
+      </div>
+      <span className="core-rules-count">{formatCount(rules.length)} operative</span>
+    </header>
+    <div className="core-rules-summary">
+      <article className="is-ok"><span>Regole operative</span><strong>{formatCount(summary.regole_operative)}</strong><small>vincoli espliciti applicabili</small></article>
+      <article><span>Storico escluso</span><strong>{formatCount(summary.storiche_escluse)}</strong><small>archiviato, mai applicato</small></article>
+      <article><span>Non vincolanti</span><strong>{formatCount(summary.non_vincolanti_escluse)}</strong><small>non usati dai wizard</small></article>
+      <article><span>Duplicati esclusi</span><strong>{formatCount(summary.duplicati_esclusi)}</strong><small>mai caricati due volte</small></article>
+    </div>
+    <div className="core-rules-policy">
+      <strong>Regola di sicurezza</strong>
+      <span>Se non esiste un vincolo valido, FMED mostra tutte le opzioni attive e non blocca il lavoro.</span>
+    </div>
+    <div className="core-rules-groups">
+      {[...groups.entries()].map(([group, items]) => <section key={group} className="core-rules-group">
+        <header><div><strong>{dictionaryLabels.get(items[0].sorgente_dizionario) || items[0].sorgente_dizionario}</strong><span>verso</span><strong>{dictionaryLabels.get(items[0].destinazione_dizionario) || items[0].destinazione_dizionario}</strong></div><b>{items.length}</b></header>
+        {items.map((rule) => <div className="core-rule-row" key={rule.id || `${rule.sorgente_dizionario}-${rule.sorgente_codice}-${rule.destinazione_dizionario}-${rule.destinazione_codice}`}>
+          <div><strong>{labels.get(`${rule.sorgente_dizionario}:${rule.sorgente_codice}`) || rule.sorgente_codice}</strong><code>{rule.sorgente_codice}</code></div>
+          <span aria-hidden="true">→</span>
+          <div><strong>{labels.get(`${rule.destinazione_dizionario}:${rule.destinazione_codice}`) || rule.destinazione_codice}</strong><code>{rule.destinazione_codice}</code></div>
+          <b>Vincolante</b>
+        </div>)}
+      </section>)}
+      {!visible.length && <div className="core-empty-state">Nessuna regola operativa configurata. I menu restano completi e utilizzabili.</div>}
+    </div>
+  </section>;
+}
+
 
 export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage = false, initialTab = "DIZIONARI" }) {
   const [catalogo, setCatalogo] = useState([]);
@@ -80,10 +136,7 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [tab, setTab] = useState(initialTab);
-  const [relazioni, setRelazioni] = useState([]);
-  const [relationDraft, setRelationDraft] = useState(emptyRelation);
-  const [relationHistoryPreview, setRelationHistoryPreview] = useState(null);
-  const [relationHistoryBusy, setRelationHistoryBusy] = useState(false);
+  const [operationalRules, setOperationalRules] = useState({ regole: [], riepilogo: {} });
   const [dictionarySearch, setDictionarySearch] = useState("");
   const [valueSearch, setValueSearch] = useState("");
   const [showInactive, setShowInactive] = useState(false);
@@ -97,9 +150,9 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
 
   const load = useCallback(async () => {
     setLoading(true); setMessage("");
-    const [dictionaryResult, relationResult] = await Promise.allSettled([
+    const [dictionaryResult, rulesResult] = await Promise.allSettled([
       fmedFetchJson("/core/dizionari/amministrazione", { apiBaseUrl, retries: 3, timeoutMs: 60000 }),
-      fmedFetchJson("/core/relazioni?solo_attive=false", { apiBaseUrl, retries: 3, timeoutMs: 60000 }),
+      fmedFetchJson("/core/regole-operative", { apiBaseUrl, retries: 3, timeoutMs: 60000 }),
     ]);
     const warnings = [];
     if (dictionaryResult.status === "fulfilled") {
@@ -109,10 +162,10 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
     } else {
       warnings.push(`Dizionari: ${dictionaryResult.reason?.message || "backend non raggiungibile"}`);
     }
-    if (relationResult.status === "fulfilled") {
-      setRelazioni(Array.isArray(relationResult.value?.relazioni) ? relationResult.value.relazioni : []);
+    if (rulesResult.status === "fulfilled") {
+      setOperationalRules(rulesResult.value || { regole: [], riepilogo: {} });
     } else {
-      warnings.push(`Relazioni: ${relationResult.reason?.message || "backend non raggiungibile"}`);
+      warnings.push(`Regole operative: ${rulesResult.reason?.message || "backend non raggiungibile"}`);
     }
     if (warnings.length) {
       setMessage(`Sincronizzazione parziale. ${warnings.join(" · ")}. FMED riprova automaticamente anche dopo il riavvio di Render.`);
@@ -175,10 +228,6 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
       return (showInactive || v.attivo !== false || pending) && (!q || normalizeText(`${v.codice} ${v.etichetta} ${v.stato_governance || ""}`).includes(q));
     });
   }, [current, valueSearch, showInactive]);
-  const filteredRelations = useMemo(() => {
-    const q = normalizeText(valueSearch);
-    return relazioni.filter(r => (showInactive || r.attivo !== false) && (!q || normalizeText(`${r.tipo} ${r.sorgente_dizionario} ${r.sorgente_codice} ${r.destinazione_dizionario} ${r.destinazione_codice}`).includes(q)));
-  }, [relazioni, valueSearch, showInactive]);
 
   async function saveValue() {
     const dictionaryCode = current?.codice || selected || draft.dizionario;
@@ -284,71 +333,6 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
     finally { setSaving(false); }
   }
 
-  async function historicalRelationsAction(apply = false) {
-    setRelationHistoryBusy(true);
-    setMessage("");
-    try {
-      const session = fmedSession();
-      const actor = String(session?.email || session?.nome || "FMED_ADMIN");
-      const data = await fmedFetchJson("/core/relazioni/acquisisci-storico", {
-        apiBaseUrl, method: "POST", headers: apiHeaders(), retries: apply ? 0 : 1, timeoutMs: 120000,
-        body: JSON.stringify({
-          apply,
-          conferma: apply ? "ACQUISISCI_RELAZIONI_REV0" : null,
-          limite: 10000,
-          utente: actor,
-        }),
-      });
-      if (!apply) {
-        setRelationHistoryPreview(data);
-        setMessage(`Anteprima pronta: ${data.totale_da_creare || 0} relazioni storiche trasformabili in automatismi.`);
-      } else {
-        setRelationHistoryPreview(null);
-        await load();
-        await onDataChanged?.({ tipo: "RELAZIONI_STORICHE_REV0", risultato: data });
-        setMessage(`Relazioni storiche acquisite: ${data.totale_create || 0}. Errori: ${data.errori?.length || 0}.`);
-      }
-    } catch (error) {
-      setMessage(error.message || "Acquisizione relazioni storiche non riuscita");
-    } finally {
-      setRelationHistoryBusy(false);
-    }
-  }
-
-  function applyHistoricalRelations() {
-    const count = Number(relationHistoryPreview?.totale_da_creare || 0);
-    if (!count) return;
-    if (!window.confirm(`Confermi la creazione di ${count} relazioni dedotte dal passato? Nessun record operativo verrà modificato.`)) return;
-    historicalRelationsAction(true);
-  }
-
-  async function saveRelation() {
-    const d = relationDraft;
-    if (!d.tipo || !d.sorgente_dizionario || !d.sorgente_codice || !d.destinazione_dizionario || !d.destinazione_codice) return setMessage("Completa tutti i campi della relazione.");
-    setSaving(true); setMessage("");
-    try {
-      await fmedFetchJson("/core/relazioni", { apiBaseUrl, method: "POST", headers: apiHeaders(), body: JSON.stringify(d), retries: 1 });
-      setRelationDraft({ ...emptyRelation, sorgente_dizionario: d.sorgente_dizionario, destinazione_dizionario: d.destinazione_dizionario });
-      await load();
-      await onDataChanged?.({ tipo: "RELAZIONE", relazione: d });
-      setMessage("Relazione salvata e sincronizzata con i moduli FMED.");
-    } catch (error) { setMessage(error.message); }
-    finally { setSaving(false); }
-  }
-
-  async function toggleRelation(value) {
-    if (!canManage) return;
-    setSaving(true);
-    try {
-      await fmedFetchJson(`/core/relazioni/${value.id}`, { apiBaseUrl, method: "PATCH", headers: apiHeaders(), body: JSON.stringify({ attivo: !value.attivo }), retries: 1 });
-      await load();
-      await onDataChanged?.({ tipo: "RELAZIONE_STATO", relazione: value });
-    } catch (error) { setMessage(error.message); }
-    finally { setSaving(false); }
-  }
-
-  const valuesOf = (code) => catalogo.find(x => x.codice === code)?.valori || [];
-
   return (
     <section className="core-standard-page">
       <header className="core-standard-head">
@@ -360,9 +344,9 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
             <p>Aggiungi e modifica i valori utilizzati nei menu a tendina di Asset, Interventi, Infrastrutture, Sicurezza 81/08 e degli altri moduli. Le modifiche restano centralizzate e sincronizzate.</p>
           </div>
         </div>
-        <button type="button" className="core-primary-button core-sync-button" onClick={load} disabled={loading} title="Ricarica dizionari e relazioni dal Master Data centrale">
+        <button type="button" className="core-primary-button core-sync-button" onClick={load} disabled={loading} title="Ricarica dizionari e regole operative dal Master Data centrale">
           <span className="core-sync-icon" aria-hidden="true">↻</span>
-          <span className="core-sync-copy"><strong>{loading ? "Sincronizzazione…" : "Sincronizza dati"}</strong><small>Ricarica valori e relazioni</small></span>
+          <span className="core-sync-copy"><strong>{loading ? "Sincronizzazione…" : "Sincronizza dati"}</strong><small>Ricarica valori e regole</small></span>
         </button>
       </header>
 
@@ -370,7 +354,7 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
         <article><span>Dizionari</span><strong>{catalogo.length}</strong><small>fonti dati centrali</small></article>
         <article><span>Valori attivi</span><strong>{activeValues}</strong><small>su {totalValues} complessivi</small></article>
         <article className={pendingValues ? "is-warning" : "is-ok"}><span>Da approvare</span><strong>{pendingValues}</strong><small>richieste Quick Add</small></article>
-        <article><span>Relazioni</span><strong>{relazioni.filter(r => r.attivo !== false).length}</strong><small>automatismi configurati</small></article>
+        <article><span>Regole operative</span><strong>{operationalRules.regole?.length || 0}</strong><small>solo vincoli verificati</small></article>
       </div>
 
       {message && <div className="core-standard-message" role="status">{message}</div>}
@@ -447,35 +431,7 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
         </div>
       </div>}
 
-      {tab === "RELAZIONI" && <div className="core-relations-panel">
-        <div className="core-dictionary-title"><div><h3>Relazioni intelligenti</h3><p>Configura i collegamenti che guidano automaticamente i moduli FMED.</p></div><span>{filteredRelations.length} relazioni</span></div>
-        {canManage && <div className="core-historical-relations">
-          <div><strong>Passato → futuro</strong><span>Rileva combinazioni già usate tra sedi, reparti, modelli, attività e item infrastrutturali e le trasforma in proposte guidate.</span></div>
-          <button type="button" onClick={() => historicalRelationsAction(false)} disabled={relationHistoryBusy}>{relationHistoryBusy ? "Analisi…" : "Anteprima relazioni storiche"}</button>
-          {relationHistoryPreview && <button type="button" className="core-danger-safe-button" onClick={applyHistoricalRelations} disabled={relationHistoryBusy || !relationHistoryPreview.totale_da_creare}>Acquisisci {relationHistoryPreview.totale_da_creare || 0}</button>}
-        </div>}
-        {relationHistoryPreview && <div className="core-relation-preview">
-          <div className="core-section-heading"><h3>Relazioni storiche acquisibili</h3><span>{relationHistoryPreview.totale_da_creare || 0}</span></div>
-          <p>{relationHistoryPreview.criterio}</p>
-          {(relationHistoryPreview.piano || []).slice(0, 120).map((item, index) => <div key={`${item.sorgente_dizionario}-${item.sorgente_codice}-${item.destinazione_dizionario}-${item.destinazione_codice}-${index}`}><code>{item.sorgente_dizionario}:{item.sorgente_codice}</code><span>→</span><code>{item.destinazione_dizionario}:{item.destinazione_codice}</code></div>)}
-          {(relationHistoryPreview.piano || []).length > 120 && <small>Mostrate le prime 120 relazioni su {relationHistoryPreview.piano.length}.</small>}
-        </div>}
-        <div className="core-relations-table">
-          {filteredRelations.length ? filteredRelations.map(r => <div className={`core-relation-row ${r.attivo ? "" : "disabled"}`} key={r.id}>
-            <span className="relation-type">{r.tipo}</span><strong>{r.sorgente_dizionario}: {r.sorgente_codice}</strong><span className="relation-arrow">→</span><strong>{r.destinazione_dizionario}: {r.destinazione_codice}</strong><span>{r.obbligatoria ? "Obbligatoria" : "Opzionale"}</span>
-            {canManage && <button type="button" onClick={() => toggleRelation(r)}>{r.attivo ? "Disattiva" : "Riattiva"}</button>}
-          </div>) : <div className="core-empty-state">Nessuna relazione corrispondente ai filtri.</div>}
-        </div>
-        {canManage && <div className="core-add-relation"><h4>Aggiungi relazione</h4>
-          <select value={relationDraft.tipo} onChange={e => setRelationDraft({ ...relationDraft, tipo: e.target.value })}><option value="CONSENTE">Consente</option><option value="PROPONE">Propone</option><option value="RICHIEDE">Richiede</option><option value="APPARTIENE_A">Appartiene a</option></select>
-          <select value={relationDraft.sorgente_dizionario} onChange={e => setRelationDraft({ ...relationDraft, sorgente_dizionario: e.target.value, sorgente_codice: "" })}>{catalogo.map(d => <option key={d.codice} value={d.codice}>{d.descrizione}</option>)}</select>
-          <select value={relationDraft.sorgente_codice} onChange={e => setRelationDraft({ ...relationDraft, sorgente_codice: e.target.value })}><option value="">Valore sorgente</option>{valuesOf(relationDraft.sorgente_dizionario).map(v => <option key={v.codice} value={v.codice}>{v.etichetta}</option>)}</select>
-          <select value={relationDraft.destinazione_dizionario} onChange={e => setRelationDraft({ ...relationDraft, destinazione_dizionario: e.target.value, destinazione_codice: "" })}>{catalogo.map(d => <option key={d.codice} value={d.codice}>{d.descrizione}</option>)}</select>
-          <select value={relationDraft.destinazione_codice} onChange={e => setRelationDraft({ ...relationDraft, destinazione_codice: e.target.value })}><option value="">Valore destinazione</option>{valuesOf(relationDraft.destinazione_dizionario).map(v => <option key={v.codice} value={v.codice}>{v.etichetta}</option>)}</select>
-          <label><input type="checkbox" checked={relationDraft.obbligatoria} onChange={e => setRelationDraft({ ...relationDraft, obbligatoria: e.target.checked })} /> Obbligatoria</label>
-          <button type="button" disabled={saving} onClick={saveRelation}>{saving ? "Salvataggio…" : "Salva relazione"}</button>
-        </div>}
-      </div>}
+      {tab === "REGOLE" && <OperationalRulesPanel audit={operationalRules} catalog={catalogo} search={valueSearch} />}
 
       {tab === "QUALITA" && <div className="core-quality-stack"><DataQualityPanel audit={dataQuality} loading={dataQualityLoading} onRefresh={loadDataQuality} /></div>}
     </section>

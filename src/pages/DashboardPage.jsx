@@ -80,7 +80,7 @@ export default function DashboardPage({
     infrastrutture_totali: 0, documenti_81_08: 0, non_conformita_aperte: 0,
     sla_rispettati_percentuale: 100,
     copertura_documentale_percentuale: cespiti.length ? Math.round(100 * cespiti.filter((row) => row?.link_documento || row?.link_sharepoint).length / cespiti.length) : 0,
-    costi_tracciati: totaleSpesaDashboard, dizionari: 0, valori_master_attivi: 0, valori_da_approvare: 0, relazioni_attive: 0,
+    costi_tracciati: totaleSpesaDashboard, dizionari: 0, valori_master_attivi: 0, valori_da_approvare: 0, regole_operative: 0,
   }), [cespiti, scadenzeConStatoBase, scadenzeImminenti, totaleSpesaDashboard]);
 
   const kpi = snapshot?.kpi || fallbackKpi;
