@@ -484,12 +484,12 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 
 /* ----------------------------- Shared surfaces ----------------------------- */
 .fmed-app-root.fmed-shell-premium .fmed-main-content :is(
-  .fmed-dashboard-header,.fmed-dashboard-panel,.fmed-operational-advanced,.fmed-module-hero,
+.fmed-operational-advanced,.fmed-module-hero,
   .fmed-costi-hero,.fmed-report-hero,.fmed-sharepoint-sync-panel,
   .fmed-sharepoint-controls,.fmed-sharepoint-table-wrap,.fmed-interventi-panel,
   .fmed-process-group,.fmed-process-card,.fmed-process-detail-section,
   .core-standard-head,.core-dictionary-panel,.core-operational-rules,.core-quality-panel,
-  .fmed-settings-head,.fmed-settings-users,
+
   .fmed-wizard-card,.fmed-asset-data-panel,.fmed-predictive-card,.s8108-panel,
   .fmed-audit-head,.fmed-audit-toolbar,.fmed-audit-list
 ) {
@@ -501,8 +501,8 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-main-content :is(
-  .fmed-dashboard-header,.fmed-module-hero,.fmed-costi-hero,.fmed-report-hero,.core-standard-head,
-  .fmed-settings-head,.fmed-audit-head
+.fmed-module-hero,.fmed-costi-hero,.fmed-report-hero,.core-standard-head,
+.fmed-audit-head
 ) {
   position: relative;
   overflow: hidden;
@@ -511,8 +511,8 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-main-content :is(
-  .fmed-dashboard-header,.fmed-module-hero,.fmed-costi-hero,.fmed-report-hero,.core-standard-head,
-  .fmed-settings-head,.fmed-audit-head
+.fmed-module-hero,.fmed-costi-hero,.fmed-report-hero,.core-standard-head,
+.fmed-audit-head
 )::after {
   content: "";
   position: absolute;
@@ -523,201 +523,6 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   border-radius: 999px;
   background: radial-gradient(circle, color-mix(in srgb, var(--fmed-primary) 12%, transparent), transparent 68%);
   pointer-events: none;
-}
-
-/* ----------------------------- Dashboard ----------------------------- */
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-dashboard {
-  display: grid;
-  grid-template-rows:auto auto auto auto auto minmax(0,1fr);
-  gap: 7px;
-  flex:1 1 auto;
-  width:100%;
-  height:100%;
-  min-width:0;
-  min-height:0;
-  overflow:hidden;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-header {
-  min-height: 58px;
-  padding: 8px 11px;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-title h2 {
-  margin: 0;
-  font-size: clamp(20px, 1.6vw, 25px);
-  font-weight: 650;
-}
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-title p {
-  margin: 5px 0 0;
-  color: var(--fmed-muted);
-  font-size: 13px;
-  font-weight: 450;
-  text-transform: none;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-title-icon,
-.fmed-app-root.fmed-shell-premium .fmed-module-icon {
-  color: var(--fmed-primary);
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-header-actions { gap: 8px; }
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-live {
-  min-height: 34px;
-  padding: 0 11px;
-  border: 1px solid var(--fmed-border);
-  border-radius: 999px;
-  background: var(--fmed-surface-2);
-  color: var(--fmed-muted);
-  font-size: 12px;
-  font-weight: 550;
-  text-transform: none;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-operational-automation-strip {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  min-height:38px;
-  padding: 5px 9px;
-  border: 1px solid color-mix(in srgb, var(--fmed-success) 22%, var(--fmed-border));
-  border-radius: var(--fmed-radius-md);
-  background: color-mix(in srgb, var(--fmed-success-soft) 70%, var(--fmed-surface));
-  box-shadow: var(--fmed-shadow-xs);
-}
-.fmed-app-root.fmed-shell-premium .fmed-operational-automation-strip strong {
-  color: var(--fmed-text-strong);
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: none;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-quick-actions {
-  display: grid;
-  grid-template-columns:repeat(6,minmax(0,1fr));
-  gap: 5px;
-}
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-quick-actions button {
-  min-height: 38px;
-  padding: 0 8px;
-  border: 1px solid var(--fmed-border);
-  border-radius: var(--fmed-radius-md);
-  background: var(--fmed-surface);
-  color: var(--fmed-text);
-  box-shadow: var(--fmed-shadow-xs);
-  font-size: 12.5px;
-  font-weight: 550;
-  text-transform: none;
-  transition: transform .16s var(--fmed-ease), border-color .16s var(--fmed-ease), box-shadow .16s var(--fmed-ease), background .16s var(--fmed-ease);
-}
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-quick-actions button:hover {
-  transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--fmed-primary) 35%, var(--fmed-border));
-  background: color-mix(in srgb, var(--fmed-primary-soft) 36%, var(--fmed-surface));
-  box-shadow: var(--fmed-shadow-sm);
-}
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-quick-actions button i {
-  width: 25px;
-  height: 25px;
-  border-radius: 8px;
-  background: var(--fmed-primary-soft);
-  color: var(--fmed-primary);
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 650;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-operational-section-head {
-  padding: 1px;
-}
-.fmed-app-root.fmed-shell-premium .fmed-operational-section-head h3 {
-  margin:0;
-  font-size: 15px;
-  font-weight: 650;
-}
-.fmed-app-root.fmed-shell-premium .fmed-operational-section-head p {
-  margin:1px 0 0;
-  color: var(--fmed-muted);
-  font-size: 12.5px;
-  font-weight: 450;
-  text-transform: none;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-kpi-grid {
-  gap: 10px;
-}
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-kpi {
-  min-height: 68px;
-  padding: 8px 9px;
-  border: 1px solid var(--fmed-border);
-  border-radius: var(--fmed-radius-md);
-  background: var(--fmed-surface);
-  color: var(--fmed-text);
-  box-shadow: var(--fmed-shadow-xs);
-  text-align: left;
-  transition: transform .16s var(--fmed-ease), border-color .16s var(--fmed-ease), box-shadow .16s var(--fmed-ease);
-}
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-kpi:hover {
-  transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--kpi-tone, var(--fmed-primary)) 35%, var(--fmed-border));
-  box-shadow: var(--fmed-shadow-sm);
-}
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-kpi-icon {
-  width: 28px;
-  height: 28px;
-  flex-basis: 28px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 650;
-}
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-kpi-copy strong {
-  color: var(--fmed-text-strong);
-  font-size: clamp(21px, 1.8vw, 27px);
-  font-weight: 650;
-  line-height: 1;
-}
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-kpi-copy small {
-  margin-top: 5px;
-  color: var(--fmed-text);
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: none;
-}
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-kpi-copy em {
-  color: var(--fmed-muted);
-  font-size: 12px;
-  font-weight: 450;
-  text-transform: none;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-panel {
-  display:flex;
-  flex-direction:column;
-  min-height:0;
-  padding: 9px;
-  overflow:hidden;
-}
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-panel-header { margin-bottom: 6px; }
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-panel-header h3 {
-  font-size: 17px;
-  font-weight: 650;
-}
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-panel-header p {
-  color: var(--fmed-muted);
-  font-size: 12px;
-  font-weight: 450;
-  text-transform: none;
-}
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-priority-list button,
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-site-list button,
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-module-list button,
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-responsible-list button {
-  min-height: 38px;
-  padding: 6px 8px;
-  border: 1px solid transparent;
-  border-radius: 11px;
-  background: var(--fmed-surface-2);
-  color: var(--fmed-text);
 }
 
 /* ----------------------------- Heroes and page headers ----------------------------- */
@@ -768,7 +573,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 
 /* ----------------------------- Buttons ----------------------------- */
 .fmed-app-root.fmed-shell-premium .fmed-main-content :is(
-  .fmed-btn-primary,.fmed-dashboard-button-primary,.core-primary-button,.fmed-login-submit,
+  .fmed-btn-primary,.core-primary-button,.fmed-login-submit,
   .s8108-btn.primary,.fmed-canonical-save
 ) {
   min-height: var(--fmed-control-h);
@@ -785,8 +590,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-main-content :is(
-  .fmed-btn-secondary,.fmed-dashboard-button-secondary,.s8108-btn,.fmed-canonical-cancel,
-  .fmed-dashboard-reset,.fmed-operational8-open-list-btn
+  .fmed-btn-secondary,.s8108-btn,.fmed-canonical-cancel
 ) {
   min-height: var(--fmed-control-h);
   padding: 0 15px;
@@ -889,7 +693,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 /* ----------------------------- Processi, cataloghi, impostazioni ----------------------------- */
 .fmed-app-root.fmed-shell-premium .fmed-process-page,
 .fmed-app-root.fmed-shell-premium .core-standard-page,
-.fmed-app-root.fmed-shell-premium .fmed-settings-page,
+.fmed-app-root.fmed-shell-premium
 .fmed-app-root.fmed-shell-premium .fmed-audit-page,
 .fmed-app-root.fmed-shell-premium .fmed-wizard-page,
 .fmed-app-root.fmed-shell-premium .s8108-page {
@@ -897,7 +701,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 .fmed-app-root.fmed-shell-premium .fmed-process-head,
 .fmed-app-root.fmed-shell-premium .core-standard-head,
-.fmed-app-root.fmed-shell-premium .fmed-settings-head,
+.fmed-app-root.fmed-shell-premium
 .fmed-app-root.fmed-shell-premium .fmed-audit-head {
   padding: 23px 25px;
 }
@@ -916,19 +720,6 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   font-size: 12px;
   letter-spacing: 0;
 }
-.fmed-app-root.fmed-shell-premium .fmed-settings-tabs {
-  padding: 5px;
-  border: 1px solid var(--fmed-border);
-  border-radius: 12px;
-  background: var(--fmed-surface-3);
-}
-.fmed-app-root.fmed-shell-premium .fmed-settings-tabs button {
-  min-height: 37px;
-  border-radius: 9px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
 /* ----------------------------- Sicurezza, wizard, audit ----------------------------- */
 .fmed-app-root.fmed-shell-premium .s8108-page-head {
   padding: 22px 24px;
@@ -955,7 +746,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 /* ----------------------------- Pagine operative secondarie ----------------------------- */
 .fmed-app-root.fmed-shell-premium .fmed-main-content[data-fmed-workspace-open="true"] > :not(.fmed-workspace-page),
 .fmed-app-root.fmed-shell-premium :is(
-  .fmed-dashboard-page,
+
   .fmed-asset-page,
   .fmed-process-page,
   .fmed-infrastructure-root
@@ -964,7 +755,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 
 .fmed-app-root.fmed-shell-premium :is(
-  .fmed-dashboard-page,
+
   .fmed-asset-page,
   .fmed-process-page,
   .fmed-infrastructure-root
@@ -1070,29 +861,8 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-alert-page > header,
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-drilldown-header {
-  display: flex;
-  flex: 0 0 auto;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--fmed-border);
-  background: var(--fmed-surface-2);
-}
-
 .fmed-app-root.fmed-shell-premium .fmed-alert-page > header :is(h2,p),
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-drilldown-header :is(h3,p) {
-  margin: 0;
-}
-
 .fmed-app-root.fmed-shell-premium .fmed-alert-page > header p,
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-drilldown-header p {
-  margin-top: 4px;
-  color: var(--fmed-muted);
-  font-size: 12px;
-}
-
 .fmed-app-root.fmed-shell-premium .fmed-alert-page-grid {
   display: grid;
   grid-template-columns: repeat(2,minmax(0,1fr));
@@ -1151,41 +921,6 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 
 .fmed-app-root.fmed-shell-premium .fmed-alert-page > footer button {
   min-height: 36px;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-drilldown-surface {
-  padding: 0;
-  overflow: hidden;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-drilldown-list {
-  display: grid;
-  flex: 1 1 auto;
-  align-content: start;
-  gap: 6px;
-  min-height: 0;
-  padding: 10px;
-  overflow: auto;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-drilldown-list article {
-  display: grid;
-  grid-template-columns: 90px minmax(0,1fr) 150px;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
-  border: 1px solid var(--fmed-border);
-  border-radius: 9px;
-  background: var(--fmed-surface);
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-drilldown-footer {
-  display: flex;
-  flex: 0 0 auto;
-  justify-content: flex-end;
-  gap: 8px;
-  padding: 10px;
-  border-top: 1px solid var(--fmed-border);
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-infrastructure-root {
@@ -1520,16 +1255,6 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 
 /* ----------------------------- Utility and empty states ----------------------------- */
-.fmed-app-root.fmed-shell-premium .fmed-main-content :is(.fmed-dashboard-empty,.core-empty-state,.s8108-empty,.fmed-process-empty,.fmed-audit-empty) {
-  padding: 26px;
-  border: 1px dashed var(--fmed-border-strong);
-  border-radius: var(--fmed-radius-md);
-  background: var(--fmed-surface-2);
-  color: var(--fmed-muted);
-  font-size: 13px;
-  text-align: center;
-}
-
 /* ==========================================================================
    REV0 · base visuale ufficiale
    Un solo contenitore applicativo con flusso verticale naturale; soltanto le
@@ -1788,135 +1513,6 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   display: none;
 }
 
-/* Dashboard: griglie esplicite e contenuti separati. */
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-title,
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-header-actions {
-  justify-content: flex-end;
-  flex-wrap: wrap;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-quick-actions {
-  grid-template-columns: repeat(6,minmax(0,1fr));
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-quick-actions button {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 11px;
-  width: 100%;
-  min-width: 0;
-  text-align: left;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-quick-actions button i {
-  display: grid;
-  place-items: center;
-  flex: 0 0 32px;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-quick-actions button span {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(6,minmax(0,1fr));
-  gap: 6px;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-kpi {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  gap: 13px;
-  width: 100%;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-kpi-copy {
-  display: grid;
-  gap: 4px;
-  min-width: 0;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-kpi-copy :is(strong,small,em) {
-  position: static;
-  display: block;
-  margin-inline: 0;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-kpi-copy small,
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-kpi-copy em {
-  white-space: normal;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-operational-operational-grid,
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-main-grid {
-  display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 7px;
-  min-height:0;
-  overflow:hidden;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-priority-list {
-  display: grid;
-  gap: 4px;
-  min-height:0;
-  overflow:auto;
-  scrollbar-width:none;
-}
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-priority-list::-webkit-scrollbar{display:none}
-
-.fmed-app-root.fmed-shell-premium .fmed-operational-advanced{
-  position:static;
-  inset:auto;
-  z-index:auto;
-  overflow:auto;
-  padding:12px;
-  background:var(--fmed-surface);
-  box-shadow:var(--fmed-shadow-sm);
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-priority-list button {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  min-width: 0;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-operational-summary-grid {
-  display: grid;
-  grid-template-columns: repeat(3,minmax(180px,1fr));
-  gap: 10px;
-}
-
 /* Pagine operative: flusso naturale nell'area FMED; solo le tabelle scorrono internamente. */
 .fmed-app-root.fmed-shell-premium :is(.fmed-asset-page,.fmed-interventi-operativi,.fmed-infrastrutture-page,.fmed-scadenze-operative) {
   display: flex;
@@ -1975,7 +1571,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-operational-filters,
-.fmed-app-root.fmed-shell-premium .fmed-operational8-deadline-filters,
+.fmed-app-root.fmed-shell-premium
 .fmed-app-root.fmed-shell-premium .fmed-operational-table-card {
   width: 100%;
   min-width: 0;
@@ -2014,22 +1610,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-operational-actions,
-.fmed-app-root.fmed-shell-premium .fmed-operational8-deadline-actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 7px;
-}
-
 .fmed-app-root.fmed-shell-premium .fmed-operational-actions button,
-.fmed-app-root.fmed-shell-premium .fmed-operational8-deadline-actions button {
-  min-height: 32px;
-  height: auto;
-  padding: 5px 10px;
-  white-space: nowrap;
-}
-
 .fmed-app-root.fmed-shell-premium .fmed-operational-kpi-grid {
   display: grid;
   grid-template-columns: repeat(4,minmax(190px,1fr));
@@ -2068,12 +1649,6 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 .fmed-app-root.fmed-shell-premium .fmed-deadline-date-field {
   display: grid;
   gap: 5px;
-}
-
-.fmed-app-root.fmed-shell-premium :is(.fmed-operational-filters,.fmed-operational8-deadline-filters,.fmed-interventi-panel) :is(input,select,button){
-  min-height:32px;
-  height:32px;
-  font-size: 12px;
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-operational-table-card,
@@ -2146,25 +1721,6 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   white-space: nowrap;
 }
 
-.fmed-app-root.fmed-shell-premium .fmed-operational8-deadlines-table {
-  width: 100%;
-  min-width: 1280px;
-  table-layout: auto;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-operational8-deadlines-table :is(th,td) {
-  vertical-align: middle;
-  word-break: normal;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-operational8-deadlines-table :is(th,td):not(:nth-child(6)) {
-  white-space: nowrap;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-operational8-deadlines-table :is(th,td):nth-child(6) {
-  min-width: 250px;
-}
-
 /* Strumenti: card vere, non pulsanti HTML compressi. */
 .fmed-app-root.fmed-shell-premium .fmed-operational-auto-card {
   display: flex;
@@ -2233,7 +1789,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 
 .fmed-app-root.fmed-shell-premium .core-standard-head,
-.fmed-app-root.fmed-shell-premium .fmed-settings-head,
+.fmed-app-root.fmed-shell-premium
 .fmed-app-root.fmed-shell-premium .fmed-process-head {
   display: flex;
   align-items: center;
@@ -2594,7 +2150,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   min-width: 1180px;
 }
 
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-title-icon,
+.fmed-app-root.fmed-shell-premium
 .fmed-app-root.fmed-shell-premium .fmed-banner-heading>.fmed-module-icon,
 .fmed-app-root.fmed-shell-premium .fmed-module-hero-heading>.fmed-module-icon{
   width:30px;
@@ -2606,12 +2162,6 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   background:var(--fmed-primary-soft);
   color:var(--fmed-primary-strong);
 }
-.fmed-app-root.fmed-shell-premium :is(.fmed-dashboard-title-icon,.fmed-module-icon) svg{
-  width:18px;
-  height:18px;
-  stroke-width:1.9;
-}
-
 /* ----------------------------- Responsive ----------------------------- */
 @media (max-width: 1400px) {
   .fmed-app-root.fmed-shell-premium { --fmed-sidebar-w: 184px; }
@@ -2683,7 +2233,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 
 @media (max-width: 1050px) {
   .fmed-app-root.fmed-shell-premium .fmed-main-content { padding: 8px; }
-  .fmed-app-root.fmed-shell-premium .fmed-dashboard-header,
+  .fmed-app-root.fmed-shell-premium
   .fmed-app-root.fmed-shell-premium .fmed-module-hero { padding: 19px; }
   .fmed-app-root.fmed-shell-premium .fmed-operational-kpi-grid,
   .fmed-app-root.fmed-shell-premium .fmed-operational-quick-actions { grid-template-columns: repeat(2,minmax(145px,1fr)); }
@@ -2693,7 +2243,6 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   .fmed-app-root.fmed-shell-premium .fmed-main-content { padding: 7px; }
   .fmed-app-root.fmed-shell-premium .fmed-operational-kpi-grid,
   .fmed-app-root.fmed-shell-premium .fmed-operational-quick-actions { grid-template-columns: 1fr; }
-  .fmed-app-root.fmed-shell-premium .fmed-dashboard-header-actions { width: 100%; flex-wrap: wrap; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3374,7 +2923,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 
 /* FMED REV0 Patch 16 · identità cromatica controllata dei moduli */
 .fmed-app-root.fmed-shell-premium :is(
-  .fmed-dashboard-page,
+
   .fmed-asset-page,
   .fmed-interventi-operativi,
   .fmed-scadenze-operative,
@@ -3382,7 +2931,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   .s8108-page,
   .fmed-process-page,
   .core-standard-page,
-  .fmed-settings-page,
+
   .fmed-costi-page,
   .fmed-export-page,
   .fmed-sharepoint-page,
@@ -3394,7 +2943,6 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   --fmed-primary-soft: color-mix(in srgb, var(--module-accent, #315f8c) 10%, #ffffff);
 }
 
-.fmed-app-root.fmed-shell-premium .fmed-dashboard-page { --module-accent: #4f46e5; }
 .fmed-app-root.fmed-shell-premium .fmed-asset-page,
 .fmed-app-root.fmed-shell-premium .fmed-wizard-page { --module-accent: #2563eb; }
 .fmed-app-root.fmed-shell-premium .fmed-interventi-operativi { --module-accent: #d97706; }
@@ -3403,18 +2951,18 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 .fmed-app-root.fmed-shell-premium .s8108-page { --module-accent: #b7791f; }
 .fmed-app-root.fmed-shell-premium .fmed-process-page { --module-accent: #0f7490; }
 .fmed-app-root.fmed-shell-premium .core-standard-page { --module-accent: #475569; }
-.fmed-app-root.fmed-shell-premium .fmed-settings-page,
+.fmed-app-root.fmed-shell-premium
 .fmed-app-root.fmed-shell-premium .fmed-audit-page { --module-accent: #a23b72; }
 .fmed-app-root.fmed-shell-premium .fmed-costi-page { --module-accent: #8b5cf6; }
 .fmed-app-root.fmed-shell-premium .fmed-export-page { --module-accent: #176b87; }
 .fmed-app-root.fmed-shell-premium .fmed-sharepoint-page { --module-accent: #2878b8; }
 
 .fmed-app-root.fmed-shell-premium :is(
-  .fmed-dashboard-header,
+
   .fmed-module-hero,
   .fmed-process-head,
   .core-standard-head,
-  .fmed-settings-head,
+
   .fmed-audit-head,
   .fmed-costi-hero,
   .fmed-report-hero
@@ -3459,7 +3007,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 .fmed-app-root.fmed-shell-premium .fmed-side-menu-btn {
   --menu-accent: #8391a5;
 }
-.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Dashboard"] { --menu-accent: #8178ff; }
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="F.M.E.D."] { --menu-accent: #8178ff; }
 .fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Asset"] { --menu-accent: #5b9cff; }
 .fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Interventi"] { --menu-accent: #f2a33b; }
 .fmed-app-root.fmed-shell-premium .fmed-side-menu-btn[data-module="Scadenze"] { --menu-accent: #f2768b; }

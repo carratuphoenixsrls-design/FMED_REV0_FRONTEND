@@ -110,10 +110,11 @@ const patch15Visual = [
 !/(#0b6f78|#075963|#0d766e|#0d8278|#087f86|#078b91|#1fae9c|#147c72|#169c8f)/i.test(patch15Visual)
   ? ok("vecchia palette verde-teal eliminata")
   : fail("vecchia palette verde-teal ancora presente");
-(/fmed-style-asset-hero-badge-number[\s\S]{0,300}-webkit-text-fill-color:\s*currentColor/i.test(patch15Visual)
-  && /fmed-style-asset-hero-badge-text[\s\S]{0,500}-webkit-text-fill-color:\s*currentColor/i.test(patch15Visual))
-  ? ok("contrasto e leggibilità KPI ripristinati")
-  : fail("contrasto KPI testata Asset non corretto");
+(/p0-asset-hero/i.test(allSource)
+  && /p0-asset-inspector/i.test(allSource)
+  && /p0-asset-results/i.test(allSource))
+  ? ok("Asset Punto 0 con ricerca, risultati e ispettore contestuale")
+  : fail("struttura Asset Punto 0 incompleta");
 
 const appShell = read("src/FmedApp.jsx");
 (/data-module=\{item\}/.test(appShell)
@@ -140,6 +141,10 @@ const appShell = read("src/FmedApp.jsx");
   && /fmed-side-menu-btn\.is-active \.fmed-side-menu-icon[\s\S]{0,300}transform:\s*translateX\(1px\)/i.test(visual))
   ? ok("icone moduli sempre riconoscibili")
   : fail("identità cromatica icone laterali incompleta");
+(!/DashboardPage|fmed-literal-|fmed-operational8-|fmed-style-asset-hero|fmed-style-interventi-hero|fmed-style-scadenze-hero/i.test(allSource)
+  && !fs.existsSync(path.resolve(root, "src/ImpostazioniPage.css")))
+  ? ok("Punto 0 senza componenti e classi grafiche precedenti")
+  : fail("residui grafici precedenti ancora presenti");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");

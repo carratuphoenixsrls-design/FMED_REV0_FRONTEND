@@ -1,5 +1,5 @@
 const ICON_PATHS = {
-  Dashboard: (
+  "F.M.E.D.": (
     <>
       <rect x="4" y="4" width="6" height="6" rx="1.5" />
       <rect x="14" y="4" width="6" height="6" rx="1.5" />
@@ -62,7 +62,7 @@ const ICON_PATHS = {
 };
 
 export default function FmedModuleIcon({ module, className = "", size = 24 }) {
-  const content = ICON_PATHS[module] || ICON_PATHS.Dashboard;
+  const content = ICON_PATHS[module] || ICON_PATHS["F.M.E.D."];
   return (
     <span className={`fmed-module-icon ${className}`.trim()} aria-hidden="true">
       <svg width={size} height={size} viewBox="0 0 24 24" fill="none">

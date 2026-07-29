@@ -100,7 +100,7 @@ export default function CostiPage(props) {
       </div>
     </section>
 
-    <div className="fmed-costi-rankings fmed-literal-3037c666cf">
+    <div className="fmed-costi-rankings p0-cost-ranking-list">
 
 
 

@@ -63,7 +63,7 @@ export default function AlertMailPage({
             <h2 id="fmed-alert-page-title">Invia il riepilogo via email</h2>
             <p>L’email include direttamente l’elenco delle scadenze Asset e Infrastrutture. Outlook resta disponibile come invio manuale; Gmail API abilita l’invio automatico su Render Free.</p>
           </div>
-          <button type="button" className="fmed-alert-page-close" onClick={onClose} disabled={busy}>Torna alla dashboard</button>
+          <button type="button" className="fmed-alert-page-close" onClick={onClose} disabled={busy}>Torna a F.M.E.D.</button>
         </header>
 
         <div className="fmed-alert-page-grid">

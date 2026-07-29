@@ -1,4 +1,4 @@
-import FmedModuleIcon from "./components/FmedModuleIcon.jsx";
+import FmedIcon from "./components/ui/FmedIcon.jsx";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ProcessiControls from "./components/ProcessiControls.jsx";
 import ProcessEnginePage from "./components/ProcessEnginePage.jsx";
@@ -346,10 +346,10 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
 
   return (
     <section className={`fmed-process-page ${launching || selectedExecution ? "is-workspace-open" : ""}`}>
-      <header className="fmed-process-head"><div className="fmed-banner-heading"><FmedModuleIcon module="Processi" /><div className="fmed-banner-copy">
-        <span className="fmed-process-kicker">FMED REV0</span><h2>Processi guidati, spiegati in modo semplice</h2>
-        <p>Ogni processo indica chiaramente quando usarlo, quali dati richiede e quale risultato produce. Le procedure restano collegate a responsabilità, SLA, evidenze, approvazioni, cicli e audit.</p>
-      </div></div></header>
+      <header className="fmed-process-head">
+        <div className="fmed-process-head__identity"><span><FmedIcon name="process" /></span><div><small>Governo delle attività</small><h1>Processi</h1><p>Dalla procedura all’esecuzione: responsabilità, tempi, evidenze e decisioni nello stesso percorso.</p></div></div>
+        <div className="fmed-process-head__metric"><strong>{stats.running}</strong><span>processi in corso</span></div>
+      </header>
 
       <aside className="fmed-process-usage" aria-label="Regole del Process Engine"><strong>Regola operativa</strong><div>
         <span><b>Responsabilità</b> responsabile, sostituto e approvatore sono sempre identificati.</span>
@@ -358,7 +358,7 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
         <span><b>Cicli</b> il completamento resta collegato al record operativo e al Motore Cicli.</span>
       </div></aside>
 
-      <div className="fmed-process-message fmed-literal-d87d5ede0c">
+      <div className="fmed-process-message is-history-switch">
         <span>{includeHistory ? "Tutto lo storico processi è visibile." : "Vista operativa dal 01/01/2023. I processi ancora aperti restano sempre visibili."}</span>
         <button type="button" onClick={() => setIncludeHistory((value) => !value)}>
           {includeHistory ? "Torna alla vista operativa" : "Apri archivio storico"}

@@ -6,7 +6,7 @@ const Sicurezza8108Page = lazy(() => import("./Sicurezza8108Page.jsx"));
 const ProcessiPage = lazy(() => import("./ProcessiPage.jsx"));
 const ImpostazioniPage = lazy(() => import("./ImpostazioniPage.jsx"));
 const NewAssetWizard = lazy(() => import("./NewAssetWizard.jsx"));
-const DashboardPage = lazy(() => import("./pages/DashboardPage.jsx"));
+const FmedIdentityPage = lazy(() => import("./pages/FmedIdentityPage.jsx"));
 const AssetPage = lazy(() => import("./pages/AssetPage.jsx"));
 const InterventiPage = lazy(() => import("./pages/InterventiPage.jsx"));
 const ScadenzePage = lazy(() => import("./pages/ScadenzePage.jsx"));
@@ -1032,9 +1032,9 @@ function urlCartellaInfrastruttura(record, tipo = "generale") {
 // Nota: questa fase non modifica API/backend. È una protezione UI.
 // La protezione definitiva lato sicurezza andrà completata in backend.
 // ========================================================
-const FMED_ALL_MENU_ITEMS = ["Dashboard", "Asset", "Interventi", "Scadenze", "Infrastrutture", "Sicurezza 81/08", "Processi", "Dizionari", "Gestione Utenti"];
+const FMED_ALL_MENU_ITEMS = ["F.M.E.D.", "Asset", "Interventi", "Scadenze", "Infrastrutture", "Sicurezza 81/08", "Processi", "Dizionari", "Gestione Utenti"];
 const FMED_MENU_GROUPS = [
-{ label: "Panoramica", items: ["Dashboard"] },
+{ label: "Identità", items: ["F.M.E.D."] },
 { label: "Operatività", items: ["Asset", "Interventi", "Scadenze", "Infrastrutture", "Sicurezza 81/08"] },
 { label: "Governance", items: ["Processi", "Dizionari", "Gestione Utenti"] }];
 
@@ -1046,7 +1046,7 @@ const FMED_MENU_LABELS = {
   "Gestione Utenti": "Strumenti"
 };
 const FMED_MENU_HELP = {
-  Dashboard: "Mostra subito cosa richiede attenzione e le operazioni più frequenti.",
+  "F.M.E.D.": "Presenta il significato, il metodo e gli obiettivi del sistema.",
   Asset: "Anagrafica delle apparecchiature e dei cespiti: ricerca, nuovo asset, OCR, modifica, documenti, QR e storico.",
   Interventi: "Registra e consulta manutenzioni ordinarie o straordinarie delle apparecchiature medicali e degli asset.",
   Costi: "Analizza costi, fornitori, ditte e spese degli interventi tecnici.",
@@ -1067,7 +1067,7 @@ function fmedMenuHelp(item) {
 }
 const FMED_ROLE_PERMISSIONS = {
   Admin: {
-    pages: ["Dashboard", "Asset", "Interventi", "Costi", "Scadenze", "Infrastrutture", "Sicurezza 81/08", "Export", "SharePoint", "Processi", "Dizionari", "Nuovo Asset", "Gestione Utenti"],
+    pages: ["F.M.E.D.", "Asset", "Interventi", "Costi", "Scadenze", "Infrastrutture", "Sicurezza 81/08", "Export", "SharePoint", "Processi", "Dizionari", "Nuovo Asset", "Gestione Utenti"],
     canEdit: true,
     canExport: true,
     canSeeCosts: true,
@@ -1076,7 +1076,7 @@ const FMED_ROLE_PERMISSIONS = {
     label: "Amministratore"
   },
   Service: {
-    pages: ["Dashboard", "Asset", "Interventi", "Scadenze", "Infrastrutture", "Sicurezza 81/08", "SharePoint", "Processi"],
+    pages: ["F.M.E.D.", "Asset", "Interventi", "Scadenze", "Infrastrutture", "Sicurezza 81/08", "SharePoint", "Processi"],
     canEdit: true,
     canExport: false,
     canSeeCosts: false,
@@ -1085,7 +1085,7 @@ const FMED_ROLE_PERMISSIONS = {
     label: "Tecnico Service"
   },
   User: {
-    pages: ["Dashboard", "Asset", "Scadenze", "Infrastrutture", "Sicurezza 81/08"],
+    pages: ["F.M.E.D.", "Asset", "Scadenze", "Infrastrutture", "Sicurezza 81/08"],
     canEdit: false,
     canExport: false,
     canSeeCosts: false,
@@ -1128,7 +1128,7 @@ function AppNuovoCore({
 
   const [cespiti, setCespiti] = useState([]);
   // FMED V14 PERFORMANCE: caricamento dati ON DEMAND con cache locale.
-  // La Dashboard resta leggera: i dataset grandi vengono letti solo quando servono.
+  // I dataset grandi vengono letti solo quando il relativo modulo viene aperto.
   const [assetLoaded, setAssetLoaded] = useState(false);
   const [assetLoading, setAssetLoading] = useState(false);
   const [interventiLoaded, setInterventiLoaded] = useState(false);
@@ -1173,14 +1173,14 @@ function AppNuovoCore({
   const [assetBulkSaving, setAssetBulkSaving] = useState(false);
   const [interventiElencoAperto, setInterventiElencoAperto] = useState(false);
   const [scadenzeElencoAperto, setScadenzeElencoAperto] = useState(false);
-  const [pagina, setPagina] = useState("Dashboard");
+  const [pagina, setPagina] = useState("F.M.E.D.");
   const utenteCorrenteFmed = sessioneFmed?.nome || sessioneFmed?.name || sessioneFmed?.username || sessioneFmed?.email || "Utente FMED";
   const ruoloFmed = normalizzaRuoloFmed(sessioneFmed);
   const permessiRuoloFmed = useMemo(() => permessiFmed(sessioneFmed), [sessioneFmed]);
   const menuItemsFmed = useMemo(() => menuItemsFmedPerRuolo(sessioneFmed), [sessioneFmed]);
   useEffect(() => {
     if (!puoAccederePaginaFmed(sessioneFmed, pagina)) {
-      setPagina("Dashboard");
+      setPagina("F.M.E.D.");
     }
   }, [pagina, ruoloFmed, sessioneFmed]);
   useEffect(() => {
@@ -1308,7 +1308,7 @@ function AppNuovoCore({
   const exportRicercaCespiteInterventiDeferred = useDeferredValue(exportRicercaCespiteInterventi);
 
   // FMED ULTRA SAFE PATCH
-  // Ogni pagina lavora solo sui propri dati pesanti. La Dashboard resta un riepilogo leggero.
+  // Ogni pagina lavora soltanto sui propri dati pesanti.
   const paginaAssetAttiva = pagina === "Asset";
   const paginaInterventiAttiva = pagina === "Interventi";
   const paginaCostiAttiva = pagina === "Costi";
@@ -1841,21 +1841,21 @@ function AppNuovoCore({
   }
   function renderFiltroBrancheExport(titolo, brancheSelezionate, setter) {
     return <div className="fmed-style-export-filter-box">
-        <div className="fmed-literal-d1380c0341">
+        <div className="p0-export-filter-head">
 
 
 
 
 
         
-          <div className="fmed-literal-5ffa08dd75">
+          <div className="p0-export-filter-title">
 
 
 
           
             {titolo} · {brancheSelezionate.length ? `${brancheSelezionate.length} selezionate` : "tutte"}
           </div>
-          <div className="fmed-literal-cc9c605f61">
+          <div className="p0-export-filter-actions">
 
 
 
@@ -1883,21 +1883,21 @@ function AppNuovoCore({
   function renderFiltroSediInterventiExport() {
     const sediSelezionate = Array.isArray(exportSediInterventi) ? exportSediInterventi : [];
     return <div className="fmed-style-export-filter-box">
-        <div className="fmed-literal-d1380c0341">
+        <div className="p0-export-filter-head">
 
 
 
 
 
         
-          <div className="fmed-literal-5ffa08dd75">
+          <div className="p0-export-filter-title">
 
 
 
           
             Filtro multiplo sede · {sediSelezionate.length ? `${sediSelezionate.length} selezionate` : "tutte"}
           </div>
-          <div className="fmed-literal-cc9c605f61">
+          <div className="p0-export-filter-actions">
 
 
 
@@ -2804,19 +2804,6 @@ function AppNuovoCore({
     finestra.focus();
     setTimeout(() => finestra.print(), 500);
   }
-  const riepilogoCostiDashboard = useMemo(() => {
-    const totaleSpesa = (Array.isArray(interventi) ? interventi : []).reduce((totale, intervento) => totale + importoIntervento(intervento), 0);
-    const interventiConCosto = (Array.isArray(interventi) ? interventi : []).filter((intervento) => importoIntervento(intervento) > 0).length;
-    return {
-      totaleSpesaDashboard: totaleSpesa,
-      interventiConCostoDashboard: interventiConCosto
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- importoIntervento è helper puro e stabile rispetto all’elenco interventi.
-  }, [interventi]);
-  const {
-    totaleSpesaDashboard,
-    interventiConCostoDashboard
-  } = riepilogoCostiDashboard;
   const fmedAuditQualitaDati = useMemo(() => {
     const listaCespiti = Array.isArray(cespiti) ? cespiti : [];
     const listaInterventi = Array.isArray(interventi) ? interventi : [];
@@ -6572,7 +6559,7 @@ ${messaggio}`);
     });
   }, [infrastruttureOperative, filtroInfraSede, filtroInfraCategoria, filtroInfraStato, filtroInfraDitta, filtroInfraPeriodicita, filtroInfraPriorita, filtroInfraResponsabile, filtroInfraCentroCosto, filtroInfraSocieta, filtroInfraProssimaDa, filtroInfraProssimaA, ricercaInfraDeferred]);
 
-  // Dashboard/KPI infrastrutture: devono seguire SEMPRE i filtri correnti
+  // I KPI infrastrutture seguono sempre i filtri correnti.
   // (sede, categoria, stato e ricerca), cioè la stessa lista visibile in tabella.
   const infraScadute = infrastruttureFiltrate.filter((r) => r._statoInfra?.codice === "SCADUTA");
   const infraInScadenza = infrastruttureFiltrate.filter((r) => r._statoInfra?.codice === "30_GIORNI");
@@ -6782,7 +6769,7 @@ ${messaggio}`);
     };
     const stroke = "currentColor";
     const sw = 2.15;
-    if (item === "Dashboard") return <svg {...common}><rect x="4" y="4" width="6" height="6" rx="1.5" stroke={stroke} strokeWidth={sw} /><rect x="14" y="4" width="6" height="6" rx="1.5" stroke={stroke} strokeWidth={sw} /><rect x="4" y="14" width="6" height="6" rx="1.5" stroke={stroke} strokeWidth={sw} /><rect x="14" y="14" width="6" height="6" rx="1.5" stroke={stroke} strokeWidth={sw} /></svg>;
+    if (item === "F.M.E.D.") return <svg {...common}><path d="M12 3 14.4 9.6 21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4L12 3Z" stroke={stroke} strokeWidth={sw} strokeLinejoin="round" /></svg>;
     if (item === "Asset") return <svg {...common}><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9L12 3Z" stroke={stroke} strokeWidth={sw} strokeLinejoin="round" /><path d="M4 7.5 12 12l8-4.5M12 12v9" stroke={stroke} strokeWidth={sw} strokeLinecap="round" /></svg>;
     if (item === "Interventi") return <svg {...common}><path d="M14.5 5.5a4.5 4.5 0 0 0-5.7 5.7L4 16v4h4l4.8-4.8a4.5 4.5 0 0 0 5.7-5.7l-3 3-4-4 3-3Z" stroke={stroke} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round" /></svg>;
     if (item === "Costi") return <svg {...common}><path d="M17 5.5A7 7 0 1 0 17 18.5M5 10h10M5 14h9" stroke={stroke} strokeWidth={sw} strokeLinecap="round" /></svg>;
@@ -6829,11 +6816,11 @@ ${messaggio}`);
       {<aside className={[`fmed-side-rail ${sidebarCompattata ? "is-collapsed" : "is-expanded"}`, "fmed-style-sidebar", sidebarCompattata && "fmed-style-sidebar-collapsed"].filter(Boolean).join(" ")}>
         <a href="#" onClick={(e) => {
         e.preventDefault();
-        setPagina("Dashboard");
-      }} title="FMED · Facility Management di Fabio Carratù" className={["fmed-style-sidebar-brand-link", sidebarCompattata && "fmed-style-sidebar-brand-link-collapsed"].filter(Boolean).join(" ")}>
+        setPagina("F.M.E.D.");
+      }} title="F.M.E.D. · Facility Management Engineering Database" className={["fmed-style-sidebar-brand-link", sidebarCompattata && "fmed-style-sidebar-brand-link-collapsed"].filter(Boolean).join(" ")}>
           {sidebarCompattata && true ? <div className="fmed-sidebar-wordmark-compact" aria-label="FMED">F</div> : <div className="fmed-sidebar-wordmark">
-              <div className="fmed-sidebar-wordmark-title">FMED</div>
-              <div className="fmed-sidebar-wordmark-subtitle">Facility Management</div>
+              <div className="fmed-sidebar-wordmark-title">F.M.E.D.</div>
+              <div className="fmed-sidebar-wordmark-subtitle">Facility Management Engineering Database</div>
             </div>}
         </a>
 
@@ -6867,7 +6854,7 @@ ${messaggio}`);
                 const help = fmedMenuHelp(item);
                 return <button key={item} className={[`fmed-side-menu-btn ${active ? "is-active" : ""}`, "fmed-style-menu-btn", active && "fmed-style-menu-btn-active"].filter(Boolean).join(" ")} title={help} data-help={help} data-module={item} aria-current={active ? "page" : undefined} aria-label={`${fmedMenuLabel(item)}. ${help}`} onClick={() => {
                   if (!puoAccederePaginaFmed(sessioneFmed, item)) {
-                    setPagina("Dashboard");
+                    setPagina("F.M.E.D.");
                     return;
                   }
                   if (item === "Scadenze") setFiltroScadenze("TUTTE");
@@ -6940,7 +6927,7 @@ ${messaggio}`);
         {/* Ogni modulo usa una sola intestazione dedicata: rimosso il banner globale duplicato. */}
 
         {paginaScadenzeAttiva && <section
-        className="fmed-operational4-expired-toolbar fmed-operational8-expired-toolbar fmed-literal-8abf612197"
+        className="  p0-deadline-closebar"
         role="region"
         aria-label="Gestione scadenze obsolete">
 
@@ -6960,23 +6947,23 @@ ${messaggio}`);
 
         
         
-          <div className="fmed-literal-8438658558">
-            <div className="fmed-literal-2ef442bb6d">
+          <div className="p0-deadline-closebar-copy">
+            <div className="p0-deadline-closebar-title">
               Gestione scadenze obsolete
             </div>
-            <div className="fmed-literal-a7bdfb5b51">
+            <div className="p0-deadline-closebar-description">
               <strong>{scadenzeVisualizzate.length}</strong> visibili · <strong>{scadenzeScaduteVisibiliCount}</strong> scadute · <strong>{scadenzeDaPianificareVisibiliCount}</strong> da pianificare · <strong>{scadenzeObsoleteSelezionateCount}</strong> selezionate.
               La chiusura archivia soltanto il ciclo operativo: record, documenti e collaudi restano nello storico e nell’audit.
             </div>
-            {messaggioCessazioneScadenze && <div role="status" className="fmed-literal-808c060502">
+            {messaggioCessazioneScadenze && <div role="status" className="p0-deadline-closebar-status">
               {messaggioCessazioneScadenze}
             </div>}
           </div>
-          <div className="fmed-literal-f318d11f4b">
+          <div className="p0-deadline-closebar-actions">
             {ruoloFmed === "Admin" && <select
             value={statoChiusuraScadenze}
             onChange={(event) => setStatoChiusuraScadenze(event.target.value)}
-            className="fmed-operational8-close-state-select fmed-literal-fcef1e5058"
+            className=" p0-deadline-closebar-select"
             aria-label="Stato finale delle scadenze selezionate">
 
 
@@ -6995,7 +6982,7 @@ ${messaggio}`);
             type="text"
             value={motivoChiusuraScadenze}
             onChange={(event) => setMotivoChiusuraScadenze(event.target.value)}
-            className="fmed-operational8-close-reason fmed-literal-5aed084412"
+            className=" p0-deadline-closebar-reason"
             aria-label="Motivo della chiusura"
             placeholder={statoChiusuraScadenze === "SOSTITUITA" ?
             "Motivo (predefinito: sostituita)" :
@@ -7013,7 +7000,7 @@ ${messaggio}`);
             <button
             type="button"
             onClick={selezionaTutteScadenzeScadute}
-            className="fmed-operational8-select-expired-btn fmed-literal-4e1c8617eb">
+            className=" p0-deadline-select-expired">
 
 
 
@@ -7031,7 +7018,7 @@ ${messaggio}`);
             <button
             type="button"
             onClick={selezionaTutteScadenzeDaPianificare}
-            className="fmed-operational8-select-unplanned-btn fmed-literal-e0b5d42fcc">
+            className=" p0-deadline-select-unplanned">
 
 
 
@@ -7049,7 +7036,7 @@ ${messaggio}`);
             {ruoloFmed === "Admin" && <button
             type="button"
             onClick={cessaScadenzeSelezionate}
-            className="fmed-operational8-close-selected-btn"
+            className="p0-deadline-close-selected"
             disabled={cessazioneScadenzeLoading || scadenzeObsoleteSelezionateCount === 0}
             style={{
               minHeight: 40,
@@ -7069,24 +7056,9 @@ ${messaggio}`);
           </div>
         </section>}
 
-        {pagina === "Dashboard" && <Suspense fallback={<div className="fmed-lazy-loading">Caricamento modulo…</div>}><DashboardPage {...{
-          apiBaseUrl: API_BASE_URL,
-          setNuovoInterventoOpen,
-          setFiltroScadenze,
-          setPagina,
-          setImpostazioniTab,
-          avviaProcessoGuidatoFmed,
-          openAlertMailPage: () => setAlertMailOpen(true),
-          openOutlook: () => apriOutlookAlertScadenze({ giorni: 30 }),
-          cespiti,
-          statoCespite,
-          interventi,
-          scadenzeConStatoBase,
-          scadenzeImminenti,
-          totaleSpesaDashboard,
-          interventiConCostoDashboard,
-          formattaData
-        }} /></Suspense>}
+        {pagina === "F.M.E.D." && <Suspense fallback={<div className="fmed-lazy-loading">Caricamento F.M.E.D.…</div>}>
+          <FmedIdentityPage onEnter={() => setPagina("Asset")} />
+        </Suspense>}
 
         {pagina === "SharePoint" && <Suspense fallback={<div className="fmed-lazy-loading">Caricamento SharePoint…</div>}>
           <SharePointPage
@@ -7927,7 +7899,7 @@ ${messaggio}`);
       </h2>
       <p className="fmed-workspace-description">Acquisisci o completa i dati tecnici usando l’intera area disponibile, poi continua nel wizard FMED.</p>
 
-      {String(formNuovoCespite.note || "").toUpperCase().includes("COPIATO DA") && <div className="fmed-literal-ae3c68c44a">
+      {String(formNuovoCespite.note || "").toUpperCase().includes("COPIATO DA") && <div className="p0-asset-copy-notice">
 
 
 
@@ -7940,14 +7912,14 @@ ${messaggio}`);
            Bozza creata copiando un cespite esistente. Controlla e modifica codice inventario, matricola e gli altri dati prima di salvare.
         </div>}
 
-      <div className="fmed-literal-bec04a7b4e">
+      <div className="p0-asset-ocr-panel">
 
 
 
 
 
             
-        <div className="fmed-literal-d87d5ede0c">
+        <div className="p0-ocr-row">
 
 
 
@@ -7955,7 +7927,7 @@ ${messaggio}`);
 
               
           <div>
-            <div className="fmed-literal-ea27dd28a3">
+            <div className="p0-ocr-title">
 
 
 
@@ -7987,7 +7959,7 @@ ${messaggio}`);
                   const file = e.target.files?.[0];
                   e.target.value = "";
                   scansionaTarghettaNuovoCespite(file);
-                }} className="fmed-literal-d6a2f871e1" />
+                }} className="p0-visually-hidden" />
           </label>
         </div>
 
@@ -8005,14 +7977,14 @@ ${messaggio}`);
           </div>}
       </div>
 
-      <div className="fmed-literal-63b4bb00c8">
+      <div className="p0-asset-accessory-panel">
 
 
 
 
 
             
-        <div className="fmed-literal-d87d5ede0c">
+        <div className="p0-ocr-row">
 
 
 
@@ -8020,7 +7992,7 @@ ${messaggio}`);
 
               
           <div>
-            <div className="fmed-literal-ea27dd28a3">
+            <div className="p0-ocr-title">
 
 
 
@@ -8052,7 +8024,7 @@ ${messaggio}`);
                   const file = e.target.files?.[0];
                   e.target.value = "";
                   aggiungiAccessorioDaFotoNuovoCespite(file);
-                }} className="fmed-literal-d6a2f871e1" />
+                }} className="p0-visually-hidden" />
           </label>
         </div>
 
@@ -8089,7 +8061,7 @@ ${messaggio}`);
                   });
                 }} placeholder={codiceCespiteAutomatico ? "Generato automaticamente dalla sede" : "Inserisci codice manuale es. A_003999"} className="fmed-style-edit-input" />
 
-            <div className="fmed-literal-9ecfcc6921">
+            <div className="p0-asset-code-actions">
 
 
 
@@ -8292,7 +8264,7 @@ ${messaggio}`);
                 }} className="fmed-style-muted-small">
               Inserisci link SharePoint o URL foto. I campi sono compatibili: se il DB non ha ancora le colonne, il backend salva comunque il cespite senza bloccare.
             </div>
-            <div className="fmed-literal-0c46007ef8">
+            <div className="p0-asset-photo-grid">
 
 
 
@@ -8395,68 +8367,52 @@ ${messaggio}`);
     </div>
   </section>}
 
-        {cespiteSelezionato && <section className="fmed-workspace-page fmed-asset-detail-workspace" aria-label={`Scheda cespite ${cespiteSelezionato.codicestrumento || ""}`}>
-    <div className="fmed-workspace-surface fmed-asset-detail-page">
-      <button className="fmed-workspace-back fmed-asset-detail-close fmed-style-close-btn" onClick={() => setCespiteSelezionato(null)}>
-        <FmedIcon name="close" /> Torna all’elenco asset
+        {cespiteSelezionato && <section className="p0-asset-inspector" aria-label={`Scheda cespite ${cespiteSelezionato.codicestrumento || ""}`}>
+    <div className="p0-asset-inspector-surface">
+      <button className="p0-asset-inspector-close" onClick={() => setCespiteSelezionato(null)}>
+        <FmedIcon name="close" /> Chiudi scheda
       </button>
 
-      <div className="fmed-style-asset-hero-card">
-        <div className="fmed-style-asset-hero-left">
-          <div className="fmed-style-asset-hero-icon"></div>
+      <header className="p0-asset-inspector-head">
+        <div className="p0-asset-inspector-title">
+          <div className="p0-asset-inspector-icon"><FmedIcon name="box" /></div>
           <div>
-            <div className="fmed-style-asset-hero-label">Scheda Cespite</div>
-            <div className="fmed-style-asset-hero-code">{cespiteSelezionato.codicestrumento}</div>
+            <span>SCHEDA CES­PITE</span>
+            <h2>{cespiteSelezionato.tipologia || cespiteSelezionato.modello || "Asset"}</h2>
+            <p>{cespiteSelezionato.codicestrumento} · {cespiteSelezionato.costruttore || "Costruttore non indicato"}</p>
           </div>
         </div>
+        <span className="p0-asset-inspector-state">{statoCespite(cespiteSelezionato)}</span>
+      </header>
 
-      </div>
-
-      {modificaLinkDoc && <div className="fmed-style-link-edit-box">
-          <label style={{
-
-              display: "block",
-              marginBottom: "8px"
-            }} className="fmed-style-edit-label">
+      {modificaLinkDoc && <div className="p0-asset-link-editor">
+          <label>
             Link documentazione SharePoint del cespite
           </label>
-          <input placeholder="https://marilab.sharepoint.com/..." value={linkDocInput} onChange={(e) => setLinkDocInput(e.target.value)} className="fmed-style-edit-input" />
-          <p style={{
-
-              marginTop: "8px"
-            }} className="fmed-style-muted">
+          <input placeholder="https://marilab.sharepoint.com/..." value={linkDocInput} onChange={(e) => setLinkDocInput(e.target.value)} />
+          <p>
             Se lasci vuoto il campo, FMED userà SharePoint generale o i link presenti nello storico.
           </p>
-          <div className="fmed-style-link-edit-actions">
-            <button onClick={salvaLinkDocumentazioneCespite} className="fmed-style-save-btn"> Salva link</button>
-            <button onClick={rimuoviLinkDocumentazioneCespite} className="fmed-style-cancel-btn"> Rimuovi link</button>
-            <button onClick={() => setModificaLinkDoc(false)} className="fmed-style-cancel-btn"> Annulla</button>
+          <div>
+            <button onClick={salvaLinkDocumentazioneCespite}>Salva link</button>
+            <button onClick={rimuoviLinkDocumentazioneCespite}>Rimuovi link</button>
+            <button onClick={() => setModificaLinkDoc(false)}>Annulla</button>
           </div>
         </div>}
 
-      {/* Toolbar compatta scheda cespite: tutte le azioni principali in un'unica barra */}
-
-      <div className="fmed-style-asset-actions-panel">
-        <div className="fmed-style-asset-actions-header-compact">
+      <section className="p0-asset-actions">
+        <header>
           <div>
-            <h3 className="fmed-style-asset-actions-title">Azioni cespite</h3>
-            <p className="fmed-style-asset-actions-subtitle">
-              Gestione rapida del cespite e dello storico interventi.
-            </p>
+            <span>AZIONI DISPONIBILI</span>
+            <h3>Lavora sul bene</h3>
           </div>
-          <div className="fmed-style-asset-actions-code">{cespiteSelezionato.codicestrumento}</div>
-        </div>
+          <small>{cespiteSelezionato.codicestrumento}</small>
+        </header>
 
-        <div style={{
-
-              ...{}
-            }} className="fmed-style-asset-actions-grouped">
-          <div className="fmed-style-asset-actions-group-block">
-            <div className="fmed-style-asset-actions-group-title">Documentazione</div>
-            <div style={{
-
-                  gridTemplateColumns: "repeat(3, minmax(180px, 1fr))"
-                }} className="fmed-style-asset-actions-group-grid">
+        <div className="p0-asset-action-groups">
+          <div className="p0-asset-action-group">
+            <strong>Documentazione</strong>
+            <div>
               <button onClick={() => {
                     const link = getLinkDocumentazioneCespite(cespiteSelezionato, interventiCespite, linkManualiDocumentazione);
                     if (!link?.url) {
@@ -8464,11 +8420,8 @@ ${messaggio}`);
                       return;
                     }
                     window.open(link.url, "_blank");
-                  }} className="fmed-style-asset-action-btn fmed-style-asset-action-btn-edit">
-
-
-                    
-                <span className="fmed-style-asset-action-icon"><FmedIcon name="folder" /></span>
+                  }} className="p0-asset-action">
+                <span><FmedIcon name="folder" /></span>
                 <span>Apri cartella</span>
               </button>
 
@@ -8476,104 +8429,87 @@ ${messaggio}`);
                     const linkAttuale = getLinkDocumentazioneCespite(cespiteSelezionato, interventiCespite, linkManualiDocumentazione);
                     setLinkDocInput(cespiteSelezionato?.link_documento || linkManualiDocumentazione[chiaveCodiceCespite(cespiteSelezionato.codicestrumento)] || (["database", "manuale"].includes(linkAttuale?.tipo) ? linkAttuale.url : ""));
                     setModificaLinkDoc(!modificaLinkDoc);
-                  }} className="fmed-style-asset-action-btn">
-                <span className="fmed-style-asset-action-icon"><FmedIcon name="link" /></span>
+                  }} className="p0-asset-action">
+                <span><FmedIcon name="link" /></span>
                 <span>Link cartella</span>
               </button>
 
               <button onClick={() => {
                     window.open(`${API_BASE_URL}/scheda-pdf/${encodeURIComponent(cespiteSelezionato.codicestrumento)}?t=${Date.now()}`, "_blank");
-                  }} className="fmed-style-asset-action-btn">
-                <span className="fmed-style-asset-action-icon"><FmedIcon name="file" /></span>
+                  }} className="p0-asset-action">
+                <span><FmedIcon name="file" /></span>
                 <span>Scheda PDF</span>
               </button>
             </div>
           </div>
 
-          <div className="fmed-style-asset-actions-group-block">
-            <div className="fmed-style-asset-actions-group-title">Identificazione</div>
-            <div style={{
-
-                  gridTemplateColumns: "repeat(3, minmax(180px, 1fr))"
-                }} className="fmed-style-asset-actions-group-grid">
-              <button onClick={() => apriEtichettaQrCespite(cespiteSelezionato)} className="fmed-style-asset-action-btn">
-                <span className="fmed-style-asset-action-icon"><FmedIcon name="qr" /></span>
+          <div className="p0-asset-action-group">
+            <strong>Identificazione</strong>
+            <div>
+              <button onClick={() => apriEtichettaQrCespite(cespiteSelezionato)} className="p0-asset-action">
+                <span><FmedIcon name="qr" /></span>
                 <span>Stampa QR</span>
               </button>
 
-              <button onClick={() => scaricaEtichettaZplCespite(cespiteSelezionato)} className="fmed-style-asset-action-btn">
-                <span className="fmed-style-asset-action-icon"><FmedIcon name="printer" /></span>
+              <button onClick={() => scaricaEtichettaZplCespite(cespiteSelezionato)} className="p0-asset-action">
+                <span><FmedIcon name="printer" /></span>
                 <span>Etichetta Zebra</span>
               </button>
 
-              <button onClick={() => scaricaEtichettaDdlClabelCespite(cespiteSelezionato)} className="fmed-style-asset-action-btn">
-                <span className="fmed-style-asset-action-icon"><FmedIcon name="tag" /></span>
+              <button onClick={() => scaricaEtichettaDdlClabelCespite(cespiteSelezionato)} className="p0-asset-action">
+                <span><FmedIcon name="tag" /></span>
                 <span>Etichetta cLabel DDL</span>
               </button>
             </div>
           </div>
 
-          <div className="fmed-style-asset-actions-group-block">
-            <div className="fmed-style-asset-actions-group-title">Manutenzione</div>
-            <div style={{
-
-                  gridTemplateColumns: "repeat(3, minmax(180px, 1fr))"
-                }} className="fmed-style-asset-actions-group-grid">
+          <div className="p0-asset-action-group">
+            <strong>Manutenzione</strong>
+            <div>
               <button
-
-
-                    onClick={() => apriNuovoIntervento(cespiteSelezionato)} className="fmed-style-asset-action-btn fmed-style-asset-action-btn-primary">
-                <span className="fmed-style-asset-action-icon"><FmedIcon name="plus" /></span>
+                    onClick={() => apriNuovoIntervento(cespiteSelezionato)} className="p0-asset-action is-primary">
+                <span><FmedIcon name="plus" /></span>
                 <span>Nuovo intervento</span>
               </button>
 
-              <button onClick={apriModificaUltimoInterventoCespite} className="fmed-style-asset-action-btn">
-                <span className="fmed-style-asset-action-icon"><FmedIcon name="edit" /></span>
+              <button onClick={apriModificaUltimoInterventoCespite} className="p0-asset-action">
+                <span><FmedIcon name="edit" /></span>
                 <span>Modifica intervento</span>
               </button>
 
-              <button onClick={() => setStoricoCespiteOpen(!storicoCespiteOpen)} className={["fmed-style-asset-action-btn", storicoCespiteOpen && "fmed-style-asset-action-btn-edit"].filter(Boolean).join(" ")}>
-                <span className="fmed-style-asset-action-icon"><FmedIcon name="history" /></span>
+              <button onClick={() => setStoricoCespiteOpen(!storicoCespiteOpen)} className={["p0-asset-action", storicoCespiteOpen && "is-active"].filter(Boolean).join(" ")}>
+                <span><FmedIcon name="history" /></span>
                 <span>{storicoCespiteOpen ? "Chiudi storico" : "Storico interventi"}</span>
               </button>
             </div>
           </div>
 
-          <div className="fmed-style-asset-actions-group-block">
-            <div className="fmed-style-asset-actions-group-title">Gestione cespite</div>
-            <div style={{
-
-                  gridTemplateColumns: "repeat(3, minmax(180px, 1fr))"
-                }} className="fmed-style-asset-actions-group-grid">
-              <button onClick={() => setModificaCespite(!modificaCespite)} className="fmed-style-asset-action-btn fmed-style-asset-action-btn-edit">
-
-
-                    
-                <span className="fmed-style-asset-action-icon"><FmedIcon name="edit" /></span>
+          <div className="p0-asset-action-group">
+            <strong>Gestione cespite</strong>
+            <div>
+              <button onClick={() => setModificaCespite(!modificaCespite)} className="p0-asset-action">
+                <span><FmedIcon name="edit" /></span>
                 <span>{modificaCespite ? "Chiudi modifica" : "Modifica cespite"}</span>
               </button>
 
-              <button onClick={() => copiaDatiCespiteInNuovoAsset(cespiteSelezionato)} title="Copia i dati principali del cespite e apre un nuovo asset modificabile" className="fmed-style-asset-action-btn">
-                <span className="fmed-style-asset-action-icon"><FmedIcon name="copy" /></span>
+              <button onClick={() => copiaDatiCespiteInNuovoAsset(cespiteSelezionato)} title="Copia i dati principali del cespite e apre un nuovo asset modificabile" className="p0-asset-action">
+                <span><FmedIcon name="copy" /></span>
                 <span>Copia dati cespite</span>
               </button>
 
-              <button onClick={eliminaCespiteSelezionato} className="fmed-style-asset-action-btn fmed-style-asset-action-btn-delete">
-
-
-                    
-                <span className="fmed-style-asset-action-icon"><FmedIcon name="archive" /></span>
+              <button onClick={eliminaCespiteSelezionato} className="p0-asset-action is-danger">
+                <span><FmedIcon name="archive" /></span>
                 <span>Dismetti</span>
               </button>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-{modificaCespite && <div className="fmed-style-edit-panel">
-    <h3 className="fmed-style-section-title"> Modifica dati cespite</h3>
+{modificaCespite && <section className="p0-asset-edit">
+    <header><span>AGGIORNAMENTO ANAGRAFICA</span><h3>Modifica dati cespite</h3></header>
 
-    <div className="fmed-literal-ad27e2bddd">
+    <div className="p0-edit-scanners">
 
 
 
@@ -8597,7 +8533,7 @@ ${messaggio}`);
                   const file = e.target.files?.[0];
                   e.target.value = "";
                   scansionaTarghettaCespite(file);
-                }} className="fmed-literal-d6a2f871e1" />
+                }} className="p0-visually-hidden" />
       </label>
 
       <label style={{
@@ -8614,10 +8550,10 @@ ${messaggio}`);
                   const file = e.target.files?.[0];
                   e.target.value = "";
                   aggiungiAccessorioDaFotoCespite(file);
-                }} className="fmed-literal-d6a2f871e1" />
+                }} className="p0-visually-hidden" />
       </label>
 
-      {(ocrTarghettaEsito || ocrAccessorioEsito) && <div className="fmed-literal-e844ea5516">
+      {(ocrTarghettaEsito || ocrAccessorioEsito) && <div className="p0-ocr-status">
 
 
 
@@ -8641,7 +8577,7 @@ ${messaggio}`);
                   ...formCespite,
                   codicestrumento: e.target.value
                 })} placeholder="Es. A_003999 oppure 00025P" className="fmed-style-edit-input" />
-        {String(formCespite.codicestrumento || "").trim() !== String(cespiteSelezionato?.codicestrumento || "").trim() && <div className="fmed-literal-fbf730b1bf">
+        {String(formCespite.codicestrumento || "").trim() !== String(cespiteSelezionato?.codicestrumento || "").trim() && <div className="p0-asset-code-warning">
 
 
 
@@ -8788,43 +8724,28 @@ ${messaggio}`);
          Salva modifiche
       </button>
     </div>
-  </div>}
+  </section>}
 
-      {storicoCespiteOpen && <div className="fmed-style-asset-history-collapsible">
-          <div className="fmed-style-asset-history-header-compact">
+      {storicoCespiteOpen && <section className="p0-asset-history">
+          <header>
             <div>
-              <h3 className="fmed-style-asset-history-title"> Storico interventi</h3>
-              <p className="fmed-style-asset-history-subtitle">
+              <span>MEMORIA OPERATIVA</span>
+              <h3>Storico interventi</h3>
+              <p>
                 Storico completo del cespite, filtrabile per testo, attività e ditta. Ordinamento: dal più recente al meno recente.
               </p>
             </div>
-            <button style={{
-
-                minWidth: "150px"
-              }} onClick={() => setStoricoCespiteOpen(false)} className="fmed-style-asset-action-btn">
-               Chiudi storico
+            <button onClick={() => setStoricoCespiteOpen(false)}>
+              Chiudi storico
             </button>
-          </div>
-            <div style={{
-
-              ...{}
-            }} className="fmed-style-history-filter-bar">
-              <input style={{
-
-                minWidth: "260px",
-                flex: 1
-              }} placeholder="Cerca nello storico: attività, ditta, esito, descrizione..." value={storicoFiltroTesto} onChange={(e) => setStoricoFiltroTesto(e.target.value)} className="fmed-style-input" />
-              <select style={{
-
-                minWidth: "220px"
-              }} value={storicoFiltroAttivita} onChange={(e) => setStoricoFiltroAttivita(e.target.value)} className="fmed-style-select">
+          </header>
+            <div className="p0-history-filters">
+              <input placeholder="Cerca attività, ditta, esito o descrizione" value={storicoFiltroTesto} onChange={(e) => setStoricoFiltroTesto(e.target.value)} />
+              <select value={storicoFiltroAttivita} onChange={(e) => setStoricoFiltroAttivita(e.target.value)}>
                 <option value="TUTTE">Tutte le attività</option>
                 {storicoAttivitaOptions.map((opzione) => <option key={opzione} value={opzione}>{opzione}</option>)}
               </select>
-              <select style={{
-
-                minWidth: "220px"
-              }} value={storicoFiltroDitta} onChange={(e) => setStoricoFiltroDitta(e.target.value)} className="fmed-style-select">
+              <select value={storicoFiltroDitta} onChange={(e) => setStoricoFiltroDitta(e.target.value)}>
                 <option value="TUTTE">Tutte le ditte</option>
                 {storicoDittaOptions.map((opzione) => <option key={opzione} value={opzione}>{opzione}</option>)}
               </select>
@@ -8832,12 +8753,12 @@ ${messaggio}`);
                 setStoricoFiltroTesto("");
                 setStoricoFiltroAttivita("TUTTE");
                 setStoricoFiltroDitta("TUTTE");
-              }} className="fmed-style-secondary-btn">
-                 Reset
+              }}>
+                Azzera
               </button>
             </div>
 
-            <div className="fmed-style-history-result-info">
+            <div className="p0-history-count">
               Visualizzati {storicoCespiteFiltrato.length} interventi su {storicoCespiteOrdinato.length}.
             </div>
 
@@ -8877,7 +8798,7 @@ ${messaggio}`);
                   </tbody>
                 </table>
               </div>}
-        </div>}
+        </section>}
 
       {analisiCespite && <div style={{
 
@@ -8932,13 +8853,10 @@ ${messaggio}`);
           </div>
         </div>}
 
-      <div className="fmed-asset-detail-grid fmed-style-asset-main-grid" style={{
-
-            ...{}
-          }}>
-        <div className="fmed-asset-data-panel fmed-style-asset-panel">
-          <h3 className="fmed-style-section-title">Dati generali</h3>
-          <div className="fmed-style-asset-info-table">
+      <div className="p0-asset-detail-content">
+        <section className="p0-asset-data">
+          <header><span>ANAGRAFICA TECNICA</span><h3>Dati generali</h3></header>
+          <div className="p0-asset-info-grid">
             <Detail label="Tipologia" value={cespiteSelezionato.tipologia} />
             <Detail label="Costruttore" value={cespiteSelezionato.costruttore} />
             <Detail label="Modello" value={cespiteSelezionato.modello} />
@@ -8960,14 +8878,14 @@ ${messaggio}`);
             <Detail label="Accessori / Sistema primario" value={cespiteSelezionato.accessori_sistema_primario} fallback="Non disponibile" />
           </div>
 
-          <div className="fmed-literal-5c1bbc18a0">
+          <div className="p0-ocr-panel">
 
 
 
 
 
                 
-            <div className="fmed-literal-d87d5ede0c">
+            <div className="p0-ocr-row">
 
 
 
@@ -8975,7 +8893,7 @@ ${messaggio}`);
 
                   
               <div>
-                <div className="fmed-literal-ea27dd28a3">
+                <div className="p0-ocr-title">
 
 
 
@@ -9007,7 +8925,7 @@ ${messaggio}`);
                       const file = e.target.files?.[0];
                       e.target.value = "";
                       scansionaTarghettaCespite(file);
-                    }} className="fmed-literal-d6a2f871e1" />
+                    }} className="p0-visually-hidden" />
               </label>
             </div>
 
@@ -9025,14 +8943,14 @@ ${messaggio}`);
               </div>}
           </div>
 
-          <div className="fmed-literal-5c1bbc18a0">
+          <div className="p0-ocr-panel">
 
 
 
 
 
                 
-            <div className="fmed-literal-d87d5ede0c">
+            <div className="p0-ocr-row">
 
 
 
@@ -9040,7 +8958,7 @@ ${messaggio}`);
 
                   
               <div>
-                <div className="fmed-literal-ea27dd28a3">
+                <div className="p0-ocr-title">
 
 
 
@@ -9072,7 +8990,7 @@ ${messaggio}`);
                       const file = e.target.files?.[0];
                       e.target.value = "";
                       aggiungiAccessorioDaFotoCespite(file);
-                    }} className="fmed-literal-d6a2f871e1" />
+                    }} className="p0-visually-hidden" />
               </label>
             </div>
 
@@ -9089,9 +9007,9 @@ ${messaggio}`);
                 {ocrAccessorioEsito.confidence !== null && ocrAccessorioEsito.confidence !== undefined && <span> Confidenza: {Math.round(Number(ocrAccessorioEsito.confidence) * 100)}%</span>}
               </div>}
           </div>
-        </div>
+        </section>
 
-        {analisiCespite && <div className="fmed-predictive-column">{(() => {
+        {analisiCespite && <section className="p0-predictive-column">{(() => {
                 const stileCriticita = coloreCriticita(analisiCespite.criticita);
                 const stileRischio = coloreCriticita(analisiCespite.rischio);
                 const stilePunteggio = colorePunteggioPredittivo(analisiCespite.punteggio);
@@ -9140,7 +9058,7 @@ ${messaggio}`);
               <div className="fmed-predictive-card is-next fmed-style-fmea-box" style={{ background: "#EFF8FF", border: "1px solid #84CAFF", boxShadow: "inset 4px 0 0 #2E90FA" }}>
                 <span style={{ background: "rgba(46,144,250,.12)", color: "#175CD3" }} className="fmed-style-predictive-icon"></span>
                 <span className="fmed-style-predictive-metric-label">Prossimo intervento</span>
-                <strong className="fmed-literal-da8aa8eb60">
+                <strong className="p0-next-date">
                   {prossimoIntervento ? formattaData(prossimoIntervento) : "Da pianificare"}
                 </strong>
                 <small className="fmed-style-predictive-metric-hint">Scadenza operativa</small>
@@ -9171,7 +9089,7 @@ ${messaggio}`);
             </div>
           </div>
         </div>
-      </div>}
+      </section>}
 
     </div>
     </div>
@@ -9317,7 +9235,7 @@ function DizionarioBox({
 
 // ========================================================
 // FMED LOGIN - wrapper leggero su base approvata
-// Non modifica grafica, funzioni, API, Dashboard, Asset, Interventi,
+// Non modifica funzioni, API, Asset, Interventi,
 // Costi, Scadenze, Export, SharePoint, QR o logiche esistenti.
 // ========================================================
 
@@ -9547,9 +9465,9 @@ const Detail = memo(function Detail({
   fallback = "-"
 }) {
   const valorePulito = String(value ?? "").trim();
-  return <div className="fmed-style-detail-item">
-      <div className="fmed-style-detail-label">{label}</div>
-      <div className="fmed-style-detail-value">{valorePulito || fallback}</div>
+  return <div className="p0-detail-item">
+      <span>{label}</span>
+      <strong>{valorePulito || fallback}</strong>
     </div>;
 });
 

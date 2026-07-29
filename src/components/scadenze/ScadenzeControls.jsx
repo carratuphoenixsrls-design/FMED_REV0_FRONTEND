@@ -1,212 +1,105 @@
-function ScadenzeSelect({ ariaLabel, value, onChange, style, children }) {
-  return (
-    <select aria-label={ariaLabel} value={value} onChange={onChange} style={style}>
-      {children}
-    </select>);
-
+function SelectField({ label, value, onChange, children }) {
+  return <label className="p0-field"><span>{label}</span><select value={value} onChange={onChange}>{children}</select></label>;
 }
 
-function ScadenzeDateField({ ariaLabel, label, value, onChange }) {
-  return (
-    <div className="fmed-deadline-date-field fmed-style-scadenze-date-filter-group">
-      <span className="fmed-style-scadenze-date-filter-label">{label}</span>
-      <input
-        aria-label={ariaLabel}
-        type="date"
-        value={value}
-        onChange={onChange} className="fmed-style-scadenze-input" />
-
-      
-    </div>);
-
+function DateField({ label, value, onChange }) {
+  return <label className="p0-field"><span>{label}</span><input type="date" value={value} onChange={onChange} /></label>;
 }
 
 export default function ScadenzeControls(props) {
   const {
-    scadenzeVisualizzate,
-    scadenzeSelezionateVisualizzate,
-    filtroScadenze,
-    setFiltroScadenze,
-    filtroScadenzeModulo,
-    setFiltroScadenzeModulo,
-    listaModuliFiltroScadenze,
-    setScadenzeElencoAperto,
-    filtroScadenzeCodice,
-    setFiltroScadenzeCodice,
-    listaCodiciFiltroScadenze,
-    filtroScadenzeSede,
-    setFiltroScadenzeSede,
-    listaSediFiltroScadenze,
-    filtroScadenzeTipologia,
-    setFiltroScadenzeTipologia,
-    listaTipologieFiltroScadenze,
-    filtroScadenzeAttivita,
-    setFiltroScadenzeAttivita,
-    listaAttivitaFiltroScadenze,
-    filtroScadenzeDitta,
-    setFiltroScadenzeDitta,
-    listaDitteFiltroScadenze,
-    normalizzaSocietaDitta,
-    ordineScadenze,
-    setOrdineScadenze,
-    filtroScadenzeProssimaDa,
-    setFiltroScadenzeProssimaDa,
-    filtroScadenzeProssimaA,
-    setFiltroScadenzeProssimaA,
-    scadenzeElencoAperto,
-    selezionaTutteScadenzeVisualizzate,
-    deselezionaTutteScadenze,
-    resetFiltriScadenze,
-    esportaScadenzePdf
+    scadenzeVisualizzate, scadenzeSelezionateVisualizzate, filtroScadenze,
+    setFiltroScadenze, filtroScadenzeModulo, setFiltroScadenzeModulo,
+    listaModuliFiltroScadenze, setScadenzeElencoAperto, filtroScadenzeCodice,
+    setFiltroScadenzeCodice, listaCodiciFiltroScadenze, filtroScadenzeSede,
+    setFiltroScadenzeSede, listaSediFiltroScadenze, filtroScadenzeTipologia,
+    setFiltroScadenzeTipologia, listaTipologieFiltroScadenze,
+    filtroScadenzeAttivita, setFiltroScadenzeAttivita, listaAttivitaFiltroScadenze,
+    filtroScadenzeDitta, setFiltroScadenzeDitta, listaDitteFiltroScadenze,
+    normalizzaSocietaDitta, ordineScadenze, setOrdineScadenze,
+    filtroScadenzeProssimaDa, setFiltroScadenzeProssimaDa,
+    filtroScadenzeProssimaA, setFiltroScadenzeProssimaA, scadenzeElencoAperto,
+    selezionaTutteScadenzeVisualizzate, deselezionaTutteScadenze,
+    resetFiltriScadenze, esportaScadenzePdf
   } = props;
-
-  const aggiornaFiltro = (setter) => (event) => {
+  const update = (setter) => (event) => {
     setter(event.target.value);
     setScadenzeElencoAperto(false);
   };
 
   return (
-    <div className="fmed-operational8-deadline-filters fmed-style-scadenze-filters-panel">
-      <div className="fmed-operational-filters-head fmed-style-scadenze-filters-header">
-        <div>
-          <h3 className="fmed-style-scadenze-section-title">Filtri scadenze</h3>
-          <p className="fmed-style-scadenze-section-subtitle">
-            Il Motore Cicli REV0 mostra una sola scadenza operativa per elemento e famiglia. Le attività precedenti restano soltanto nello storico.
-          </p>
+    <section className="p0-command p0-command--deadline" aria-label="Comandi scadenze">
+      <div className="p0-command__primary">
+        <div className="p0-command__intro">
+          <div>
+            <span className="p0-kicker">Agenda tecnica</span>
+            <h2>Concentrati su ciò che richiede attenzione</h2>
+          </div>
+          <div className="p0-command__facts">
+            <span><b>{scadenzeVisualizzate.length}</b> visibili</span>
+            <span><b>{scadenzeSelezionateVisualizzate.length}</b> selezionate</span>
+          </div>
         </div>
-        <div className="fmed-style-scadenze-filter-chips">
-          <span className="fmed-style-scadenze-chip">Visibili: {scadenzeVisualizzate.length}</span>
-          <span className="fmed-style-scadenze-chip">Selezionate: {scadenzeSelezionateVisualizzate.length}</span>
+        <div className="p0-deadline-quick">
+          <SelectField label="Priorità temporale" value={filtroScadenze} onChange={update(setFiltroScadenze)}>
+            <option value="TUTTE">Tutte le scadenze</option><option value="SCADUTA">Scadute</option>
+            <option value="30_GIORNI">Entro 30 giorni</option><option value="60_GIORNI">Da 31 a 60 giorni</option>
+            <option value="REGOLARE">Future / regolari</option><option value="DA_PIANIFICARE">Da pianificare</option>
+            <option value="NON_DISPONIBILE">Data non disponibile</option>
+          </SelectField>
+          <SelectField label="Ambito" value={filtroScadenzeModulo} onChange={update(setFiltroScadenzeModulo)}>
+            <option value="TUTTI">Tutti i moduli</option>
+            {listaModuliFiltroScadenze.map((v) => <option key={v} value={v}>{v.replaceAll("_", " ")}</option>)}
+          </SelectField>
+          <SelectField label="Ordina" value={ordineScadenze} onChange={(e) => setOrdineScadenze(e.target.value)}>
+            <option value="SCADENZA_ASC">Più urgente</option><option value="SCADENZA_DESC">Più lontana</option>
+            <option value="CODICE_ASC">Codice crescente</option><option value="CODICE_DESC">Codice decrescente</option>
+          </SelectField>
         </div>
       </div>
 
-      <div className="fmed-operational-filters-grid fmed-deadline-filters-grid fmed-style-scadenze-filters-grid">
-        <ScadenzeSelect
-          ariaLabel="Filtra scadenze per stato"
-          value={filtroScadenze}
-          onChange={aggiornaFiltro(setFiltroScadenze)} className="fmed-style-scadenze-select-large">
+      <details className="p0-advanced">
+        <summary>
+          <span><b>Affina agenda</b><small>Elemento, sede, attività, responsabile e intervallo</small></span>
+          <span className="p0-advanced__summary">{scadenzeVisualizzate.length} risultati</span>
+        </summary>
+        <div className="p0-filter-grid">
+          <SelectField label="Elemento" value={filtroScadenzeCodice} onChange={update(setFiltroScadenzeCodice)}>
+            <option value="TUTTE">Tutti gli elementi</option>
+            {listaCodiciFiltroScadenze.map((v) => <option key={v} value={v}>{v}</option>)}
+          </SelectField>
+          <SelectField label="Sede" value={filtroScadenzeSede} onChange={update(setFiltroScadenzeSede)}>
+            <option value="TUTTE">Tutte le sedi</option>
+            {listaSediFiltroScadenze.map((v) => <option key={v} value={v}>{v}</option>)}
+          </SelectField>
+          <SelectField label="Tipologia" value={filtroScadenzeTipologia} onChange={update(setFiltroScadenzeTipologia)}>
+            <option value="TUTTE">Tutte le tipologie</option>
+            {listaTipologieFiltroScadenze.map((v) => <option key={v} value={v}>{v}</option>)}
+          </SelectField>
+          <SelectField label="Attività" value={filtroScadenzeAttivita} onChange={update(setFiltroScadenzeAttivita)}>
+            <option value="TUTTE">Tutte le attività</option>
+            {listaAttivitaFiltroScadenze.map((v) => <option key={v} value={v}>{v}</option>)}
+          </SelectField>
+          <SelectField label="Ditta / ente" value={filtroScadenzeDitta} onChange={update(setFiltroScadenzeDitta)}>
+            <option value="TUTTE">Tutte le ditte</option>
+            {listaDitteFiltroScadenze.map((v) => <option key={v} value={v}>{normalizzaSocietaDitta(v)}</option>)}
+          </SelectField>
+          <DateField label="Scadenza dal" value={filtroScadenzeProssimaDa} onChange={(e) => setFiltroScadenzeProssimaDa(e.target.value)} />
+          <DateField label="Scadenza al" value={filtroScadenzeProssimaA} onChange={(e) => setFiltroScadenzeProssimaA(e.target.value)} />
+        </div>
+      </details>
 
-          
-          <option value="TUTTE">Tutti gli stati</option>
-          <option value="SCADUTA">Scadute</option>
-          <option value="30_GIORNI">Entro 30 giorni</option>
-          <option value="60_GIORNI">Da 31 a 60 giorni</option>
-          <option value="REGOLARE">Future / regolari</option>
-          <option value="DA_PIANIFICARE">Da pianificare</option>
-          <option value="NON_DISPONIBILE">Data non disponibile</option>
-        </ScadenzeSelect>
-
-        <ScadenzeSelect
-          ariaLabel="Filtra scadenze per modulo"
-          value={filtroScadenzeModulo}
-          onChange={aggiornaFiltro(setFiltroScadenzeModulo)} className="fmed-style-scadenze-select-large">
-
-          
-          <option value="TUTTI">Tutti i moduli</option>
-          {listaModuliFiltroScadenze.map((modulo) => <option key={modulo} value={modulo}>{modulo.replaceAll("_", " ")}</option>)}
-        </ScadenzeSelect>
-
-        <ScadenzeSelect
-          ariaLabel="Filtra scadenze per elemento"
-          value={filtroScadenzeCodice}
-          onChange={aggiornaFiltro(setFiltroScadenzeCodice)} className="fmed-style-scadenze-select-large">
-
-          
-          <option value="TUTTE">Tutti gli elementi</option>
-          {listaCodiciFiltroScadenze.map((codice) => <option key={codice} value={codice}>{codice}</option>)}
-        </ScadenzeSelect>
-
-        <ScadenzeSelect
-          ariaLabel="Filtra scadenze per sede"
-          value={filtroScadenzeSede}
-          onChange={aggiornaFiltro(setFiltroScadenzeSede)} className="fmed-style-scadenze-select-large">
-
-          
-          <option value="TUTTE">Tutte le sedi</option>
-          {listaSediFiltroScadenze.map((sede) => <option key={sede} value={sede}>{sede}</option>)}
-        </ScadenzeSelect>
-
-        <ScadenzeSelect
-          ariaLabel="Filtra scadenze per tipologia"
-          value={filtroScadenzeTipologia}
-          onChange={aggiornaFiltro(setFiltroScadenzeTipologia)} className="fmed-style-scadenze-select-large">
-
-          
-          <option value="TUTTE">Tutte le tipologie</option>
-          {listaTipologieFiltroScadenze.map((tipologia) => <option key={tipologia} value={tipologia}>{tipologia}</option>)}
-        </ScadenzeSelect>
-
-        <ScadenzeSelect
-          ariaLabel="Filtra scadenze per attività"
-          value={filtroScadenzeAttivita}
-          onChange={aggiornaFiltro(setFiltroScadenzeAttivita)} className="fmed-style-scadenze-select-large">
-
-          
-          <option value="TUTTE">Tutte le attività</option>
-          {listaAttivitaFiltroScadenze.map((attivita) => <option key={attivita} value={attivita}>{attivita}</option>)}
-        </ScadenzeSelect>
-
-        <ScadenzeSelect
-          ariaLabel="Filtra scadenze per ditta esecutrice"
-          value={filtroScadenzeDitta}
-          onChange={aggiornaFiltro(setFiltroScadenzeDitta)} className="fmed-style-scadenze-select-large">
-
-          
-          <option value="TUTTE">Tutte le ditte</option>
-          {listaDitteFiltroScadenze.map((ditta) =>
-          <option key={ditta} value={ditta}>{normalizzaSocietaDitta(ditta)}</option>
-          )}
-        </ScadenzeSelect>
-
-        <ScadenzeSelect
-          ariaLabel="Ordina scadenze"
-          value={ordineScadenze}
-          onChange={(event) => setOrdineScadenze(event.target.value)} className="fmed-style-scadenze-select-large">
-
-          
-          <option value="SCADENZA_ASC">Scadenza più vicina</option>
-          <option value="SCADENZA_DESC">Scadenza più lontana</option>
-          <option value="CODICE_ASC">Codice crescente</option>
-          <option value="CODICE_DESC">Codice decrescente</option>
-        </ScadenzeSelect>
-
-        <ScadenzeDateField
-          ariaLabel="Scadenza da"
-          label="Scadenza da"
-          value={filtroScadenzeProssimaDa}
-          onChange={(event) => setFiltroScadenzeProssimaDa(event.target.value)} />
-        
-        <ScadenzeDateField
-          ariaLabel="Scadenza a"
-          label="Scadenza a"
-          value={filtroScadenzeProssimaA}
-          onChange={(event) => setFiltroScadenzeProssimaA(event.target.value)} />
-        
+      <div className="p0-command__actions">
+        <button className="p0-btn p0-btn--deadline" type="button" onClick={() => setScadenzeElencoAperto((v) => !v)}>
+          {scadenzeElencoAperto ? "Chiudi agenda" : `Apri agenda · ${scadenzeVisualizzate.length}`}
+        </button>
+        <button className="p0-btn" type="button" onClick={selezionaTutteScadenzeVisualizzate}>Seleziona visibili</button>
+        <button className="p0-btn" type="button" onClick={deselezionaTutteScadenze}>Deseleziona</button>
+        <button className="p0-btn" type="button" disabled={!scadenzeSelezionateVisualizzate.length} onClick={esportaScadenzePdf}>
+          PDF · {scadenzeSelezionateVisualizzate.length}
+        </button>
+        <button className="p0-btn p0-btn--quiet" type="button" onClick={resetFiltriScadenze}>Azzera filtri</button>
       </div>
-
-      <div className="fmed-operational8-deadline-actions fmed-style-scadenze-actions-bar">
-        <button type="button" className="fmed-operational8-open-list-btn fmed-style-scadenze-primary-action" onClick={() => setScadenzeElencoAperto((value) => !value)}>
-          {scadenzeElencoAperto ? "▲ Nascondi elenco" : ` Apri elenco filtrato (${scadenzeVisualizzate.length})`}
-        </button>
-        <button type="button" onClick={selezionaTutteScadenzeVisualizzate} className="fmed-style-scadenze-secondary-action">
-          Seleziona visibili
-        </button>
-        <button type="button" onClick={deselezionaTutteScadenze} className="fmed-style-scadenze-ghost-action">
-          ⬜ Deseleziona
-        </button>
-        <button type="button" onClick={resetFiltriScadenze} className="fmed-style-scadenze-ghost-action">
-           Reset filtri
-        </button>
-        <button
-          type="button"
-          className="fmed-style-scadenze-ghost-action"
-          style={{ opacity: scadenzeSelezionateVisualizzate.length === 0 ? 0.55 : 1 }}
-          onClick={esportaScadenzePdf}
-          disabled={scadenzeSelezionateVisualizzate.length === 0}>
-          
-          PDF selezionate ({scadenzeSelezionateVisualizzate.length})
-        </button>
-      </div>
-    </div>);
-
+    </section>
+  );
 }

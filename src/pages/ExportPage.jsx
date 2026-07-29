@@ -285,14 +285,14 @@ export default function ExportPage(props) {
 
                     <ReportAdvancedSection title="Colonne opzionali" summary="Export sintetico predefinito">
                     <div className="fmed-style-export-filter-box">
-                      <div className="fmed-literal-d1380c0341">
+                      <div className="p0-export-filter-head">
 
 
 
 
 
                 
-                        <div className="fmed-literal-5ffa08dd75">
+                        <div className="p0-export-filter-title">
 
 
 
@@ -305,7 +305,7 @@ export default function ExportPage(props) {
                             <span>{colonna.label}</span>
                           </label>)}
                       </div>
-                      <div className="fmed-literal-14fdc86419">
+                      <div className="p0-export-filter-note">
 
 
 
@@ -318,19 +318,19 @@ export default function ExportPage(props) {
 
                     <ReportAdvancedSection title="Cespiti specifici" summary={exportCespitiInventarioSelezionati.length ? `${exportCespitiInventarioSelezionati.length} selezionati` : "Tutti i cespiti filtrati"}>
                     <div className="fmed-style-export-filter-box">
-                      <div className="fmed-literal-d1380c0341">
+                      <div className="p0-export-filter-head">
 
 
 
 
 
                 
-                        <div className="fmed-literal-5ffa08dd75">
+                        <div className="p0-export-filter-title">
 
 
 
                   Cespiti da esportare</div>
-                        <div className="fmed-literal-cc9c605f61">
+                        <div className="p0-export-filter-actions">
 
 
 
@@ -349,7 +349,7 @@ export default function ExportPage(props) {
                           </label>)}
                       </div>
 
-                      {codiciInventarioExportVisibili.length > 60 && <div className="fmed-literal-1212093a3b">
+                      {codiciInventarioExportVisibili.length > 60 && <div className="p0-export-limit-note">
 
 
 
@@ -358,7 +358,7 @@ export default function ExportPage(props) {
                           Mostrati i primi 60 codici: usa la ricerca per trovare gli altri.
                         </div>}
 
-                      <div className="fmed-literal-14fdc86419">
+                      <div className="p0-export-filter-note">
 
 
 
@@ -438,19 +438,19 @@ export default function ExportPage(props) {
 
                     <ReportAdvancedSection title="Attività" summary={`${attivitaExportIncluse.length} incluse`}>
                     <div className="fmed-style-export-filter-box">
-                      <div className="fmed-literal-d1380c0341">
+                      <div className="p0-export-filter-head">
 
 
 
 
 
                 
-                        <div className="fmed-literal-5ffa08dd75">
+                        <div className="p0-export-filter-title">
 
 
 
                   Attività da includere nell'export</div>
-                        <div className="fmed-literal-cc9c605f61">
+                        <div className="p0-export-filter-actions">
 
 
 
@@ -467,7 +467,7 @@ export default function ExportPage(props) {
                           </label>)}
                       </div>
 
-                      <div className="fmed-literal-14fdc86419">
+                      <div className="p0-export-filter-note">
 
 
 
@@ -480,19 +480,19 @@ export default function ExportPage(props) {
 
                     <ReportAdvancedSection title="Cespiti specifici" summary={exportCespitiInterventiSelezionati.length ? `${exportCespitiInterventiSelezionati.length} selezionati` : "Tutti gli interventi filtrati"}>
                     <div className="fmed-style-export-filter-box">
-                      <div className="fmed-literal-d1380c0341">
+                      <div className="p0-export-filter-head">
 
 
 
 
 
                 
-                        <div className="fmed-literal-5ffa08dd75">
+                        <div className="p0-export-filter-title">
 
 
 
                   Cespiti da esportare negli interventi</div>
-                        <div className="fmed-literal-cc9c605f61">
+                        <div className="p0-export-filter-actions">
 
 
 
@@ -511,7 +511,7 @@ export default function ExportPage(props) {
                           </label>)}
                       </div>
 
-                      {codiciInterventiExportVisibili.length > 60 && <div className="fmed-literal-1212093a3b">
+                      {codiciInterventiExportVisibili.length > 60 && <div className="p0-export-limit-note">
 
 
 
@@ -520,7 +520,7 @@ export default function ExportPage(props) {
                           Mostrati i primi 60 codici: usa la ricerca per trovare gli altri.
                         </div>}
 
-                      <div className="fmed-literal-14fdc86419">
+                      <div className="p0-export-filter-note">
 
 
 
@@ -547,7 +547,7 @@ export default function ExportPage(props) {
                 </button>
 
                 {exportPanelAperto === "scadenze" && <div className="fmed-style-export-accordion-body">
-                    <div className="fmed-literal-632664df44">
+                    <div className="p0-export-deadline-summary">
 
 
 
@@ -558,7 +558,7 @@ export default function ExportPage(props) {
                       <div className="fmed-style-export-info-line">
                         Visibili: {scadenzeVisualizzate.length} · Selezionate: {scadenzeSelezionateVisualizzate.length}
                       </div>
-                      <div className="fmed-literal-f60672cbcd">
+                      <div className="p0-export-deadline-actions">
 
 
 

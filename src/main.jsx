@@ -4,13 +4,14 @@ import FmedErrorBoundary from "./FmedErrorBoundary.jsx";
 import "./FmedBaseStyles.css";
 import "./FmedErrorBoundary.css";
 import "./ProcessiPage.css";
-import "./ImpostazioniPage.css";
 import "./CoreStandardPage.css";
 import "./SystemAuditPage.css";
 import "./NewAssetWizard.css";
-import "./Sicurezza8108Page.css";
-import "./components/ProcessEnginePage.css";
 import "./components/masterdata/CanonicalSelect.css";
+import "./pages/FmedIdentityPage.css";
+import "./pages/AssetPointZero.css";
+import "./pages/OperationsPointZero.css";
+import "./pages/GovernancePointZero.css";
 import "./FmedVisualClean.css";
 
 const FMED_APP_CACHE_VERSION = "fmed-rev0-20260729-9";
