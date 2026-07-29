@@ -39,7 +39,7 @@ function DataQualityPanel({ audit, loading, onRefresh }) {
     <div className="core-quality-summary">
       <article><span>Duplicati esatti</span><strong>{formatCount(summary.duplicati_esatti)}</strong><small>gruppi nel catalogo</small></article>
       <article><span>Conflitti alias</span><strong>{formatCount(summary.conflitti_alias)}</strong><small>nessun merge automatico</small></article>
-      <article><span>Cataloghi vuoti</span><strong>{formatCount(summary.cataloghi_vuoti)}</strong><small>da classificare</small></article>
+      <article className={summary.cataloghi_vuoti_richiesti ? "is-warning" : "is-ok"}><span>Cataloghi vuoti</span><strong>{formatCount(summary.cataloghi_vuoti)}</strong><small>{formatCount(summary.cataloghi_vuoti_richiesti)} richiesti dai dati · {formatCount(summary.cataloghi_vuoti_non_utilizzati)} non utilizzati</small></article>
       <article><span>Locazioni asset vuote</span><strong>{formatCount(summary.locazioni_asset_vuote)}</strong><small>solo diagnostica</small></article>
     </div>
     <div className="core-quality-rules">
@@ -57,9 +57,17 @@ function DataQualityPanel({ audit, loading, onRefresh }) {
     </div>
     <div className="core-quality-diagnostics">
       <article><h4>Duplicati e alias</h4><strong>{duplicates.length + conflicts.length}</strong><span>gruppi da verificare nel Catalogo</span></article>
-      <article><h4>Cataloghi vuoti</h4><strong>{emptyCatalogs.length}</strong><span>vuoti non significa automaticamente errati</span></article>
+      <article><h4>Cataloghi vuoti</h4><strong>{emptyCatalogs.length}</strong><span>classificati in base ai riferimenti operativi reali</span></article>
       <article><h4>Locazioni mancanti</h4><strong>{missingLocations.length}</strong><span>nessuna deduzione o compilazione automatica</span></article>
     </div>
+    {emptyCatalogs.length > 0 && <div className="core-quality-empty-catalogs">
+      <div className="core-section-heading"><h3>Classificazione cataloghi vuoti</h3><span>{emptyCatalogs.length}</span></div>
+      {emptyCatalogs.map((item) => <div key={item.dizionario}>
+        <div><strong>{item.descrizione || item.dizionario}</strong><code>{item.dizionario}</code></div>
+        <span>{item.esito === "RICHIESTO_DAI_DATI" ? "Richiesto dai dati: verificare e popolare" : "Non utilizzato nei dati analizzati"}</span>
+        <b>{formatCount(item.riferimenti_operativi)} riferimenti</b>
+      </div>)}
+    </div>}
   </section>;
 }
 

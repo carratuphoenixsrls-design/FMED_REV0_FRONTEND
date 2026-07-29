@@ -653,8 +653,30 @@
 .core-quality-diagnostics h4 { margin: 0; }
 .core-quality-diagnostics strong { font-size: 28px; }
 .core-quality-diagnostics span { color: var(--fmed-muted, #60706d); }
+.core-quality-empty-catalogs {
+  display: grid;
+  gap: 7px;
+  padding: 14px;
+  border: 1px solid var(--fmed-border, #dfe7e5);
+  border-radius: 14px;
+}
+.core-quality-empty-catalogs > div:not(.core-section-heading) {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(260px, 1.2fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 50px;
+  padding: 9px 11px;
+  border-radius: 10px;
+  background: var(--fmed-surface, #f7faf9);
+}
+.core-quality-empty-catalogs > div > div { display: grid; gap: 3px; }
+.core-quality-empty-catalogs code,
+.core-quality-empty-catalogs span { color: var(--fmed-muted, #60706d); }
+.core-quality-empty-catalogs b { white-space: nowrap; }
 @media (max-width: 900px) {
   .core-quality-diagnostics { grid-template-columns: 1fr; }
+  .core-quality-empty-catalogs > div:not(.core-section-heading) { grid-template-columns: 1fr; }
 }
 
 /* REV0 Catalogo Canonico Globale */

@@ -80,6 +80,10 @@ allSource.includes("/data-quality/audit")
 (allSource.match(/function DataQualityPanel/g) || []).length === 1
   ? ok("un solo pannello Qualità dati")
   : fail("pannello Qualità dati duplicato");
+allSource.includes("cataloghi_vuoti_richiesti")
+  && allSource.includes("Non utilizzato nei dati analizzati")
+  ? ok("cataloghi vuoti classificati per uso reale")
+  : fail("cataloghi vuoti non classificati");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");
