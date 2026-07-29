@@ -6,8 +6,8 @@
 }
 
 .fmed-canonical-label {
-  color: var(--fmed-text, #173a48);
-  font-size: 11px;
+  color: var(--fmed-text, #172033);
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -26,7 +26,7 @@
   border: 1px solid var(--fmed-border, #d8e4e7);
   border-radius: 10px;
   background: #fff;
-  color: var(--fmed-text, #173a48);
+  color: var(--fmed-text, #172033);
   font: inherit;
 }
 
@@ -36,10 +36,10 @@
   width: 34px;
   height: 36px;
   padding: 0;
-  border: 1px solid rgba(11, 111, 120, .28);
+  border: 1px solid rgba(49, 95, 140, .28);
   border-radius: 10px;
   background: #eff8f7;
-  color: #075963;
+  color: #244a73;
   font-size: 19px;
   font-weight: 700;
   cursor: pointer;
@@ -47,7 +47,7 @@
 
 .fmed-canonical-hint {
   color: var(--fmed-muted, #667981);
-  font-size:11px;
+  font-size: 12px;
   line-height: 1.35;
 }
 
@@ -56,9 +56,9 @@
   grid-column: 1 / -1;
   margin-top: 7px;
   min-width: 0;
-  border: 1px solid rgba(11, 111, 120, .24);
+  border: 1px solid rgba(49, 95, 140, .24);
   border-radius: 13px;
-  background: #f8fbfa;
+  background: #f8fafc;
   box-shadow: 0 8px 22px rgba(11, 47, 56, .07);
   overflow: hidden;
 }
@@ -79,14 +79,14 @@
 
 .fmed-canonical-inline-editor-head h3 {
   margin: 2px 0 3px;
-  color: #173a48;
+  color: #172033;
   font-size: 17px;
 }
 
 .fmed-canonical-inline-editor-head p {
   margin: 0;
   color: #667981;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .fmed-canonical-close {
@@ -95,7 +95,7 @@
   border: 1px solid #d6e3e4;
   border-radius: 9px;
   background: #fff;
-  color: #173a48;
+  color: #172033;
   font-size: 18px;
   cursor: pointer;
 }
@@ -116,7 +116,7 @@
   gap: 5px;
   min-width: 0;
   color: #405962;
-  font-size:11px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -132,7 +132,7 @@
   border: 1px solid #d6e3e4;
   border-radius: 9px;
   background: #fff;
-  color: #173a48;
+  color: #172033;
   font: inherit;
 }
 
@@ -153,7 +153,7 @@
 
 .fmed-canonical-suggestions > p {
   margin: 0;
-  font-size:11px;
+  font-size: 12px;
 }
 
 .fmed-canonical-suggestion {
@@ -165,7 +165,7 @@
   border: 1px solid #e4d8aa;
   border-radius: 8px;
   background: #fff;
-  color: #173a48;
+  color: #172033;
   cursor: pointer;
 }
 
@@ -173,7 +173,7 @@
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  font-size:11px;
+  font-size: 12px;
 }
 
 .fmed-canonical-distinct-confirm span {
@@ -187,7 +187,7 @@
   border-radius: 9px;
   background: #fff3d4;
   color: #765700;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .fmed-canonical-actions {
@@ -208,11 +208,11 @@
 .fmed-canonical-cancel {
   border: 1px solid #d6e3e4;
   background: #fff;
-  color: #173a48;
+  color: #172033;
 }
 
 .fmed-canonical-save {
-  border: 1px solid #0b6f78;
-  background: #0b6f78;
+  border: 1px solid #315f8c;
+  background: #315f8c;
   color: #fff;
 }

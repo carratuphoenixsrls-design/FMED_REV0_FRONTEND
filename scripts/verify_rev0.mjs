@@ -97,5 +97,23 @@ allSource.includes("Nessun vincolo configurato: sono mostrate tutte le opzioni a
   ? ok("wizard sicuro senza deduzioni storiche")
   : fail("wizard ancora dipendente dal vecchio storico");
 
+const patch15Visual = [
+  visual,
+  baseStyles,
+  read("src/NewAssetWizard.css"),
+  read("src/CoreStandardPage.css"),
+].join("\n");
+(/--fmed-primary:\s*#315f8c/i.test(patch15Visual)
+  && /--fmed-sidebar-w:\s*220px/i.test(patch15Visual))
+  ? ok("sistema grafico professionale Patch 15")
+  : fail("sistema grafico Patch 15 non applicato");
+!/(#0b6f78|#075963|#0d766e|#0d8278|#087f86|#078b91|#1fae9c|#147c72|#169c8f)/i.test(patch15Visual)
+  ? ok("vecchia palette verde-teal eliminata")
+  : fail("vecchia palette verde-teal ancora presente");
+(/fmed-style-asset-hero-badge-number[\s\S]{0,300}-webkit-text-fill-color:\s*currentColor/i.test(patch15Visual)
+  && /fmed-style-asset-hero-badge-text[\s\S]{0,500}-webkit-text-fill-color:\s*currentColor/i.test(patch15Visual))
+  ? ok("contrasto e leggibilità KPI ripristinati")
+  : fail("contrasto KPI testata Asset non corretto");
+
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");

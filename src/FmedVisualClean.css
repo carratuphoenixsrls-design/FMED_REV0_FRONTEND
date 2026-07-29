@@ -1,36 +1,36 @@
 /*
- * FMED REV0 · sistema visuale unico
- * Unico foglio grafico globale. Tema chiaro, sidebar petrolio, superfici,
+ * FMED REV0 · sistema visuale unico Patch 15
+ * Tema chiaro professionale, sidebar blu notte, superfici,
  * tipografia, controlli, tabelle e pagine operative coerenti.
  * Nessuna logica applicativa, API o integrazione viene modificata.
  */
 
 :root {
   font-family: "Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-  color: #172b34;
-  background: #f3f6f7;
+  color: #172033;
+  background: #f4f6f8;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --fmed-font-family: "Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
   --fmed-font-mono: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
-  --fmed-bg: #f3f6f7;
-  --fmed-bg-accent: #e8f0f1;
+  --fmed-bg: #f4f6f8;
+  --fmed-bg-accent: #e9edf2;
   --fmed-surface: #ffffff;
   --fmed-surface-2: #f8fafb;
   --fmed-surface-3: #eef3f4;
   --fmed-card: #ffffff;
-  --fmed-text: #172b34;
-  --fmed-text-strong: #0d2028;
-  --fmed-title: #0d2028;
-  --fmed-muted: #5b6f78;
-  --fmed-subtle: #7a8c94;
-  --fmed-border: #dbe4e7;
-  --fmed-border-strong: #c9d6da;
-  --fmed-primary: #0b6f78;
-  --fmed-primary-strong: #075963;
-  --fmed-primary-soft: #e5f3f2;
+  --fmed-text: #172033;
+  --fmed-text-strong: #101828;
+  --fmed-title: #101828;
+  --fmed-muted: #5e6878;
+  --fmed-subtle: #7a8493;
+  --fmed-border: #d8dee7;
+  --fmed-border-strong: #c7d0dc;
+  --fmed-primary: #315f8c;
+  --fmed-primary-strong: #244a73;
+  --fmed-primary-soft: #edf3f9;
   --fmed-success: #16785a;
   --fmed-success-soft: #e9f5ef;
   --fmed-warning: #9a6408;
@@ -63,7 +63,7 @@ body,
 
 html,
 body {
-  background: #f3f6f7;
+  background: #f4f6f8;
 }
 
 body {
@@ -89,14 +89,14 @@ button {
   --fmed-radius-md: 14px;
   --fmed-radius-lg: 18px;
   --fmed-radius-xl: 22px;
-  --fmed-control-h: 34px;
-  --fmed-sidebar-w: 196px;
-  --fmed-sidebar-collapsed-w: 58px;
+  --fmed-control-h: 40px;
+  --fmed-sidebar-w: 220px;
+  --fmed-sidebar-collapsed-w: 64px;
   --fmed-ease: cubic-bezier(.2,.8,.2,1);
   height: 100dvh;
   min-height: 0;
   font-family: var(--fmed-font-family);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0;
@@ -108,20 +108,20 @@ button {
 
 body[data-theme="light"] .fmed-app-root.fmed-shell-premium,
 .fmed-app-root.fmed-light-mode.fmed-shell-premium {
-  --fmed-bg: #f3f6f7;
-  --fmed-bg-accent: #e8f0f1;
+  --fmed-bg: #f4f6f8;
+  --fmed-bg-accent: #e9edf2;
   --fmed-surface: #ffffff;
   --fmed-surface-2: #f8fafb;
   --fmed-surface-3: #eef3f4;
-  --fmed-text: #172b34;
-  --fmed-text-strong: #0d2028;
-  --fmed-muted: #5b6f78;
-  --fmed-subtle: #7a8c94;
-  --fmed-border: #dbe4e7;
-  --fmed-border-strong: #c9d6da;
-  --fmed-primary: #0b6f78;
-  --fmed-primary-strong: #075963;
-  --fmed-primary-soft: #e5f3f2;
+  --fmed-text: #172033;
+  --fmed-text-strong: #101828;
+  --fmed-muted: #5e6878;
+  --fmed-subtle: #7a8493;
+  --fmed-border: #d8dee7;
+  --fmed-border-strong: #c7d0dc;
+  --fmed-primary: #315f8c;
+  --fmed-primary-strong: #244a73;
+  --fmed-primary-soft: #edf3f9;
   --fmed-success: #16785a;
   --fmed-success-soft: #e9f5ef;
   --fmed-warning: #9a6408;
@@ -134,8 +134,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium,
   --fmed-shadow-sm: 0 8px 22px rgba(12,39,48,.055);
   --fmed-shadow-md: 0 18px 46px rgba(12,39,48,.075);
   background:
-    radial-gradient(circle at 88% -12%, rgba(70,145,151,.11), transparent 31%),
-    linear-gradient(180deg, #f7f9f9 0%, #f1f5f6 100%);
+    linear-gradient(180deg, #f8f9fb 0%, #f2f4f7 100%);
   color: var(--fmed-text);
 }
 
@@ -161,20 +160,20 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium,
   text-transform: none;
 }
 
-.fmed-app-root.fmed-shell-premium .fmed-main-content h1 { font-size: clamp(27px, 2.1vw, 34px); }
-.fmed-app-root.fmed-shell-premium .fmed-main-content h2 { font-size: clamp(24px, 1.8vw, 31px); }
-.fmed-app-root.fmed-shell-premium .fmed-main-content h3 { font-size: 18px; }
-.fmed-app-root.fmed-shell-premium .fmed-main-content h4 { font-size: 15px; }
+.fmed-app-root.fmed-shell-premium .fmed-main-content h1 { font-size: clamp(28px, 2vw, 34px); }
+.fmed-app-root.fmed-shell-premium .fmed-main-content h2 { font-size: clamp(24px, 1.7vw, 30px); }
+.fmed-app-root.fmed-shell-premium .fmed-main-content h3 { font-size: 20px; }
+.fmed-app-root.fmed-shell-premium .fmed-main-content h4 { font-size: 16px; }
 
 .fmed-app-root.fmed-shell-premium .fmed-main-content :is(p,li,td,input,select,textarea) {
-  font-size: 13px;
-  line-height: 1.45;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-main-content :is(small,.fmed-banner-copy,.fmed-module-hero-subtitle) {
   color: var(--fmed-muted);
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: 13px;
+  line-height: 1.45;
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-main-content :is(button,label,th,.fmed-module-kicker,.fmed-module-hero-eyebrow) {
@@ -190,7 +189,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium,
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-main-content :is([class*="badge"],[class*="status"],[class*="pill"]) {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 650;
   letter-spacing: .015em;
 }
@@ -209,7 +208,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium,
   height: 100dvh;
   min-width: 0;
   min-height: 0;
-  padding: 10px 12px;
+  padding: 14px 16px;
   background: transparent;
   color: var(--fmed-text);
   overflow-x: hidden;
@@ -234,8 +233,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium aside.fmed-side-rail 
   gap: 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 15% -8%, rgba(75,189,181,.16), transparent 31%),
-    linear-gradient(180deg, #0b313a 0%, #082630 47%, #061b23 100%);
+    linear-gradient(180deg, #172a43 0%, #122238 52%, #0d1929 100%);
   border: 0;
   border-right: 1px solid rgba(1,16,21,.48);
   box-shadow: 14px 0 38px rgba(3,22,28,.11);
@@ -281,7 +279,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium aside.fmed-side-rail 
 .fmed-app-root.fmed-shell-premium .fmed-sidebar-wordmark-subtitle {
   margin-top: 5px;
   color: var(--sidebar-muted);
-  font-size:11px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: .025em;
@@ -318,7 +316,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-control
   background: rgba(255,255,255,.04);
   color: #dce9ec;
   box-shadow: none;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 550;
   letter-spacing: 0;
 }
@@ -353,7 +351,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-menu-gr
 .fmed-app-root.fmed-shell-premium .fmed-sidebar-group-label {
   padding: 0 7px 3px;
   color: #7897a0;
-  font-size:11px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: .055em;
@@ -459,7 +457,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-mover-sidebar-l
 }
 .fmed-app-root.fmed-shell-premium .fmed-mover-sidebar-copy small {
   color: #9db4c0;
-  font-size:11px;
+  font-size: 12px;
   font-weight: 450;
 }
 
@@ -473,13 +471,13 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 .fmed-app-root.fmed-shell-premium .fmed-sidebar-account-copy strong {
   color: #f2f8f9;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: none;
 }
 .fmed-app-root.fmed-shell-premium .fmed-sidebar-account-copy span {
   color: #8ba5ae;
-  font-size:11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: .02em;
 }
@@ -571,7 +569,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   border-radius: 999px;
   background: var(--fmed-surface-2);
   color: var(--fmed-muted);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 550;
   text-transform: none;
 }
@@ -687,7 +685,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 .fmed-app-root.fmed-shell-premium .fmed-dashboard-kpi-copy em {
   color: var(--fmed-muted);
-  font-size:11px;
+  font-size: 12px;
   font-weight: 450;
   text-transform: none;
 }
@@ -743,7 +741,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 .fmed-app-root.fmed-shell-premium .fmed-costi-kicker,
 .fmed-app-root.fmed-shell-premium .fmed-login-kicker {
   color: var(--fmed-primary);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 650;
   letter-spacing: .015em;
   text-transform: none;
@@ -763,7 +761,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 .fmed-app-root.fmed-shell-premium .fmed-module-hero-metric-label {
   color: var(--fmed-text);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: none;
 }
@@ -861,7 +859,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   border-bottom: 1px solid var(--fmed-border-strong);
   background: var(--fmed-surface-2);
   color: var(--fmed-muted);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 650;
   line-height: 1.25;
   letter-spacing: .01em;
@@ -915,7 +913,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 .fmed-app-root.fmed-shell-premium .fmed-process-code,
 .fmed-app-root.fmed-shell-premium .core-auto-code-preview {
   font-family: var(--fmed-font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0;
 }
 .fmed-app-root.fmed-shell-premium .fmed-settings-tabs {
@@ -1058,7 +1056,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   border-radius: 9px;
   background: var(--fmed-surface);
   color: var(--fmed-text);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0;
   box-shadow: none;
@@ -1092,7 +1090,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 .fmed-app-root.fmed-shell-premium .fmed-dashboard-drilldown-header p {
   margin-top: 4px;
   color: var(--fmed-muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-alert-page-grid {
@@ -1271,7 +1269,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   padding: 0;
   overflow: hidden;
   background: #f5f1e8;
-  color: #172b34;
+  color: #172033;
   font-family: var(--fmed-font-family);
 }
 
@@ -1288,7 +1286,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   background:
     radial-gradient(circle at 18% 8%, rgba(101,215,203,.18), transparent 31%),
     radial-gradient(circle at 100% 100%, rgba(41,130,138,.17), transparent 35%),
-    linear-gradient(145deg, #0b313a 0%, #082630 52%, #061b23 100%);
+    linear-gradient(145deg, #172a43 0%, #122238 52%, #0d1929 100%);
 }
 
 .fmed-operational2-login .fmed-login-brand-panel::after {
@@ -1358,7 +1356,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   position: relative;
   z-index: 1;
   color: #77969e;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: .035em;
 }
@@ -1381,7 +1379,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: #172b34;
+  color: #172033;
   box-shadow: none;
   backdrop-filter: none;
 }
@@ -1393,9 +1391,9 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   border: 1px solid #cfe0df;
   border-radius: 999px;
   background: rgba(255,255,255,.58);
-  color: #0b6f78;
-  -webkit-text-fill-color: #0b6f78;
-  font-size:11px;
+  color: #315f8c;
+  -webkit-text-fill-color: #315f8c;
+  font-size: 12px;
   font-weight: 650;
   line-height: 1;
   letter-spacing: .04em;
@@ -1430,7 +1428,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   margin: 8px 0 0;
   color: #314951;
   -webkit-text-fill-color: #314951;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 650;
   letter-spacing: .015em;
   text-transform: none;
@@ -1443,16 +1441,16 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   border: 1px solid #cedadd;
   border-radius: 11px;
   background: rgba(255,255,255,.88);
-  color: #172b34;
-  -webkit-text-fill-color: #172b34;
+  color: #172033;
+  -webkit-text-fill-color: #172033;
   box-shadow: 0 1px 2px rgba(12,39,48,.025);
   outline: 0;
   font-size: 14px;
 }
 
 .fmed-operational2-login .fmed-login-form > input:focus {
-  border-color: #0b6f78;
-  box-shadow: 0 0 0 3px rgba(11,111,120,.12);
+  border-color: #315f8c;
+  box-shadow: 0 0 0 3px rgba(49,95,140,.12);
 }
 
 .fmed-operational2-login .fmed-login-remember {
@@ -1469,7 +1467,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   width: 16px;
   height: 16px;
   margin: 0;
-  accent-color: #0b6f78;
+  accent-color: #315f8c;
 }
 
 .fmed-operational2-login .fmed-login-error {
@@ -1488,9 +1486,9 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   min-height: 49px;
   margin-top: 12px;
   padding: 0 18px;
-  border: 1px solid #075963;
+  border: 1px solid #244a73;
   border-radius: 11px;
-  background: linear-gradient(180deg, #0d7b84, #075963);
+  background: linear-gradient(180deg, #315f8c, #244a73);
   color: #ffffff;
   -webkit-text-fill-color: #ffffff;
   box-shadow: 0 9px 20px rgba(7,89,99,.16);
@@ -1502,7 +1500,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 }
 
 .fmed-operational2-login .fmed-login-submit:hover:not(:disabled) {
-  background: linear-gradient(180deg, #0b737c, #064f58);
+  background: linear-gradient(180deg, #315f8c, #244a73);
   box-shadow: 0 11px 24px rgba(7,89,99,.20);
 }
 
@@ -1515,7 +1513,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   margin-top: 17px;
   color: #809197;
   -webkit-text-fill-color: #809197;
-  font-size:11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: .025em;
   text-align: left;
@@ -1550,7 +1548,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   --fmed-d3-shadow: var(--fmed-shadow-md);
   --fmed-card: var(--fmed-surface);
   --fmed-soft-panel: var(--fmed-surface-2);
-  --fmed-main-bg: linear-gradient(180deg, #f7f9f9 0%, #f1f5f6 100%);
+  --fmed-main-bg: linear-gradient(180deg, #f8f9fb 0%, #f2f4f7 100%);
   --fmed-title: var(--fmed-text-strong);
   display: flex;
   width: 100%;
@@ -1687,7 +1685,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   position: absolute;
   right: 10px;
   color: var(--sidebar-muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-sidebar-footer {
@@ -2075,7 +2073,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 .fmed-app-root.fmed-shell-premium :is(.fmed-operational-filters,.fmed-operational8-deadline-filters,.fmed-interventi-panel) :is(input,select,button){
   min-height:32px;
   height:32px;
-  font-size:11px;
+  font-size: 12px;
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-operational-table-card,
@@ -2408,7 +2406,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 
 .fmed-app-root.fmed-shell-premium .fmed-process-control-summary article > span {
   color: var(--fmed-muted);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -2420,7 +2418,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 
 .fmed-app-root.fmed-shell-premium .fmed-process-control-summary article > small {
   color: var(--fmed-muted);
-  font-size:11px;
+  font-size: 12px;
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-process-control-bar {
@@ -2442,7 +2440,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 
 .fmed-app-root.fmed-shell-premium :is(.fmed-process-search-field,.fmed-process-status-field) > span {
   color: var(--fmed-muted);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -2715,7 +2713,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
    regola sostituisce esplicitamente la variante dedicato senza aggiungere temi.
    ========================================================================== */
 .fmed-app-root.fmed-shell-premium {
-  --fmed-focus-ring: 0 0 0 3px rgba(11,111,120,.18);
+  --fmed-focus-ring: 0 0 0 3px rgba(49,95,140,.18);
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-main-content {
@@ -2818,7 +2816,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   border-bottom: 1px solid var(--fmed-border-strong);
   background: var(--fmed-surface-3);
   color: var(--fmed-muted);
-  font-size:11px;
+  font-size: 12px;
   font-weight: 750;
   letter-spacing: .025em;
   white-space: nowrap;
@@ -2830,7 +2828,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   border-bottom: 1px solid var(--fmed-border);
   background: var(--fmed-surface);
   color: var(--fmed-text);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 550;
   line-height: 1.35;
   overflow-wrap: normal;
@@ -3001,7 +2999,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   min-height: 34px;
   padding: 0;
   overflow: visible;
-  border: 1px solid #bfd6d8;
+  border: 1px solid #c7d0dc;
   border-radius: 9px;
   background: var(--fmed-primary-soft);
   color: var(--fmed-primary);
@@ -3039,7 +3037,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   gap: 7px;
   min-height: 34px;
   padding: 0 11px;
-  border: 1px solid #bfd6d8;
+  border: 1px solid #c7d0dc;
   border-radius: 9px;
   background: var(--fmed-primary-soft);
   color: var(--fmed-primary);
@@ -3167,7 +3165,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   .fmed-intervention-selected-summary-copy > span
 ) {
   color: var(--fmed-primary);
-  font-size:11px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -3175,7 +3173,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 
 .fmed-app-root.fmed-shell-premium .fmed-intervention-selected-summary-copy small {
   color: var(--fmed-muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-intervention-selected-asset {
@@ -3194,7 +3192,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 .fmed-app-root.fmed-shell-premium .fmed-intervention-selected-asset small,
 .fmed-app-root.fmed-shell-premium .fmed-intervention-selected-asset span {
   color: var(--fmed-muted);
-  font-size:11px;
+  font-size: 12px;
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-intervention-asset-picker-filters {
@@ -3209,7 +3207,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   gap: 6px;
   min-width: 0;
   color: var(--fmed-text);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -3228,7 +3226,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 
 .fmed-app-root.fmed-shell-premium .fmed-intervention-asset-picker-filters :is(input,select):focus-visible,
 .fmed-app-root.fmed-shell-premium .fmed-intervention-asset-results > button:focus-visible {
-  outline: 3px solid rgba(11,111,120,.28);
+  outline: 3px solid rgba(49,95,140,.28);
   outline-offset: 2px;
 }
 
@@ -3239,7 +3237,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   gap: 12px;
   min-height: 28px;
   color: var(--fmed-muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-intervention-search-meta button {
@@ -3248,7 +3246,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   border-radius: 8px;
   background: var(--fmed-surface);
   color: var(--fmed-primary);
-  font-size: 11px;
+  font-size: 12px;
   cursor: pointer;
 }
 
@@ -3300,14 +3298,14 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
 
 .fmed-app-root.fmed-shell-premium .fmed-intervention-asset-results > button span {
   color: var(--fmed-primary);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
 }
 
 .fmed-app-root.fmed-shell-premium .fmed-intervention-asset-results > button small,
 .fmed-app-root.fmed-shell-premium .fmed-intervention-asset-results > button em {
   color: var(--fmed-muted);
-  font-size:11px;
+  font-size: 12px;
   font-style: normal;
 }
 
@@ -3331,7 +3329,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium .fmed-sidebar-account
   .fmed-intervention-asset-picker-note
 ) {
   color: var(--fmed-muted);
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.45;
 }
 

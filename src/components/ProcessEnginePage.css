@@ -15,12 +15,12 @@
   justify-content: space-between;
   gap: 20px;
   padding: 18px 20px 15px;
-  border-bottom: 1px solid var(--fmed-border, #dbe5ea);
+  border-bottom: 1px solid var(--fmed-border, #d8dee7);
   background: linear-gradient(135deg, rgba(236, 248, 247, .9), rgba(255, 255, 255, .9));
 }
 
 .fmed-process-form-surface > header span {
-  color: var(--fmed-primary, #087f86);
+  color: var(--fmed-primary, #315f8c);
   font-size:12px;
   font-weight: 800;
   letter-spacing: .08em;
@@ -28,14 +28,14 @@
 
 .fmed-process-form-surface > header h3 {
   margin: 4px 0 0;
-  color: var(--fmed-text, #102a3a);
+  color: var(--fmed-text, #172033);
   font-size: 24px;
 }
 
 .fmed-process-form-surface > header p {
   max-width: 920px;
   margin: 6px 0 0;
-  color: var(--fmed-muted, #647784);
+  color: var(--fmed-muted, #5e6878);
   font-size: 13px;
   line-height: 1.45;
 }
@@ -43,10 +43,10 @@
 .fmed-process-form-close {
   min-height: 36px;
   padding: 0 13px;
-  border: 1px solid var(--fmed-border, #dbe5ea);
+  border: 1px solid var(--fmed-border, #d8dee7);
   border-radius: 10px;
   background: #fff;
-  color: var(--fmed-text, #102a3a);
+  color: var(--fmed-text, #172033);
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
@@ -77,7 +77,7 @@
 }
 
 .fmed-process-form-field > span {
-  color: var(--fmed-muted, #647784);
+  color: var(--fmed-muted, #5e6878);
   font-size:12px;
   font-weight: 800;
   letter-spacing: .04em;
@@ -86,10 +86,10 @@
 .fmed-process-form-field :is(input, select, textarea) {
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid var(--fmed-border, #dbe5ea);
+  border: 1px solid var(--fmed-border, #d8dee7);
   border-radius: 10px;
   background: #fff;
-  color: var(--fmed-text, #102a3a);
+  color: var(--fmed-text, #172033);
   font: inherit;
 }
 
@@ -105,7 +105,7 @@
 }
 
 .fmed-process-form-field small {
-  color: var(--fmed-muted, #647784);
+  color: var(--fmed-muted, #5e6878);
   font-size:12px;
   line-height: 1.35;
 }
@@ -116,14 +116,14 @@
   gap: 7px;
   margin-top: 14px;
   padding: 10px;
-  border: 1px solid rgba(8, 127, 134, .2);
+  border: 1px solid rgba(49, 95, 140, .2);
   border-radius: 11px;
   background: rgba(235, 248, 247, .82);
 }
 
 .fmed-process-form-requirements strong {
   width: 100%;
-  color: var(--fmed-primary, #087f86);
+  color: var(--fmed-primary, #315f8c);
   font-size:12px;
 }
 
@@ -131,8 +131,8 @@
   padding: 4px 7px;
   border-radius: 999px;
   background: #fff;
-  color: var(--fmed-text, #102a3a);
-  font-size:11px;
+  color: var(--fmed-text, #172033);
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -154,25 +154,25 @@
   gap: 9px;
   margin-top: 15px;
   padding: 12px 0 0;
-  border-top: 1px solid var(--fmed-border, #dbe5ea);
+  border-top: 1px solid var(--fmed-border, #d8dee7);
   background: #fff;
 }
 
 .fmed-process-form-surface footer button {
   min-height: 38px;
   padding: 0 15px;
-  border: 1px solid var(--fmed-primary, #087f86);
+  border: 1px solid var(--fmed-primary, #315f8c);
   border-radius: 10px;
-  background: var(--fmed-primary, #087f86);
+  background: var(--fmed-primary, #315f8c);
   color: #fff;
   font-weight: 800;
   cursor: pointer;
 }
 
 .fmed-process-form-surface footer button.is-secondary {
-  border-color: var(--fmed-border, #dbe5ea);
+  border-color: var(--fmed-border, #d8dee7);
   background: #fff;
-  color: var(--fmed-text, #102a3a);
+  color: var(--fmed-text, #172033);
 }
 
 .fmed-process-form-surface footer button:disabled {
