@@ -7,7 +7,6 @@ function AssetSelect({ label, value, onChange, children }) {
 
 export default function AssetControls(props) {
   const {
-    filtrati = [],
     sede = 'TUTTE',
     categoriaFiltro = 'TUTTE',
     assetLocazioneFiltro = 'TUTTE',
@@ -84,7 +83,6 @@ export default function AssetControls(props) {
         value={ricerca}
         onChange={(event) => { setRicerca(event.target.value); filtersChanged(); }}
       />
-      <span>{filtrati.length.toLocaleString("it-IT")} risultati</span>
       <button type="button" onClick={() => setAssetElencoAperto(true)}>Mostra risultati</button>
     </div>
 
@@ -116,8 +114,8 @@ export default function AssetControls(props) {
         <option value="TUTTI">Tutti i modelli</option>
         {listaModelli.map((item) => <option key={item}>{item}</option>)}
       </AssetSelect>
-      <AssetSelect label="Società" value={assetSocietaFiltro} onChange={(event) => { setAssetSocietaFiltro(event.target.value); setSede("TUTTE"); setAssetLocazioneFiltro("TUTTE"); filtersChanged(); }}>
-        <option value="TUTTE">Tutte le società</option>
+      <AssetSelect label="Societa' " value={assetSocietaFiltro} onChange={(event) => { setAssetSocietaFiltro(event.target.value); setSede("TUTTE"); setAssetLocazioneFiltro("TUTTE"); filtersChanged(); }}>
+        <option value="TUTTE">Tutte le societa' </option>
         {listaSocieta.map((item) => <option key={item}>{item}</option>)}
       </AssetSelect>
       <AssetSelect label="Stato" value={assetStatoFiltro} onChange={(event) => { setAssetStatoFiltro(event.target.value); filtersChanged(); }}>
@@ -148,3 +146,4 @@ export default function AssetControls(props) {
     </div>
   </section>;
 }
+

@@ -36,16 +36,7 @@ const forbidRegex = (label, source, regex) => {
 const app = requireFile("src/FmedApp.jsx", "shell applicativa");
 const main = requireFile("src/main.jsx", "bootstrap applicativo");
 const baseCss = requireFile("src/FmedBaseStyles.css", "stili base");
-const visualCss = requireFile("src/FmedVisualClean.css", "sistema visuale stabile");
-const regola0Css = requireFile("src/Regola0VisualSystem.css",
-  "src/PointZeroCompatibility.css",
-  "src/pages/AssetPointZero.css",
-  "src/pages/OperationsPointZero.css",
-  "src/pages/GovernancePointZero.css", "sistema visuale Regola 0");
-const pointZeroCss = requireFile("src/PointZeroCompatibility.css", "compatibilità Punto 0");
-const assetPointZeroCss = requireFile("src/pages/AssetPointZero.css", "Asset Punto 0");
-const operationsPointZeroCss = requireFile("src/pages/OperationsPointZero.css", "moduli operativi Punto 0");
-const governancePointZeroCss = requireFile("src/pages/GovernancePointZero.css", "governance Punto 0");
+const unifiedCss = requireFile("src/FmedUnifiedVisualSystem.css", "sistema visuale unificato definitivo");
 const errorBoundary = requireFile("src/FmedErrorBoundary.jsx", "error boundary");
 
 const pageContracts = [
@@ -127,9 +118,8 @@ requireTokens("error boundary con recupero visibile", errorBoundary, [
   "Ricarica FMED",
 ]);
 requireTokens("sistema grafico Regola 0 caricato per ultimo", main, [
-  "import \"./FmedVisualClean.css\";",
-  "import \"./Regola0VisualSystem.css\";",
-  "fmed-rev0-regola0-",
+  "import \"./FmedUnifiedVisualSystem.css\";",
+  "fmed-rev0-complete-reconstruction-",
 ]);
 
 requireTokens("menu principale completo", app, [
@@ -200,7 +190,7 @@ requireTokens("caricamento on demand preservato", app, [
   "caricaInfrastruttureOnDemand",
 ]);
 
-requireTokens("grafica integrale su tutti i moduli principali", regola0Css, [
+requireTokens("grafica integrale su tutti i moduli principali", unifiedCss, [
   ".fmed-dashboard-page",
   ".fmed-asset-page",
   ".fmed-interventi-operativi",
@@ -217,15 +207,17 @@ requireTokens("grafica integrale su tutti i moduli principali", regola0Css, [
   ".fmed-wizard-page",
 ]);
 
-requireTokens("ricostruzione reale Punto 0 caricata", `${assetPointZeroCss}\n${operationsPointZeroCss}\n${governancePointZeroCss}\n${pointZeroCss}`, [
+requireTokens("ricostruzione reale finale caricata", unifiedCss, [
   ".p0-asset-page",
   ".p0-operations",
   ".p0-governance",
   ".fmed-asset-detail-workspace",
   ".fmed-intervention-workspace",
+  ".fmed-style-asset-hero-summary",
+  ".fmed-style-asset-actions-grouped",
 ]);
 
-requireTokens("grafica primaria secondaria e terziaria coperta", `${regola0Css}\n${pointZeroCss}`, [
+requireTokens("grafica primaria secondaria e terziaria coperta", unifiedCss, [
   ".fmed-module-hero",
   ".fmed-operational-filters",
   ".fmed-operational-kpi-card",
@@ -236,7 +228,7 @@ requireTokens("grafica primaria secondaria e terziaria coperta", `${regola0Css}\
   ":focus-visible",
 ]);
 
-const allCss = `${baseCss}\n${visualCss}\n${regola0Css}\n${pointZeroCss}\n${assetPointZeroCss}\n${operationsPointZeroCss}\n${governancePointZeroCss}`;
+const allCss = `${baseCss}\n${unifiedCss}`;
 forbidRegex(
   "nessun oscuramento globale del contenuto principale",
   allCss,
@@ -259,23 +251,22 @@ forbidRegex(
 );
 forbidRegex(
   "nessuna larghezza rigida per modali e pannelli terziari",
-  regola0Css,
+  unifiedCss,
   /(?:\[role=\"dialog\"\]|modal-content|dialog-content)[\s\S]{0,900}\bwidth\s*:\s*\d{4,}px/i,
 );
 
-requireTokens("sistema responsive notebook-desktop-monitor", `${visualCss}\n${regola0Css}`, [
+requireTokens("sistema responsive notebook-desktop-monitor", unifiedCss, [
   "@media (max-width: 1440px)",
   "@media (max-width: 1180px)",
   "@media (min-width: 1800px)",
 ]);
-requireTokens("accessibilità movimento ridotto", regola0Css, [
+requireTokens("accessibilità movimento ridotto", unifiedCss, [
   "@media (prefers-reduced-motion: reduce)",
 ]);
 
 const requiredCssFiles = [
   "src/FmedBaseStyles.css",
-  "src/FmedVisualClean.css",
-  "src/Regola0VisualSystem.css",
+  "src/FmedUnifiedVisualSystem.css",
   "src/NewAssetWizard.css",
   "src/ProcessiPage.css",
   "src/Sicurezza8108Page.css",

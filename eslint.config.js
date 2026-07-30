@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'qa']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
@@ -18,8 +18,8 @@ export default defineConfig([
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
     rules: {
-      // Il frontend legacy sincronizza filtri e dataset tramite effect intenzionali.
-      // Il refactoring dei flussi sarà eseguito per modulo, senza alterare il comportamento operativo.
+      // Gli effect legacy sincronizzano filtri e dataset intenzionalmente.
+      // La ricostruzione grafica non deve modificare i flussi operativi.
       'react-hooks/set-state-in-effect': 'off',
     },
   },

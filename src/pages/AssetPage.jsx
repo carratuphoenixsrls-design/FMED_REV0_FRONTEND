@@ -67,20 +67,29 @@ export default function AssetPage(props) {
   return <main className={`p0-asset-page ${assetElencoAperto ? "has-results" : ""}`}>
     <header className="p0-asset-hero">
       <div className="p0-asset-hero-icon"><FmedIcon name="box" /></div>
-      <div><span>INVENTARIO TECNICO</span><h1>Gestione asset</h1><p>Cerca, riconosci e governa ogni bene dalla stessa superficie operativa.</p></div>
-      <div className="p0-asset-total"><strong>{filtrati.length.toLocaleString("it-IT")}</strong><span>asset visualizzati</span><small>su {cespiti.length.toLocaleString("it-IT")} totali</small></div>
+      <div>
+        <span>INVENTARIO TECNICO</span>
+        <h1>Gestione asset</h1>
+        <p>Cerca, riconosci e governa ogni bene dalla stessa superficie operativa.</p>
+      </div>
     </header>
 
+    {!assetElencoAperto && <section className="p0-asset-kpis">
+      <Kpi tone="#2f76e8" icon="box" label="Asset filtrati" value={assetKpiFiltrati.totale} detail={`su ${cespiti.length.toLocaleString("it-IT")} totali`} />
+      <Kpi tone="#13aa91" icon="check" label="Attivi" value={assetKpiFiltrati.attivi} detail="operativi" />
+      <Kpi tone="#8d4cf2" icon="archive" label="Dismessi" value={assetKpiFiltrati.dismessi} detail="fuori inventario attivo" />
+      <Kpi tone="#e88713" icon="pause" label="Non in uso" value={assetKpiFiltrati.nonInUso} detail="da verificare" />
+    </section>}
+
     <section className="p0-asset-deck">
-      <div className="p0-asset-search-copy"><span>RICERCA INVENTARIO</span><h2>Trova un bene</h2><p>Imposta solo i criteri necessari. I risultati restano nello stesso ambiente.</p></div>
+      <div className="p0-asset-search-copy">
+        <span>RICERCA INVENTARIO</span>
+        <h2>Trova un bene</h2>
+        <p>Imposta solo i criteri necessari. I risultati restano nello stesso ambiente.</p>
+      </div>
       <AssetControls {...props} />
 
-      {!assetElencoAperto && <div className="p0-asset-kpis">
-        <Kpi tone="#2f76e8" icon="box" label="Asset filtrati" value={assetKpiFiltrati.totale} detail={`su ${cespiti.length.toLocaleString("it-IT")} totali`} />
-        <Kpi tone="#13aa91" icon="check" label="Attivi" value={assetKpiFiltrati.attivi} detail="operativi" />
-        <Kpi tone="#8d4cf2" icon="archive" label="Dismessi" value={assetKpiFiltrati.dismessi} detail="fuori inventario attivo" />
-        <Kpi tone="#e88713" icon="pause" label="Non in uso" value={assetKpiFiltrati.nonInUso} detail="da verificare" />
-      </div>}
+
 
       {assetElencoAperto && <section className="p0-asset-results" aria-label="Elenco asset filtrati">
         <div className="p0-asset-results-head">
@@ -91,7 +100,7 @@ export default function AssetPage(props) {
         {assetSelezionatiBulk.length > 0 && <div className="p0-asset-bulk">
           <strong>{assetSelezionatiBulk.length} selezionati</strong>
           <CanonicalSelect dictionary="BRANCHE_MEDICHE" value={assetBulkBranca} onChange={setAssetBulkBranca} options={listaBranche} placeholder="Branca: non modificare" apiBaseUrl={apiBaseUrl} />
-          <CanonicalSelect dictionary="SOCIETA" value={assetBulkSocieta} onChange={setAssetBulkSocieta} options={listaSocieta} placeholder="Società: non modificare" apiBaseUrl={apiBaseUrl} />
+          <CanonicalSelect dictionary="SOCIETA" value={assetBulkSocieta} onChange={setAssetBulkSocieta} options={listaSocieta} placeholder="Societa' : non modificare" apiBaseUrl={apiBaseUrl} />
           <CanonicalSelect dictionary="SEDI" value={assetBulkSede} onChange={(value) => { setAssetBulkSede(value); setAssetBulkLocazione(""); }} options={listaSedi} placeholder="Sede: non modificare" apiBaseUrl={apiBaseUrl} />
           <CanonicalSelect dictionary="LOCAZIONI" value={assetBulkLocazione} disabled={!assetBulkSede} onChange={setAssetBulkLocazione} options={getListaLocazioniPerSede(assetBulkSede || "TUTTE", assetBulkLocazione, true)} placeholder="Locazione: non modificare" apiBaseUrl={apiBaseUrl} restrictToOptions />
           <CanonicalSelect dictionary="STATI_ASSET" value={assetBulkStato} onChange={setAssetBulkStato} options={STATI_ASSET_STANDARD} placeholder="Stato: non modificare" apiBaseUrl={apiBaseUrl} />
@@ -107,7 +116,7 @@ export default function AssetPage(props) {
             return <article className={`p0-asset-row ${editing ? "is-editing" : ""}`} key={code || index}>
               <input type="checkbox" aria-label={`Seleziona ${code}`} checked={assetSelezionatiBulk.includes(code)} onChange={(event) => toggleSelezioneAssetBulk(code, event.target.checked)} />
               <button type="button" className="p0-asset-open" onClick={() => !editing && apriSchedaCespite(asset)}>
-                <span>{code}</span><strong>{asset.tipologia || asset.modello || "Asset senza descrizione"}</strong><small>{asset.costruttore || "Costruttore non indicato"} · {asset.modello || "Modello non indicato"}</small>
+                <span>{code}</span><strong>{asset.tipologia || asset.modello || "Asset senza descrizione"}</strong><small>{asset.costruttore || "Costruttore non indicato"} Â· {asset.modello || "Modello non indicato"}</small>
               </button>
               <div className="p0-asset-location"><strong>{asset.sede || "Sede non indicata"}</strong><span>{getBrancaAsset(asset) || "Branca non indicata"}</span><small>{getLocazioneFmed(asset) || "Locazione non indicata"}</small></div>
               <span className="p0-asset-state" style={{ "--state": coloreStatoAsset(statoCespite(asset)) }}>{statoCespite(asset)}</span>
@@ -143,3 +152,6 @@ export default function AssetPage(props) {
     </section>}
   </main>;
 }
+
+
+

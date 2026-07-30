@@ -17,7 +17,7 @@ const app = read("src/FmedApp.jsx");
 const settings = read("src/ImpostazioniPage.jsx");
 const exportPage = read("src/pages/ExportPage.jsx");
 const baseStyles = read("src/FmedBaseStyles.css");
-const visual = read("src/FmedVisualClean.css");
+const visual = read("src/FmedUnifiedVisualSystem.css");
 const cssFiles = fs.readdirSync(path.join(root, "src"), { recursive: true })
   .filter((file) => file.endsWith(".css"));
 const allCss = cssFiles.map((file) => read(path.join("src", file))).join("\n");

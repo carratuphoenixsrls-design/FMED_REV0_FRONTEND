@@ -98,18 +98,18 @@ export default function DashboardPage({
 
   return <div className={`fmed-dashboard-page fmed-dashboard-dashboard fmed-operational-dashboard ${drilldown ? "is-workspace-open" : ""}`} data-fmed-dashboard="REV0">
     <header className="fmed-dashboard-header fmed-operational-header">
-      <div className="fmed-dashboard-title"><FmedModuleIcon module="Dashboard" className="fmed-dashboard-title-icon" /><div><h2>FMED operativo</h2><p>Cosa richiede attenzione e cosa devi fare oggi</p></div></div>
+      <div className="fmed-dashboard-title"><FmedModuleIcon module="Dashboard" className="fmed-dashboard-title-icon" /><div><h2>FMED operativo</h2><p>Priorita' , scadenze e attivita'  operative di oggi</p></div></div>
       <div className="fmed-dashboard-header-actions">
-        <span className="fmed-dashboard-live"><i /> {loading ? "Aggiornamento…" : "Dati aggiornati"}</span>
+        <span className="fmed-dashboard-live" role="status" aria-live="polite"><i /> {loading ? "Aggiornamento in corsoâ€¦" : "Dati aggiornati"}</span>
         <button type="button" className="fmed-dashboard-button-secondary" onClick={() => loadDashboard({ force: true })} disabled={loading}>Aggiorna</button>
         <button type="button" className="fmed-dashboard-button-primary" onClick={() => setPagina("Export")}>Analisi e report</button>
       </div>
     </header>
 
-    {error && <div className="fmed-dashboard-warning"><strong>Non tutti i dati sono aggiornati.</strong><span>{error}. Puoi continuare a usare le funzioni disponibili e riprovare con Aggiorna.</span></div>}
+    {error && <div className="fmed-dashboard-warning"><strong>Non tutti i dati sono aggiornati.</strong>{" "}<span>{error}. Puoi continuare a usare le funzioni disponibili e riprovare con Aggiorna.</span></div>}
 
     <section className="fmed-operational-automation-strip">
-      <div><strong>Automazioni attive</strong><span>Scadenze, cicli, storico, codici e dashboard si aggiornano automaticamente quando registri o chiudi un’attività.</span></div>
+      <div><strong>Automazioni attive</strong>{" "}<span>Scadenze, cicli, storico, codici e dashboard si aggiornano automaticamente quando registri o chiudi unâ€™attivita' .</span></div>
       <button type="button" onClick={() => { setImpostazioniTab?.("STRUMENTI"); setPagina("Gestione Utenti"); }}>Strumenti</button>
     </section>
 
@@ -121,7 +121,7 @@ export default function DashboardPage({
     <section className="fmed-dashboard-kpi-grid fmed-operational-kpi-grid">
       <KpiCard label="Scadenze scadute" value={formatInteger(kpi.scadenze_scadute)} detail="Richiedono verifica" tone="danger" icon={<FmedIcon name="alert" size={20} />} onClick={() => showRows("Scadenze scadute", (snapshot?.scadenze_operative || []).filter((row) => row.stato === "SCADUTA"), "Scadenze")} />
       <KpiCard label="Entro 30 giorni" value={formatInteger(kpi.scadenze_entro_30)} detail="Da organizzare" tone="warning" icon={<FmedIcon name="calendar" size={20} />} onClick={() => showRows("Scadenze entro 30 giorni", snapshot?.scadenze_critiche, "Scadenze")} />
-      <KpiCard label="Processi in ritardo" value={formatInteger(kpi.processi_in_ritardo)} detail="Attività oltre i tempi" tone="danger" icon={<FmedIcon name="workflow" size={20} />} onClick={() => showRows("Attività in ritardo", (snapshot?.processi_operativi || []).filter((row) => row.in_ritardo), "Processi")} />
+      <KpiCard label="Processi in ritardo" value={formatInteger(kpi.processi_in_ritardo)} detail="Attivita'  oltre i tempi" tone="danger" icon={<FmedIcon name="workflow" size={20} />} onClick={() => showRows("Attivita'  in ritardo", (snapshot?.processi_operativi || []).filter((row) => row.in_ritardo), "Processi")} />
       <KpiCard label="Da approvare" value={formatInteger(kpi.processi_da_approvare)} detail="Verifiche pendenti" tone="warning" icon={<FmedIcon name="check" size={20} />} onClick={() => showRows("Approvazioni pendenti", snapshot?.approvazioni_pendenti, "Processi")} />
       <KpiCard label="Da pianificare" value={formatInteger(kpi.scadenze_da_pianificare)} detail="Manca la prossima data" tone="secondary" icon={<FmedIcon name="clock" size={20} />} onClick={() => showRows("Da pianificare", (snapshot?.scadenze_operative || []).filter((row) => row.stato === "DA_PIANIFICARE"), "Scadenze")} />
       <KpiCard label="Asset attivi" value={formatInteger(kpi.asset_attivi)} detail={`${Number(kpi.copertura_documentale_percentuale || 0).toLocaleString("it-IT")}% documentati`} tone="success" icon={<FmedIcon name="box" size={20} />} onClick={() => setPagina("Asset")} />
@@ -129,27 +129,28 @@ export default function DashboardPage({
 
     <div className="fmed-operational-operational-grid">
       <section className="fmed-dashboard-panel">
-        <div className="fmed-dashboard-panel-header"><div><h3>Priorità</h3><p>Le prossime attività da controllare</p></div><button type="button" onClick={() => navigateDeadline("TUTTE")}>Apri tutte</button></div>
+        <div className="fmed-dashboard-panel-header"><div><h3>Priorita' </h3><p>Le prossime attivita'  da controllare</p></div><button type="button" onClick={() => navigateDeadline("TUTTE")}>Apri tutte</button></div>
         <div className="fmed-dashboard-priority-list">
-          {(snapshot?.scadenze_critiche || []).slice(0, 7).map((row) => <button type="button" key={`deadline-${row.id}-${row.famiglia || row.titolo}`} onClick={() => showRows("Dettaglio priorità", snapshot?.scadenze_critiche, "Scadenze")}>
+          {(snapshot?.scadenze_critiche || []).slice(0, 7).map((row) => <button type="button" key={`deadline-${row.id}-${row.famiglia || row.titolo}`} onClick={() => showRows("Dettaglio priorita' ", snapshot?.scadenze_critiche, "Scadenze")}>
             <span className={`fmed-dashboard-state-dot ${row.stato === "SCADUTA" ? "danger" : "warning"}`} />
-            <span><strong>{row.titolo}</strong><small>{row.riferimento} · {row.sede}</small></span><em>{formatDate(row.scadenza)}</em>
+            <span><strong>{row.titolo}</strong><small>{row.riferimento} Â· {row.sede}</small></span><em>{formatDate(row.scadenza)}</em>
           </button>)}
-          {!(snapshot?.scadenze_critiche || []).length && <div className="fmed-dashboard-empty">Nessuna priorità critica.</div>}
+          {!(snapshot?.scadenze_critiche || []).length && <div className="fmed-dashboard-empty">Nessuna priorita'  critica.</div>}
         </div>
       </section>
       <section className="fmed-dashboard-panel">
-        <div className="fmed-dashboard-panel-header"><div><h3>Attività aperte</h3><p>Solo quelle che richiedono ancora lavoro</p></div><button type="button" onClick={() => setPagina("Processi")}>Gestisci</button></div>
+        <div className="fmed-dashboard-panel-header"><div><h3>Attivita'  aperte</h3><p>Solo quelle che richiedono ancora lavoro</p></div><button type="button" onClick={() => setPagina("Processi")}>Gestisci</button></div>
         <div className="fmed-dashboard-priority-list">
-          {(snapshot?.processi_operativi || []).slice(0, 7).map((row) => <button type="button" key={`process-${row.id}`} onClick={() => showRows("Attività aperte", snapshot?.processi_operativi, "Processi")}>
+          {(snapshot?.processi_operativi || []).slice(0, 7).map((row) => <button type="button" key={`process-${row.id}`} onClick={() => showRows("Attivita'  aperte", snapshot?.processi_operativi, "Processi")}>
             <span className={`fmed-dashboard-state-dot ${row.in_ritardo ? "danger" : "warning"}`} />
-            <span><strong>{row.titolo}</strong><small>{row.sede} · {row.responsabile || "Da assegnare"}</small></span><em>{humanize(row.stato)}</em>
+            <span><strong>{row.titolo}</strong><small>{row.sede} Â· {row.responsabile || "Da assegnare"}</small></span><em>{humanize(row.stato)}</em>
           </button>)}
-          {!(snapshot?.processi_operativi || []).length && <div className="fmed-dashboard-empty">Nessuna attività aperta.</div>}
+          {!(snapshot?.processi_operativi || []).length && <div className="fmed-dashboard-empty">Nessuna attivita'  aperta.</div>}
         </div>
       </section>
     </div>
 
-    {drilldown && <section className="fmed-workspace-page fmed-dashboard-drilldown-page" aria-label={drilldown.title}><div className="fmed-workspace-surface fmed-dashboard-drilldown-surface"><div className="fmed-dashboard-drilldown-header"><div><h3>{drilldown.title}</h3><p>{drilldown.rows.length} record</p></div><button type="button" className="fmed-workspace-back" onClick={() => setDrilldown(null)}>Torna alla dashboard</button></div><div className="fmed-dashboard-drilldown-list">{drilldown.rows.slice(0, 100).map((row, index) => <article key={`${row.tipo}-${row.id}-${index}`}><span className={`fmed-dashboard-record-type ${row.tipo === "SCADENZA" ? "deadline" : "process"}`}>{row.tipo}</span><div><strong>{row.titolo}</strong><small>{row.riferimento} · {row.sede} · {row.modulo_label}</small></div><div className="fmed-dashboard-record-status"><b>{humanize(row.stato)}</b><small>{formatDate(row.scadenza)}</small></div></article>)}{!drilldown.rows.length && <div className="fmed-dashboard-empty">Nessun record.</div>}</div><div className="fmed-dashboard-drilldown-footer"><button type="button" className="fmed-dashboard-button-secondary" onClick={() => downloadCsv(drilldown.rows)}>Esporta</button><button type="button" className="fmed-dashboard-button-primary" onClick={() => { setPagina(drilldown.page || "Dashboard"); setDrilldown(null); }}>Apri modulo</button></div></div></section>}
+    {drilldown && <section className="fmed-workspace-page fmed-dashboard-drilldown-page" aria-label={drilldown.title}><div className="fmed-workspace-surface fmed-dashboard-drilldown-surface"><div className="fmed-dashboard-drilldown-header"><div><h3>{drilldown.title}</h3><p>{drilldown.rows.length} record</p></div><button type="button" className="fmed-workspace-back" onClick={() => setDrilldown(null)}>Torna alla dashboard</button></div><div className="fmed-dashboard-drilldown-list">{drilldown.rows.slice(0, 100).map((row, index) => <article key={`${row.tipo}-${row.id}-${index}`}><span className={`fmed-dashboard-record-type ${row.tipo === "SCADENZA" ? "deadline" : "process"}`}>{row.tipo}</span><div><strong>{row.titolo}</strong><small>{row.riferimento} Â· {row.sede} Â· {row.modulo_label}</small></div><div className="fmed-dashboard-record-status"><b>{humanize(row.stato)}</b><small>{formatDate(row.scadenza)}</small></div></article>)}{!drilldown.rows.length && <div className="fmed-dashboard-empty">Nessun record.</div>}</div><div className="fmed-dashboard-drilldown-footer"><button type="button" className="fmed-dashboard-button-secondary" onClick={() => downloadCsv(drilldown.rows)}>Esporta</button><button type="button" className="fmed-dashboard-button-primary" onClick={() => { setPagina(drilldown.page || "Dashboard"); setDrilldown(null); }}>Apri modulo</button></div></div></section>}
   </div>;
 }
+

@@ -11,16 +11,9 @@ import "./NewAssetWizard.css";
 import "./Sicurezza8108Page.css";
 import "./components/ProcessEnginePage.css";
 import "./components/masterdata/CanonicalSelect.css";
-import "./FmedVisualClean.css";
-import "./Regola0VisualSystem.css";
-import "./pages/AssetPointZero.css";
-import "./pages/OperationsPointZero.css";
-import "./pages/GovernancePointZero.css";
-import "./PointZeroCompatibility.css";
-import "./PointZeroPolish.css";
-import "./PointZeroFinalFix.css";
+import "./FmedUnifiedVisualSystem.css";
 
-const FMED_APP_CACHE_VERSION = "fmed-rev0-regola0-punto0-final-20260730-1";
+const FMED_APP_CACHE_VERSION = "fmed-rev0-complete-reconstruction-20260730-3";
 
 const FMED_API_WARMUP_URL = String(
   import.meta.env?.VITE_API_BASE_URL || "https://fmed-backend.onrender.com"

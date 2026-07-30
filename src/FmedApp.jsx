@@ -7947,7 +7947,7 @@ ${messaggio}`);
 
 
             
-        <div className="fmed-literal-d87d5ede0c">
+        <div className="fmed-style-ocr-card-row">
 
 
 
@@ -7955,7 +7955,7 @@ ${messaggio}`);
 
               
           <div>
-            <div className="fmed-literal-ea27dd28a3">
+            <div className="fmed-style-ocr-card-title">
 
 
 
@@ -7987,7 +7987,7 @@ ${messaggio}`);
                   const file = e.target.files?.[0];
                   e.target.value = "";
                   scansionaTarghettaNuovoCespite(file);
-                }} className="fmed-literal-d6a2f871e1" />
+                }} className="fmed-style-visually-hidden" />
           </label>
         </div>
 
@@ -8012,7 +8012,7 @@ ${messaggio}`);
 
 
             
-        <div className="fmed-literal-d87d5ede0c">
+        <div className="fmed-style-ocr-card-row">
 
 
 
@@ -8020,7 +8020,7 @@ ${messaggio}`);
 
               
           <div>
-            <div className="fmed-literal-ea27dd28a3">
+            <div className="fmed-style-ocr-card-title">
 
 
 
@@ -8052,7 +8052,7 @@ ${messaggio}`);
                   const file = e.target.files?.[0];
                   e.target.value = "";
                   aggiungiAccessorioDaFotoNuovoCespite(file);
-                }} className="fmed-literal-d6a2f871e1" />
+                }} className="fmed-style-visually-hidden" />
           </label>
         </div>
 
@@ -8397,19 +8397,39 @@ ${messaggio}`);
 
         {cespiteSelezionato && <section className="fmed-workspace-page fmed-asset-detail-workspace" aria-label={`Scheda cespite ${cespiteSelezionato.codicestrumento || ""}`}>
     <div className="fmed-workspace-surface fmed-asset-detail-page">
-      <button className="fmed-workspace-back fmed-asset-detail-close fmed-style-close-btn" onClick={() => setCespiteSelezionato(null)}>
-        <FmedIcon name="close" /> Torna all’elenco asset
-      </button>
+      <div className="fmed-style-asset-topbar">
+        <div className="fmed-style-asset-breadcrumb" aria-label="Percorso scheda cespite">
+          <span>Inventario tecnico</span>
+          <span aria-hidden="true">/</span>
+          <strong>{cespiteSelezionato.codicestrumento}</strong>
+        </div>
+        <button className="fmed-workspace-back fmed-asset-detail-close fmed-style-close-btn" onClick={() => setCespiteSelezionato(null)}>
+          <FmedIcon name="close" /> Torna all’elenco asset
+        </button>
+      </div>
 
       <div className="fmed-style-asset-hero-card">
         <div className="fmed-style-asset-hero-left">
-          <div className="fmed-style-asset-hero-icon"></div>
+          <div className="fmed-style-asset-hero-icon"><FmedIcon name="box" size={24} /></div>
           <div>
-            <div className="fmed-style-asset-hero-label">Scheda Cespite</div>
+            <div className="fmed-style-asset-hero-label">Scheda cespite</div>
             <div className="fmed-style-asset-hero-code">{cespiteSelezionato.codicestrumento}</div>
           </div>
         </div>
 
+        <div className="fmed-style-asset-hero-summary">
+          <div className="fmed-style-asset-hero-summary-main">
+            <span>{cespiteSelezionato.tipologia || "Tipologia non indicata"}</span>
+            <strong>
+              {[cespiteSelezionato.costruttore, cespiteSelezionato.modello].filter(Boolean).join(" · ") || "Costruttore e modello non indicati"}
+            </strong>
+          </div>
+          <div className="fmed-style-asset-hero-meta">
+            <span><FmedIcon name="building" size={15} /> {normalizzaSedeDisplay(cespiteSelezionato.sede)}</span>
+            <span><FmedIcon name="tag" size={15} /> {getLocazioneFmed(cespiteSelezionato) || "Locazione non indicata"}</span>
+            <span className="fmed-style-asset-status-badge">{cespiteSelezionato.stato_asset || "Stato non indicato"}</span>
+          </div>
+        </div>
       </div>
 
       {modificaLinkDoc && <div className="fmed-style-link-edit-box">
@@ -8447,16 +8467,10 @@ ${messaggio}`);
           <div className="fmed-style-asset-actions-code">{cespiteSelezionato.codicestrumento}</div>
         </div>
 
-        <div style={{
-
-              ...{}
-            }} className="fmed-style-asset-actions-grouped">
+        <div className="fmed-style-asset-actions-grouped">
           <div className="fmed-style-asset-actions-group-block">
             <div className="fmed-style-asset-actions-group-title">Documentazione</div>
-            <div style={{
-
-                  gridTemplateColumns: "repeat(3, minmax(180px, 1fr))"
-                }} className="fmed-style-asset-actions-group-grid">
+            <div className="fmed-style-asset-actions-group-grid">
               <button onClick={() => {
                     const link = getLinkDocumentazioneCespite(cespiteSelezionato, interventiCespite, linkManualiDocumentazione);
                     if (!link?.url) {
@@ -8492,10 +8506,7 @@ ${messaggio}`);
 
           <div className="fmed-style-asset-actions-group-block">
             <div className="fmed-style-asset-actions-group-title">Identificazione</div>
-            <div style={{
-
-                  gridTemplateColumns: "repeat(3, minmax(180px, 1fr))"
-                }} className="fmed-style-asset-actions-group-grid">
+            <div className="fmed-style-asset-actions-group-grid">
               <button onClick={() => apriEtichettaQrCespite(cespiteSelezionato)} className="fmed-style-asset-action-btn">
                 <span className="fmed-style-asset-action-icon"><FmedIcon name="qr" /></span>
                 <span>Stampa QR</span>
@@ -8515,10 +8526,7 @@ ${messaggio}`);
 
           <div className="fmed-style-asset-actions-group-block">
             <div className="fmed-style-asset-actions-group-title">Manutenzione</div>
-            <div style={{
-
-                  gridTemplateColumns: "repeat(3, minmax(180px, 1fr))"
-                }} className="fmed-style-asset-actions-group-grid">
+            <div className="fmed-style-asset-actions-group-grid">
               <button
 
 
@@ -8541,10 +8549,7 @@ ${messaggio}`);
 
           <div className="fmed-style-asset-actions-group-block">
             <div className="fmed-style-asset-actions-group-title">Gestione cespite</div>
-            <div style={{
-
-                  gridTemplateColumns: "repeat(3, minmax(180px, 1fr))"
-                }} className="fmed-style-asset-actions-group-grid">
+            <div className="fmed-style-asset-actions-group-grid">
               <button onClick={() => setModificaCespite(!modificaCespite)} className="fmed-style-asset-action-btn fmed-style-asset-action-btn-edit">
 
 
@@ -8597,7 +8602,7 @@ ${messaggio}`);
                   const file = e.target.files?.[0];
                   e.target.value = "";
                   scansionaTarghettaCespite(file);
-                }} className="fmed-literal-d6a2f871e1" />
+                }} className="fmed-style-visually-hidden" />
       </label>
 
       <label style={{
@@ -8614,7 +8619,7 @@ ${messaggio}`);
                   const file = e.target.files?.[0];
                   e.target.value = "";
                   aggiungiAccessorioDaFotoCespite(file);
-                }} className="fmed-literal-d6a2f871e1" />
+                }} className="fmed-style-visually-hidden" />
       </label>
 
       {(ocrTarghettaEsito || ocrAccessorioEsito) && <div className="fmed-literal-e844ea5516">
@@ -8932,12 +8937,15 @@ ${messaggio}`);
           </div>
         </div>}
 
-      <div className="fmed-asset-detail-grid fmed-style-asset-main-grid" style={{
-
-            ...{}
-          }}>
+      <div className="fmed-asset-detail-grid fmed-style-asset-main-grid">
         <div className="fmed-asset-data-panel fmed-style-asset-panel">
-          <h3 className="fmed-style-section-title">Dati generali</h3>
+          <div className="fmed-style-section-heading">
+            <div>
+              <span className="fmed-style-section-eyebrow">Identità tecnica</span>
+              <h3 className="fmed-style-section-title">Dati generali</h3>
+            </div>
+            <span className="fmed-style-section-record-code">{cespiteSelezionato.codicestrumento}</span>
+          </div>
           <div className="fmed-style-asset-info-table">
             <Detail label="Tipologia" value={cespiteSelezionato.tipologia} />
             <Detail label="Costruttore" value={cespiteSelezionato.costruttore} />
@@ -8960,14 +8968,14 @@ ${messaggio}`);
             <Detail label="Accessori / Sistema primario" value={cespiteSelezionato.accessori_sistema_primario} fallback="Non disponibile" />
           </div>
 
-          <div className="fmed-literal-5c1bbc18a0">
+          <div className="fmed-style-ocr-card">
 
 
 
 
 
                 
-            <div className="fmed-literal-d87d5ede0c">
+            <div className="fmed-style-ocr-card-row">
 
 
 
@@ -8975,7 +8983,7 @@ ${messaggio}`);
 
                   
               <div>
-                <div className="fmed-literal-ea27dd28a3">
+                <div className="fmed-style-ocr-card-title">
 
 
 
@@ -9007,7 +9015,7 @@ ${messaggio}`);
                       const file = e.target.files?.[0];
                       e.target.value = "";
                       scansionaTarghettaCespite(file);
-                    }} className="fmed-literal-d6a2f871e1" />
+                    }} className="fmed-style-visually-hidden" />
               </label>
             </div>
 
@@ -9025,14 +9033,14 @@ ${messaggio}`);
               </div>}
           </div>
 
-          <div className="fmed-literal-5c1bbc18a0">
+          <div className="fmed-style-ocr-card">
 
 
 
 
 
                 
-            <div className="fmed-literal-d87d5ede0c">
+            <div className="fmed-style-ocr-card-row">
 
 
 
@@ -9040,7 +9048,7 @@ ${messaggio}`);
 
                   
               <div>
-                <div className="fmed-literal-ea27dd28a3">
+                <div className="fmed-style-ocr-card-title">
 
 
 
@@ -9072,7 +9080,7 @@ ${messaggio}`);
                       const file = e.target.files?.[0];
                       e.target.value = "";
                       aggiungiAccessorioDaFotoCespite(file);
-                    }} className="fmed-literal-d6a2f871e1" />
+                    }} className="fmed-style-visually-hidden" />
               </label>
             </div>
 
