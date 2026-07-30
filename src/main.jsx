@@ -11,8 +11,8 @@ import "./NewAssetWizard.css";
 import "./Sicurezza8108Page.css";
 import "./components/ProcessEnginePage.css";
 import "./components/masterdata/CanonicalSelect.css";
-import "./FmedUnifiedVisualSystem.css";
 import "./AssetDetailCompact.css";
+import "./FmedUnifiedVisualSystem.css";
 
 const FMED_APP_CACHE_VERSION = "fmed-rev0-complete-reconstruction-20260730-3";
 
