@@ -12,8 +12,9 @@ import "./Sicurezza8108Page.css";
 import "./components/ProcessEnginePage.css";
 import "./components/masterdata/CanonicalSelect.css";
 import "./FmedVisualClean.css";
+import "./AssetPredictiveHorizontal.css";
 
-const FMED_APP_CACHE_VERSION = "fmed-rev0-20260729-9";
+const FMED_APP_CACHE_VERSION = "fmed-rev0-20260730-1";
 
 const FMED_API_WARMUP_URL = String(
   import.meta.env?.VITE_API_BASE_URL || "https://fmed-backend.onrender.com"
