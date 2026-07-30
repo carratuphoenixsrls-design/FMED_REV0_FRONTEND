@@ -1,0 +1,90 @@
+/*
+ * FMED REV0 · Scheda Cespite · analisi predittiva orizzontale
+ * Solo layout: nessuna modifica a dati, calcoli, API o funzioni.
+ */
+
+.fmed-app-root.fmed-shell-premium .fmed-asset-detail-grid.fmed-style-asset-main-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-asset-detail-grid > .fmed-predictive-column {
+  order: -1;
+  display: grid;
+  grid-template-columns: minmax(470px, .9fr) minmax(0, 1.1fr);
+  gap: 14px;
+  width: 100%;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-predictive-column > .fmed-predictive-panel,
+.fmed-app-root.fmed-shell-premium .fmed-predictive-column > .fmed-predictive-recommendations {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-predictive-column .fmed-predictive-panel,
+.fmed-app-root.fmed-shell-premium .fmed-predictive-column .fmed-predictive-recommendations {
+  padding: 16px;
+  border-radius: 16px;
+  box-sizing: border-box;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-predictive-column .fmed-predictive-grid,
+.fmed-app-root.fmed-shell-premium .fmed-predictive-column .fmed-style-fmea-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  align-items: stretch;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-predictive-column .fmed-style-fmea-box {
+  min-width: 0;
+  min-height: 126px;
+  padding: 14px 10px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-predictive-column .fmed-style-recommendation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  align-items: stretch;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-predictive-column .fmed-style-recommendation-box {
+  min-width: 0;
+  min-height: 126px;
+  padding: 14px;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-predictive-column .fmed-style-recommendation-box p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-predictive-column .fmed-style-predictive-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-predictive-column .fmed-style-section-title {
+  margin-top: 0;
+}
+
+@media (max-width: 1280px) {
+  .fmed-app-root.fmed-shell-premium .fmed-asset-detail-grid > .fmed-predictive-column {
+    grid-template-columns: 1fr;
+  }
+}
