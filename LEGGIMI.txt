@@ -1,0 +1,8 @@
+FMED REV0 - Patch locale Scheda Cespite
+File inclusi:
+- src/FmedApp.jsx
+- src/AssetDetailCompact.css
+- src/main.jsx
+
+Ambito: solo Asset e Cespiti > Apri > Scheda Cespite.
+Nessun backend, API, Supabase, commit o push.

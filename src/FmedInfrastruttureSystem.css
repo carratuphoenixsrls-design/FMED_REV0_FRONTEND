@@ -1,0 +1,2906 @@
+
+/* INFRASTRUTTURE SISTEMA PROFESSIONALE START */
+
+html body{
+  --infra-dark:#075940;
+  --infra-main:#08795a;
+  --infra-mid:#11956f;
+  --infra-light:#32ad86;
+  --infra-soft:#eaf8f3;
+  --infra-border:#cee5dc;
+  --infra-text:#0b294b;
+}
+
+/* ============================================================
+   CONTENITORE E ORDINE
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations--infrastructure{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:0!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:12px 16px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations--infrastructure > .p0-operations__head{
+  order:1!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations--infrastructure > .p0-metric-strip{
+  order:2!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations--infrastructure > .p0-command--infrastructure{
+  order:3!important;
+}
+
+/* Gli altri elementi restano successivi */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations--infrastructure > :not(
+  .p0-operations__head
+):not(
+  .p0-metric-strip
+):not(
+  .p0-command--infrastructure
+){
+  order:4!important;
+}
+
+/* ============================================================
+   TESTATA INFRASTRUTTURE
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations--infrastructure > .p0-operations__head{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:22px!important;
+
+  width:100%!important;
+  min-height:123px!important;
+  height:123px!important;
+
+  margin:0!important;
+  padding:18px 24px!important;
+
+  border:0!important;
+  border-radius:17px 17px 0 0!important;
+
+  background:
+    radial-gradient(
+      circle at 84% 12%,
+      rgba(255,255,255,.15) 0 88px,
+      transparent 89px
+    ),
+    linear-gradient(
+      120deg,
+      var(--infra-dark) 0%,
+      var(--infra-main) 56%,
+      var(--infra-light) 100%
+    )!important;
+
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+
+/* Tutti i testi realmente bianchi */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations__head,
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations__head *,
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations__head :is(
+  div,span,p,h1,h2,h3,strong,small,b
+){
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  text-shadow:none!important;
+  opacity:1!important;
+
+  font-family:
+    "Futura Light",
+    "Futura PT Light",
+    "Futura PT",
+    "Futura",
+    "Century Gothic",
+    Arial,
+    sans-serif!important;
+
+  text-transform:uppercase!important;
+}
+
+/* Identità sinistra */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations__identity{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:16px!important;
+  min-width:0!important;
+  margin:0!important;
+}
+
+/* Icona */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations__icon{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  flex:0 0 58px!important;
+  width:58px!important;
+  min-width:58px!important;
+  height:58px!important;
+
+  margin:0!important;
+
+  border:1px solid rgba(255,255,255,.45)!important;
+  border-radius:14px!important;
+  background:rgba(255,255,255,.14)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations__icon svg{
+  width:27px!important;
+  height:27px!important;
+}
+
+/* Blocco testo */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations__identity > div{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+/* Eyebrow */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations__identity > div > span{
+  display:block!important;
+  margin:0 0 6px!important;
+  padding:0!important;
+
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.11em!important;
+  white-space:nowrap!important;
+}
+
+/* Titolo */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations__identity h1{
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+
+  font-size:34px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.01em!important;
+  white-space:nowrap!important;
+}
+
+/* Sottotitolo */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations__identity p{
+  display:block!important;
+  max-width:780px!important;
+  margin:8px 0 0!important;
+  padding:0!important;
+
+  font-size:11px!important;
+  line-height:1.25!important;
+  font-weight:800!important;
+  white-space:normal!important;
+}
+
+/* Badge destra */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations__metric{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+
+  flex:0 0 195px!important;
+  width:195px!important;
+  min-width:195px!important;
+  min-height:86px!important;
+
+  margin:0!important;
+  padding:14px 18px!important;
+
+  border:1px solid rgba(255,255,255,.45)!important;
+  border-radius:13px!important;
+  background:rgba(255,255,255,.14)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations__metric strong{
+  display:block!important;
+  margin:0!important;
+
+  font-size:39px!important;
+  line-height:.95!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations__metric span{
+  display:block!important;
+  margin-top:8px!important;
+
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+/* ============================================================
+   QUATTRO KPI ATTACCATI ALLA TESTATA
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations--infrastructure > .p0-metric-strip{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:0!important;
+
+  width:100%!important;
+  min-height:94px!important;
+
+  margin:-1px 0 13px!important;
+  padding:0!important;
+
+  border:1px solid #d7e2ec!important;
+  border-top:0!important;
+  border-radius:0 0 17px 17px!important;
+
+  background:#ffffff!important;
+  box-shadow:0 8px 20px rgba(15,42,67,.07)!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-metric-strip > article{
+  position:relative!important;
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  grid-template-columns:46px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:12px!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:94px!important;
+  height:94px!important;
+
+  margin:0!important;
+  padding:13px 17px!important;
+
+  border:0!important;
+  border-right:1px solid #dfe7ef!important;
+  border-radius:0!important;
+
+  background:#ffffff!important;
+  box-shadow:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-metric-strip > article:last-child{
+  border-right:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-metric-strip > article::after{
+  content:""!important;
+  position:absolute!important;
+  left:15px!important;
+  right:15px!important;
+  bottom:0!important;
+
+  height:3px!important;
+  border-radius:999px 999px 0 0!important;
+  background:var(--infra-mid)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-metric-strip__icon{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  width:46px!important;
+  min-width:46px!important;
+  height:46px!important;
+
+  border-radius:12px!important;
+  background:var(--infra-soft)!important;
+  color:var(--infra-main)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-metric-strip__icon svg,
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-metric-strip__icon svg *{
+  color:var(--infra-main)!important;
+  stroke:currentColor!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-metric-strip small{
+  display:block!important;
+  margin:0!important;
+
+  color:#50677e!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-metric-strip strong{
+  display:block!important;
+  margin:6px 0 0!important;
+
+  color:var(--infra-text)!important;
+  font-size:31px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+/* ============================================================
+   SIDEBAR COMPLETA VERDE
+   ============================================================ */
+
+html body .fmed-app-root:has(
+  .fmed-main-content[data-fmed-page="Infrastrutture"]
+)
+:is(div,aside,section):has(
+  > .fmed-sidebar-controls
+):has(
+  > .fmed-sidebar-navigation
+){
+  background:
+    radial-gradient(
+      circle at 82% 14%,
+      rgba(255,255,255,.14) 0 74px,
+      transparent 75px
+    ),
+    linear-gradient(
+      180deg,
+      #064d38 0%,
+      #076b4e 50%,
+      #118665 100%
+    )!important;
+
+  border-right:1px solid rgba(3,71,50,.40)!important;
+  box-shadow:6px 0 22px rgba(3,70,50,.15)!important;
+}
+
+/* Contenuti sidebar */
+html body .fmed-app-root:has(
+  .fmed-main-content[data-fmed-page="Infrastrutture"]
+) :is(
+  .fmed-sidebar-controls,
+  .fmed-sidebar-navigation,
+  .fmed-sidebar-footer,
+  .fmed-sidebar-account,
+  .fmed-sidebar-menu-group,
+  .fmed-sidebar-group-items
+){
+  color:#ffffff!important;
+}
+
+/* Testi e icone */
+html body .fmed-app-root:has(
+  .fmed-main-content[data-fmed-page="Infrastrutture"]
+) :is(
+  .fmed-sidebar-controls,
+  .fmed-sidebar-navigation,
+  .fmed-sidebar-footer
+) *{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* Voci menu */
+html body .fmed-app-root:has(
+  .fmed-main-content[data-fmed-page="Infrastrutture"]
+) .fmed-side-menu-btn{
+  border-color:rgba(255,255,255,.16)!important;
+  background:transparent!important;
+  color:#ffffff!important;
+}
+
+/* Voce attiva */
+html body .fmed-app-root:has(
+  .fmed-main-content[data-fmed-page="Infrastrutture"]
+) .fmed-side-menu-btn.is-active,
+html body .fmed-app-root:has(
+  .fmed-main-content[data-fmed-page="Infrastrutture"]
+) .fmed-side-menu-btn[aria-current="page"]{
+  border:1px solid rgba(255,255,255,.46)!important;
+  background:rgba(255,255,255,.19)!important;
+
+  color:#ffffff!important;
+
+  box-shadow:
+    inset 4px 0 0 #ffffff,
+    0 6px 15px rgba(2,54,39,.21)!important;
+}
+
+/* ============================================================
+   TIPOGRAFIA PAGINA
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"],
+html body .fmed-main-content[data-fmed-page="Infrastrutture"] *{
+  font-family:
+    "Futura Light",
+    "Futura PT Light",
+    "Futura PT",
+    "Futura",
+    "Century Gothic",
+    Arial,
+    sans-serif!important;
+
+  text-transform:uppercase!important;
+}
+
+/* ============================================================
+   NOTEBOOK 15 POLLICI
+   ============================================================ */
+
+@media (max-width:1440px){
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-operations--infrastructure{
+    padding:10px 12px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-operations__head{
+    min-height:112px!important;
+    height:112px!important;
+    padding:16px 20px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-operations__identity h1{
+    font-size:31px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-operations__metric{
+    flex-basis:180px!important;
+    width:180px!important;
+    min-width:180px!important;
+    min-height:80px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-operations--infrastructure > .p0-metric-strip,
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-metric-strip > article{
+    min-height:86px!important;
+    height:86px!important;
+  }
+}
+
+/* INFRASTRUTTURE SISTEMA PROFESSIONALE END */
+
+/* INFRASTRUTTURE RICERCA FILTRI TABELLA START */
+
+/* ============================================================
+   BLOCCO RICERCA E FILTRI
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure{
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:0 0 13px!important;
+  padding:0!important;
+  border:1px solid #d3e2dc!important;
+  border-radius:16px!important;
+  background:#ffffff!important;
+  box-shadow:0 8px 20px rgba(15,73,55,.07)!important;
+  overflow:hidden!important;
+}
+
+/* Parte superiore */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure > .p0-command__primary{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:13px!important;
+  width:100%!important;
+  margin:0!important;
+  padding:18px 20px 17px!important;
+}
+
+/* Titolo e pulsante Nuova infrastruttura */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-command__intro{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:20px!important;
+  width:100%!important;
+  min-height:56px!important;
+  margin:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-kicker{
+  display:block!important;
+  margin:0 0 6px!important;
+  color:#08795a!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.08em!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-command__intro h2{
+  margin:0!important;
+  color:#0b294b!important;
+  font-size:25px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.01em!important;
+}
+
+/* Nuova infrastruttura */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-btn--infrastructure{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:190px!important;
+  height:48px!important;
+  min-height:48px!important;
+  margin:0!important;
+  padding:0 18px!important;
+  border:1px solid #08795a!important;
+  border-radius:9px!important;
+  background:#08795a!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  box-shadow:0 5px 12px rgba(8,121,90,.18)!important;
+}
+
+/* Barra di ricerca senza cornice esterna inutile */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-search{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:100%!important;
+  min-height:52px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+/* Elimina la lente separata */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-search__mark{
+  display:none!important;
+}
+
+/* Campo ricerca */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-search input{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  height:52px!important;
+  min-height:52px!important;
+  margin:0!important;
+  padding:0 17px!important;
+  border:1px solid #b9cec6!important;
+  border-radius:9px!important;
+  background:#ffffff!important;
+  color:#153e34!important;
+  font-size:12px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  outline:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-search input:focus{
+  border-color:#08795a!important;
+  box-shadow:0 0 0 3px rgba(8,121,90,.12)!important;
+}
+
+/* Badge risultati */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-search__meta{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:112px!important;
+  height:42px!important;
+  margin:0!important;
+  padding:0 15px!important;
+  border:1px solid #cbe8dd!important;
+  border-radius:999px!important;
+  background:#eaf8f3!important;
+  color:#08795a!important;
+  font-size:10px!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+/* ============================================================
+   AFFINA PATRIMONIO
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced{
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-top:1px solid #dce7e3!important;
+  border-radius:0!important;
+  background:#f6faf8!important;
+}
+
+/* Testata apribile */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced > summary{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:16px!important;
+  width:100%!important;
+  min-height:56px!important;
+  margin:0!important;
+  padding:0 20px!important;
+  cursor:pointer!important;
+  list-style:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced > summary::-webkit-details-marker{
+  display:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced > summary b{
+  color:#0b294b!important;
+  font-size:17px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced > summary small{
+  margin-left:12px!important;
+  color:#61778b!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:800!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced__summary{
+  color:#08795a!important;
+  font-size:11px!important;
+  font-weight:900!important;
+}
+
+/* Quando chiuso elimina completamente lo spazio vuoto */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced:not([open])
+.p0-filter-grid{
+  display:none!important;
+}
+
+/* Griglia filtri visibile soltanto quando aperta */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced[open]
+.p0-filter-grid{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:10px!important;
+  width:100%!important;
+  margin:0!important;
+  padding:14px 20px 16px!important;
+  border-top:1px solid #dce7e3!important;
+}
+
+/* Campi filtro */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-field{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:6px!important;
+  min-width:0!important;
+  margin:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-field > span{
+  color:#3f5d55!important;
+  font-size:9px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-field :is(select,input){
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  height:46px!important;
+  min-height:46px!important;
+  margin:0!important;
+  padding:0 12px!important;
+  border:1px solid #b9cec6!important;
+  border-radius:8px!important;
+  background:#ffffff!important;
+  color:#153e34!important;
+  font-size:10px!important;
+  font-weight:900!important;
+}
+
+/* Barra pulsanti filtri */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-command__actions{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(180px,220px) 1fr minmax(160px,190px)!important;
+  align-items:center!important;
+  gap:12px!important;
+  width:100%!important;
+  min-height:62px!important;
+  margin:0!important;
+  padding:8px 20px!important;
+  border-top:1px solid #dce7e3!important;
+  background:#f6faf8!important;
+}
+
+/* Aggiorna dati */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-command__actions > .p0-btn:first-child{
+  grid-column:1!important;
+  border-color:#176fa3!important;
+  background:#287fb0!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* Azzera filtri */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-command__actions > .p0-btn:last-child{
+  grid-column:3!important;
+  border-color:#cf3340!important;
+  background:#cf3340!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* Pulsanti azioni comuni */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-command__actions > .p0-btn{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  height:44px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:0 15px!important;
+  border-width:1px!important;
+  border-style:solid!important;
+  border-radius:8px!important;
+  font-size:10px!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+/* ============================================================
+   REGISTRO INFRASTRUTTURE
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:1px solid #d3e2dc!important;
+  border-radius:16px!important;
+  background:#ffffff!important;
+  box-shadow:0 8px 20px rgba(15,73,55,.07)!important;
+  overflow:hidden!important;
+}
+
+/* Testata registro */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register > header{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  width:100%!important;
+  min-height:88px!important;
+  margin:0!important;
+  padding:14px 18px!important;
+  border-bottom:1px solid #dce7e3!important;
+  background:#ffffff!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register > header .p0-kicker{
+  color:#08795a!important;
+  font-size:10px!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register > header h2{
+  margin:6px 0 0!important;
+  color:#0b294b!important;
+  font-size:25px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register > header p{
+  margin:7px 0 0!important;
+  color:#60788c!important;
+  font-size:9px!important;
+  line-height:1.2!important;
+  font-weight:800!important;
+}
+
+/* Contenitore con scroll interno */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-table-wrap{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  max-height:calc(100vh - 585px)!important;
+  min-height:260px!important;
+  margin:0!important;
+  padding:0!important;
+  overflow-y:auto!important;
+  overflow-x:auto!important;
+  scrollbar-gutter:stable!important;
+}
+
+/* Tabella */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register table{
+  table-layout:fixed!important;
+  width:100%!important;
+  min-width:1240px!important;
+  margin:0!important;
+  border-collapse:separate!important;
+  border-spacing:0!important;
+}
+
+/* Larghezze colonne */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(1){
+  width:31%!important;
+  min-width:330px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(2){
+  width:18%!important;
+  min-width:210px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(3){
+  width:14%!important;
+  min-width:160px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(4){
+  width:10%!important;
+  min-width:120px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(5){
+  width:10%!important;
+  min-width:125px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(6){
+  width:10%!important;
+  min-width:130px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(7){
+  width:225px!important;
+  min-width:225px!important;
+  text-align:center!important;
+}
+
+/* Intestazioni */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register thead{
+  position:sticky!important;
+  top:0!important;
+  z-index:15!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register th{
+  box-sizing:border-box!important;
+  height:46px!important;
+  padding:0 13px!important;
+  border-bottom:1px solid #cdded7!important;
+  background:#f4f8f6!important;
+  color:#496359!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  text-align:left!important;
+  vertical-align:middle!important;
+  white-space:nowrap!important;
+}
+
+/* Righe */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register tbody tr{
+  height:72px!important;
+  min-height:72px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register td{
+  box-sizing:border-box!important;
+  height:72px!important;
+  min-height:72px!important;
+  padding:10px 13px!important;
+  border-bottom:1px solid #dce7e3!important;
+  color:#0c3154!important;
+  font-size:11px!important;
+  line-height:1.2!important;
+  font-weight:800!important;
+  vertical-align:middle!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register td b{
+  display:block!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  color:#0b294b!important;
+  font-size:11px!important;
+  line-height:1.2!important;
+  font-weight:900!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register td small{
+  display:block!important;
+  max-width:100%!important;
+  margin-top:5px!important;
+  overflow:hidden!important;
+  color:#5c778d!important;
+  font-size:9px!important;
+  line-height:1.1!important;
+  font-weight:800!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+/* Toolbar azioni uniforme */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(6,34px)!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:34px!important;
+  min-width:34px!important;
+  height:34px!important;
+  min-height:34px!important;
+  margin:0!important;
+  padding:0!important;
+  border:1px solid #b9cec6!important;
+  border-radius:8px!important;
+  background:#ffffff!important;
+  color:#236b58!important;
+  box-shadow:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button svg{
+  width:17px!important;
+  height:17px!important;
+}
+
+/* Colori funzionali toolbar */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:nth-child(1){
+  background:#edf5fa!important;
+  color:#286f9f!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:nth-child(2){
+  background:#edf5fa!important;
+  color:#286f9f!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:nth-child(3){
+  background:#eaf8f3!important;
+  color:#08795a!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:nth-child(4){
+  background:#fff6df!important;
+  color:#ad7208!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:nth-child(5){
+  background:#ffffff!important;
+  color:#225c88!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:nth-child(6){
+  border-color:#efc6cb!important;
+  background:#fff1f2!important;
+  color:#c6313f!important;
+}
+
+/* Tipografia uniforme */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"],
+html body .fmed-main-content[data-fmed-page="Infrastrutture"] *{
+  font-family:
+    "Futura Light",
+    "Futura PT Light",
+    "Futura PT",
+    "Futura",
+    "Century Gothic",
+    Arial,
+    sans-serif!important;
+  text-transform:uppercase!important;
+}
+
+/* INFRASTRUTTURE RICERCA FILTRI TABELLA END */
+
+/* INFRASTRUTTURE FILTRI SEMPRE VISIBILI START */
+
+/* Il contenitore filtri resta sempre aperto visivamente */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced{
+  display:block!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  border-top:1px solid #dce7e3!important;
+  background:#f6faf8!important;
+}
+
+/* Mantiene la testata Affina patrimonio */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced > summary{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  width:100%!important;
+  min-height:52px!important;
+  margin:0!important;
+  padding:0 18px!important;
+  pointer-events:none!important;
+  cursor:default!important;
+  list-style:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced > summary::-webkit-details-marker{
+  display:none!important;
+}
+
+/* Forza la griglia filtri sempre visibile, anche se details non è open */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced .p0-filter-grid{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:10px!important;
+  width:100%!important;
+  margin:0!important;
+  padding:12px 18px 14px!important;
+  border-top:1px solid #dce7e3!important;
+  background:#ffffff!important;
+}
+
+/* Campi */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-filter-grid .p0-field{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:6px!important;
+  min-width:0!important;
+  margin:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-filter-grid .p0-field > span{
+  display:block!important;
+  color:#3f5d55!important;
+  font-size:9px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+/* Select e input */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-filter-grid :is(select,input){
+  box-sizing:border-box!important;
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  height:46px!important;
+  min-height:46px!important;
+  margin:0!important;
+  padding:0 12px!important;
+  border:1px solid #b9cec6!important;
+  border-radius:8px!important;
+  background:#ffffff!important;
+  color:#153e34!important;
+  font-size:10px!important;
+  font-weight:900!important;
+  outline:none!important;
+}
+
+/* Focus */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-filter-grid :is(select,input):focus{
+  border-color:#08795a!important;
+  box-shadow:0 0 0 3px rgba(8,121,90,.12)!important;
+}
+
+/* Pulsanti subito sotto i filtri */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-command__actions{
+  display:grid!important;
+  grid-template-columns:minmax(190px,220px) 1fr minmax(170px,200px)!important;
+  align-items:center!important;
+  gap:12px!important;
+  width:100%!important;
+  min-height:62px!important;
+  margin:0!important;
+  padding:8px 18px!important;
+  border-top:1px solid #dce7e3!important;
+  background:#f6faf8!important;
+}
+
+/* Notebook */
+@media (max-width:1440px){
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-command--infrastructure .p0-advanced .p0-filter-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:8px!important;
+    padding:10px 14px 12px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-command--infrastructure .p0-filter-grid :is(select,input){
+    height:42px!important;
+    min-height:42px!important;
+  }
+}
+
+/* INFRASTRUTTURE FILTRI SEMPRE VISIBILI END */
+
+/* INFRASTRUTTURE LEGGIBILITA DEFINITIVA START */
+
+/* ============================================================
+   FILTRI: DIMENSIONI PROFESSIONALI
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced > summary{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  width:100%!important;
+  min-height:56px!important;
+  height:56px!important;
+  padding:0 18px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced > summary b{
+  font-size:18px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced > summary small{
+  margin-left:14px!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:800!important;
+}
+
+/* Cinque colonne realmente leggibili */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-advanced .p0-filter-grid{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  grid-auto-flow:row!important;
+  align-items:end!important;
+  gap:12px!important;
+
+  width:100%!important;
+  margin:0!important;
+  padding:15px 18px 17px!important;
+
+  border-top:1px solid #d7e5df!important;
+  background:#ffffff!important;
+}
+
+/* Reset delle vecchie posizioni forzate */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-filter-grid .p0-field{
+  grid-column:auto!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:7px!important;
+
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+}
+
+/* Società più larga */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-filter-grid .p0-field:nth-child(9){
+  grid-column:1 / span 2!important;
+}
+
+/* Date larghe e ordinate */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-filter-grid .p0-field:nth-child(10){
+  grid-column:3 / span 1!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-filter-grid .p0-field:nth-child(11){
+  grid-column:4 / span 1!important;
+}
+
+/* Etichette filtri */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-filter-grid .p0-field > span{
+  display:block!important;
+  min-height:11px!important;
+  margin:0!important;
+
+  color:#31564b!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.02em!important;
+  white-space:nowrap!important;
+}
+
+/* Select e date più grandi */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-filter-grid :is(select,input){
+  box-sizing:border-box!important;
+  display:block!important;
+
+  width:100%!important;
+  min-width:0!important;
+  height:50px!important;
+  min-height:50px!important;
+
+  margin:0!important;
+  padding:0 13px!important;
+
+  border:1px solid #aec9bf!important;
+  border-radius:9px!important;
+
+  background:#ffffff!important;
+  color:#103d31!important;
+
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-filter-grid :is(select,input):focus{
+  border-color:#08795a!important;
+  box-shadow:0 0 0 3px rgba(8,121,90,.13)!important;
+  outline:none!important;
+}
+
+/* ============================================================
+   PULSANTI FILTRI
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-command__actions{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:220px minmax(0,1fr) 205px!important;
+  align-items:center!important;
+  gap:14px!important;
+
+  width:100%!important;
+  min-height:68px!important;
+  height:68px!important;
+
+  margin:0!important;
+  padding:9px 18px!important;
+
+  border-top:1px solid #d7e5df!important;
+  background:#f3f8f6!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-command__actions > .p0-btn{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  width:100%!important;
+  min-width:0!important;
+  height:50px!important;
+  min-height:50px!important;
+
+  margin:0!important;
+  padding:0 17px!important;
+
+  border-radius:9px!important;
+
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+/* ============================================================
+   REGISTRO E TABELLA
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register > header{
+  box-sizing:border-box!important;
+  min-height:88px!important;
+  height:88px!important;
+  padding:14px 18px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register > header h2{
+  font-size:27px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register > header p{
+  margin-top:7px!important;
+  font-size:10px!important;
+  line-height:1.15!important;
+  font-weight:800!important;
+}
+
+/* Scroll soltanto dentro la tabella */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-table-wrap{
+  box-sizing:border-box!important;
+
+  width:100%!important;
+  min-width:0!important;
+  height:410px!important;
+  min-height:410px!important;
+  max-height:410px!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  overflow-y:scroll!important;
+  overflow-x:auto!important;
+  scrollbar-gutter:stable!important;
+}
+
+/* Tabella proporzionata alla larghezza disponibile */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register table{
+  table-layout:fixed!important;
+
+  width:100%!important;
+  min-width:1280px!important;
+  height:auto!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  border-collapse:separate!important;
+  border-spacing:0!important;
+}
+
+/* ============================================================
+   LARGHEZZE COLONNE
+   ============================================================ */
+
+/* Impianto */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(1){
+  width:29%!important;
+  min-width:310px!important;
+}
+
+/* Contesto */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(2){
+  width:17%!important;
+  min-width:185px!important;
+}
+
+/* Gestione */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(3){
+  width:14%!important;
+  min-width:155px!important;
+}
+
+/* Ciclo */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(4){
+  width:9%!important;
+  min-width:100px!important;
+}
+
+/* Prossima */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(5){
+  width:9%!important;
+  min-width:110px!important;
+}
+
+/* Stato */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(6){
+  width:9%!important;
+  min-width:115px!important;
+}
+
+/* Azioni: spazio sufficiente per tutti i pulsanti */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(7){
+  width:248px!important;
+  min-width:248px!important;
+  max-width:248px!important;
+
+  padding-left:8px!important;
+  padding-right:8px!important;
+
+  text-align:center!important;
+  overflow:visible!important;
+}
+
+/* ============================================================
+   INTESTAZIONI E RIGHE
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register thead{
+  position:sticky!important;
+  top:0!important;
+  z-index:20!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register th{
+  box-sizing:border-box!important;
+
+  height:52px!important;
+  min-height:52px!important;
+
+  padding:0 13px!important;
+
+  background:#f1f7f4!important;
+  color:#395b52!important;
+
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+
+  vertical-align:middle!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register tbody tr{
+  height:86px!important;
+  min-height:86px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register td{
+  box-sizing:border-box!important;
+
+  height:86px!important;
+  min-height:86px!important;
+
+  padding:12px 13px!important;
+
+  border-bottom:1px solid #d9e5e0!important;
+
+  color:#0b3153!important;
+  font-size:12px!important;
+  line-height:1.25!important;
+  font-weight:800!important;
+
+  vertical-align:middle!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register td b{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+
+  margin:0!important;
+
+  overflow:hidden!important;
+  color:#092d4d!important;
+
+  font-size:12px!important;
+  line-height:1.25!important;
+  font-weight:900!important;
+
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register td small{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+
+  margin-top:6px!important;
+
+  overflow:hidden!important;
+  color:#54758c!important;
+
+  font-size:10px!important;
+  line-height:1.15!important;
+  font-weight:800!important;
+
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+/* ============================================================
+   TOOLBAR AZIONI COMPLETA
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(6,36px)!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+
+  width:100%!important;
+  min-width:226px!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  overflow:visible!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  width:36px!important;
+  min-width:36px!important;
+  max-width:36px!important;
+
+  height:36px!important;
+  min-height:36px!important;
+  max-height:36px!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  border-radius:8px!important;
+
+  overflow:visible!important;
+  flex:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button svg{
+  width:18px!important;
+  height:18px!important;
+  flex:none!important;
+}
+
+/* Elimina mai più tagliato */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:last-child{
+  display:inline-flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+
+  border:1px solid #efbec5!important;
+  background:#fff0f2!important;
+  color:#c72f40!important;
+}
+
+/* ============================================================
+   FONT DELLA PAGINA
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"],
+html body .fmed-main-content[data-fmed-page="Infrastrutture"] *{
+  font-family:
+    "Futura Light",
+    "Futura PT Light",
+    "Futura PT",
+    "Futura",
+    "Century Gothic",
+    Arial,
+    sans-serif!important;
+
+  text-transform:uppercase!important;
+}
+
+/* Notebook da 15 pollici */
+@media (max-width:1440px){
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-command--infrastructure .p0-advanced .p0-filter-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-command--infrastructure .p0-filter-grid .p0-field{
+    grid-column:auto!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-register .p0-table-wrap{
+    height:390px!important;
+    min-height:390px!important;
+    max-height:390px!important;
+  }
+}
+
+/* INFRASTRUTTURE LEGGIBILITA DEFINITIVA END */
+
+/* INFRASTRUTTURE TOOLBAR AZIONI DEFINITIVA START */
+
+/* Colonna azioni */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register :is(th,td):nth-child(7){
+  box-sizing:border-box!important;
+  width:268px!important;
+  min-width:268px!important;
+  max-width:268px!important;
+  padding-left:10px!important;
+  padding-right:10px!important;
+  text-align:center!important;
+  overflow:visible!important;
+}
+
+/* Toolbar unica */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(6,38px)!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+
+  width:100%!important;
+  min-width:258px!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  overflow:visible!important;
+}
+
+/* Pulsanti uniformi */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  width:38px!important;
+  min-width:38px!important;
+  max-width:38px!important;
+
+  height:38px!important;
+  min-height:38px!important;
+  max-height:38px!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  border-width:1px!important;
+  border-style:solid!important;
+  border-radius:9px!important;
+
+  box-shadow:0 3px 8px rgba(15,42,67,.08)!important;
+
+  opacity:1!important;
+  visibility:visible!important;
+  overflow:visible!important;
+
+  transition:
+    transform .14s ease,
+    box-shadow .14s ease,
+    filter .14s ease!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:hover{
+  transform:translateY(-1px)!important;
+  box-shadow:0 5px 12px rgba(15,42,67,.14)!important;
+  filter:brightness(.98)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:active{
+  transform:translateY(0)!important;
+}
+
+/* Icone */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button svg{
+  width:18px!important;
+  height:18px!important;
+  flex:none!important;
+  stroke-width:1.8!important;
+}
+
+/* 1 — Analisi */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:nth-child(1){
+  border-color:#b9cee0!important;
+  background:#edf5fb!important;
+  color:#286f9f!important;
+}
+
+/* 2 — Documenti */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:nth-child(2){
+  border-color:#b9cee0!important;
+  background:#eef6fc!important;
+  color:#225f91!important;
+}
+
+/* 3 — Report */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:nth-child(3){
+  border-color:#afe0d8!important;
+  background:#e8f7f5!important;
+  color:#087e75!important;
+}
+
+/* 4 — Upload */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:nth-child(4){
+  border-color:#e8c67f!important;
+  background:#fff5dc!important;
+  color:#a96a00!important;
+}
+
+/* 5 — Modifica */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:nth-child(5){
+  border-color:#c8bee8!important;
+  background:#f3effd!important;
+  color:#6746ad!important;
+}
+
+/* 6 — Elimina */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:nth-child(6){
+  border-color:#efbdc5!important;
+  background:#fff0f2!important;
+  color:#c72f40!important;
+}
+
+/* Focus accessibile */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-register .p0-row-actions > button:focus-visible{
+  outline:3px solid rgba(8,121,90,.22)!important;
+  outline-offset:2px!important;
+}
+
+/* INFRASTRUTTURE TOOLBAR AZIONI DEFINITIVA END */
+
+/* INFRASTRUTTURE BARRA COMANDI UNICA START */
+
+/* Titolo ricerca senza pulsante laterale */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-command__intro{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  width:100%!important;
+}
+
+/* Barra unica */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-infrastructure-command-bar{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  align-items:center!important;
+  gap:11px!important;
+
+  width:100%!important;
+  min-height:72px!important;
+  height:72px!important;
+
+  margin:0!important;
+  padding:11px 18px!important;
+
+  border-top:1px solid #d5e4de!important;
+  background:#f4f9f7!important;
+}
+
+/* Tutti i comandi con proporzioni identiche */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-command-bar > .p0-btn{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  width:100%!important;
+  min-width:0!important;
+  height:50px!important;
+  min-height:50px!important;
+
+  margin:0!important;
+  padding:0 15px!important;
+
+  border-width:1px!important;
+  border-style:solid!important;
+  border-radius:9px!important;
+
+  font-family:
+    "Futura Light",
+    "Futura PT Light",
+    "Futura PT",
+    "Futura",
+    "Century Gothic",
+    Arial,
+    sans-serif!important;
+
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.015em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+
+  opacity:1!important;
+  box-shadow:0 4px 11px rgba(15,42,67,.11)!important;
+}
+
+/* Aggiornamento: blu */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-command-bar__refresh{
+  border-color:#176e9e!important;
+  background:#287faf!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* Nuova infrastruttura: verde principale */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-command-bar__new{
+  border-color:#076d51!important;
+  background:#087f5e!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* Excel: verde scuro distinto */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-command-bar__excel{
+  border-color:#145d42!important;
+  background:#1d704f!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* Azzera: rosso */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-command-bar__reset{
+  border-color:#bd2d39!important;
+  background:#cf3541!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* Stato disabilitato coerente */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-command-bar > .p0-btn:disabled{
+  border-color:#b6c9c2!important;
+  background:#c5d3ce!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+  cursor:not-allowed!important;
+  box-shadow:none!important;
+}
+
+/* Hover */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-command-bar > .p0-btn:not(:disabled):hover{
+  transform:translateY(-1px)!important;
+  filter:brightness(.97)!important;
+  box-shadow:0 6px 14px rgba(15,42,67,.16)!important;
+}
+
+/* Se l'utente non può creare, i tre pulsanti occupano tutta la riga */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-command-bar:has(
+  > .p0-btn:nth-child(3):last-child
+){
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+}
+
+/* Notebook 15 pollici */
+@media (max-width:1440px){
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-command--infrastructure .p0-infrastructure-command-bar{
+    gap:8px!important;
+    min-height:68px!important;
+    height:68px!important;
+    padding:9px 13px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-infrastructure-command-bar > .p0-btn{
+    height:48px!important;
+    min-height:48px!important;
+    padding:0 10px!important;
+    font-size:10px!important;
+  }
+}
+
+/* INFRASTRUTTURE BARRA COMANDI UNICA END */
+
+/* INFRASTRUTTURE VISTA PATRIMONIO DEDICATA START */
+
+/* ============================================================
+   BARRA PRINCIPALE A CINQUE COMANDI
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-command--infrastructure .p0-infrastructure-command-bar{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:100%!important;
+  min-height:72px!important;
+  height:72px!important;
+  padding:11px 18px!important;
+}
+
+/* Apri patrimonio: petrolio */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-command-bar__open{
+  border-color:#075c65!important;
+  background:#087681!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* ============================================================
+   PAGINA PRINCIPALE: NESSUNA TABELLA
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations--infrastructure:not(.is-infrastructure-register-open)
+> .p0-register{
+  display:none!important;
+}
+
+/* ============================================================
+   MODALITÀ PATRIMONIO APERTA
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations--infrastructure.is-infrastructure-register-open{
+  box-sizing:border-box!important;
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  height:calc(100vh - 74px)!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:10px 12px!important;
+  overflow:hidden!important;
+}
+
+/* Nasconde testata, KPI, ricerca e filtri nella vista dedicata */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations--infrastructure.is-infrastructure-register-open
+> :is(
+  .p0-operations__head,
+  .p0-metric-strip,
+  .p0-command--infrastructure
+){
+  display:none!important;
+}
+
+/* Registro a tutta pagina */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-operations--infrastructure.is-infrastructure-register-open
+> .p0-register{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:flex-start!important;
+
+  width:100%!important;
+  min-width:0!important;
+  height:100%!important;
+  min-height:0!important;
+  max-height:none!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  border:1px solid #cbded7!important;
+  border-radius:16px!important;
+
+  background:#ffffff!important;
+  box-shadow:0 10px 28px rgba(10,65,49,.10)!important;
+
+  overflow:hidden!important;
+}
+
+/* Testata della vista */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register > header{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:20px!important;
+
+  flex:0 0 104px!important;
+
+  width:100%!important;
+  min-height:104px!important;
+  height:104px!important;
+
+  margin:0!important;
+  padding:16px 20px!important;
+
+  border-bottom:1px solid #d7e4df!important;
+  background:#ffffff!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register > header h2{
+  margin:6px 0 0!important;
+  color:#0a304f!important;
+  font-size:31px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register > header p{
+  margin:8px 0 0!important;
+  color:#59758a!important;
+  font-size:10px!important;
+  line-height:1.15!important;
+  font-weight:800!important;
+}
+
+/* Chiudi patrimonio */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-register-close{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  min-width:210px!important;
+  height:50px!important;
+  min-height:50px!important;
+
+  margin:0!important;
+  padding:0 18px!important;
+
+  border:1px solid #bd2d39!important;
+  border-radius:9px!important;
+
+  background:#cf3541!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+/* Tabella usa tutta l’altezza rimanente */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register > .p0-table-wrap{
+  box-sizing:border-box!important;
+  display:block!important;
+
+  flex:1 1 0!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  height:0!important;
+  max-height:none!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  overflow-y:scroll!important;
+  overflow-x:auto!important;
+  scrollbar-gutter:stable!important;
+
+  background:#ffffff!important;
+}
+
+/* Tabelle e righe più leggibili nella vista dedicata */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register table{
+  width:100%!important;
+  min-width:1320px!important;
+  height:auto!important;
+  margin:0!important;
+  table-layout:fixed!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register th{
+  height:56px!important;
+  min-height:56px!important;
+  padding:0 14px!important;
+  font-size:11px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register tbody tr,
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register td{
+  height:88px!important;
+  min-height:88px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register td{
+  padding:13px 14px!important;
+  font-size:12px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register td b{
+  font-size:12px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register td small{
+  font-size:10px!important;
+}
+
+/* Notebook da 15 pollici */
+@media (max-width:1440px){
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-command--infrastructure .p0-infrastructure-command-bar{
+    gap:7px!important;
+    padding:9px 12px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-infrastructure-command-bar > .p0-btn{
+    padding:0 8px!important;
+    font-size:9px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .is-infrastructure-register-open
+  .p0-register > header{
+    flex-basis:94px!important;
+    height:94px!important;
+    min-height:94px!important;
+  }
+}
+
+/* INFRASTRUTTURE VISTA PATRIMONIO DEDICATA END */
+
+/* INFRASTRUTTURE PATRIMONIO AZIONI START */
+
+/* ============================================================
+   COLONNA AZIONI
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register :is(th,td):nth-child(7){
+  box-sizing:border-box!important;
+
+  width:286px!important;
+  min-width:286px!important;
+  max-width:286px!important;
+
+  padding-left:14px!important;
+  padding-right:14px!important;
+
+  text-align:center!important;
+  overflow:visible!important;
+}
+
+/* Intestazione centrata */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register th:nth-child(7){
+  text-align:center!important;
+}
+
+/* ============================================================
+   TOOLBAR UNICA
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register .p0-row-actions{
+  box-sizing:border-box!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+
+  width:100%!important;
+  min-width:0!important;
+
+  margin:0!important;
+  padding:6px 8px!important;
+
+  border:1px solid #d7e3df!important;
+  border-radius:12px!important;
+
+  background:#f6faf8!important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    0 3px 9px rgba(15,65,52,.07)!important;
+
+  overflow:visible!important;
+}
+
+/* ============================================================
+   PULSANTI
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register .p0-row-actions > button{
+  box-sizing:border-box!important;
+
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  flex:0 0 38px!important;
+
+  width:38px!important;
+  min-width:38px!important;
+  max-width:38px!important;
+
+  height:38px!important;
+  min-height:38px!important;
+  max-height:38px!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  border-width:1px!important;
+  border-style:solid!important;
+  border-radius:9px!important;
+
+  box-shadow:none!important;
+
+  opacity:1!important;
+  visibility:visible!important;
+
+  transition:
+    transform .14s ease,
+    box-shadow .14s ease,
+    filter .14s ease!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register .p0-row-actions > button:hover{
+  transform:translateY(-1px)!important;
+  box-shadow:0 5px 10px rgba(15,42,67,.13)!important;
+  filter:brightness(.98)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register .p0-row-actions > button:active{
+  transform:translateY(0)!important;
+}
+
+/* Icone */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register .p0-row-actions > button svg{
+  width:18px!important;
+  height:18px!important;
+  flex:none!important;
+  stroke-width:1.9!important;
+}
+
+/* ============================================================
+   COLORI FUNZIONALI
+   ============================================================ */
+
+/* Attività */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-row-actions > button:nth-child(1){
+  border-color:#b9cee0!important;
+  background:#edf5fb!important;
+  color:#286f9f!important;
+}
+
+/* Documentazione */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-row-actions > button:nth-child(2){
+  border-color:#b9cee0!important;
+  background:#eef6fc!important;
+  color:#225f91!important;
+}
+
+/* Report */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-row-actions > button:nth-child(3){
+  border-color:#afe0d8!important;
+  background:#e8f7f5!important;
+  color:#087e75!important;
+}
+
+/* Allegati / upload */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-row-actions > button:nth-child(4){
+  border-color:#e5c274!important;
+  background:#fff5dc!important;
+  color:#a96a00!important;
+}
+
+/* Modifica */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-row-actions > button:nth-child(5){
+  border-color:#c8bee8!important;
+  background:#f3effd!important;
+  color:#6746ad!important;
+}
+
+/* Elimina */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-row-actions > button:nth-child(6){
+  border-color:#efbdc5!important;
+  background:#fff0f2!important;
+  color:#c72f40!important;
+}
+
+/* Focus tastiera */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-row-actions > button:focus-visible{
+  outline:3px solid rgba(8,121,90,.20)!important;
+  outline-offset:2px!important;
+}
+
+/* ============================================================
+   RIGA E CONTENUTI
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register tbody tr,
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register td{
+  height:90px!important;
+  min-height:90px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register td{
+  vertical-align:middle!important;
+}
+
+/* Impedisce che l’ultima icona venga tagliata */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register,
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-table-wrap,
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register td:nth-child(7){
+  overflow-x:visible!important;
+}
+
+/* Notebook 15 pollici */
+@media (max-width:1440px){
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .is-infrastructure-register-open
+  .p0-register :is(th,td):nth-child(7){
+    width:272px!important;
+    min-width:272px!important;
+    max-width:272px!important;
+    padding-left:9px!important;
+    padding-right:9px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .is-infrastructure-register-open
+  .p0-register .p0-row-actions{
+    gap:5px!important;
+    padding:5px 6px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .is-infrastructure-register-open
+  .p0-register .p0-row-actions > button{
+    flex-basis:36px!important;
+    width:36px!important;
+    min-width:36px!important;
+    max-width:36px!important;
+    height:36px!important;
+    min-height:36px!important;
+    max-height:36px!important;
+  }
+}
+
+/* INFRASTRUTTURE PATRIMONIO AZIONI END */
+
+/* INFRASTRUTTURE PATRIMONIO COMANDI DEFINITIVI START */
+
+/* Testata patrimonio */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register > .p0-infrastructure-register-header{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(270px,360px) minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:18px!important;
+
+  flex:0 0 118px!important;
+  width:100%!important;
+  min-height:118px!important;
+  height:118px!important;
+
+  margin:0!important;
+  padding:14px 18px!important;
+
+  border-bottom:1px solid #d5e3de!important;
+  background:#ffffff!important;
+}
+
+/* Titolo */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-register-title h2{
+  margin:7px 0 0!important;
+  color:#082f50!important;
+  font-size:30px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-register-title p{
+  margin:8px 0 0!important;
+  color:#56748a!important;
+  font-size:10px!important;
+  line-height:1.2!important;
+  font-weight:800!important;
+}
+
+/* Barra quattro pulsanti */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-register-toolbar{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  align-items:center!important;
+  gap:8px!important;
+
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-register-toolbar > .p0-btn{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  width:100%!important;
+  min-width:0!important;
+  height:50px!important;
+  min-height:50px!important;
+
+  margin:0!important;
+  padding:0 9px!important;
+
+  border-width:1px!important;
+  border-style:solid!important;
+  border-radius:9px!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+
+  box-shadow:0 4px 10px rgba(15,42,67,.11)!important;
+}
+
+/* Seleziona */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-register-toolbar__select{
+  border-color:#176e9e!important;
+  background:#287faf!important;
+}
+
+/* Deseleziona */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-register-toolbar__clear{
+  border-color:#627b90!important;
+  background:#70889c!important;
+}
+
+/* Excel */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-register-toolbar__excel{
+  border-color:#126844!important;
+  background:#1d8057!important;
+}
+
+/* Chiudi */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-register-toolbar__close{
+  border-color:#bd2d39!important;
+  background:#cf3541!important;
+}
+
+/* Disabilitati */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-register-toolbar > .p0-btn:disabled{
+  border-color:#bcc9c5!important;
+  background:#c8d2cf!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+  cursor:not-allowed!important;
+  box-shadow:none!important;
+}
+
+/* Colonna selezione */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register :is(th,td):nth-child(1){
+  width:58px!important;
+  min-width:58px!important;
+  max-width:58px!important;
+  padding:0 9px!important;
+  text-align:center!important;
+}
+
+/* Impianto */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register :is(th,td):nth-child(2){
+  width:27%!important;
+  min-width:300px!important;
+}
+
+/* Contesto */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register :is(th,td):nth-child(3){
+  width:17%!important;
+  min-width:185px!important;
+}
+
+/* Gestione */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register :is(th,td):nth-child(4){
+  width:14%!important;
+  min-width:160px!important;
+}
+
+/* Ciclo */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register :is(th,td):nth-child(5){
+  width:9%!important;
+  min-width:105px!important;
+}
+
+/* Prossima */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register :is(th,td):nth-child(6){
+  width:10%!important;
+  min-width:120px!important;
+}
+
+/* Stato */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register :is(th,td):nth-child(7){
+  width:10%!important;
+  min-width:125px!important;
+}
+
+/* Azioni */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register :is(th,td):nth-child(8){
+  width:280px!important;
+  min-width:280px!important;
+  max-width:280px!important;
+  padding-left:10px!important;
+  padding-right:10px!important;
+  text-align:center!important;
+  overflow:visible!important;
+}
+
+/* Checkbox */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-select-cell input[type="checkbox"]{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+
+  box-sizing:border-box!important;
+  display:inline-grid!important;
+  place-content:center!important;
+
+  width:21px!important;
+  height:21px!important;
+
+  margin:0!important;
+
+  border:1px solid #8fa9a0!important;
+  border-radius:5px!important;
+
+  background:#ffffff!important;
+  cursor:pointer!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-select-cell input[type="checkbox"]::before{
+  content:""!important;
+  width:10px!important;
+  height:6px!important;
+
+  border-left:2px solid #ffffff!important;
+  border-bottom:2px solid #ffffff!important;
+
+  transform:rotate(-45deg) scale(0)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-select-cell input[type="checkbox"]:checked{
+  border-color:#08795a!important;
+  background:#08795a!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.p0-infrastructure-select-cell input[type="checkbox"]:checked::before{
+  transform:rotate(-45deg) scale(1)!important;
+}
+
+/* Riga selezionata */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register tbody tr.is-selected td{
+  background:#eaf8f3!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register tbody tr.is-selected td:first-child{
+  box-shadow:inset 4px 0 0 #08795a!important;
+}
+
+/* Toolbar azioni sulla colonna corretta */
+html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+.is-infrastructure-register-open
+.p0-register td:nth-child(8) .p0-row-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  width:100%!important;
+}
+
+/* Notebook 15 pollici */
+@media (max-width:1440px){
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .is-infrastructure-register-open
+  .p0-register > .p0-infrastructure-register-header{
+    grid-template-columns:minmax(230px,290px) minmax(0,1fr)!important;
+    gap:10px!important;
+    flex-basis:108px!important;
+    min-height:108px!important;
+    height:108px!important;
+    padding:11px 13px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-infrastructure-register-toolbar{
+    gap:6px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .p0-infrastructure-register-toolbar > .p0-btn{
+    height:46px!important;
+    min-height:46px!important;
+    padding:0 5px!important;
+    font-size:9px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Infrastrutture"]
+  .is-infrastructure-register-open
+  .p0-register :is(th,td):nth-child(8){
+    width:270px!important;
+    min-width:270px!important;
+    max-width:270px!important;
+  }
+}
+
+/* INFRASTRUTTURE PATRIMONIO COMANDI DEFINITIVI END */
