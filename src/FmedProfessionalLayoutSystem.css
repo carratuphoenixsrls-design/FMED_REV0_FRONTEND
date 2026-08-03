@@ -1,0 +1,670 @@
+
+/* FMED PROFESSIONAL PROPORTIONS V2 START */
+
+html body .fmed-app-root{
+  --fmed-pro-page-gap:12px;
+  --fmed-pro-radius:16px;
+  --fmed-pro-border:#d7e2ec;
+  --fmed-pro-shadow:0 8px 20px rgba(15,42,67,.07);
+  --fmed-pro-control-height:42px;
+  --fmed-pro-button-height:40px;
+}
+
+/* ============================================================
+   PAGINE: STESSA LARGHEZZA E STESSO UTILIZZO DELLO SPAZIO
+   ============================================================ */
+
+html body .fmed-app-root :is(
+  .fmed-dashboard-page,
+  .p0-asset-page,
+  .p0-operations.p0-operations--maintenance
+){
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:0!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:12px 16px!important;
+}
+
+html body .fmed-app-root :is(
+  .fmed-dashboard-page,
+  .p0-asset-page,
+  .p0-operations.p0-operations--maintenance
+) > *{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+}
+
+/* ============================================================
+   TESTATE: MEDESIMA ALTEZZA, PADDING E GERARCHIA
+   ============================================================ */
+
+html body .fmed-app-root :is(
+  .fmed-dashboard-header,
+  .p0-asset-hero,
+  .p0-operations--maintenance > .p0-operations__head
+){
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  width:100%!important;
+  min-height:112px!important;
+  height:112px!important;
+  margin:0!important;
+  padding:16px 22px!important;
+  border-radius:var(--fmed-pro-radius) var(--fmed-pro-radius) 0 0!important;
+  overflow:hidden!important;
+}
+
+/* Gruppi identità */
+html body .fmed-app-root :is(
+  .fmed-dashboard-title,
+  .p0-asset-hero-main,
+  .p0-operations__identity
+){
+  display:flex!important;
+  align-items:center!important;
+  gap:15px!important;
+  min-width:0!important;
+}
+
+/* Icone testata */
+html body .fmed-app-root :is(
+  .fmed-dashboard-title-icon,
+  .p0-asset-hero-icon,
+  .p0-operations__icon
+){
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 50px!important;
+  width:50px!important;
+  min-width:50px!important;
+  height:50px!important;
+  border-radius:13px!important;
+}
+
+/* Titoli */
+html body .fmed-app-root :is(
+  .fmed-dashboard-title h2,
+  .p0-asset-hero h1,
+  .p0-operations__identity h1
+){
+  margin:0!important;
+  font-size:30px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.01em!important;
+  white-space:nowrap!important;
+}
+
+/* Eyebrow */
+html body .fmed-app-root :is(
+  .fmed-dashboard-title > div > span,
+  .p0-asset-hero span,
+  .p0-operations__identity > div > span
+){
+  display:block!important;
+  margin:0 0 5px!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.11em!important;
+  white-space:nowrap!important;
+}
+
+/* Sottotitoli */
+html body .fmed-app-root :is(
+  .fmed-dashboard-title p,
+  .p0-asset-hero p,
+  .p0-operations__identity p
+){
+  margin:7px 0 0!important;
+  font-size:10px!important;
+  line-height:1.2!important;
+  font-weight:800!important;
+  letter-spacing:.02em!important;
+  white-space:nowrap!important;
+}
+
+/* ============================================================
+   KPI: ATTACCATI ALLA TESTATA E PROPORZIONI IDENTICHE
+   ============================================================ */
+
+html body .fmed-app-root :is(
+  .fmed-dashboard-kpi-grid,
+  .p0-asset-kpis,
+  .p0-operations--maintenance > .p0-metric-strip
+){
+  box-sizing:border-box!important;
+  display:grid!important;
+  gap:0!important;
+  width:100%!important;
+  min-height:84px!important;
+  margin:-1px 0 var(--fmed-pro-page-gap)!important;
+  padding:0!important;
+  border:1px solid var(--fmed-pro-border)!important;
+  border-top:0!important;
+  border-radius:0 0 var(--fmed-pro-radius) var(--fmed-pro-radius)!important;
+  background:#ffffff!important;
+  box-shadow:var(--fmed-pro-shadow)!important;
+  overflow:hidden!important;
+}
+
+/* Colonne specifiche */
+html body .fmed-app-root .fmed-dashboard-kpi-grid{
+  grid-template-columns:repeat(6,minmax(0,1fr))!important;
+}
+
+html body .fmed-app-root .p0-asset-kpis,
+html body .fmed-app-root .p0-operations--maintenance > .p0-metric-strip{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+}
+
+/* Celle KPI */
+html body .fmed-app-root :is(
+  .fmed-dashboard-kpi,
+  .p0-asset-kpi,
+  .p0-metric-strip > article
+){
+  position:relative!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:38px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:84px!important;
+  height:84px!important;
+  margin:0!important;
+  padding:11px 15px!important;
+  border:0!important;
+  border-right:1px solid #dfe7ef!important;
+  border-radius:0!important;
+  background:#ffffff!important;
+  box-shadow:none!important;
+}
+
+html body .fmed-app-root :is(
+  .fmed-dashboard-kpi:last-child,
+  .p0-asset-kpi:last-child,
+  .p0-metric-strip > article:last-child
+){
+  border-right:0!important;
+}
+
+/* Icone KPI */
+html body .fmed-app-root :is(
+  .fmed-dashboard-kpi-icon,
+  .p0-asset-kpi-icon,
+  .p0-metric-strip__icon
+){
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:38px!important;
+  min-width:38px!important;
+  height:38px!important;
+  border-radius:11px!important;
+}
+
+/* Titolo KPI */
+html body .fmed-app-root :is(
+  .fmed-dashboard-kpi span,
+  .fmed-dashboard-kpi small,
+  .p0-asset-kpi span,
+  .p0-metric-strip small
+){
+  margin:0!important;
+  font-size:8.5px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.04em!important;
+  white-space:nowrap!important;
+}
+
+/* Valore KPI */
+html body .fmed-app-root :is(
+  .fmed-dashboard-kpi strong,
+  .p0-asset-kpi strong,
+  .p0-asset-kpi h2,
+  .p0-metric-strip strong
+){
+  margin:3px 0 0!important;
+  font-size:24px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:-.01em!important;
+  white-space:nowrap!important;
+}
+
+/* Nota KPI */
+html body .fmed-app-root :is(
+  .fmed-dashboard-kpi em,
+  .fmed-dashboard-kpi small,
+  .p0-asset-kpi small,
+  .p0-asset-kpi em,
+  .p0-metric-strip article > div > span
+){
+  margin-top:4px!important;
+  font-size:7.5px!important;
+  line-height:1.05!important;
+  font-weight:800!important;
+  white-space:nowrap!important;
+}
+
+/* ============================================================
+   CARD OPERATIVE
+   ============================================================ */
+
+html body .fmed-app-root :is(
+  .fmed-dashboard-panel,
+  .p0-asset-search,
+  .p0-command,
+  .p0-register
+){
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0 0 var(--fmed-pro-page-gap)!important;
+  border:1px solid var(--fmed-pro-border)!important;
+  border-radius:var(--fmed-pro-radius)!important;
+  background:#ffffff!important;
+  box-shadow:var(--fmed-pro-shadow)!important;
+}
+
+/* Titoli sezioni */
+html body .fmed-app-root :is(
+  .fmed-dashboard-panel h2,
+  .fmed-dashboard-panel h3,
+  .p0-asset-search h2,
+  .p0-command__intro h2,
+  .p0-register h2
+){
+  margin:0!important;
+  font-size:20px!important;
+  line-height:1.05!important;
+  font-weight:900!important;
+}
+
+/* Testi secondari */
+html body .fmed-app-root :is(
+  .fmed-dashboard-panel p,
+  .p0-asset-search p,
+  .p0-command__intro p,
+  .p0-register p
+){
+  margin:5px 0 0!important;
+  font-size:9px!important;
+  line-height:1.15!important;
+  font-weight:800!important;
+}
+
+/* ============================================================
+   CAMPI E PULSANTI
+   ============================================================ */
+
+html body .fmed-app-root :is(input,select){
+  box-sizing:border-box!important;
+  min-height:var(--fmed-pro-control-height)!important;
+  height:var(--fmed-pro-control-height)!important;
+  padding:0 13px!important;
+  border-radius:10px!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:800!important;
+}
+
+html body .fmed-app-root textarea{
+  box-sizing:border-box!important;
+  min-height:82px!important;
+  padding:10px 13px!important;
+  border-radius:10px!important;
+  font-size:10px!important;
+  line-height:1.3!important;
+  font-weight:800!important;
+}
+
+html body .fmed-app-root :is(
+  button,
+  .p0-btn,
+  [role="button"]
+){
+  box-sizing:border-box!important;
+  min-height:var(--fmed-pro-button-height)!important;
+  height:var(--fmed-pro-button-height)!important;
+  padding:0 15px!important;
+  border-radius:9px!important;
+  font-size:9px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+/* ============================================================
+   NOTEBOOK 15 POLLICI
+   ============================================================ */
+
+@media (max-width:1440px){
+
+  html body .fmed-app-root :is(
+    .fmed-dashboard-page,
+    .p0-asset-page,
+    .p0-operations.p0-operations--maintenance
+  ){
+    padding:10px 12px!important;
+  }
+
+  html body .fmed-app-root :is(
+    .fmed-dashboard-header,
+    .p0-asset-hero,
+    .p0-operations--maintenance > .p0-operations__head
+  ){
+    min-height:104px!important;
+    height:104px!important;
+    padding:14px 18px!important;
+  }
+
+  html body .fmed-app-root :is(
+    .fmed-dashboard-title h2,
+    .p0-asset-hero h1,
+    .p0-operations__identity h1
+  ){
+    font-size:27px!important;
+  }
+
+  html body .fmed-app-root :is(
+    .fmed-dashboard-kpi,
+    .p0-asset-kpi,
+    .p0-metric-strip > article
+  ){
+    min-height:78px!important;
+    height:78px!important;
+    padding:9px 12px!important;
+  }
+
+  html body .fmed-app-root :is(
+    .fmed-dashboard-kpi strong,
+    .p0-asset-kpi strong,
+    .p0-asset-kpi h2,
+    .p0-metric-strip strong
+  ){
+    font-size:22px!important;
+  }
+}
+
+/* FMED PROFESSIONAL PROPORTIONS V2 END */
+
+/* FMED SCALA GLOBALE START */
+
+html body .fmed-app-root{
+  --fmed-pro-page-gap:13px;
+  --fmed-pro-radius:17px;
+  --fmed-pro-control-height:46px;
+  --fmed-pro-button-height:44px;
+}
+
+/* Testate +10% */
+html body .fmed-app-root :is(
+  .fmed-dashboard-header,
+  .p0-asset-hero,
+  .p0-operations--maintenance > .p0-operations__head
+){
+  min-height:123px!important;
+  height:123px!important;
+  padding:18px 24px!important;
+}
+
+/* Icone testata +10% */
+html body .fmed-app-root :is(
+  .fmed-dashboard-title-icon,
+  .p0-asset-hero-icon,
+  .p0-operations__icon
+){
+  flex-basis:55px!important;
+  width:55px!important;
+  min-width:55px!important;
+  height:55px!important;
+  border-radius:14px!important;
+}
+
+/* Titoli +10% */
+html body .fmed-app-root :is(
+  .fmed-dashboard-title h2,
+  .p0-asset-hero h1,
+  .p0-operations__identity h1
+){
+  font-size:33px!important;
+}
+
+/* Eyebrow e sottotitoli +10% */
+html body .fmed-app-root :is(
+  .fmed-dashboard-title > div > span,
+  .p0-asset-hero span,
+  .p0-operations__identity > div > span
+){
+  font-size:11px!important;
+}
+
+html body .fmed-app-root :is(
+  .fmed-dashboard-title p,
+  .p0-asset-hero p,
+  .p0-operations__identity p
+){
+  font-size:11px!important;
+}
+
+/* KPI +10% */
+html body .fmed-app-root :is(
+  .fmed-dashboard-kpi-grid,
+  .p0-asset-kpis,
+  .p0-operations--maintenance > .p0-metric-strip
+){
+  min-height:92px!important;
+}
+
+html body .fmed-app-root :is(
+  .fmed-dashboard-kpi,
+  .p0-asset-kpi,
+  .p0-metric-strip > article
+){
+  min-height:92px!important;
+  height:92px!important;
+  padding:12px 16px!important;
+  grid-template-columns:42px minmax(0,1fr)!important;
+  gap:11px!important;
+}
+
+html body .fmed-app-root :is(
+  .fmed-dashboard-kpi-icon,
+  .p0-asset-kpi-icon,
+  .p0-metric-strip__icon
+){
+  width:42px!important;
+  min-width:42px!important;
+  height:42px!important;
+  border-radius:12px!important;
+}
+
+html body .fmed-app-root :is(
+  .fmed-dashboard-kpi strong,
+  .p0-asset-kpi strong,
+  .p0-asset-kpi h2,
+  .p0-metric-strip strong
+){
+  font-size:26px!important;
+}
+
+html body .fmed-app-root :is(
+  .fmed-dashboard-kpi span,
+  .fmed-dashboard-kpi small,
+  .p0-asset-kpi span,
+  .p0-metric-strip small
+){
+  font-size:9.3px!important;
+}
+
+html body .fmed-app-root :is(
+  .fmed-dashboard-kpi em,
+  .p0-asset-kpi small,
+  .p0-asset-kpi em,
+  .p0-metric-strip article > div > span
+){
+  font-size:8.2px!important;
+}
+
+/* Titoli sezioni +10% */
+html body .fmed-app-root :is(
+  .fmed-dashboard-panel h2,
+  .fmed-dashboard-panel h3,
+  .p0-asset-search h2,
+  .p0-command__intro h2,
+  .p0-register h2
+){
+  font-size:22px!important;
+}
+
+/* Campi e pulsanti +10% */
+html body .fmed-app-root :is(input,select){
+  min-height:46px!important;
+  height:46px!important;
+  padding:0 14px!important;
+  font-size:11px!important;
+}
+
+html body .fmed-app-root textarea{
+  min-height:90px!important;
+  padding:11px 14px!important;
+  font-size:11px!important;
+}
+
+html body .fmed-app-root :is(
+  button,
+  .p0-btn,
+  [role="button"]
+){
+  min-height:44px!important;
+  height:44px!important;
+  padding:0 17px!important;
+  font-size:10px!important;
+}
+
+/* FMED SCALA GLOBALE END */
+
+/* ASSET TESTATA ALLINEAMENTO DEFINITIVO START */
+
+/* Sostituisce il comportamento space-between solo nella testata Asset */
+html body .fmed-app-root .p0-asset-hero{
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:16px!important;
+  width:100%!important;
+  min-height:123px!important;
+  height:123px!important;
+  padding:18px 24px!important;
+}
+
+/* Tutti i figli diretti restano uniti sulla sinistra */
+html body .fmed-app-root .p0-asset-hero > *{
+  flex:0 0 auto!important;
+  margin:0!important;
+  transform:none!important;
+}
+
+/* Icona Asset */
+html body .fmed-app-root .p0-asset-hero > :first-child{
+  order:1!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 55px!important;
+  width:55px!important;
+  min-width:55px!important;
+  height:55px!important;
+  margin:0!important;
+}
+
+/* Gruppo testi immediatamente dopo l'icona */
+html body .fmed-app-root .p0-asset-hero > :nth-child(2){
+  order:2!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  flex:0 1 auto!important;
+  min-width:0!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:left!important;
+  transform:none!important;
+}
+
+/* Tutti i testi allineati a sinistra */
+html body .fmed-app-root .p0-asset-hero > :nth-child(2) :is(
+  span,
+  h1,
+  h2,
+  p
+){
+  position:static!important;
+  inset:auto!important;
+  width:auto!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  text-align:left!important;
+  transform:none!important;
+}
+
+/* Eyebrow */
+html body .fmed-app-root .p0-asset-hero > :nth-child(2) > span{
+  margin:0 0 5px!important;
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+/* Titolo */
+html body .fmed-app-root .p0-asset-hero > :nth-child(2) :is(h1,h2){
+  margin:0!important;
+  font-size:33px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+/* Sottotitolo */
+html body .fmed-app-root .p0-asset-hero > :nth-child(2) p{
+  margin:7px 0 0!important;
+  font-size:11px!important;
+  line-height:1.15!important;
+  font-weight:800!important;
+  white-space:nowrap!important;
+}
+
+/* Protezione contro regole che spingono il testo a destra */
+html body .fmed-app-root .p0-asset-hero{
+  text-align:left!important;
+}
+
+html body .fmed-app-root .p0-asset-hero > :nth-child(2){
+  margin-left:0!important;
+  margin-right:auto!important;
+}
+
+/* ASSET TESTATA ALLINEAMENTO DEFINITIVO END */

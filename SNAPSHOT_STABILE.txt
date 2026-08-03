@@ -1,0 +1,14 @@
+﻿FMED REV0 UFFICIO - SNAPSHOT GRAFICO STABILE
+Creato: 30/07/2026 18:45:04
+Origine: C:\Users\FabioCarratu\Downloads\FMED_REV0_UFFICIO
+Override grafici presenti: 432
+NON RIMUOVERE GLI !important: contengono le modifiche grafiche approvate.
+
+Algorithm Hash                                                             Path                                                          
+--------- ----                                                             ----                                                          
+SHA256    6B6D950BF64A89FFA7CB0EEC6433AC23EA167CB1E61ECB09D96C27D22610440A C:\Users\FabioCarratu\OneDrive - Marilab Srl\Desktop\FMED_R...
+SHA256    25C4D7DAA41EA72A69426647F750BF4B574901EE73C49E9076C7F95F09B7B2CF C:\Users\FabioCarratu\OneDrive - Marilab Srl\Desktop\FMED_R...
+SHA256    6C0CE442DDB4CD14CE4D09F85E441E542CF921DD4146D18CBCF45776731C71A0 C:\Users\FabioCarratu\OneDrive - Marilab Srl\Desktop\FMED_R...
+
+
+
