@@ -1,0 +1,218 @@
+.fmed-canonical-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.fmed-canonical-label {
+  color: var(--fmed-text, #172033);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.fmed-canonical-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34px;
+  gap: 6px;
+  min-width: 0;
+}
+
+.fmed-canonical-select {
+  width: 100%;
+  min-width: 0;
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--fmed-border, #d8e4e7);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--fmed-text, #172033);
+  font: inherit;
+}
+
+.fmed-canonical-add {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid rgba(49, 95, 140, .28);
+  border-radius: 10px;
+  background: #eff8f7;
+  color: #244a73;
+  font-size: 19px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.fmed-canonical-hint {
+  color: var(--fmed-muted, #667981);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+/* Quick Add resta nel flusso della pagina come editor contestuale. */
+.fmed-canonical-inline-editor {
+  grid-column: 1 / -1;
+  margin-top: 7px;
+  min-width: 0;
+  border: 1px solid rgba(49, 95, 140, .24);
+  border-radius: 13px;
+  background: #f8fafc;
+  box-shadow: 0 8px 22px rgba(11, 47, 56, .07);
+  overflow: hidden;
+}
+
+.fmed-canonical-inline-editor-content {
+  width: 100%;
+  min-width: 0;
+}
+
+.fmed-canonical-inline-editor-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #dce8e6;
+}
+
+.fmed-canonical-inline-editor-head h3 {
+  margin: 2px 0 3px;
+  color: #172033;
+  font-size: 17px;
+}
+
+.fmed-canonical-inline-editor-head p {
+  margin: 0;
+  color: #667981;
+  font-size: 12px;
+}
+
+.fmed-canonical-close {
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid #d6e3e4;
+  border-radius: 9px;
+  background: #fff;
+  color: #172033;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.fmed-canonical-body {
+  padding: 12px 14px 14px;
+}
+
+.fmed-canonical-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.fmed-canonical-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+  color: #405962;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.fmed-canonical-grid label.wide {
+  grid-column: 1 / -1;
+}
+
+.fmed-canonical-grid :is(input, select, textarea) {
+  width: 100%;
+  min-width: 0;
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 1px solid #d6e3e4;
+  border-radius: 9px;
+  background: #fff;
+  color: #172033;
+  font: inherit;
+}
+
+.fmed-canonical-grid textarea {
+  min-height: 62px;
+  resize: vertical;
+}
+
+.fmed-canonical-suggestions {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #e7d596;
+  border-radius: 10px;
+  background: #fff9e8;
+}
+
+.fmed-canonical-suggestions > p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.fmed-canonical-suggestion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 34px;
+  padding: 0 9px;
+  border: 1px solid #e4d8aa;
+  border-radius: 8px;
+  background: #fff;
+  color: #172033;
+  cursor: pointer;
+}
+
+.fmed-canonical-distinct-confirm {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.fmed-canonical-distinct-confirm span {
+  display: grid;
+  gap: 2px;
+}
+
+.fmed-canonical-message {
+  margin-top: 9px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  background: #fff3d4;
+  color: #765700;
+  font-size: 12px;
+}
+
+.fmed-canonical-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 11px;
+}
+
+.fmed-canonical-actions button {
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 9px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.fmed-canonical-cancel {
+  border: 1px solid #d6e3e4;
+  background: #fff;
+  color: #172033;
+}
+
+.fmed-canonical-save {
+  border: 1px solid #315f8c;
+  background: #315f8c;
+  color: #fff;
+}

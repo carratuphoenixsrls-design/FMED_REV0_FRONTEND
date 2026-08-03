@@ -1,0 +1,2010 @@
+
+/* SCADENZE V4 CLASSI REALI START */
+
+html body{
+  --scad-dark:#84113f;
+  --scad-main:#ad1858;
+  --scad-mid:#c52d6d;
+  --scad-light:#db4a84;
+  --scad-soft:#fbedf4;
+  --scad-border:#e7d5de;
+  --scad-text:#0b294b;
+}
+
+/* ============================================================
+   ORDINE GENERALE
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  gap:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+> .p0-operations--deadline{
+  order:1!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+> .fmed-operational4-expired-toolbar,
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+> .fmed-operational8-expired-toolbar{
+  order:20!important;
+}
+
+/* ============================================================
+   PAGINA SCADENZE
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations--deadline{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:0!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:12px 16px!important;
+}
+
+/* ============================================================
+   TESTATA REALE: P0-OPERATIONS__HEAD
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations--deadline > .p0-operations__head{
+  order:1!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:22px!important;
+  width:100%!important;
+  min-height:123px!important;
+  height:123px!important;
+  margin:0!important;
+  padding:18px 24px!important;
+  border:0!important;
+  border-radius:17px 17px 0 0!important;
+  background:
+    radial-gradient(
+      circle at 84% 10%,
+      rgba(255,255,255,.15) 0 88px,
+      transparent 89px
+    ),
+    linear-gradient(
+      120deg,
+      var(--scad-dark) 0%,
+      var(--scad-main) 56%,
+      var(--scad-light) 100%
+    )!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+
+/* Qualsiasi testo della testata diventa realmente bianco */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations__head,
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations__head *,
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations__head :is(
+  span,div,p,h1,h2,h3,strong,small,b
+){
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  text-shadow:none!important;
+  opacity:1!important;
+}
+
+/* Identità sinistra */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations__identity{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:16px!important;
+  min-width:0!important;
+  margin:0!important;
+}
+
+/* Icona testata */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations__icon{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 55px!important;
+  width:55px!important;
+  min-width:55px!important;
+  height:55px!important;
+  margin:0!important;
+  border:1px solid rgba(255,255,255,.43)!important;
+  border-radius:14px!important;
+  background:rgba(255,255,255,.13)!important;
+}
+
+/* Colonna testo */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations__identity > div{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:left!important;
+}
+
+/* Eyebrow */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations__identity > div > span{
+  display:block!important;
+  margin:0 0 5px!important;
+  padding:0!important;
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.11em!important;
+  white-space:nowrap!important;
+}
+
+/* Titolo */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations__identity h1{
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  font-size:33px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+/* Sottotitolo */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations__identity p{
+  display:block!important;
+  margin:7px 0 0!important;
+  padding:0!important;
+  max-width:780px!important;
+  font-size:11px!important;
+  line-height:1.2!important;
+  font-weight:800!important;
+  white-space:normal!important;
+}
+
+/* Indicatore destro */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations__metric{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  flex:0 0 190px!important;
+  width:190px!important;
+  min-width:190px!important;
+  min-height:84px!important;
+  margin:0!important;
+  padding:13px 18px!important;
+  border:1px solid rgba(255,255,255,.43)!important;
+  border-radius:13px!important;
+  background:rgba(255,255,255,.13)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations__metric strong{
+  margin:0!important;
+  font-size:38px!important;
+  line-height:.95!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations__metric span{
+  margin-top:7px!important;
+  font-size:10px!important;
+  line-height:1.1!important;
+  font-weight:900!important;
+}
+
+/* ============================================================
+   KPI: CINQUE SU UNA RIGA ATTACCATI ALLA TESTATA
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-operations--deadline > .p0-metric-strip{
+  order:2!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:0!important;
+  width:100%!important;
+  min-height:92px!important;
+  margin:-1px 0 13px!important;
+  padding:0!important;
+  border:1px solid #d7e2ec!important;
+  border-top:0!important;
+  border-radius:0 0 17px 17px!important;
+  background:#ffffff!important;
+  box-shadow:0 8px 20px rgba(15,42,67,.07)!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-metric-strip > article{
+  position:relative!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:42px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:11px!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:92px!important;
+  height:92px!important;
+  margin:0!important;
+  padding:12px 16px!important;
+  border:0!important;
+  border-right:1px solid #dfe7ef!important;
+  border-radius:0!important;
+  background:#ffffff!important;
+  box-shadow:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-metric-strip > article:last-child{
+  border-right:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-metric-strip > article::after{
+  content:""!important;
+  position:absolute!important;
+  left:14px!important;
+  right:14px!important;
+  bottom:0!important;
+  height:3px!important;
+  background:var(--scad-mid)!important;
+}
+
+/* ============================================================
+   AGENDA CON SPAZIATURA PROFESSIONALE
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command--deadline{
+  order:3!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:0 0 13px!important;
+  border:1px solid #d7e2ec!important;
+  border-radius:17px!important;
+  background:#ffffff!important;
+  box-shadow:0 8px 20px rgba(15,42,67,.06)!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__primary{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(380px,.9fr) minmax(620px,1.55fr)!important;
+  align-items:center!important;
+  gap:25px!important;
+  width:100%!important;
+  min-height:142px!important;
+  padding:20px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__intro h2{
+  margin:0!important;
+  max-width:450px!important;
+  font-size:23px!important;
+  line-height:1.08!important;
+  font-weight:900!important;
+  color:var(--scad-text)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-deadline-quick{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  align-items:end!important;
+  gap:12px!important;
+}
+
+/* ============================================================
+   AFFINA AGENDA APERTO E VISIBILE
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+details.p0-advanced{
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  border-top:1px solid #dfe7ef!important;
+  background:#fbfcfe!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+details.p0-advanced > summary{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  min-height:54px!important;
+  padding:12px 20px!important;
+  list-style:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+details.p0-advanced > summary::-webkit-details-marker{
+  display:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-filter-grid{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  align-items:end!important;
+  gap:12px!important;
+  width:100%!important;
+  padding:4px 20px 18px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-field{
+  display:grid!important;
+  grid-template-rows:auto 46px!important;
+  gap:7px!important;
+  min-width:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-field :is(select,input){
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:46px!important;
+  min-height:46px!important;
+  padding:0 13px!important;
+  border:1px solid #c7d5e3!important;
+  border-radius:10px!important;
+  background:#ffffff!important;
+}
+
+/* ============================================================
+   PULSANTI
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__actions{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  align-items:center!important;
+  gap:12px!important;
+  width:100%!important;
+  padding:13px 16px!important;
+  border-top:1px solid #dfe7ef!important;
+  background:#ffffff!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__actions > .p0-btn{
+  width:100%!important;
+  min-width:0!important;
+  height:44px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:0 12px!important;
+  border-radius:9px!important;
+  font-size:10px!important;
+  font-weight:900!important;
+}
+
+/* ============================================================
+   SIDEBAR REALE
+   ============================================================ */
+
+html body .fmed-app-root:has(
+  .fmed-main-content[data-fmed-page="Scadenze"]
+)
+:is(div,aside,section):has(
+  > .fmed-sidebar-controls
+):has(
+  > .fmed-sidebar-navigation
+){
+  background:
+    radial-gradient(
+      circle at 82% 14%,
+      rgba(255,255,255,.15) 0 74px,
+      transparent 75px
+    ),
+    linear-gradient(
+      180deg,
+      #771034 0%,
+      #98174b 50%,
+      #b72562 100%
+    )!important;
+  border-right:1px solid rgba(89,8,38,.38)!important;
+  box-shadow:6px 0 22px rgba(83,12,45,.15)!important;
+}
+
+/* Copre anche il contenitore padre nel caso abbia una classe specifica */
+html body .fmed-app-root:has(
+  .fmed-main-content[data-fmed-page="Scadenze"]
+)
+:has(> .fmed-sidebar-controls)
+:has(> .fmed-sidebar-navigation){
+  background-color:#921646!important;
+  background-image:
+    radial-gradient(
+      circle at 82% 14%,
+      rgba(255,255,255,.15) 0 74px,
+      transparent 75px
+    ),
+    linear-gradient(
+      180deg,
+      #771034 0%,
+      #98174b 50%,
+      #b72562 100%
+    )!important;
+}
+
+/* Testi sidebar */
+html body .fmed-app-root:has(
+  .fmed-main-content[data-fmed-page="Scadenze"]
+) :is(
+  .fmed-sidebar-controls,
+  .fmed-sidebar-navigation,
+  .fmed-sidebar-footer
+),
+html body .fmed-app-root:has(
+  .fmed-main-content[data-fmed-page="Scadenze"]
+) :is(
+  .fmed-sidebar-controls,
+  .fmed-sidebar-navigation,
+  .fmed-sidebar-footer
+) *{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* Voci menu */
+html body .fmed-app-root:has(
+  .fmed-main-content[data-fmed-page="Scadenze"]
+) .fmed-side-menu-btn{
+  border-color:rgba(255,255,255,.18)!important;
+  background:transparent!important;
+  color:#ffffff!important;
+}
+
+/* Voce attiva */
+html body .fmed-app-root:has(
+  .fmed-main-content[data-fmed-page="Scadenze"]
+) .fmed-side-menu-btn.is-active{
+  border:1px solid rgba(255,255,255,.45)!important;
+  background:rgba(255,255,255,.19)!important;
+  box-shadow:
+    inset 4px 0 0 #ffffff,
+    0 6px 15px rgba(64,6,30,.20)!important;
+}
+
+/* ============================================================
+   PANNELLO OBSOLETE IN FONDO
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.fmed-operational4-expired-toolbar,
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.fmed-operational8-expired-toolbar{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(360px,1fr) minmax(720px,1.7fr)!important;
+  align-items:center!important;
+  gap:18px!important;
+  width:calc(100% - 32px)!important;
+  margin:2px 16px 14px!important;
+  padding:13px 15px!important;
+  border:1px solid #d7e2ec!important;
+  border-radius:14px!important;
+  background:#ffffff!important;
+  box-shadow:0 7px 18px rgba(15,42,67,.05)!important;
+}
+
+/* ============================================================
+   NOTEBOOK 15 POLLICI
+   ============================================================ */
+
+@media (max-width:1440px){
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .p0-operations--deadline{
+    padding:10px 12px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .p0-operations__head{
+    min-height:112px!important;
+    height:112px!important;
+    padding:16px 20px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .p0-operations__identity h1{
+    font-size:30px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .p0-command__primary{
+    grid-template-columns:minmax(330px,.85fr) minmax(570px,1.55fr)!important;
+    min-height:132px!important;
+    padding:17px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .p0-filter-grid{
+    gap:9px!important;
+    padding-left:16px!important;
+    padding-right:16px!important;
+  }
+}
+
+/* SCADENZE V4 CLASSI REALI END */
+
+
+
+/* SCADENZE CONTROLLI PROFESSIONALE START */
+
+/* ============================================================
+   TIPOGRAFIA COMPLETA PAGINA SCADENZE
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"],
+html body .fmed-main-content[data-fmed-page="Scadenze"] *{
+  font-family:
+    "Futura Light",
+    "Futura PT Light",
+    "Futura PT",
+    "Futura",
+    "Century Gothic",
+    "Trebuchet MS",
+    Arial,
+    sans-serif!important;
+  font-style:normal!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"] :is(
+  h1,h2,h3,h4,h5,h6,
+  strong,b,
+  button,
+  label,
+  summary,
+  th
+){
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"] :is(
+  p,span,small,
+  input,select,option,
+  td
+){
+  font-weight:800!important;
+}
+
+/* Mantiene leggibili date e valori tecnici */
+html body .fmed-main-content[data-fmed-page="Scadenze"] :is(
+  input[type="date"],
+  input[type="email"],
+  input[type="url"]
+){
+  text-transform:uppercase!important;
+}
+
+/* ============================================================
+   CELLE RICERCA E FILTRI
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-filter-grid{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  align-items:end!important;
+  gap:12px!important;
+  width:100%!important;
+  padding:6px 16px 18px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-filter-grid > .p0-field{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-rows:16px 46px!important;
+  gap:6px!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-field > span{
+  display:flex!important;
+  align-items:center!important;
+  min-height:16px!important;
+  margin:0!important;
+  padding:0 2px!important;
+  color:#163653!important;
+  font-size:9px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.025em!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-field :is(select,input){
+  box-sizing:border-box!important;
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  height:46px!important;
+  min-height:46px!important;
+  margin:0!important;
+  padding:0 14px!important;
+  border:1px solid #bfd0e0!important;
+  border-radius:10px!important;
+  background:#ffffff!important;
+  color:#0c294b!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  box-shadow:
+    0 1px 2px rgba(15,42,67,.03),
+    inset 0 0 0 1px rgba(255,255,255,.4)!important;
+  outline:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-field :is(select,input):hover{
+  border-color:#9fb7cc!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-field :is(select,input):focus{
+  border-color:#b21c59!important;
+  box-shadow:
+    0 0 0 3px rgba(178,28,89,.11)!important;
+}
+
+/* Campi principali superiori */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-deadline-quick{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  align-items:end!important;
+  gap:12px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+
+/* ============================================================
+   RIGA PULSANTI UNICA, ORDINATA E PROPORZIONATA
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__actions{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:
+    minmax(190px,1.1fr)
+    minmax(180px,1fr)
+    minmax(160px,.95fr)
+    minmax(150px,.9fr)
+    minmax(160px,.95fr)!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:100%!important;
+  margin:0!important;
+  padding:12px 14px!important;
+  border-top:1px solid #dfe7ef!important;
+  background:#ffffff!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__actions > .p0-btn{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-width:0!important;
+  height:44px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:0 13px!important;
+  border-width:1px!important;
+  border-style:solid!important;
+  border-radius:9px!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.01em!important;
+  white-space:nowrap!important;
+  opacity:1!important;
+  cursor:pointer!important;
+  box-shadow:0 4px 10px rgba(15,42,67,.09)!important;
+  transition:
+    transform .12s ease,
+    box-shadow .12s ease,
+    filter .12s ease!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__actions > .p0-btn:not(:disabled):hover{
+  transform:translateY(-1px)!important;
+  filter:brightness(1.04)!important;
+  box-shadow:0 6px 14px rgba(15,42,67,.13)!important;
+}
+
+/* 1 — Apri agenda */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__actions > .p0-btn:nth-child(1){
+  border-color:#a81451!important;
+  background:#b2185a!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* 2 — Seleziona visibili */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__actions > .p0-btn:nth-child(2){
+  border-color:#176b9d!important;
+  background:#237caf!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* 3 — Deseleziona */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__actions > .p0-btn:nth-child(3){
+  border-color:#536c82!important;
+  background:#647d92!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* 4 — PDF */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__actions > .p0-btn:nth-child(4){
+  border-color:#b92c38!important;
+  background:#cc3944!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* 5 — Azzera filtri */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__actions > .p0-btn:nth-child(5){
+  border-color:#d02f3c!important;
+  background:#ffffff!important;
+  color:#c32633!important;
+  -webkit-text-fill-color:#c32633!important;
+}
+
+/* Pulsante disabilitato sempre leggibile */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__actions > .p0-btn:disabled{
+  border-color:#d6b2b8!important;
+  background:#d9a5ac!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+  cursor:not-allowed!important;
+  box-shadow:none!important;
+}
+
+/* ============================================================
+   PANNELLO GESTIONE SCADENZE OBSOLETE
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+:is(
+  .fmed-operational4-expired-toolbar,
+  .fmed-operational8-expired-toolbar
+){
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(390px,1.1fr) minmax(760px,1.9fr)!important;
+  align-items:center!important;
+  gap:18px!important;
+  width:calc(100% - 32px)!important;
+  margin:2px 16px 14px!important;
+  padding:14px 15px!important;
+  border:1px solid #d7e2ec!important;
+  border-radius:14px!important;
+  background:#ffffff!important;
+  box-shadow:0 7px 18px rgba(15,42,67,.06)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+:is(
+  .fmed-operational4-expired-toolbar,
+  .fmed-operational8-expired-toolbar
+) :is(
+  select,input,button
+){
+  box-sizing:border-box!important;
+  height:44px!important;
+  min-height:44px!important;
+  margin:0!important;
+  border-radius:9px!important;
+  font-size:9px!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+/* Contenitore reale dei comandi obsolete */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.fmed-literal-f318d11f4b{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:
+    minmax(175px,1fr)
+    minmax(220px,1.25fr)
+    minmax(145px,.9fr)
+    minmax(175px,1fr)
+    minmax(145px,.9fr)!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+
+/* Select e campo motivo */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.fmed-literal-f318d11f4b :is(select,input){
+  width:100%!important;
+  min-width:0!important;
+  padding:0 12px!important;
+  border:1px solid #bfd0e0!important;
+  background:#ffffff!important;
+  color:#0c294b!important;
+}
+
+/* Pulsanti pannello obsolete */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.fmed-literal-f318d11f4b button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-width:0!important;
+  padding:0 11px!important;
+  border:1px solid #b8cadb!important;
+  background:#ffffff!important;
+  color:#173856!important;
+  opacity:1!important;
+}
+
+/* Pulsante chiusura selezionate */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.fmed-literal-f318d11f4b button:last-child{
+  border-color:#d59ca5!important;
+  background:#fff7f8!important;
+  color:#a93440!important;
+}
+
+/* ============================================================
+   TESTI AGENDA E FILTRI
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-advanced > summary b{
+  color:#0c294b!important;
+  font-size:15px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-advanced > summary small{
+  color:#61788e!important;
+  font-size:9px!important;
+  line-height:1!important;
+  font-weight:800!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-advanced__summary{
+  color:#b2185a!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+/* ============================================================
+   NOTEBOOK 15 POLLICI
+   ============================================================ */
+
+@media (max-width:1440px){
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .p0-filter-grid{
+    gap:9px!important;
+    padding-left:14px!important;
+    padding-right:14px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .p0-command__actions{
+    gap:8px!important;
+    padding-left:12px!important;
+    padding-right:12px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .p0-command__actions > .p0-btn{
+    padding:0 9px!important;
+    font-size:9px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  :is(
+    .fmed-operational4-expired-toolbar,
+    .fmed-operational8-expired-toolbar
+  ){
+    grid-template-columns:minmax(340px,1fr) minmax(700px,1.85fr)!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .fmed-literal-f318d11f4b{
+    gap:8px!important;
+  }
+}
+
+/* SCADENZE CONTROLLI PROFESSIONALE END */
+
+
+
+
+
+
+
+/* SCADENZE AZIONE ARCHIVIA START */
+
+/*
+   Azione conclusiva:
+   ARCHIVIA SCADENZA = chiude soltanto il ciclo operativo,
+   preservando record, documenti e storico.
+*/
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td:last-child{
+  text-align:center!important;
+  vertical-align:middle!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td:last-child .p0-btn{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-width:138px!important;
+  max-width:155px!important;
+  height:46px!important;
+  min-height:46px!important;
+  margin:0 auto!important;
+  padding:0 14px!important;
+
+  border:1px solid #a91850!important;
+  border-radius:9px!important;
+
+  background:#b51d59!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+  font-family:
+    "Futura Light",
+    "Futura PT Light",
+    "Futura PT",
+    "Futura",
+    "Century Gothic",
+    Arial,
+    sans-serif!important;
+
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.015em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+
+  opacity:1!important;
+  cursor:pointer!important;
+
+  box-shadow:
+    0 4px 10px rgba(130,17,63,.17)!important;
+
+  transition:
+    transform .12s ease,
+    box-shadow .12s ease,
+    filter .12s ease!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td:last-child .p0-btn:hover{
+  transform:translateY(-1px)!important;
+  filter:brightness(1.06)!important;
+  box-shadow:
+    0 7px 15px rgba(130,17,63,.23)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td:last-child .p0-btn:active{
+  transform:translateY(0)!important;
+  box-shadow:
+    0 3px 7px rgba(130,17,63,.16)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td:last-child .p0-btn:focus-visible{
+  outline:3px solid rgba(181,29,89,.22)!important;
+  outline-offset:2px!important;
+}
+
+/* Allarga la colonna Azione per il nuovo testo */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register :is(th,td):nth-child(7){
+  width:175px!important;
+  min-width:175px!important;
+  text-align:center!important;
+}
+
+/* Il trattino delle righe senza azione resta centrato e leggibile */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td:last-child{
+  color:#60778d!important;
+  font-size:13px!important;
+  font-weight:900!important;
+}
+
+/* SCADENZE AZIONE ARCHIVIA END */
+
+
+
+/* SCADENZE HOME TESTO GRANDE START */
+
+/* Titolo principale Agenda tecnica */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command--deadline .p0-kicker{
+  font-size:12px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.08em!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command--deadline .p0-command__intro h2{
+  font-size:29px!important;
+  line-height:1.08!important;
+  font-weight:900!important;
+  max-width:520px!important;
+}
+
+/* Badge visibili e selezionate */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__facts > span{
+  min-height:38px!important;
+  padding:0 14px!important;
+  font-size:11px!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__facts > span b{
+  font-size:14px!important;
+  font-weight:900!important;
+}
+
+/* Etichette filtri principali */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-deadline-quick .p0-field > span{
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+/* Valori select principali */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-deadline-quick :is(select,input){
+  height:50px!important;
+  min-height:50px!important;
+  padding:0 15px!important;
+  font-size:12px!important;
+  font-weight:900!important;
+}
+
+/* Titolo Affina agenda */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-advanced > summary b{
+  font-size:18px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+/* Sottotitolo Affina agenda */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-advanced > summary small{
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:800!important;
+}
+
+/* Totale risultati */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-advanced__summary{
+  font-size:12px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+/* Etichette filtri avanzati */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-filter-grid .p0-field > span{
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+/* Campi filtri avanzati */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-filter-grid :is(select,input){
+  height:50px!important;
+  min-height:50px!important;
+  padding:0 15px!important;
+  font-size:12px!important;
+  font-weight:900!important;
+}
+
+/* Pulsanti principali */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command__actions > .p0-btn{
+  height:48px!important;
+  min-height:48px!important;
+  padding:0 15px!important;
+  font-size:11px!important;
+  font-weight:900!important;
+}
+
+/* Pannello gestione obsolete */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+:is(
+  .fmed-operational4-expired-toolbar,
+  .fmed-operational8-expired-toolbar
+){
+  padding:16px 17px!important;
+}
+
+/* Titolo gestione obsolete */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+:is(
+  .fmed-operational4-expired-toolbar,
+  .fmed-operational8-expired-toolbar
+) > div:first-child > div:first-child{
+  font-size:13px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+/* Testo descrittivo gestione obsolete */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+:is(
+  .fmed-operational4-expired-toolbar,
+  .fmed-operational8-expired-toolbar
+) > div:first-child{
+  font-size:12px!important;
+  line-height:1.45!important;
+  font-weight:800!important;
+}
+
+/* Controlli gestione obsolete */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+:is(
+  .fmed-operational4-expired-toolbar,
+  .fmed-operational8-expired-toolbar
+) :is(select,input,button){
+  height:48px!important;
+  min-height:48px!important;
+  padding:0 13px!important;
+  font-size:10px!important;
+  font-weight:900!important;
+}
+
+/* KPI: etichette più grandi */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-metric-strip small{
+  font-size:10px!important;
+  font-weight:900!important;
+}
+
+/* KPI: numeri più grandi */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-metric-strip strong{
+  font-size:31px!important;
+  font-weight:900!important;
+}
+
+/* KPI: note più grandi */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-metric-strip article > div > span{
+  font-size:9px!important;
+  font-weight:800!important;
+}
+
+/* Tipografia uniforme */
+html body .fmed-main-content[data-fmed-page="Scadenze"],
+html body .fmed-main-content[data-fmed-page="Scadenze"] *{
+  font-family:
+    "Futura Light",
+    "Futura PT Light",
+    "Futura PT",
+    "Futura",
+    "Century Gothic",
+    "Trebuchet MS",
+    Arial,
+    sans-serif!important;
+  text-transform:uppercase!important;
+}
+
+/* SCADENZE HOME TESTO GRANDE END */
+
+/* SCADENZE AGENDA STRUTTURA UNICA START */
+
+/* ============================================================
+   MODALITÀ AGENDA: NASCONDE SOLO LA HOME
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]:has(.p0-register)
+.p0-operations--deadline > :is(
+  .p0-operations__head,
+  .fmed-module-hero-scadenze,
+  .p0-metric-strip,
+  .p0-command--deadline
+){
+  display:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]:has(.p0-register)
+> :is(
+  .fmed-operational4-expired-toolbar,
+  .fmed-operational8-expired-toolbar
+){
+  display:none!important;
+}
+
+/* ============================================================
+   PAGINA COMPLETA
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]:has(.p0-register){
+  box-sizing:border-box!important;
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  height:calc(100vh - 76px)!important;
+  margin:0!important;
+  padding:10px 12px!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]:has(.p0-register)
+.p0-operations--deadline{
+  box-sizing:border-box!important;
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+}
+
+/* ============================================================
+   REGISTRO: TESTATA, AZIONI, TABELLA, FOOTER
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:flex-start!important;
+
+  width:100%!important;
+  min-width:0!important;
+  height:100%!important;
+  min-height:0!important;
+  max-height:none!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  border:1px solid #d3dfe9!important;
+  border-radius:16px!important;
+  background:#ffffff!important;
+  box-shadow:0 10px 25px rgba(15,42,67,.09)!important;
+
+  overflow:hidden!important;
+}
+
+/* ============================================================
+   1. TESTATA
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register > header{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+
+  flex:0 0 96px!important;
+  order:1!important;
+
+  width:100%!important;
+  min-height:96px!important;
+  height:96px!important;
+
+  margin:0!important;
+  padding:16px 20px!important;
+
+  border-bottom:1px solid #d7e2ec!important;
+  background:#ffffff!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register > header h2{
+  margin:0!important;
+  color:#082c50!important;
+  font-size:32px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register > header p{
+  margin:7px 0 0!important;
+  color:#5f758b!important;
+  font-size:11px!important;
+  line-height:1.15!important;
+  font-weight:800!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register > header .p0-btn{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  min-width:112px!important;
+  height:48px!important;
+
+  border:1px solid #b8cada!important;
+  border-radius:9px!important;
+
+  background:#ffffff!important;
+  color:#123c60!important;
+
+  font-size:11px!important;
+  font-weight:900!important;
+}
+
+/* ============================================================
+   2. BARRA AZIONI
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register > .p0-register-agenda-actions{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  align-items:center!important;
+  gap:12px!important;
+
+  flex:0 0 72px!important;
+  order:2!important;
+
+  width:100%!important;
+  min-height:72px!important;
+  height:72px!important;
+
+  margin:0!important;
+  padding:12px 16px!important;
+
+  border-bottom:1px solid #d7e2ec!important;
+  background:#ffffff!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register-agenda-actions > .p0-btn{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  width:100%!important;
+  height:48px!important;
+  min-height:48px!important;
+
+  margin:0!important;
+  padding:0 15px!important;
+
+  border-radius:9px!important;
+
+  font-size:12px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register-agenda-actions__select{
+  border:1px solid #176b9d!important;
+  background:#267caf!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register-agenda-actions__clear{
+  border:1px solid #526b81!important;
+  background:#647d92!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register-agenda-actions__pdf{
+  border:1px solid #b92c38!important;
+  background:#cb3743!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register-agenda-actions__pdf:disabled{
+  border-color:#d6a3aa!important;
+  background:#d6a3aa!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+}
+
+/* ============================================================
+   3. TABELLA SUBITO SOTTO I PULSANTI
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register > .p0-table-wrap{
+  box-sizing:border-box!important;
+  display:block!important;
+
+  flex:1 1 0!important;
+  order:3!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  height:0!important;
+  max-height:none!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  position:static!important;
+  inset:auto!important;
+  transform:none!important;
+
+  overflow-y:scroll!important;
+  overflow-x:auto!important;
+  scrollbar-gutter:stable!important;
+
+  background:#ffffff!important;
+}
+
+/* Reset assoluto della tabella */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register > .p0-table-wrap > table{
+  display:table!important;
+  position:static!important;
+  inset:auto!important;
+  transform:none!important;
+
+  table-layout:fixed!important;
+
+  width:100%!important;
+  min-width:1280px!important;
+  height:auto!important;
+  min-height:0!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  border-collapse:separate!important;
+  border-spacing:0!important;
+
+  visibility:visible!important;
+  opacity:1!important;
+}
+
+/* Intestazione tabella */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register thead{
+  display:table-header-group!important;
+  position:sticky!important;
+  top:0!important;
+  z-index:20!important;
+
+  visibility:visible!important;
+  opacity:1!important;
+}
+
+/* Corpo e righe */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register tbody{
+  display:table-row-group!important;
+  position:static!important;
+
+  visibility:visible!important;
+  opacity:1!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register tbody tr{
+  display:table-row!important;
+  position:static!important;
+
+  height:96px!important;
+
+  visibility:visible!important;
+  opacity:1!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register th{
+  height:54px!important;
+  padding:0 14px!important;
+
+  background:#f3f7fa!important;
+  color:#405870!important;
+
+  font-size:11px!important;
+  font-weight:900!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td{
+  box-sizing:border-box!important;
+
+  height:96px!important;
+  padding:14px!important;
+
+  border-bottom:1px solid #dce5ed!important;
+
+  color:#0c3154!important;
+  font-size:12px!important;
+  line-height:1.25!important;
+  font-weight:800!important;
+
+  vertical-align:middle!important;
+
+  visibility:visible!important;
+  opacity:1!important;
+}
+
+/* ============================================================
+   4. MOSTRA ALTRE
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register > .p0-register__more{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  flex:0 0 48px!important;
+  order:4!important;
+  align-self:center!important;
+
+  min-width:210px!important;
+  height:48px!important;
+  min-height:48px!important;
+
+  margin:5px auto!important;
+  padding:0 18px!important;
+
+  font-size:11px!important;
+  font-weight:900!important;
+}
+
+/* Elimina qualunque spazio artificiale */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register::before,
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register::after,
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-table-wrap::before,
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-table-wrap::after{
+  content:none!important;
+  display:none!important;
+}
+
+/* ============================================================
+   TIPOGRAFIA
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register,
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register *{
+  font-family:
+    "Futura Light",
+    "Futura PT Light",
+    "Futura PT",
+    "Futura",
+    "Century Gothic",
+    Arial,
+    sans-serif!important;
+
+  text-transform:uppercase!important;
+}
+
+/* SCADENZE AGENDA STRUTTURA UNICA END */
+
+/* SCADENZE COLONNE ED EXCEL START */
+
+/* ============================================================
+   BARRA AGENDA: QUATTRO COMANDI
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register > .p0-register-agenda-actions{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  align-items:center!important;
+  gap:10px!important;
+  flex:0 0 72px!important;
+  width:100%!important;
+  min-height:72px!important;
+  height:72px!important;
+  margin:0!important;
+  padding:12px 14px!important;
+  border-bottom:1px solid #d7e2ec!important;
+  background:#ffffff!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register-agenda-actions > .p0-btn{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-width:0!important;
+  height:48px!important;
+  min-height:48px!important;
+  margin:0!important;
+  padding:0 12px!important;
+  border-radius:9px!important;
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+/* Excel */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register-agenda-actions__excel{
+  border:1px solid #16734f!important;
+  background:#1d8a62!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  box-shadow:0 4px 10px rgba(20,105,75,.16)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register-agenda-actions__excel:disabled{
+  border-color:#a9cabc!important;
+  background:#a9cabc!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+}
+
+/* ============================================================
+   TABELLA: LARGHEZZE PROPORZIONATE
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register table{
+  table-layout:fixed!important;
+  width:100%!important;
+  min-width:1380px!important;
+  margin:0!important;
+  border-collapse:separate!important;
+  border-spacing:0!important;
+}
+
+/* Selezione */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register :is(th,td):nth-child(1){
+  width:48px!important;
+  min-width:48px!important;
+  text-align:center!important;
+}
+
+/* Elemento */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register :is(th,td):nth-child(2){
+  width:27%!important;
+  min-width:300px!important;
+}
+
+/* Contesto */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register :is(th,td):nth-child(3){
+  width:18%!important;
+  min-width:210px!important;
+}
+
+/* Attività */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register :is(th,td):nth-child(4){
+  width:19%!important;
+  min-width:220px!important;
+}
+
+/* Ultima / prossima */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register :is(th,td):nth-child(5){
+  width:15%!important;
+  min-width:175px!important;
+}
+
+/* Stato */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register :is(th,td):nth-child(6){
+  width:12%!important;
+  min-width:150px!important;
+}
+
+/* Azione */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register :is(th,td):nth-child(7){
+  width:175px!important;
+  min-width:175px!important;
+  text-align:center!important;
+}
+
+/* ============================================================
+   BLOCCO ANTI-SOVRAPPOSIZIONE
+   ============================================================ */
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td{
+  box-sizing:border-box!important;
+  position:relative!important;
+  overflow:hidden!important;
+  padding:14px!important;
+  vertical-align:middle!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td > *{
+  box-sizing:border-box!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+/* Testo principale nelle celle */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td > b{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+  overflow:hidden!important;
+  color:#0a3154!important;
+  font-size:11px!important;
+  line-height:1.25!important;
+  font-weight:900!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+/* Elementi infrastrutturali lunghi: massimo due righe */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td:nth-child(2) > b{
+  display:-webkit-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  line-height:1.25!important;
+  text-overflow:ellipsis!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;
+}
+
+/* Contesto e attività non invadono altre colonne */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td:nth-child(3) > b,
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td:nth-child(4) > b{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+/* Testi secondari */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td small{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin-top:6px!important;
+  overflow:hidden!important;
+  color:#587590!important;
+  font-size:10px!important;
+  line-height:1.15!important;
+  font-weight:800!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+/* Codice asset */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register .p0-table-link{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  max-width:100%!important;
+  min-width:86px!important;
+  height:46px!important;
+  padding:0 13px!important;
+  overflow:hidden!important;
+  border:1px solid #b7c9da!important;
+  border-radius:9px!important;
+  background:#ffffff!important;
+  color:#16466d!important;
+  font-size:10px!important;
+  font-weight:900!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+/* Intestazioni perfettamente allineate */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register th{
+  box-sizing:border-box!important;
+  height:54px!important;
+  padding:0 14px!important;
+  overflow:hidden!important;
+  background:#f3f7fa!important;
+  color:#405870!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  vertical-align:middle!important;
+}
+
+/* Righe uniformi */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register tbody tr,
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register td{
+  height:96px!important;
+  min-height:96px!important;
+}
+
+/* SCADENZE COLONNE ED EXCEL END */
+
+/* SCADENZE EXCEL ACCANTO PDF START */
+
+/* Barra unica: seleziona, deseleziona, PDF, Excel */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register > .p0-register-agenda-actions{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:100%!important;
+  min-height:72px!important;
+  height:72px!important;
+  margin:0!important;
+  padding:12px 14px!important;
+  border-bottom:1px solid #d7e2ec!important;
+  background:#ffffff!important;
+}
+
+/* Tutti i quattro pulsanti identici per altezza e proporzioni */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register-agenda-actions > .p0-btn{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-width:0!important;
+  height:48px!important;
+  min-height:48px!important;
+  margin:0!important;
+  padding:0 12px!important;
+  border-radius:9px!important;
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+/* Excel verde, accanto a PDF */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register-agenda-actions__excel{
+  position:static!important;
+  inset:auto!important;
+  grid-column:auto!important;
+  width:100%!important;
+  margin:0!important;
+  border:1px solid #16734f!important;
+  background:#1d8a62!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  box-shadow:0 4px 10px rgba(20,105,75,.15)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register-agenda-actions__excel:disabled{
+  border-color:#a9cabc!important;
+  background:#a9cabc!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+}
+
+/* Impedisce che il pulsante Excel appaia fuori dalla barra */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-register > .p0-register-agenda-actions__excel{
+  display:none!important;
+}
+
+/* SCADENZE EXCEL ACCANTO PDF END */

@@ -1,0 +1,2407 @@
+/* =====================================================================
+   FMED REV0 · ASSET E CESPITI
+   Foglio autorevole della pagina. Solo grafica e impaginazione.
+   ===================================================================== */
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page {
+  --asset-blue: #245f9f;
+  --asset-blue-strong: #1d5185;
+  --asset-violet: #6f4bb8;
+  --asset-green: #187c68;
+  --asset-amber: #ad6816;
+  --asset-red: #bd2d35;
+  --asset-slate: #607086;
+  --asset-ink: #122c4b;
+  --asset-muted: #61758e;
+  --asset-line: #d4dfeb;
+  --asset-soft: #f3f6fa;
+  min-width: 0;
+  min-height: 100%;
+  padding: clamp(10px, 1.15vw, 18px);
+  color: var(--asset-ink);
+  background: #edf2f7;
+}
+
+/* Testata */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  min-height: 82px;
+  padding: 14px 20px;
+  border-radius: 18px 18px 0 0;
+  color: #fff;
+  background: linear-gradient(120deg, #153f78, #256bb6 68%, #3d83c8);
+  box-shadow: 0 12px 28px rgb(29 66 111 / 14%);
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 11px;
+  border: 1px solid rgb(255 255 255 / 35%);
+  border-radius: 13px;
+  background: rgb(255 255 255 / 11%);
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero-icon svg { width: 100%; height: 100%; }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero span {
+  display: block;
+  color: #cfe3fb;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero h1 {
+  margin: 2px 0 3px;
+  color: #fff;
+  font-size: clamp(25px, 2vw, 30px);
+  line-height: 1;
+  font-weight: 850;
+  letter-spacing: -.025em;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero p {
+  margin: 0;
+  color: #e5effb;
+  font-size: 11px;
+  line-height: 1.25;
+  font-weight: 600;
+  text-transform: none;
+}
+
+/* KPI */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  background: #fff;
+  border-top: 1px solid #dce5ef;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi {
+  --tone: #2f76e8;
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 82px;
+  padding: 12px 16px;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi + .p0-asset-kpi { border-left: 1px solid #e1e8f0; }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi::after {
+  position: absolute;
+  right: 15px;
+  bottom: 0;
+  left: 15px;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--tone);
+  content: "";
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi-icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 9px;
+  border-radius: 10px;
+  color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 11%, white);
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi-icon svg { width: 100%; height: 100%; }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi small,
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi em {
+  display: block;
+  color: var(--asset-muted);
+  font-size: 9px;
+  line-height: 1.15;
+  font-style: normal;
+  font-weight: 700;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi small { text-transform: uppercase; letter-spacing: .035em; }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi strong {
+  display: block;
+  margin: 3px 0;
+  color: var(--asset-ink);
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 850;
+}
+
+/* Superficie operativa */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-deck {
+  overflow: hidden;
+  border-radius: 0 0 18px 18px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgb(29 66 111 / 10%);
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-search-copy {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 16px 18px 8px;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-search-copy > span {
+  color: var(--asset-blue);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .075em;
+  text-transform: uppercase;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-search-copy h2 {
+  margin: 0;
+  color: var(--asset-ink);
+  font-size: 19px;
+  font-weight: 850;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-search-copy p {
+  justify-self: end;
+  margin: 0;
+  color: var(--asset-muted);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: none;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-search { padding: 0 18px 14px; }
+
+/* Ricerca senza cornice esterna doppia */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-searchbar {
+  display: grid;
+  grid-template-columns: 20px minmax(180px, 1fr) auto;
+  gap: 9px;
+  align-items: center;
+  min-height: 42px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-searchbar svg {
+  width: 18px;
+  fill: none;
+  stroke: var(--asset-blue);
+  stroke-width: 1.8;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-searchbar input {
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  padding: 0 13px;
+  border: 1px solid #bfd0e2;
+  border-radius: 10px;
+  outline: 0;
+  color: var(--asset-ink);
+  background: #fff;
+  font-size: 12px;
+  font-weight: 650;
+  text-transform: none;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-searchbar > button {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  background: var(--asset-blue);
+  font-size: 10px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+/* Filtri 5 x 2 */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-filter {
+  min-width: 0;
+  padding: 7px 8px 6px;
+  border: 1px solid var(--asset-line);
+  border-radius: 10px;
+  background: var(--asset-soft);
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-filter > span {
+  display: block;
+  margin-bottom: 4px;
+  color: #6b7d93;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-filter select {
+  width: 100%;
+  height: 32px;
+  padding: 0 7px;
+  border: 1px solid #c8d5e3;
+  border-radius: 7px;
+  outline: 0;
+  color: #213a57;
+  background: #fff;
+  font-size: 10px;
+  font-weight: 650;
+  text-transform: none;
+}
+
+/* Barra comandi: ordine e colori semantici */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  align-items: center;
+  margin-top: 11px;
+  padding-top: 11px;
+  border-top: 1px solid #e0e7ef;
+  background: transparent;
+  box-shadow: none;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar > button {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  box-shadow: none;
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 850;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar .is-open-list { background: var(--asset-blue); }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar .is-analysis { background: var(--asset-violet); }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar .is-new { background: var(--asset-green); }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar .is-master { background: var(--asset-amber); }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar .is-reset { background: var(--asset-red); }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar .is-select-all { background: #166f9e; }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar .is-bulk-edit { background: #7444a6; }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar .is-close-results { background: var(--asset-slate); }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar .is-bulk-edit:disabled {
+  color: #708198;
+  background: #dfe6ee;
+  cursor: not-allowed;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar > button:not(:disabled):hover { filter: brightness(.92); }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-active-filters {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-active-filters span {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  border: 1px solid #c8d8e8;
+  border-radius: 8px;
+  color: #2c5f91;
+  background: #edf5fc;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* Risultati */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-results {
+  padding: 14px 16px 16px;
+  border-top: 1px solid #dbe4ee;
+  background: #f4f7fa;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-results-head {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  margin-bottom: 8px;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-results-head span {
+  color: var(--asset-ink);
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+
+/* Modifica multipla */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-bulk {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.15fr) repeat(5, minmax(125px, 1fr)) auto auto;
+  gap: 7px;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #bfd4e9;
+  border-radius: 11px;
+  background: #eaf3fc;
+  box-shadow: none;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-bulk-title { display: grid; gap: 3px; }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-bulk-title strong {
+  color: #173b63;
+  font-size: 11px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-bulk-title span {
+  color: var(--asset-muted);
+  font-size: 8px;
+  font-weight: 650;
+  text-transform: none;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-bulk :is(input, select) {
+  min-height: 36px;
+  border-radius: 8px;
+  font-size: 9px;
+  font-weight: 650;
+  text-transform: none;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-bulk > button {
+  min-height: 36px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-bulk .is-apply { background: var(--asset-green); }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-bulk > button:last-child { background: var(--asset-slate); }
+
+/* Elenco */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list {
+  display: grid;
+  gap: 7px;
+  width: 100%;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list-labels,
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row {
+  display: grid;
+  grid-template-columns: 30px minmax(300px, 1.55fr) minmax(190px, .85fr) 92px 172px;
+  gap: 12px;
+  align-items: center;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list-labels {
+  min-height: 34px;
+  padding: 0 12px;
+  color: #6c7f96;
+  font-size: 8px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list-spacer { visibility: hidden; }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row {
+  position: relative;
+  min-height: 82px;
+  padding: 10px 12px;
+  border: 1px solid #d3deea;
+  border-radius: 11px;
+  background: #fff;
+  box-shadow: none;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row:hover {
+  border-color: #91b3d8;
+  box-shadow: 0 7px 16px rgb(29 66 111 / 7%);
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-open {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: inherit;
+  background: transparent;
+  box-shadow: none;
+  text-align: left;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-open span {
+  color: var(--asset-blue);
+  font-size: 9px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-open strong {
+  overflow: hidden;
+  color: var(--asset-ink);
+  font-size: 14px;
+  line-height: 1.15;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-open small {
+  overflow: hidden;
+  color: #6f8198;
+  font-size: 10px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-location {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-location strong {
+  overflow: hidden;
+  color: var(--asset-ink);
+  font-size: 11px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-location span,
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-location small {
+  overflow: hidden;
+  color: #718399;
+  font-size: 9px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-state {
+  min-width: 84px;
+  min-height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--state) 78%, #10233f);
+  background: color-mix(in srgb, var(--state) 14%, white);
+  font-size: 8px;
+  font-weight: 850;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  width: 172px;
+  min-width: 172px;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row-actions button {
+  min-height: 36px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  box-shadow: none;
+  font-size: 9px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row-actions .is-open { background: var(--asset-blue); }
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row-actions .is-edit { background: var(--asset-amber); }
+
+/* Modifica rapida */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-quickedit {
+  grid-column: 2 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(125px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+  padding: 11px;
+  border-top: 1px solid #dbe4ee;
+}
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-more {
+  display: block;
+  min-height: 36px;
+  margin: 5px auto 0;
+  padding: 0 14px;
+  border: 1px solid #c5d4e4;
+  border-radius: 8px;
+  color: #315679;
+  background: #fff;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+@media (max-width: 1450px) {
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-search-copy p { display: none; }
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar > button { padding: 0 10px; font-size: 8px; }
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-active-filters { width: 100%; margin-left: 0; }
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list-labels,
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row {
+    grid-template-columns: 28px minmax(260px, 1.45fr) minmax(170px, .8fr) 86px 158px;
+    gap: 9px;
+  }
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row-actions { width: 158px; min-width: 158px; }
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-bulk {
+    grid-template-columns: minmax(165px, 1.1fr) repeat(5, minmax(110px, 1fr)) auto auto;
+  }
+}
+
+@media (max-width: 1180px) {
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-filter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-bulk { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list { overflow-x: auto; }
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list-labels,
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row { min-width: 900px; }
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ASSET TESTO RIGA ALLINEATO A SINISTRA */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row .p0-asset-open{
+  justify-self:stretch!important;
+  justify-items:start!important;
+  text-align:left!important;
+  padding-left:0!important;
+  margin-left:0!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row .p0-asset-open > *{
+  justify-self:start!important;
+  text-align:left!important;
+  margin-left:0!important;
+  padding-left:0!important;
+  width:100%!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row{
+  grid-template-columns:34px minmax(420px,1.65fr) minmax(210px,.85fr) 94px 176px!important;
+}
+
+/* ================================================================
+   ASSET AUTORITÀ DEFINITIVA START
+   Caricato per ultimo da main.jsx.
+   Sostituisce tutte le vecchie forzature della pagina Asset.
+   ================================================================ */
+
+/* Tipografia della sola pagina Asset */
+.fmed-app-root.fmed-shell-premium .p0-asset-page,
+.fmed-app-root.fmed-shell-premium .p0-asset-page * {
+  text-transform: uppercase !important;
+  font-weight: 800 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page :is(
+  h1,h2,h3,
+  .p0-asset-results-head span,
+  .p0-asset-search-copy > span,
+  .p0-asset-open strong,
+  .p0-asset-location strong
+) {
+  font-weight: 900 !important;
+}
+
+/* Risultati compatti */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-results {
+  padding: 14px 16px 16px !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-results-head {
+  min-height: 42px !important;
+  margin: 0 0 4px !important;
+  padding: 0 4px !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list-labels {
+  min-height: 28px !important;
+  padding: 0 14px 4px !important;
+  margin: 0 !important;
+}
+
+/* Griglia identica tra intestazioni e righe */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list-labels,
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row {
+  display: grid !important;
+  grid-template-columns:
+    34px
+    minmax(420px, 1.65fr)
+    minmax(210px, .85fr)
+    100px
+    184px !important;
+  column-gap: 14px !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+/* Riga */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row {
+  min-height: 92px !important;
+  margin: 0 0 8px !important;
+  padding: 10px 14px !important;
+}
+
+/* Checkbox */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > input[type="checkbox"] {
+  grid-column: 1 !important;
+  justify-self: start !important;
+  align-self: center !important;
+  margin: 0 !important;
+}
+
+/*
+  BLOCCO DECISIVO:
+  p0-asset-open è un BUTTON e le vecchie regole globali lo centravano.
+  Qui viene trasformato in flex verticale con contenuto ancorato a sinistra.
+*/
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > .p0-asset-open {
+  grid-column: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  justify-self: stretch !important;
+  align-self: stretch !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 70px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  text-align: left !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > .p0-asset-open > span,
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > .p0-asset-open > strong,
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > .p0-asset-open > small {
+  display: block !important;
+  flex: 0 0 auto !important;
+  align-self: flex-start !important;
+  width: auto !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  text-align: left !important;
+  transform: none !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > .p0-asset-open > span {
+  margin: 0 0 4px !important;
+  font-size: 10px !important;
+  line-height: 1 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > .p0-asset-open > strong {
+  margin: 0 0 5px !important;
+  font-size: 15px !important;
+  line-height: 1.15 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > .p0-asset-open > small {
+  margin: 0 !important;
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+}
+
+/* Posizione */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > .p0-asset-location {
+  grid-column: 3 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  justify-self: stretch !important;
+  align-self: stretch !important;
+  width: 100% !important;
+  min-height: 70px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-location :is(strong,span,small) {
+  align-self: flex-start !important;
+  width: auto !important;
+  max-width: 100% !important;
+  text-align: left !important;
+}
+
+/* Stato */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > .p0-asset-state {
+  grid-column: 4 !important;
+  justify-self: center !important;
+  align-self: center !important;
+  width: 92px !important;
+  min-width: 92px !important;
+  max-width: 92px !important;
+  min-height: 34px !important;
+  margin: 0 !important;
+  text-align: center !important;
+}
+
+/* Azioni */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > .p0-asset-row-actions {
+  grid-column: 5 !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  justify-self: end !important;
+  align-self: center !important;
+  width: 184px !important;
+  min-width: 184px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row-actions button {
+  min-width: 0 !important;
+  min-height: 38px !important;
+  padding: 0 10px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+/* ================================================================
+   ASSET AUTORITÀ DEFINITIVA END
+   ================================================================ */
+
+/* ASSET RICERCA RIPRISTINATA START */
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-searchbar{
+  display:grid!important;
+  grid-template-columns:minmax(320px,580px) auto!important;
+  gap:12px!important;
+  align-items:center!important;
+  justify-content:start!important;
+  width:100%!important;
+  max-width:760px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-searchbar input{
+  display:block!important;
+  grid-column:1!important;
+  width:100%!important;
+  min-width:320px!important;
+  max-width:580px!important;
+  height:44px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:0 14px!important;
+  border:1px solid #b8cce4!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  color:#102b4d!important;
+  font-size:12px!important;
+  font-weight:800!important;
+  line-height:44px!important;
+  text-align:left!important;
+  outline:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-searchbar input::placeholder{
+  color:#6d8199!important;
+  opacity:1!important;
+  text-align:left!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-searchbar > button{
+  grid-column:2!important;
+  width:auto!important;
+  min-width:148px!important;
+  height:44px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:0 18px!important;
+}
+
+/* ASSET RICERCA RIPRISTINATA END */
+
+/* ASSET FULLSCREEN PROFESSIONALE START */
+
+/* La pagina Asset occupa tutta l'altezza utile dello schermo */
+.fmed-app-root.fmed-shell-premium .p0-asset-page {
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: calc(100vh - 24px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Testata e KPI: compatti ma leggibili */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero {
+  flex: 0 0 auto !important;
+  min-height: 80px !important;
+  padding: 14px 20px !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero h1 {
+  font-size: 28px !important;
+  line-height: 1.05 !important;
+  font-weight: 900 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero :is(span,p) {
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+  font-weight: 800 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpis {
+  flex: 0 0 auto !important;
+  min-height: 78px !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi {
+  min-height: 78px !important;
+  padding: 12px 16px !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi :is(span,small,em) {
+  font-size: 10px !important;
+  line-height: 1.15 !important;
+  font-weight: 800 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi :is(strong,h2) {
+  font-size: 24px !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+}
+
+/* Area ricerca e filtri */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-command {
+  flex: 0 0 auto !important;
+  padding: 14px 16px 12px !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-search-copy > span {
+  font-size: 22px !important;
+  line-height: 1.05 !important;
+  font-weight: 900 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-search-copy h2 {
+  font-size: 11px !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-search-copy p {
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+  font-weight: 700 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-searchbar {
+  min-height: 44px !important;
+  margin-top: 10px !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-searchbar input,
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-searchbar > button {
+  height: 44px !important;
+  min-height: 44px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-filter-grid {
+  gap: 8px !important;
+  margin-top: 10px !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-filter {
+  min-height: 68px !important;
+  padding: 8px 9px !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-filter > span {
+  font-size: 10px !important;
+  line-height: 1 !important;
+  font-weight: 850 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-filter select {
+  height: 36px !important;
+  min-height: 36px !important;
+  font-size: 11px !important;
+  line-height: 1.1 !important;
+  font-weight: 800 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar {
+  min-height: 50px !important;
+  padding-top: 8px !important;
+  gap: 7px !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar > button,
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-active-filters span {
+  min-height: 38px !important;
+  font-size: 10px !important;
+  line-height: 1 !important;
+  font-weight: 850 !important;
+}
+
+/* Risultati: diventano l'area principale e riempiono lo schermo */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-results {
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  min-height: 260px !important;
+  margin: 0 !important;
+  padding: 14px 16px 16px !important;
+  overflow: hidden !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-results-head {
+  flex: 0 0 auto !important;
+  min-height: 42px !important;
+  margin: 0 0 4px !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-results-head span {
+  font-size: 24px !important;
+  line-height: 1.05 !important;
+  font-weight: 900 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list-labels {
+  flex: 0 0 auto !important;
+  min-height: 30px !important;
+  padding: 0 14px 4px !important;
+  font-size: 9px !important;
+  line-height: 1 !important;
+  font-weight: 850 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Riga asset: proporzioni professionali */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row {
+  min-height: 92px !important;
+  padding: 10px 14px !important;
+  margin-bottom: 8px !important;
+  align-items: center !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-open > span {
+  font-size: 10px !important;
+  line-height: 1 !important;
+  font-weight: 850 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-open > strong {
+  font-size: 15px !important;
+  line-height: 1.15 !important;
+  font-weight: 900 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-open > small {
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+  font-weight: 800 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-location > strong {
+  font-size: 12px !important;
+  line-height: 1.1 !important;
+  font-weight: 900 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-location :is(span,small) {
+  font-size: 10px !important;
+  line-height: 1.15 !important;
+  font-weight: 800 !important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-state,
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row-actions button {
+  font-size: 10px !important;
+  line-height: 1 !important;
+  font-weight: 850 !important;
+}
+
+/* Tutta la pagina Asset mantiene maiuscolo e grassetto */
+.fmed-app-root.fmed-shell-premium .p0-asset-page,
+.fmed-app-root.fmed-shell-premium .p0-asset-page * {
+  text-transform: uppercase !important;
+}
+
+/* Notebook più bassi: riduzione controllata, senza schiacciare */
+@media (max-height: 820px) {
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero {
+    min-height: 72px !important;
+    padding-block: 10px !important;
+  }
+
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpis,
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi {
+    min-height: 70px !important;
+  }
+
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-command {
+    padding-block: 10px !important;
+  }
+
+  .fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-results {
+    min-height: 230px !important;
+  }
+}
+
+/* ASSET FULLSCREEN PROFESSIONALE END */
+
+/* ASSET RISULTATI ALLINEATI DEFINITIVI START */
+
+/* Contenitore risultati: titolo, intestazioni e righe senza spazi inutili */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-results{
+  display:grid!important;
+  grid-template-rows:auto auto minmax(0,1fr)!important;
+  align-content:start!important;
+  gap:0!important;
+  min-height:280px!important;
+  padding:14px 16px 16px!important;
+  overflow:hidden!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-results-head{
+  min-height:44px!important;
+  margin:0!important;
+  padding:0 4px 6px!important;
+  display:flex!important;
+  align-items:flex-start!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-results-head span{
+  margin:0!important;
+  font-size:24px!important;
+  line-height:1.05!important;
+  font-weight:900!important;
+}
+
+/* Stessa griglia esatta per intestazioni e righe */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list-labels,
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row{
+  display:grid!important;
+  grid-template-columns:
+    34px
+    minmax(420px,1.55fr)
+    minmax(230px,.90fr)
+    110px
+    190px!important;
+  column-gap:16px!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list-labels{
+  min-height:34px!important;
+  margin:0!important;
+  padding:0 14px 6px!important;
+  align-items:end!important;
+  color:#5f748e!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:850!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list-labels > span:nth-child(3){
+  grid-column:3!important;
+  justify-self:start!important;
+  text-align:left!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list-labels > span:nth-child(4){
+  grid-column:4!important;
+  justify-self:center!important;
+  text-align:center!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list-labels > span:nth-child(5){
+  grid-column:5!important;
+  justify-self:center!important;
+  text-align:center!important;
+}
+
+/* Elenco subito sotto le intestazioni */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list{
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+}
+
+/* Riga asset direttamente sotto RISULTATI */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row{
+  min-height:96px!important;
+  margin:0 0 8px!important;
+  padding:12px 14px!important;
+  align-items:center!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > input[type="checkbox"]{
+  grid-column:1!important;
+  justify-self:start!important;
+  align-self:center!important;
+  margin:0!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > .p0-asset-open{
+  grid-column:2!important;
+  justify-self:stretch!important;
+  align-self:center!important;
+  text-align:left!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > .p0-asset-location{
+  grid-column:3!important;
+  justify-self:start!important;
+  align-self:center!important;
+  text-align:left!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > .p0-asset-state{
+  grid-column:4!important;
+  justify-self:center!important;
+  align-self:center!important;
+  width:96px!important;
+  min-width:96px!important;
+  text-align:center!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row > .p0-asset-row-actions{
+  grid-column:5!important;
+  justify-self:end!important;
+  align-self:center!important;
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:8px!important;
+  width:190px!important;
+  min-width:190px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row-actions button{
+  min-width:0!important;
+  min-height:40px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+/* Testi posizione e azioni leggibili */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-location strong{
+  font-size:12px!important;
+  line-height:1.1!important;
+  font-weight:900!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-location :is(span,small){
+  font-size:10px!important;
+  line-height:1.15!important;
+  font-weight:800!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-state,
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row-actions button{
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:850!important;
+}
+
+/* ASSET RISULTATI ALLINEATI DEFINITIVI END */
+
+/* ASSET CONTROLLI UNIFORMI START */
+
+/* Font unico per celle, campi, select e pulsanti */
+.fmed-app-root.fmed-shell-premium .p0-asset-page :is(
+  input,
+  select,
+  button,
+  .p0-asset-filter > span,
+  .p0-asset-list-labels,
+  .p0-asset-state,
+  .p0-asset-active-filters span
+){
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  letter-spacing:0!important;
+}
+
+/* Celle filtro tutte uguali */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-filter{
+  min-height:70px!important;
+  height:70px!important;
+  padding:8px 10px!important;
+  display:grid!important;
+  grid-template-rows:16px 38px!important;
+  align-content:center!important;
+  gap:4px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-filter > span{
+  min-height:16px!important;
+  display:flex!important;
+  align-items:center!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-filter select{
+  width:100%!important;
+  height:38px!important;
+  min-height:38px!important;
+  padding:0 12px!important;
+  border-radius:9px!important;
+  display:block!important;
+}
+
+/* Campo ricerca e pulsante stessa altezza */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-searchbar input,
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-searchbar > button{
+  height:44px!important;
+  min-height:44px!important;
+  border-radius:10px!important;
+  font-size:11px!important;
+  font-weight:800!important;
+}
+
+/* Mostra risultati verde */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-searchbar > button{
+  min-width:150px!important;
+  padding:0 20px!important;
+  border:1px solid #0f7a61!important;
+  background:#12866b!important;
+  color:#fff!important;
+  box-shadow:none!important;
+}
+
+/* Pulsanti barra azioni tutti uguali */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-commandbar > button{
+  height:40px!important;
+  min-height:40px!important;
+  min-width:118px!important;
+  padding:0 14px!important;
+  border-radius:9px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+}
+
+/* Badge filtri attivi coerenti con i pulsanti */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-active-filters span{
+  height:40px!important;
+  min-height:40px!important;
+  min-width:92px!important;
+  padding:0 12px!important;
+  border-radius:9px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+/* Pulsanti riga asset uguali */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row-actions{
+  grid-template-columns:1fr 1fr!important;
+  gap:8px!important;
+  width:190px!important;
+  min-width:190px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-row-actions button{
+  width:100%!important;
+  min-width:0!important;
+  height:40px!important;
+  min-height:40px!important;
+  padding:0 12px!important;
+  border-radius:9px!important;
+  font-size:11px!important;
+  font-weight:800!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+/* Stato stessa altezza dei pulsanti */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-state{
+  width:96px!important;
+  min-width:96px!important;
+  height:40px!important;
+  min-height:40px!important;
+  padding:0 12px!important;
+  border-radius:999px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+/* ASSET CONTROLLI UNIFORMI END */
+
+/* ASSET TESTATA KPI PIU GRANDI START */
+
+/* Testata leggermente più presente */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero{
+  min-height:92px!important;
+  padding:16px 22px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero-icon{
+  width:50px!important;
+  height:50px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero h1{
+  font-size:31px!important;
+  line-height:1.02!important;
+  font-weight:900!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero span{
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:850!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-hero p{
+  font-size:11px!important;
+  line-height:1.2!important;
+  font-weight:800!important;
+}
+
+/* KPI più leggibili senza aumentare troppo l'altezza */
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpis{
+  min-height:88px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi{
+  min-height:88px!important;
+  padding:14px 18px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi-icon{
+  width:40px!important;
+  height:40px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi span{
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:850!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi strong,
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi h2{
+  font-size:28px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi small,
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-kpi em{
+  font-size:10px!important;
+  line-height:1.15!important;
+  font-weight:800!important;
+}
+
+/* ASSET TESTATA KPI PIU GRANDI END */
+
+/* ASSET SCROLL RISULTATI START */
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page{
+  height:calc(100vh - 12px)!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-results{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  max-height:100%!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  overscroll-behavior:contain!important;
+  scrollbar-gutter:stable!important;
+  padding-right:4px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list::-webkit-scrollbar{
+  width:10px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list::-webkit-scrollbar-thumb{
+  background:#9fb3c9!important;
+  border-radius:999px!important;
+  border:2px solid #eef3f8!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list::-webkit-scrollbar-track{
+  background:#eef3f8!important;
+  border-radius:999px!important;
+}
+
+/* ASSET SCROLL RISULTATI END */
+
+/* ASSET SCROLL FORZATO DEFINITIVO START */
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page{
+  height:calc(100dvh - 12px)!important;
+  max-height:calc(100dvh - 12px)!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-results{
+  display:grid!important;
+  grid-template-rows:auto auto minmax(0,1fr)!important;
+  height:calc(100dvh - 585px)!important;
+  min-height:260px!important;
+  max-height:calc(100dvh - 585px)!important;
+  overflow:hidden!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list{
+  display:block!important;
+  height:100%!important;
+  min-height:0!important;
+  max-height:100%!important;
+  overflow-y:scroll!important;
+  overflow-x:hidden!important;
+  overscroll-behavior:contain!important;
+  scrollbar-gutter:stable!important;
+  padding-right:6px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list::-webkit-scrollbar{
+  display:block!important;
+  width:11px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list::-webkit-scrollbar-track{
+  background:#e7edf4!important;
+  border-radius:999px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list::-webkit-scrollbar-thumb{
+  min-height:42px!important;
+  background:#8198b2!important;
+  border:2px solid #e7edf4!important;
+  border-radius:999px!important;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-asset-page .p0-asset-list::-webkit-scrollbar-thumb:hover{
+  background:#617a96!important;
+}
+
+/* ASSET SCROLL FORZATO DEFINITIVO END */
+
+/* INTERVENTI PAGINA REALE START */
+
+/* Identità cromatica esclusiva del modulo Interventi */
+body .p0-operations.p0-operations--maintenance{
+  --interventi-dark:#964000;
+  --interventi-main:#c35f00;
+  --interventi-light:#e78b18;
+  --interventi-soft:#fff3df;
+  --interventi-border:#efd5ad;
+  width:100%;
+  min-width:0;
+}
+
+/* Testata reale */
+body .p0-operations--maintenance > .p0-operations__head{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:20px!important;
+  width:100%!important;
+  min-height:116px!important;
+  margin:0 0 0!important;
+  padding:17px 24px!important;
+  border:0!important;
+  border-radius:16px 16px 0 0!important;
+  background:linear-gradient(125deg,var(--interventi-dark) 0%,var(--interventi-main) 56%,var(--interventi-light) 100%)!important;
+  box-shadow:0 10px 24px rgba(116,52,0,.16)!important;
+  overflow:hidden!important;
+}
+
+/* Tutti i testi della testata bianchi */
+body .p0-operations--maintenance > .p0-operations__head,
+body .p0-operations--maintenance > .p0-operations__head *{
+  color:#fff!important;
+  text-transform:uppercase!important;
+  text-shadow:none!important;
+}
+
+body .p0-operations--maintenance .p0-operations__identity{
+  display:flex!important;
+  align-items:center!important;
+  gap:16px!important;
+  min-width:0!important;
+}
+
+body .p0-operations--maintenance .p0-operations__icon{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 50px!important;
+  width:50px!important;
+  height:50px!important;
+  border:1px solid rgba(255,255,255,.42)!important;
+  border-radius:13px!important;
+  background:rgba(255,255,255,.13)!important;
+  color:#fff!important;
+}
+
+body .p0-operations--maintenance .p0-operations__icon svg,
+body .p0-operations--maintenance .p0-operations__icon svg *{
+  color:#fff!important;
+  stroke:#fff!important;
+}
+
+body .p0-operations--maintenance .p0-operations__identity > div > span{
+  display:block!important;
+  margin:0 0 5px!important;
+  color:#fff!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.12em!important;
+}
+
+body .p0-operations--maintenance .p0-operations__identity h1{
+  margin:0!important;
+  color:#fff!important;
+  font-size:31px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.01em!important;
+}
+
+body .p0-operations--maintenance .p0-operations__identity p{
+  margin:7px 0 0!important;
+  color:#fff!important;
+  font-size:10.5px!important;
+  line-height:1.2!important;
+  font-weight:800!important;
+  letter-spacing:.025em!important;
+  opacity:.96!important;
+}
+
+/* Contatore a destra */
+body .p0-operations--maintenance .p0-operations__metric{
+  box-sizing:border-box!important;
+  display:grid!important;
+  align-content:center!important;
+  justify-items:center!important;
+  min-width:165px!important;
+  min-height:76px!important;
+  padding:11px 15px!important;
+  border:1px solid rgba(255,255,255,.42)!important;
+  border-radius:12px!important;
+  background:rgba(255,255,255,.13)!important;
+  color:#fff!important;
+}
+
+body .p0-operations--maintenance .p0-operations__metric strong{
+  color:#fff!important;
+  font-size:35px!important;
+  line-height:.95!important;
+  font-weight:900!important;
+}
+
+body .p0-operations--maintenance .p0-operations__metric span{
+  margin-top:7px!important;
+  color:#fff!important;
+  font-size:9px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.05em!important;
+  text-align:center!important;
+}
+
+/* KPI uniti come Asset */
+body .p0-operations--maintenance > .p0-metric-strip{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:0!important;
+  width:100%!important;
+  margin:0 0 12px!important;
+  padding:0!important;
+  border:1px solid #dbe4ed!important;
+  border-top:0!important;
+  border-radius:0 0 16px 16px!important;
+  background:#fff!important;
+  box-shadow:0 7px 18px rgba(15,42,67,.07)!important;
+  overflow:hidden!important;
+}
+
+body .p0-operations--maintenance > .p0-metric-strip > article{
+  position:relative!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:38px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:11px!important;
+  min-width:0!important;
+  min-height:86px!important;
+  margin:0!important;
+  padding:12px 16px!important;
+  border:0!important;
+  border-right:1px solid #dfe7ef!important;
+  border-radius:0!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+
+body .p0-operations--maintenance > .p0-metric-strip > article:last-child{
+  border-right:0!important;
+}
+
+body .p0-operations--maintenance > .p0-metric-strip > article::after{
+  content:""!important;
+  position:absolute!important;
+  left:14px!important;
+  right:14px!important;
+  bottom:0!important;
+  height:3px!important;
+  border-radius:999px 999px 0 0!important;
+  background:var(--interventi-light)!important;
+}
+
+body .p0-operations--maintenance .p0-metric-strip__icon{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:38px!important;
+  height:38px!important;
+  border-radius:11px!important;
+  background:var(--interventi-soft)!important;
+  color:var(--interventi-main)!important;
+}
+
+body .p0-operations--maintenance .p0-metric-strip__icon svg,
+body .p0-operations--maintenance .p0-metric-strip__icon svg *{
+  color:var(--interventi-main)!important;
+  stroke:var(--interventi-main)!important;
+}
+
+body .p0-operations--maintenance .p0-metric-strip article > div{
+  display:grid!important;
+  align-content:center!important;
+  min-width:0!important;
+}
+
+body .p0-operations--maintenance .p0-metric-strip small{
+  color:#536b84!important;
+  font-size:9px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.04em!important;
+  text-transform:uppercase!important;
+}
+
+body .p0-operations--maintenance .p0-metric-strip strong{
+  margin-top:4px!important;
+  color:#102b4d!important;
+  font-size:25px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+body .p0-operations--maintenance .p0-metric-strip article > div > span{
+  margin-top:4px!important;
+  color:#657b92!important;
+  font-size:8px!important;
+  line-height:1.1!important;
+  font-weight:800!important;
+  text-transform:uppercase!important;
+}
+
+/* Stampatello e gerarchia tipografica nella sola pagina Interventi */
+body .p0-operations--maintenance :is(
+  .p0-command,
+  .p0-register
+),
+body .p0-operations--maintenance :is(
+  .p0-command,
+  .p0-register
+) *{
+  text-transform:uppercase!important;
+}
+
+body .p0-operations--maintenance :is(h1,h2,h3,strong,b,button,.p0-kicker){
+  font-weight:900!important;
+}
+
+body .p0-operations--maintenance :is(p,span,small,label,input,select){
+  font-weight:800!important;
+}
+
+/* Pulsanti principali coordinati con Interventi */
+body .p0-operations--maintenance .p0-btn--maintenance,
+body .p0-operations--maintenance .p0-btn--new{
+  border-color:var(--interventi-main)!important;
+  background:var(--interventi-main)!important;
+  color:#fff!important;
+}
+
+body .p0-operations--maintenance .p0-btn--maintenance:hover,
+body .p0-operations--maintenance .p0-btn--new:hover{
+  border-color:var(--interventi-dark)!important;
+  background:var(--interventi-dark)!important;
+  color:#fff!important;
+}
+
+/* INTERVENTI PAGINA REALE END */
+
+/* SIDEBAR INTERVENTI COMPLETA START */
+
+/* Intera sidebar coordinata al modulo Interventi */
+body:has(.p0-operations--maintenance) :is(
+  .fmed-sidebar,
+  .fmed-shell-sidebar,
+  .fmed-app-sidebar,
+  aside[class*="sidebar"]
+){
+  background:
+    radial-gradient(circle at 82% 14%,rgba(255,255,255,.16) 0 74px,transparent 75px),
+    linear-gradient(180deg,#8f3900 0%,#b94e00 44%,#d66f0b 100%)!important;
+  border-right:1px solid rgba(112,45,0,.36)!important;
+  box-shadow:6px 0 22px rgba(95,39,0,.14)!important;
+}
+
+/* Logo e intestazioni */
+body:has(.p0-operations--maintenance) :is(
+  .fmed-sidebar,
+  .fmed-shell-sidebar,
+  .fmed-app-sidebar,
+  aside[class*="sidebar"]
+) :is(
+  h1,h2,h3,h4,
+  strong,b,
+  p,span,small,
+  label
+){
+  color:#ffffff!important;
+}
+
+/* Separatori e linee */
+body:has(.p0-operations--maintenance) :is(
+  .fmed-sidebar,
+  .fmed-shell-sidebar,
+  .fmed-app-sidebar,
+  aside[class*="sidebar"]
+) :is(
+  hr,
+  [class*="separator"],
+  [class*="divider"]
+){
+  border-color:rgba(255,255,255,.20)!important;
+  background:rgba(255,255,255,.20)!important;
+}
+
+/* Tutte le voci della navigazione */
+body:has(.p0-operations--maintenance) :is(
+  .fmed-sidebar,
+  .fmed-shell-sidebar,
+  .fmed-app-sidebar,
+  aside[class*="sidebar"]
+) :is(
+  a,
+  button,
+  [role="button"]
+){
+  color:#ffffff!important;
+  font-weight:850!important;
+}
+
+/* Icone di tutte le voci */
+body:has(.p0-operations--maintenance) :is(
+  .fmed-sidebar,
+  .fmed-shell-sidebar,
+  .fmed-app-sidebar,
+  aside[class*="sidebar"]
+) :is(
+  svg,
+  svg *,
+  [class*="icon"]
+){
+  color:#ffffff!important;
+  stroke:currentColor!important;
+}
+
+/* Tessere delle icone */
+body:has(.p0-operations--maintenance) :is(
+  .fmed-sidebar,
+  .fmed-shell-sidebar,
+  .fmed-app-sidebar,
+  aside[class*="sidebar"]
+) :is(
+  .fmed-nav-icon,
+  .sidebar-icon,
+  [class*="nav-icon"]
+){
+  border-color:rgba(255,255,255,.22)!important;
+  background:rgba(255,255,255,.11)!important;
+}
+
+/* Hover delle voci non attive */
+body:has(.p0-operations--maintenance) :is(
+  .fmed-sidebar,
+  .fmed-shell-sidebar,
+  .fmed-app-sidebar,
+  aside[class*="sidebar"]
+) :is(
+  a,
+  button,
+  [role="button"]
+):not([aria-current="page"]):not(.active):not(.is-active):hover{
+  background:rgba(255,255,255,.12)!important;
+  color:#ffffff!important;
+}
+
+/* Voce Interventi attiva più chiara */
+body:has(.p0-operations--maintenance) :is(
+  .fmed-sidebar,
+  .fmed-shell-sidebar,
+  .fmed-app-sidebar,
+  aside[class*="sidebar"]
+) :is(
+  [aria-current="page"],
+  .active,
+  .is-active
+){
+  border:1px solid rgba(255,255,255,.42)!important;
+  background:rgba(255,255,255,.20)!important;
+  color:#ffffff!important;
+  box-shadow:
+    inset 4px 0 0 #ffffff,
+    0 6px 15px rgba(74,27,0,.20)!important;
+}
+
+/* Pulsante riduci menu */
+body:has(.p0-operations--maintenance) :is(
+  .fmed-sidebar,
+  .fmed-shell-sidebar,
+  .fmed-app-sidebar,
+  aside[class*="sidebar"]
+) :is(
+  [class*="collapse"],
+  [class*="reduce"],
+  [class*="riduci"]
+){
+  border-color:rgba(255,255,255,.30)!important;
+  background:rgba(70,23,0,.20)!important;
+  color:#ffffff!important;
+}
+
+/* Area utente in fondo */
+body:has(.p0-operations--maintenance) :is(
+  .fmed-sidebar,
+  .fmed-shell-sidebar,
+  .fmed-app-sidebar,
+  aside[class*="sidebar"]
+) :is(
+  [class*="profile"],
+  [class*="user"],
+  [class*="account"]
+){
+  border-color:rgba(255,255,255,.22)!important;
+  background:rgba(255,255,255,.10)!important;
+  color:#ffffff!important;
+}
+
+/* SIDEBAR INTERVENTI COMPLETA END */
+
+
+
+
+
+/* INTERVENTI PULSANTI DEFINITIVI START */
+
+/* Base coerente */
+body .p0-operations--maintenance .p0-btn{
+  min-height:38px!important;
+  padding:0 16px!important;
+  border-width:1px!important;
+  border-style:solid!important;
+  border-radius:9px!important;
+  color:#ffffff!important;
+  font-weight:900!important;
+  text-transform:uppercase!important;
+  letter-spacing:.01em!important;
+  box-shadow:0 3px 8px rgba(15,42,67,.08)!important;
+  transition:
+    transform .16s ease,
+    background-color .16s ease,
+    border-color .16s ease,
+    box-shadow .16s ease!important;
+}
+
+body .p0-operations--maintenance .p0-btn:not(:disabled):hover{
+  transform:translateY(-1px)!important;
+  box-shadow:0 6px 13px rgba(15,42,67,.14)!important;
+}
+
+/* APRI REGISTRO — BLU */
+body .p0-operations--maintenance
+.p0-command__actions .p0-btn--maintenance{
+  border-color:#2868a5!important;
+  background:#2868a5!important;
+  color:#ffffff!important;
+}
+
+body .p0-operations--maintenance
+.p0-command__actions .p0-btn--maintenance:not(:disabled):hover{
+  border-color:#205789!important;
+  background:#205789!important;
+}
+
+/* INTERVENTO MANUALE — ARANCIONE MODULO */
+body .p0-operations--maintenance
+.p0-command__primary > .p0-btn--maintenance{
+  border-color:#c85f00!important;
+  background:#c85f00!important;
+  color:#ffffff!important;
+}
+
+body .p0-operations--maintenance
+.p0-command__primary > .p0-btn--maintenance:not(:disabled):hover{
+  border-color:#a94e00!important;
+  background:#a94e00!important;
+}
+
+/* NUOVO INTERVENTO — VERDE */
+body .p0-operations--maintenance .p0-btn--new{
+  border-color:#148169!important;
+  background:#148169!important;
+  color:#ffffff!important;
+}
+
+body .p0-operations--maintenance .p0-btn--new:not(:disabled):hover{
+  border-color:#0f6956!important;
+  background:#0f6956!important;
+}
+
+/* ANALIZZA COSTI — VIOLA */
+body .p0-operations--maintenance .p0-btn--costs{
+  border-color:#7047bd!important;
+  background:#7047bd!important;
+  color:#ffffff!important;
+}
+
+body .p0-operations--maintenance .p0-btn--costs:not(:disabled):hover{
+  border-color:#5b36a1!important;
+  background:#5b36a1!important;
+}
+
+/* ESPORTA PDF — ROSSO SCURO */
+body .p0-operations--maintenance .p0-btn--pdf{
+  border-color:#ad3d43!important;
+  background:#ad3d43!important;
+  color:#ffffff!important;
+}
+
+body .p0-operations--maintenance .p0-btn--pdf:not(:disabled):hover{
+  border-color:#8f3036!important;
+  background:#8f3036!important;
+}
+
+/* ESPORTA EXCEL — VERDE EXCEL */
+body .p0-operations--maintenance .p0-btn--excel{
+  border-color:#247a54!important;
+  background:#247a54!important;
+  color:#ffffff!important;
+}
+
+body .p0-operations--maintenance .p0-btn--excel:not(:disabled):hover{
+  border-color:#1c6243!important;
+  background:#1c6243!important;
+}
+
+/* SCHEDA CESPITE / STORICO — BLU GRIGIO */
+body .p0-operations--maintenance .p0-btn--asset-history{
+  border-color:#536c88!important;
+  background:#536c88!important;
+  color:#ffffff!important;
+}
+
+body .p0-operations--maintenance .p0-btn--asset-history:not(:disabled):hover{
+  border-color:#425872!important;
+  background:#425872!important;
+}
+
+/* STORICO COMPLETO — PETROLIO */
+body .p0-operations--maintenance .p0-btn--history{
+  border-color:#08799b!important;
+  background:#08799b!important;
+  color:#ffffff!important;
+}
+
+body .p0-operations--maintenance .p0-btn--history:not(:disabled):hover{
+  border-color:#05647f!important;
+  background:#05647f!important;
+}
+
+/* AZZERA FILTRI / CHIUDI — ROSSO */
+body .p0-operations--maintenance .p0-btn--quiet{
+  border-color:#c9343f!important;
+  background:#c9343f!important;
+  color:#ffffff!important;
+}
+
+body .p0-operations--maintenance .p0-btn--quiet:not(:disabled):hover{
+  border-color:#a52630!important;
+  background:#a52630!important;
+}
+
+/* RICERCA IMMEDIATA — AMBRA */
+body .p0-operations--maintenance .p0-search__meta{
+  border:1px solid #d78a16!important;
+  border-radius:999px!important;
+  background:#d78a16!important;
+  color:#ffffff!important;
+  font-weight:900!important;
+}
+
+/* DISABILITATI */
+body .p0-operations--maintenance .p0-btn:disabled{
+  border-color:#d5dee8!important;
+  background:#e8edf2!important;
+  color:#91a0b0!important;
+  box-shadow:none!important;
+  transform:none!important;
+  cursor:not-allowed!important;
+  opacity:1!important;
+}
+
+/* INTERVENTI PULSANTI DEFINITIVI END */
+
+/* INTERVENTI PULSANTI UNICA RIGA START */
+
+/* Barra comandi completa su una sola riga */
+body .p0-operations--maintenance .p0-command__actions--complete{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:
+    minmax(126px,1.05fr)
+    minmax(150px,1.18fr)
+    minmax(132px,1fr)
+    minmax(116px,.9fr)
+    minmax(124px,.95fr)
+    minmax(168px,1.28fr)
+    minmax(148px,1.12fr)
+    minmax(124px,.95fr)!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:10px 14px!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+}
+
+/* Tutti i pulsanti occupano correttamente la propria colonna */
+body .p0-operations--maintenance
+.p0-command__actions--complete > .p0-btn{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-width:0!important;
+  height:40px!important;
+  min-height:40px!important;
+  margin:0!important;
+  padding:0 12px!important;
+  white-space:nowrap!important;
+  text-align:center!important;
+  line-height:1!important;
+  font-size:10px!important;
+  font-weight:900!important;
+}
+
+/* Ordine funzionale univoco */
+body .p0-operations--maintenance
+.p0-command__actions--complete > .p0-btn--maintenance{
+  order:1!important;
+}
+
+body .p0-operations--maintenance
+.p0-command__actions--complete > .p0-btn--new{
+  order:2!important;
+}
+
+body .p0-operations--maintenance
+.p0-command__actions--complete > .p0-btn--costs{
+  order:3!important;
+}
+
+body .p0-operations--maintenance
+.p0-command__actions--complete > .p0-btn--pdf{
+  order:4!important;
+}
+
+body .p0-operations--maintenance
+.p0-command__actions--complete > .p0-btn--excel{
+  order:5!important;
+}
+
+body .p0-operations--maintenance
+.p0-command__actions--complete > .p0-btn--asset-history{
+  order:6!important;
+}
+
+body .p0-operations--maintenance
+.p0-command__actions--complete > .p0-btn--history{
+  order:7!important;
+}
+
+body .p0-operations--maintenance
+.p0-command__actions--complete > .p0-btn--quiet{
+  order:8!important;
+}
+
+/* Azzera filtri non deve più essere spinto a destra */
+body .p0-operations--maintenance
+.p0-command__actions--complete > .p0-btn--quiet{
+  margin-left:0!important;
+  justify-self:stretch!important;
+}
+
+/* Nessun pulsante deve andare a capo */
+body .p0-operations--maintenance
+.p0-command__actions--complete > *{
+  grid-row:1!important;
+}
+
+/* Scroll orizzontale discreto solo su schermi troppo stretti */
+body .p0-operations--maintenance
+.p0-command__actions--complete{
+  scrollbar-width:thin!important;
+  scrollbar-color:#9aabbd #edf2f6!important;
+}
+
+body .p0-operations--maintenance
+.p0-command__actions--complete::-webkit-scrollbar{
+  height:7px!important;
+}
+
+body .p0-operations--maintenance
+.p0-command__actions--complete::-webkit-scrollbar-track{
+  background:#edf2f6!important;
+  border-radius:999px!important;
+}
+
+body .p0-operations--maintenance
+.p0-command__actions--complete::-webkit-scrollbar-thumb{
+  background:#9aabbd!important;
+  border-radius:999px!important;
+}
+
+/* INTERVENTI PULSANTI UNICA RIGA END */
+
+/* INTERVENTI TESTATA KPI UNIFICATI START */
+
+/* Contenitore pagina: nessuno spazio tra primo e secondo blocco */
+body .p0-operations.p0-operations--maintenance{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:0!important;
+}
+
+/* Testata superiore */
+body .p0-operations--maintenance > .p0-operations__head{
+  position:relative!important;
+  z-index:2!important;
+  width:100%!important;
+  margin:0!important;
+  padding-bottom:17px!important;
+  border-radius:16px 16px 0 0!important;
+  box-shadow:none!important;
+}
+
+/* KPI immediatamente sotto */
+body .p0-operations--maintenance > .p0-operations__head + .p0-metric-strip{
+  position:relative!important;
+  z-index:1!important;
+  width:100%!important;
+  margin:-1px 0 14px!important;
+  padding:0!important;
+  border-top:0!important;
+  border-radius:0 0 16px 16px!important;
+  box-shadow:0 10px 22px rgba(15,42,67,.08)!important;
+  overflow:hidden!important;
+}
+
+/* Continuità perfetta dei bordi */
+body .p0-operations--maintenance > .p0-operations__head{
+  border-bottom-left-radius:0!important;
+  border-bottom-right-radius:0!important;
+}
+
+body .p0-operations--maintenance > .p0-metric-strip{
+  border-top-left-radius:0!important;
+  border-top-right-radius:0!important;
+}
+
+/* Elimina spazi generati da regole generiche */
+body .p0-operations--maintenance > .p0-operations__head + section,
+body .p0-operations--maintenance > header + section{
+  margin-top:-1px!important;
+}
+
+/* KPI come fascia unica continua */
+body .p0-operations--maintenance > .p0-metric-strip{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:0!important;
+  background:#ffffff!important;
+}
+
+body .p0-operations--maintenance > .p0-metric-strip > article{
+  margin:0!important;
+  border-top:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+
+/* INTERVENTI TESTATA KPI UNIFICATI END */
+
+/* INTERVENTI RICERCA SENZA LENTE START */
+
+/* Elimina completamente la lente */
+body .p0-operations--maintenance .p0-search__mark{
+  display:none!important;
+}
+
+/* Campo ricerca riallineato senza colonna vuota */
+body .p0-operations--maintenance .p0-search{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:100%!important;
+  padding:6px 10px!important;
+}
+
+/* Campo testo perfettamente allineato */
+body .p0-operations--maintenance .p0-search input{
+  box-sizing:border-box!important;
+  grid-column:1!important;
+  width:100%!important;
+  min-width:0!important;
+  height:44px!important;
+  margin:0!important;
+  padding:0 15px!important;
+  border-radius:10px!important;
+}
+
+/* Pulsante ricerca allineato alla stessa altezza */
+body .p0-operations--maintenance .p0-search__meta{
+  box-sizing:border-box!important;
+  grid-column:2!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:142px!important;
+  height:44px!important;
+  margin:0!important;
+  padding:0 16px!important;
+  white-space:nowrap!important;
+}
+
+/* Nessuna cella o spazio residuo a sinistra */
+body .p0-operations--maintenance .p0-search > :first-child{
+  margin-left:0!important;
+}
+
+/* INTERVENTI RICERCA SENZA LENTE END */
+
+/* INTERVENTI RICERCA SENZA CONTENITORE START */
+
+/* Elimina completamente cornice e sfondo esterno */
+body .p0-operations--maintenance .p0-search{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  outline:0!important;
+}
+
+/* Elimina eventuali pseudo-elementi decorativi */
+body .p0-operations--maintenance .p0-search::before,
+body .p0-operations--maintenance .p0-search::after{
+  content:none!important;
+  display:none!important;
+}
+
+/* Campo pulito */
+body .p0-operations--maintenance .p0-search input{
+  width:100%!important;
+  height:44px!important;
+  margin:0!important;
+  padding:0 15px!important;
+  border:1px solid #c9d7e5!important;
+  border-radius:10px!important;
+  background:#ffffff!important;
+  box-shadow:none!important;
+}
+
+/* Pulsante perfettamente allineato */
+body .p0-operations--maintenance .p0-search__meta{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:142px!important;
+  height:44px!important;
+  margin:0!important;
+  padding:0 16px!important;
+  border-radius:10px!important;
+  white-space:nowrap!important;
+}
+
+/* INTERVENTI RICERCA SENZA CONTENITORE END */
