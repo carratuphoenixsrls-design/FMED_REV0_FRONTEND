@@ -7644,13 +7644,59 @@ ${messaggio}`);
 
         {nuovoInterventoOpen && <section className="fmed-workspace-page fmed-intervention-workspace fmed-new-intervention-page" aria-labelledby="fmed-new-intervention-title">
     <div className="fmed-workspace-surface fmed-intervention-workspace-surface">
-      <button className="fmed-workspace-back fmed-style-close-btn" onClick={() => chiudiNuovoIntervento({ annullaProcesso: true })}>
-        <FmedIcon name="close" /> {cespiteRitornoOperazione ? "Torna indietro" : "Torna indietro"}
-      </button>
+      <header className="fmed-new-intervention-head">
+        <div className="fmed-new-intervention-head-copy">
+          <span>FMED REV0</span>
+          <h2 id="fmed-new-intervention-title">
+            {processoNuovoInterventoGuidato ? "NUOVO INTERVENTO GUIDATO" : "NUOVO INTERVENTO"}
+          </h2>
+          <p>Seleziona il cespite, completa i dati operativi e salva senza uscire dall'area di lavoro FMED.</p>
+        </div>
 
-      <h2 id="fmed-new-intervention-title" className="fmed-style-workspace-title">{processoNuovoInterventoGuidato ? "NUOVO INTERVENTO guidato" : "NUOVO INTERVENTO"}</h2>
-      <p className="fmed-workspace-description">Seleziona il cespite, completa i dati operativi e salva senza uscire dall’area di lavoro FMED.</p>
+        <button
+          type="button"
+          className="fmed-new-intervention-back"
+          onClick={() => chiudiNuovoIntervento({ annullaProcesso: true })}
+        >
+          TORNA INDIETRO
+        </button>
+      </header>
 
+      <div className="fmed-new-intervention-facts" aria-label="Caratteristiche del processo Nuovo Intervento">
+        <article>
+          <span>01</span>
+          <div>
+            <strong>Cespite reale</strong>
+            <small>Ricerca e selezione direttamente dal censimento FMED.</small>
+          </div>
+        </article>
+        <article>
+          <span>02</span>
+          <div>
+            <strong>Dati governati</strong>
+            <small>Sede, attivitÃ , periodicitÃ  e campi operativi controllati.</small>
+          </div>
+        </article>
+        <article>
+          <span>03</span>
+          <div>
+            <strong>Storico aggiornato</strong>
+            <small>Intervento, scadenze e analisi aggiornati dopo il salvataggio.</small>
+          </div>
+        </article>
+      </div>
+
+      <div className="fmed-new-intervention-steps" aria-label="Passaggi Nuovo Intervento">
+        <div className={formNuovoIntervento.codice_strumento ? "is-done" : "is-active"}>
+          <b>1</b><span>Selezione cespite</span>
+        </div>
+        <div className={formNuovoIntervento.codice_strumento ? "is-active" : ""}>
+          <b>2</b><span>Dati intervento</span>
+        </div>
+        <div>
+          <b>3</b><span>Conferma e salvataggio</span>
+        </div>
+      </div>
       <NewInterventionAssetPicker
             cespiti={cespiti}
             selectedCode={formNuovoIntervento.codice_strumento}

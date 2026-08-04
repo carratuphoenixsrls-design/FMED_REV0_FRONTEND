@@ -1,0 +1,242 @@
+﻿{
+    "run_id":  "DIAGNOSI_INTERVENTI_20260804_080358",
+    "backend":  "https://fmed-backend.onrender.com",
+    "cespite_reale":  "001733",
+    "template_intervento":  {
+                                "id_intervento":  "8739",
+                                "codice_strumento":  "001733",
+                                "sede":  "Marilab Center",
+                                "tipologia":  "INCUBATORE",
+                                "attivita":  "MANUTENZIONE PREVENTIVA / VERIFICA PARTICOLARE",
+                                "costruttore":  "INTERCONTINENTAL",
+                                "modello":  "DAS 73010",
+                                "reparto":  "LABORATORIO ANALISI",
+                                "matricola":  "0/00504/7",
+                                "societa":  "SINCRONIS MEDICAL",
+                                "link_documento":  "https://marilab.sharepoint.com/sites/marilab2/Documenti%20condivisi/Forms/AllItems.aspx?id=%2Fsites%2Fmarilab2%2FDocumenti%20condivisi%2FINFRASTRUTTURE%2FSETTORE%20TECNICO%2FINVENTARIO%2FAPPARECCHIATURE%20MEDICALI%2FZAMBRINI%2F001733_A_003145_DATALOGGER_ZAMBRINI",
+                                "descrizione_attivita":  "ESEGUITA VERIFICA CON ESITO POSITIVO",
+                                "esito":  "ESI_0001",
+                                "costo":  "39.50 â¬",
+                                "data_ultimo_intervento":  "2024-11-25T00:00:00+00:00",
+                                "data_prossimo_intervento":  "2025-11-25T00:00:00+00:00",
+                                "periodicita":  null,
+                                "importo_extra":  null,
+                                "ditta_esecutrice":  "SINCRONIS MEDICAL",
+                                "branca_medica":  null,
+                                "stato_ciclo":  "SOSTITUITA",
+                                "ciclo_chiave":  "MARILAB_CENTER::001733::MANUTENZIONE PREVENTIVA VERIFICA PARTICOLARE::",
+                                "sostituito_da":  "9578",
+                                "data_chiusura":  "2026-07-13T16:06:20.340256+00:00",
+                                "motivo_chiusura":  "Riconciliazione FMED 4.1",
+                                "sede_originale":  "MARILAB CENTER",
+                                "sede_chiave":  "MARILAB_CENTER",
+                                "_ciclo_corrente":  false,
+                                "_ciclo_stato":  "CHIUSO",
+                                "_ciclo_label":  "Sostituita",
+                                "giorni_alla_scadenza":  null,
+                                "stato_scadenza":  "SOSTITUITA",
+                                "_finestra_operativa":  true,
+                                "_archivio_storico":  false,
+                                "_eccezione_collaudo":  false,
+                                "_data_attivita_riferimento":  "2024-11-25",
+                                "_criterio_temporale":  "DAL_01_01_2023"
+                            },
+    "risultati":  [
+                      {
+                          "test":  "PAYLOAD MINIMO SU CESPITE REALE",
+                          "esito":  "OK",
+                          "dettaglio":  "Creazione riuscita. ID: INT_20260804060421",
+                          "payload":  {
+                                          "dati":  {
+                                                       "attivita":  "MANUTENZIONE PREVENTIVA / VERIFICA PARTICOLARE",
+                                                       "data_ultimo_intervento":  "2026-08-04",
+                                                       "descrizione_attivita":  "DIAGNOSI_INTERVENTI_20260804_080358 - TEST MINIMO TEMPORANEO",
+                                                       "stato_ciclo":  "COMPLETATA",
+                                                       "codice_strumento":  "001733",
+                                                       "sede":  "Marilab Center"
+                                                   }
+                                      },
+                          "risposta":  {
+                                           "status":  "ok",
+                                           "messaggio":  "Intervento creato correttamente",
+                                           "codice":  "001733",
+                                           "dati_creati":  {
+                                                               "attivita":  "MANUTENZIONE PREVENTIVA / VERIFICA PARTICOLARE",
+                                                               "data_ultimo_intervento":  "2026-08-04",
+                                                               "descrizione_attivita":  "DIAGNOSI_INTERVENTI_20260804_080358 - TEST MINIMO TEMPORANEO",
+                                                               "stato_ciclo":  "COMPLETATA",
+                                                               "codice_strumento":  "001733",
+                                                               "sede":  "Marilab Center",
+                                                               "societa":  "MARILAB S.R.L.",
+                                                               "id_intervento":  "INT_20260804060421",
+                                                               "ciclo_chiave":  "MARILAB_CENTER::001733::MANUTENZIONE PREVENTIVA VERIFICA PARTICOLARE::"
+                                                           },
+                                           "cicli_precedenti_chiusi":  0,
+                                           "valori_catalogo_acquisiti":  [
+
+                                                                         ],
+                                           "risultato":  {
+                                                             "status":  "ok",
+                                                             "risultato":  [
+                                                                               {
+                                                                                   "id_intervento":  "INT_20260804060421",
+                                                                                   "codice_strumento":  "001733",
+                                                                                   "sede":  "Marilab Center",
+                                                                                   "tipologia":  null,
+                                                                                   "attivita":  "MANUTENZIONE PREVENTIVA / VERIFICA PARTICOLARE",
+                                                                                   "costruttore":  null,
+                                                                                   "modello":  null,
+                                                                                   "reparto":  null,
+                                                                                   "matricola":  null,
+                                                                                   "societa":  "MARILAB S.R.L.",
+                                                                                   "link_documento":  null,
+                                                                                   "descrizione_attivita":  "DIAGNOSI_INTERVENTI_20260804_080358 - TEST MINIMO TEMPORANEO",
+                                                                                   "esito":  null,
+                                                                                   "costo":  null,
+                                                                                   "data_ultimo_intervento":  "2026-08-04T00:00:00+00:00",
+                                                                                   "data_prossimo_intervento":  null,
+                                                                                   "periodicita":  null,
+                                                                                   "importo_extra":  null,
+                                                                                   "ditta_esecutrice":  null,
+                                                                                   "branca_medica":  null,
+                                                                                   "stato_ciclo":  "COMPLETATA",
+                                                                                   "ciclo_chiave":  "MARILAB_CENTER::001733::MANUTENZIONE PREVENTIVA VERIFICA PARTICOLARE::",
+                                                                                   "sostituito_da":  null,
+                                                                                   "data_chiusura":  null,
+                                                                                   "motivo_chiusura":  null
+                                                                               }
+                                                                           ],
+                                                             "colonne_rimosse_per_compatibilita":  [
+
+                                                                                                   ],
+                                                             "dati_effettivamente_inviati":  {
+                                                                                                 "attivita":  "MANUTENZIONE PREVENTIVA / VERIFICA PARTICOLARE",
+                                                                                                 "data_ultimo_intervento":  "2026-08-04",
+                                                                                                 "descrizione_attivita":  "DIAGNOSI_INTERVENTI_20260804_080358 - TEST MINIMO TEMPORANEO",
+                                                                                                 "stato_ciclo":  "COMPLETATA",
+                                                                                                 "codice_strumento":  "001733",
+                                                                                                 "sede":  "Marilab Center",
+                                                                                                 "societa":  "MARILAB S.R.L.",
+                                                                                                 "id_intervento":  "INT_20260804060421",
+                                                                                                 "ciclo_chiave":  "MARILAB_CENTER::001733::MANUTENZIONE PREVENTIVA VERIFICA PARTICOLARE::"
+                                                                                             }
+                                                         }
+                                       }
+                      },
+                      {
+                          "test":  "PAYLOAD COMPLETO SIMILE AL FRONTEND",
+                          "esito":  "OK",
+                          "dettaglio":  "Creazione riuscita. ID: INT_20260804060424",
+                          "payload":  {
+                                          "dati":  {
+                                                       "esito":  "ESI_0001",
+                                                       "tipologia":  "INCUBATORE",
+                                                       "stato_ciclo":  "COMPLETATA",
+                                                       "attivita":  "MANUTENZIONE PREVENTIVA / VERIFICA PARTICOLARE",
+                                                       "ditta_esecutrice":  "SINCRONIS MEDICAL",
+                                                       "costo":  "39.50 â¬",
+                                                       "codice_strumento":  "001733",
+                                                       "modello":  "DAS 73010",
+                                                       "data_prossimo_intervento":  "2025-11-25T00:00:00+00:00",
+                                                       "reparto":  "LABORATORIO ANALISI",
+                                                       "descrizione_attivita":  "DIAGNOSI_INTERVENTI_20260804_080358 - TEST PAYLOAD FRONTEND TEMPORANEO",
+                                                       "sede":  "Marilab Center",
+                                                       "matricola":  "0/00504/7",
+                                                       "link_documento":  "https://marilab.sharepoint.com/sites/marilab2/Documenti%20condivisi/Forms/AllItems.aspx?id=%2Fsites%2Fmarilab2%2FDocumenti%20condivisi%2FINFRASTRUTTURE%2FSETTORE%20TECNICO%2FINVENTARIO%2FAPPARECCHIATURE%20MEDICALI%2FZAMBRINI%2F001733_A_003145_DATALOGGER_ZAMBRINI",
+                                                       "costruttore":  "INTERCONTINENTAL",
+                                                       "data_ultimo_intervento":  "2026-08-04",
+                                                       "societa":  "SINCRONIS MEDICAL"
+                                                   }
+                                      },
+                          "risposta":  {
+                                           "status":  "ok",
+                                           "messaggio":  "Intervento creato correttamente",
+                                           "codice":  "001733",
+                                           "dati_creati":  {
+                                                               "esito":  "0",
+                                                               "tipologia":  "INCUBATORE",
+                                                               "stato_ciclo":  "COMPLETATA",
+                                                               "attivita":  "MANUTENZIONE PREVENTIVA / VERIFICA PARTICOLARE",
+                                                               "ditta_esecutrice":  "SINCRONIS MEDICAL",
+                                                               "costo":  "39.50",
+                                                               "codice_strumento":  "001733",
+                                                               "modello":  "DAS 73010",
+                                                               "data_prossimo_intervento":  "2025-11-25",
+                                                               "reparto":  "LABORATORIO ANALISI",
+                                                               "descrizione_attivita":  "DIAGNOSI_INTERVENTI_20260804_080358 - TEST PAYLOAD FRONTEND TEMPORANEO",
+                                                               "sede":  "Marilab Center",
+                                                               "matricola":  "0/00504/7",
+                                                               "link_documento":  "https://marilab.sharepoint.com/sites/marilab2/Documenti%20condivisi/Forms/AllItems.aspx?id=%2Fsites%2Fmarilab2%2FDocumenti%20condivisi%2FINFRASTRUTTURE%2FSETTORE%20TECNICO%2FINVENTARIO%2FAPPARECCHIATURE%20MEDICALI%2FZAMBRINI%2F001733_A_003145_DATALOGGER_ZAMBRINI",
+                                                               "costruttore":  "INTERCONTINENTAL",
+                                                               "data_ultimo_intervento":  "2026-08-04",
+                                                               "societa":  "SINCRONIS MEDICAL",
+                                                               "id_intervento":  "INT_20260804060424",
+                                                               "ciclo_chiave":  "MARILAB_CENTER::001733::MANUTENZIONE PREVENTIVA VERIFICA PARTICOLARE::"
+                                                           },
+                                           "cicli_precedenti_chiusi":  0,
+                                           "valori_catalogo_acquisiti":  [
+
+                                                                         ],
+                                           "risultato":  {
+                                                             "status":  "ok",
+                                                             "risultato":  [
+                                                                               {
+                                                                                   "id_intervento":  "INT_20260804060424",
+                                                                                   "codice_strumento":  "001733",
+                                                                                   "sede":  "Marilab Center",
+                                                                                   "tipologia":  "INCUBATORE",
+                                                                                   "attivita":  "MANUTENZIONE PREVENTIVA / VERIFICA PARTICOLARE",
+                                                                                   "costruttore":  "INTERCONTINENTAL",
+                                                                                   "modello":  "DAS 73010",
+                                                                                   "reparto":  "LABORATORIO ANALISI",
+                                                                                   "matricola":  "0/00504/7",
+                                                                                   "societa":  "SINCRONIS MEDICAL",
+                                                                                   "link_documento":  "https://marilab.sharepoint.com/sites/marilab2/Documenti%20condivisi/Forms/AllItems.aspx?id=%2Fsites%2Fmarilab2%2FDocumenti%20condivisi%2FINFRASTRUTTURE%2FSETTORE%20TECNICO%2FINVENTARIO%2FAPPARECCHIATURE%20MEDICALI%2FZAMBRINI%2F001733_A_003145_DATALOGGER_ZAMBRINI",
+                                                                                   "descrizione_attivita":  "DIAGNOSI_INTERVENTI_20260804_080358 - TEST PAYLOAD FRONTEND TEMPORANEO",
+                                                                                   "esito":  "0",
+                                                                                   "costo":  "39.50",
+                                                                                   "data_ultimo_intervento":  "2026-08-04T00:00:00+00:00",
+                                                                                   "data_prossimo_intervento":  "2025-11-25T00:00:00+00:00",
+                                                                                   "periodicita":  null,
+                                                                                   "importo_extra":  null,
+                                                                                   "ditta_esecutrice":  "SINCRONIS MEDICAL",
+                                                                                   "branca_medica":  null,
+                                                                                   "stato_ciclo":  "COMPLETATA",
+                                                                                   "ciclo_chiave":  "MARILAB_CENTER::001733::MANUTENZIONE PREVENTIVA VERIFICA PARTICOLARE::",
+                                                                                   "sostituito_da":  null,
+                                                                                   "data_chiusura":  null,
+                                                                                   "motivo_chiusura":  null
+                                                                               }
+                                                                           ],
+                                                             "colonne_rimosse_per_compatibilita":  [
+
+                                                                                                   ],
+                                                             "dati_effettivamente_inviati":  {
+                                                                                                 "esito":  "0",
+                                                                                                 "tipologia":  "INCUBATORE",
+                                                                                                 "stato_ciclo":  "COMPLETATA",
+                                                                                                 "attivita":  "MANUTENZIONE PREVENTIVA / VERIFICA PARTICOLARE",
+                                                                                                 "ditta_esecutrice":  "SINCRONIS MEDICAL",
+                                                                                                 "costo":  "39.50",
+                                                                                                 "codice_strumento":  "001733",
+                                                                                                 "modello":  "DAS 73010",
+                                                                                                 "data_prossimo_intervento":  "2025-11-25",
+                                                                                                 "reparto":  "LABORATORIO ANALISI",
+                                                                                                 "descrizione_attivita":  "DIAGNOSI_INTERVENTI_20260804_080358 - TEST PAYLOAD FRONTEND TEMPORANEO",
+                                                                                                 "sede":  "Marilab Center",
+                                                                                                 "matricola":  "0/00504/7",
+                                                                                                 "link_documento":  "https://marilab.sharepoint.com/sites/marilab2/Documenti%20condivisi/Forms/AllItems.aspx?id=%2Fsites%2Fmarilab2%2FDocumenti%20condivisi%2FINFRASTRUTTURE%2FSETTORE%20TECNICO%2FINVENTARIO%2FAPPARECCHIATURE%20MEDICALI%2FZAMBRINI%2F001733_A_003145_DATALOGGER_ZAMBRINI",
+                                                                                                 "costruttore":  "INTERCONTINENTAL",
+                                                                                                 "data_ultimo_intervento":  "2026-08-04",
+                                                                                                 "societa":  "SINCRONIS MEDICAL",
+                                                                                                 "id_intervento":  "INT_20260804060424",
+                                                                                                 "ciclo_chiave":  "MARILAB_CENTER::001733::MANUTENZIONE PREVENTIVA VERIFICA PARTICOLARE::"
+                                                                                             }
+                                                         }
+                                       }
+                      }
+                  ],
+    "record_residui":  [
+
+                       ]
+}

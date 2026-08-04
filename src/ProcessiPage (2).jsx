@@ -154,7 +154,6 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("TUTTI");
   const [moduleFilter, setModuleFilter] = useState("TUTTI");
-  const [archiveView, setArchiveView] = useState("ATTIVI");
   const [launching, setLaunching] = useState(null);
   const [selectedExecution, setSelectedExecution] = useState(null);
   const [detail, setDetail] = useState({ attivita: [], approvazioni: [], allegati: [], eventi: [], solleciti: [], requisiti: {} });
@@ -231,13 +230,10 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
       if (moduleFilter !== "TUTTI" && moduleCode !== moduleFilter) return false;
       const config = processByCode.get(String(item.processo || "").toUpperCase());
       const payload = safeObject(item.dati);
-      const archived = payload.archiviato === true;
-      if (archiveView === "ATTIVI" && archived) return false;
-      if (archiveView === "ARCHIVIATI" && !archived) return false;
       const haystack = normalize(`${item.titolo || ""} ${item.processo} ${config?.titolo || ""} ${item.passo_corrente || ""} ${item.avviato_da || ""} ${item.sede || ""} ${item.responsabile || ""} ${item.riferimento_id || ""} ${JSON.stringify(payload)}`);
       return !query || haystack.includes(query);
     });
-  }, [archiveView, executions, moduleFilter, processByCode, search, statusFilter]);
+  }, [executions, moduleFilter, processByCode, search, statusFilter]);
 
   function launchProcess(process) {
     if (!canManage) return;
@@ -340,40 +336,6 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
 
   const approval = detail.approvazioni?.[0];
   const requirements = detail.requisiti || {};
-  const canArchive = String(fmedSession()?.ruolo || "").trim().toUpperCase() === "ADMIN";
-
-  async function archiveExecution(item) {
-    if (!item?.id || !canArchive) return;
-    const state = String(item.stato || "").toUpperCase();
-    if (!["BOZZA", "ANNULLATO", "ERRORE"].includes(state)) {
-      setMessage("È possibile archiviare soltanto processi in stato Bozza, Annullato o Errore.");
-      return;
-    }
-    const reason = window.prompt("Indicare il motivo dell’archiviazione:");
-    if (!String(reason || "").trim()) return;
-    if (!window.confirm("Archiviare questo processo? Checklist, eventi, approvazioni e allegati resteranno conservati.")) return;
-    try {
-      await fmedFetchJson(`/process-engine/esecuzioni/${item.id}`, {
-        apiBaseUrl,
-        method: "PATCH",
-        headers: fmedAuthHeaders(),
-        retries: 1,
-        timeoutMs: 60000,
-        body: JSON.stringify({
-          dati: {
-            archiviato: true,
-            archiviato_il: new Date().toISOString(),
-            motivo_archiviazione: String(reason).trim()
-          },
-          aggiornato_da: actor()
-        })
-      });
-      setMessage("Processo archiviato correttamente.");
-      await loadData();
-    } catch (error) {
-      setMessage(error?.message || "Archiviazione non riuscita.");
-    }
-  }
 
   return (
     <section className={`fmed-process-page ${launching || selectedExecution ? "is-workspace-open" : ""}`}>
@@ -397,6 +359,32 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
       </div>
 
       <ProcessiControls loading={loading} onRefresh={loadData} stats={stats} search={search} onSearchChange={setSearch} statusFilter={statusFilter} onStatusFilterChange={setStatusFilter} />
+
+
+      <section className="fmed-process-history"><div className="fmed-process-history-head"><div><h3>Registro processi</h3><p>Stato, SLA, responsabilità, approvazione e avanzamento delle esecuzioni.</p></div></div>
+        <div className="fmed-process-table-wrap"><table className="fmed-process-table"><thead><tr><th>Processo</th><th>Modulo</th><th>Stato</th><th>SLA</th><th>Responsabile</th><th>Scadenza</th><th>Checklist</th><th>Approvazione</th><th /></tr></thead><tbody>
+          {!loading && filteredExecutions.length === 0 && <tr><td colSpan="9" className="fmed-process-empty">Nessuna esecuzione corrispondente.</td></tr>}
+          {filteredExecutions.map((item) => {
+                const config = processByCode.get(String(item.processo || "").toUpperCase());
+                const percentage = Math.max(0, Math.min(100, Number(item.percentuale || 0)));
+                const moduleCode = String(item.modulo || item.riferimento_modulo || "PROCESS_ENGINE").toUpperCase();
+                const slaCode = String(item?.sla?.codice || item.stato_sla || "REGOLARE").toUpperCase();
+                return <tr key={item.id || `${item.processo}-${item.aggiornato_il}`}>
+              <td><strong>{item.titolo || config?.titolo || String(item.processo || "").replaceAll("_", " ")}</strong><small>{item.sede || "Sede non indicata"}{item.riferimento_id ? ` · ${item.riferimento_id}` : ""}</small>{item._archivio_storico && <small>Archivio pre-2023</small>}</td>
+              <td>{MODULE_LABELS[moduleCode] || moduleCode.replaceAll("_", " ")}</td>
+              <td><span className={`fmed-process-status is-${String(item.stato || "APERTO").toLowerCase()}`}>{STATUS_LABELS[String(item.stato || "").toUpperCase()] || item.stato}</span></td>
+              <td><span className={`fmed-process-sla is-${slaCode.toLowerCase()}`}>{SLA_LABELS[slaCode] || slaCode}</span></td>
+              <td>{item.responsabile || item.assegnato_a || "Da assegnare"}</td>
+              <td>{formatDate(item.scadenza, true)}</td>
+              <td><div className="fmed-process-progress"><span style={{ width: `${percentage}%` }} /></div><small>{item.checklist_completata || 0}/{item.checklist_totale || 0} · {humanizeStep(item.passo_corrente)}</small></td>
+              <td>{humanizeStep(item.approvazione_stato || "NON_RICHIESTA")}</td>
+              <td><button type="button" className="fmed-process-row-open" onClick={() => refreshSelected(item.id)}>Gestisci</button></td>
+            </tr>;
+              })}
+        </tbody></table></div>
+      </section>
+
+
 
       <div className="fmed-process-module-filter">
         <button type="button" className={moduleFilter === "TUTTI" ? "is-active" : ""} onClick={() => setModuleFilter("TUTTI")}>Tutti i moduli</button>
@@ -425,30 +413,6 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
             })}</div>
         </details>)}
       </div>
-
-      <section className="fmed-process-history"><div className="fmed-process-history-head"><div><h3>Registro processi</h3><p>Stato, SLA, responsabilità, approvazione e avanzamento delle esecuzioni.</p></div><div className="fmed-process-archive-filter"><button type="button" className={archiveView === "ATTIVI" ? "is-active" : ""} onClick={() => setArchiveView("ATTIVI")}>Attivi</button><button type="button" className={archiveView === "ARCHIVIATI" ? "is-active" : ""} onClick={() => setArchiveView("ARCHIVIATI")}>Archiviati</button><button type="button" className={archiveView === "TUTTI" ? "is-active" : ""} onClick={() => setArchiveView("TUTTI")}>Tutti</button></div></div>
-        <div className="fmed-process-table-wrap"><table className="fmed-process-table"><thead><tr><th>Processo</th><th>Modulo</th><th>Stato</th><th>SLA</th><th>Responsabile</th><th>Scadenza</th><th>Checklist</th><th>Approvazione</th><th /></tr></thead><tbody>
-          {!loading && filteredExecutions.length === 0 && <tr><td colSpan="9" className="fmed-process-empty">Nessuna esecuzione corrispondente.</td></tr>}
-          {filteredExecutions.map((item) => {
-                const config = processByCode.get(String(item.processo || "").toUpperCase());
-                const percentage = Math.max(0, Math.min(100, Number(item.percentuale || 0)));
-                const moduleCode = String(item.modulo || item.riferimento_modulo || "PROCESS_ENGINE").toUpperCase();
-                const slaCode = String(item?.sla?.codice || item.stato_sla || "REGOLARE").toUpperCase();
-                return <tr key={item.id || `${item.processo}-${item.aggiornato_il}`}>
-              <td><strong>{item.titolo || config?.titolo || String(item.processo || "").replaceAll("_", " ")}</strong><small>{item.sede || "Sede non indicata"}{item.riferimento_id ? ` · ${item.riferimento_id}` : ""}</small>{item._archivio_storico && <small>Archivio pre-2023</small>}</td>
-              <td>{MODULE_LABELS[moduleCode] || moduleCode.replaceAll("_", " ")}</td>
-              <td><span className={`fmed-process-status is-${String(item.stato || "APERTO").toLowerCase()}`}>{STATUS_LABELS[String(item.stato || "").toUpperCase()] || item.stato}</span></td>
-              <td><span className={`fmed-process-sla is-${slaCode.toLowerCase()}`}>{SLA_LABELS[slaCode] || slaCode}</span></td>
-              <td>{item.responsabile || item.assegnato_a || "Da assegnare"}</td>
-              <td>{formatDate(item.scadenza, true)}</td>
-              <td><div className="fmed-process-progress"><span style={{ width: `${percentage}%` }} /></div><small>{item.checklist_completata || 0}/{item.checklist_totale || 0} · {humanizeStep(item.passo_corrente)}</small></td>
-              <td>{humanizeStep(item.approvazione_stato || "NON_RICHIESTA")}</td>
-              <td><div className="fmed-process-row-actions"><button type="button" className="fmed-process-row-open" onClick={() => refreshSelected(item.id)}>Gestisci</button>{canArchive && !safeObject(item.dati).archiviato && ["BOZZA", "ANNULLATO", "ERRORE"].includes(String(item.stato || "").toUpperCase()) && <button type="button" className="fmed-process-row-archive" onClick={() => archiveExecution(item)}>Archivia</button>}</div></td>
-            </tr>;
-              })}
-        </tbody></table></div>
-      </section>
-
       {launching && <ProcessEnginePage process={launching} apiBaseUrl={apiBaseUrl} onClose={() => setLaunching(null)} onCreated={(execution, warning) => {setLaunching(null);setMessage(warning || "Processo aperto correttamente.");if (execution?.id) refreshSelected(execution.id);loadData();}} />}
 
       {selectedExecution && <section className="fmed-workspace-page fmed-process-detail-page">

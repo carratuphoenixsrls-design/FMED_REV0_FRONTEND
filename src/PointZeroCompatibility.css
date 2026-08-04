@@ -481,8 +481,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium aside.fmed-side-rail 
 
 .fmed-app-root.fmed-shell-premium .fmed-wizard-page :is(
   .fmed-wizard-header,
-  .new-asset-wizard-header,
-  [class*="wizard-hero"]
+  .new-asset-wizard-header
 ) {
   padding: clamp(22px, 2.5vw, 38px);
   border: 0;
@@ -496,8 +495,7 @@ body[data-theme="light"] .fmed-app-root.fmed-shell-premium aside.fmed-side-rail 
 
 .fmed-app-root.fmed-shell-premium .fmed-wizard-page :is(
   .fmed-wizard-header,
-  .new-asset-wizard-header,
-  [class*="wizard-hero"]
+  .new-asset-wizard-header
 ) :is(h1,h2,h3,p,span,strong,small) {
   color: #fff;
   -webkit-text-fill-color: currentColor;

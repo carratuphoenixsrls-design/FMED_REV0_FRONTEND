@@ -101,29 +101,6 @@
   color: #ffffff;
   -webkit-text-fill-color: currentColor;
 }
-
-/* Wizard Nuovo Asset: le tre schede informative non devono ereditare
-   il testo bianco della testata quando sono visualizzate su superficie chiara. */
-.fmed-app-root.fmed-shell-premium .fmed-wizard-page .fmed-wizard-hero-facts article {
-  color: #10233f;
-  -webkit-text-fill-color: currentColor;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-wizard-page .fmed-wizard-hero-facts article strong {
-  color: #10233f;
-  -webkit-text-fill-color: currentColor;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-wizard-page .fmed-wizard-hero-facts article small {
-  color: #5e6878;
-  -webkit-text-fill-color: currentColor;
-}
-
-.fmed-app-root.fmed-shell-premium .fmed-wizard-page .fmed-wizard-hero-facts article > span {
-  color: #315f8c;
-  -webkit-text-fill-color: currentColor;
-}
-
 /* Codice cespite nel pannello azioni: contrasto pieno su fondo chiaro. */
 .fmed-app-root.fmed-shell-premium .fmed-asset-detail-workspace .fmed-style-asset-actions-code {
   color: #2a507d;

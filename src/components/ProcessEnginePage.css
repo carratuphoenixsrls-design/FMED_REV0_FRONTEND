@@ -1,187 +1,626 @@
-.fmed-process-create-page {
-  min-height: 0;
+/* FMED PROCESS ENGINE TEMPLATE UNICO V2 START */
+
+/*
+ * Standard unico per tutti i moduli Process Engine.
+ * Pagina piena, nessun popup, nessun taglio laterale.
+ * Solo grafica: JSX, handler, funzioni, API, backend e dati invariati.
+ */
+
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page{
+  --pe-blue-dark:#1d4e91;
+  --pe-blue:#2f76c4;
+  --pe-blue-light:#4694df;
+  --pe-ink:#142b46;
+  --pe-muted:#5d7083;
+  --pe-border:#d3dfeb;
+
+  box-sizing:border-box!important;
+  position:relative!important;
+  z-index:40!important;
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:calc(100dvh - 10px)!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:8px 10px!important;
+  overflow:hidden!important;
+  background:#edf3f8!important;
 }
 
-.fmed-process-form-surface {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+> .fmed-process-form-surface{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-rows:auto minmax(0,1fr)!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border:1px solid #cad8e5!important;
+  border-radius:15px!important;
+  background:#f8fafc!important;
+  box-shadow:0 10px 24px rgba(31,69,103,.09)!important;
 }
 
-.fmed-process-form-surface > header {
-  display: flex;
-  flex: 0 0 auto;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 18px 20px 15px;
-  border-bottom: 1px solid var(--fmed-border, #d8dee7);
-  background: linear-gradient(135deg, rgba(236, 248, 247, .9), rgba(255, 255, 255, .9));
+/* Testata */
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-surface
+> header{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:18px!important;
+  min-width:0!important;
+  min-height:84px!important;
+  padding:12px 16px!important;
+  overflow:hidden!important;
+  border:0!important;
+  border-radius:15px 15px 0 0!important;
+  background:
+    radial-gradient(circle at 88% -55%,rgba(255,255,255,.18) 0 92px,transparent 93px),
+    linear-gradient(105deg,var(--pe-blue-dark) 0%,var(--pe-blue) 62%,var(--pe-blue-light) 100%)!important;
+  color:#fff!important;
 }
 
-.fmed-process-form-surface > header span {
-  color: var(--fmed-primary, #315f8c);
-  font-size:12px;
-  font-weight: 800;
-  letter-spacing: .08em;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-surface
+> header
+> div{
+  display:grid!important;
+  gap:2px!important;
+  min-width:0!important;
 }
 
-.fmed-process-form-surface > header h3 {
-  margin: 4px 0 0;
-  color: var(--fmed-text, #172033);
-  font-size: 24px;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+$111px!important;
+  font-weight:800!important;
+  line-height:1!important;
+  letter-spacing:.09em!important;
+  text-transform:uppercase!important;
 }
 
-.fmed-process-form-surface > header p {
-  max-width: 920px;
-  margin: 6px 0 0;
-  color: var(--fmed-muted, #5e6878);
-  font-size: 13px;
-  line-height: 1.45;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-surface
+> header
+h3{
+  margin:1px 0 0!important;
+  color:#fff!important;
+  -webkit-text-fill-color:currentColor!important;
+  font-size:clamp(27px,1.8vw,34px)!important;
+  font-weight:800!important;
+  line-height:1.04!important;
+  letter-spacing:.01em!important;
+  text-transform:uppercase!important;
 }
 
-.fmed-process-form-close {
-  min-height: 36px;
-  padding: 0 13px;
-  border: 1px solid var(--fmed-border, #d8dee7);
-  border-radius: 10px;
-  background: #fff;
-  color: var(--fmed-text, #172033);
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+$111px!important;
+  font-weight:650!important;
+  line-height:1.25!important;
+  letter-spacing:.015em!important;
+  text-transform:uppercase!important;
 }
 
-.fmed-process-form-surface form {
-  flex: 1 1 auto;
-  min-height: 0;
-  padding: 16px 20px 18px;
-  overflow: auto;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+$111px!important;
+  font-weight:800!important;
+  line-height:1!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+  cursor:pointer!important;
 }
 
-.fmed-process-form-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+/* Corpo */
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-surface
+> form{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-rows:auto minmax(105px,1fr) auto auto!important;
+  gap:10px!important;
+  min-width:0!important;
+  min-height:0!important;
+  width:100%!important;
+  height:100%!important;
+  margin:0!important;
+  padding:12px 14px 11px!important;
+  overflow:hidden!important;
+  background:#f8fafc!important;
 }
 
-.fmed-process-form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
+/* Campi: 3 colonne reali, nessun taglio laterale */
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-grid{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  align-content:start!important;
+  align-items:end!important;
+  gap:10px 12px!important;
+  min-width:0!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+  padding:1px!important;
+  overflow:visible!important;
 }
 
-.fmed-process-form-field.is-wide {
-  grid-column: 1 / -1;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-grid
+> *{
+  box-sizing:border-box!important;
+  min-width:0!important;
+  max-width:100%!important;
 }
 
-.fmed-process-form-field > span {
-  color: var(--fmed-muted, #5e6878);
-  font-size:12px;
-  font-weight: 800;
-  letter-spacing: .04em;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-field,
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-grid
+> label,
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-grid
+.fmed-canonical-field{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-rows:auto minmax(40px,auto)!important;
+  align-content:end!important;
+  gap:5px!important;
+  min-width:0!important;
+  width:100%!important;
+  margin:0!important;
 }
 
-.fmed-process-form-field :is(input, select, textarea) {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid var(--fmed-border, #d8dee7);
-  border-radius: 10px;
-  background: #fff;
-  color: var(--fmed-text, #172033);
-  font: inherit;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-field.is-wide{
+  grid-column:1 / -1!important;
 }
 
-.fmed-process-form-field :is(input, select) {
-  height: 38px;
-  padding: 0 11px;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-field
+> span,
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-grid
+label
+> span,
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-grid
+.fmed-canonical-label{
+  display:block!important;
+  min-height:11px!important;
+  margin:0!important;
+  color:#314c64!important;
+  -webkit-text-fill-color:currentColor!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  line-height:1.1!important;
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
 }
 
-.fmed-process-form-field textarea {
-  min-height: 84px;
-  padding: 10px 11px;
-  resize: vertical;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+:is(input,select){
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:40px!important;
+  min-height:40px!important;
+  margin:0!important;
+  padding:0 11px!important;
+  border:1px solid #bfd0df!important;
+  border-radius:8px!important;
+  background:#fff!important;
+  color:#263f56!important;
+  -webkit-text-fill-color:currentColor!important;
+  font-family:inherit!important;
+  font-size:10px!important;
+  font-weight:700!important;
+  line-height:40px!important;
 }
 
-.fmed-process-form-field small {
-  color: var(--fmed-muted, #5e6878);
-  font-size:12px;
-  line-height: 1.35;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+textarea{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  min-height:92px!important;
+  max-height:150px!important;
+  margin:0!important;
+  padding:10px 11px!important;
+  border:1px solid #bfd0df!important;
+  border-radius:8px!important;
+  background:#fff!important;
+  color:#263f56!important;
+  -webkit-text-fill-color:currentColor!important;
+  font-family:inherit!important;
+  font-size:10px!important;
+  font-weight:650!important;
+  line-height:1.3!important;
+  resize:vertical!important;
 }
 
-.fmed-process-form-requirements {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 14px;
-  padding: 10px;
-  border: 1px solid rgba(49, 95, 140, .2);
-  border-radius: 11px;
-  background: rgba(235, 248, 247, .82);
+/* Il campo descrizione sfrutta la larghezza completa */
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-grid
+.fmed-process-form-field.is-wide
+textarea{
+  min-height:92px!important;
 }
 
-.fmed-process-form-requirements strong {
-  width: 100%;
-  color: var(--fmed-primary, #315f8c);
-  font-size:12px;
+/* Workflow compatto e leggibile */
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-requirements{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:auto repeat(4,minmax(0,1fr))!important;
+  align-items:center!important;
+  gap:7px!important;
+  min-width:0!important;
+  width:100%!important;
+  min-height:48px!important;
+  margin:0!important;
+  padding:8px 10px!important;
+  overflow:hidden!important;
+  border:1px solid #bdd9df!important;
+  border-radius:10px!important;
+  background:#edf8f9!important;
 }
 
-.fmed-process-form-requirements span {
-  padding: 4px 7px;
-  border-radius: 999px;
-  background: #fff;
-  color: var(--fmed-text, #172033);
-  font-size: 12px;
-  font-weight: 700;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-requirements
+> strong{
+  width:auto!important;
+  margin:0!important;
+  color:#214a64!important;
+  -webkit-text-fill-color:currentColor!important;
+  font-size:9px!important;
+  font-weight:850!important;
+  line-height:1.15!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
 }
 
-.fmed-process-form-message {
-  margin-top: 12px;
-  padding: 9px 11px;
-  border: 1px solid #e3cb7e;
-  border-radius: 10px;
-  background: #fff7dc;
-  color: #66500f;
-  font-size: 12px;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-requirements
+> span{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:0!important;
+  min-height:28px!important;
+  margin:0!important;
+  padding:5px 8px!important;
+  overflow:hidden!important;
+  border:1px solid #d6e6e9!important;
+  border-radius:999px!important;
+  background:#fff!important;
+  color:#31556c!important;
+  -webkit-text-fill-color:currentColor!important;
+  font-size:8px!important;
+  font-weight:800!important;
+  line-height:1.1!important;
+  text-align:center!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  text-transform:uppercase!important;
 }
 
-.fmed-process-form-surface footer {
-  position: sticky;
-  bottom: -18px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 9px;
-  margin-top: 15px;
-  padding: 12px 0 0;
-  border-top: 1px solid var(--fmed-border, #d8dee7);
-  background: #fff;
+/* Messaggi */
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-message{
+  box-sizing:border-box!important;
+  min-height:34px!important;
+  margin:0!important;
+  padding:8px 10px!important;
+  border:1px solid #efb7b7!important;
+  border-radius:8px!important;
+  background:#fff1f1!important;
+  color:#8b2525!important;
+  font-size:9px!important;
+  font-weight:750!important;
+  line-height:1.25!important;
+  text-transform:uppercase!important;
 }
 
-.fmed-process-form-surface footer button {
-  min-height: 38px;
-  padding: 0 15px;
-  border: 1px solid var(--fmed-primary, #315f8c);
-  border-radius: 10px;
-  background: var(--fmed-primary, #315f8c);
-  color: #fff;
-  font-weight: 800;
-  cursor: pointer;
+/* Footer sempre visibile e contenuto */
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-surface
+footer{
+  position:static!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:9px!important;
+  min-width:0!important;
+  width:100%!important;
+  min-height:48px!important;
+  margin:0!important;
+  padding:8px 0 0!important;
+  border-top:1px solid #d7e2ec!important;
+  background:transparent!important;
 }
 
-.fmed-process-form-surface footer button.is-secondary {
-  border-color: var(--fmed-border, #d8dee7);
-  background: #fff;
-  color: var(--fmed-text, #172033);
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-surface
+footer
+button{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:132px!important;
+  height:38px!important;
+  min-height:38px!important;
+  margin:0!important;
+  padding:0 14px!important;
+  border:1px solid #1f5f98!important;
+  border-radius:9px!important;
+  background:#236da8!important;
+  color:#fff!important;
+  -webkit-text-fill-color:currentColor!important;
+  box-shadow:0 4px 10px rgba(30,90,140,.14)!important;
+  font-family:inherit!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  line-height:1!important;
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
+  cursor:pointer!important;
 }
 
-.fmed-process-form-surface footer button:disabled {
-  opacity: .55;
-  cursor: not-allowed;
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-surface
+footer
+button.is-secondary{
+  border-color:#c7d5e1!important;
+  background:#f4f7fa!important;
+  color:#52697e!important;
+  box-shadow:none!important;
 }
 
-@media (max-width: 1366px) {
-  .fmed-process-form-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-process-create-page
+.fmed-process-form-surface
+footer
+button:disabled{
+  border-color:#d9e2ea!important;
+  background:#f4f7f9!important;
+  color:#91a2b1!important;
+  box-shadow:none!important;
+  cursor:not-allowed!important;
+}
+
+/* Notebook 15" */
+@media(max-width:1366px){
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-process-create-page{
+    padding:6px 8px!important;
+  }
+
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-process-create-page
+  .fmed-process-form-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:8px 10px!important;
+  }
+
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-process-create-page
+  .fmed-process-form-requirements{
+    grid-template-columns:auto repeat(4,minmax(0,1fr))!important;
   }
 }
+
+@media(max-width:1050px){
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-process-create-page
+  .fmed-process-form-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-process-create-page
+  .fmed-process-form-requirements{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-process-create-page
+  .fmed-process-form-requirements
+  > strong{
+    grid-column:1 / -1!important;
+  }
+}
+
+@media(max-width:720px){
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-process-create-page{
+    height:auto!important;
+    min-height:100dvh!important;
+    padding:4px!important;
+    overflow-y:auto!important;
+  }
+
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-process-create-page
+  > .fmed-process-form-surface{
+    height:auto!important;
+    min-height:calc(100dvh - 8px)!important;
+    overflow:visible!important;
+  }
+
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-process-create-page
+  .fmed-process-form-surface
+  > header{
+    align-items:flex-start!important;
+    flex-wrap:wrap!important;
+  }
+
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-process-create-page
+  .fmed-process-form-close{
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-process-create-page
+  .fmed-process-form-surface
+  > form{
+    height:auto!important;
+    overflow:visible!important;
+  }
+
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-process-create-page
+  :is(.fmed-process-form-grid,.fmed-process-form-requirements){
+    grid-template-columns:1fr!important;
+    overflow:visible!important;
+  }
+
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-process-create-page
+  .fmed-process-form-surface
+  footer{
+    flex-direction:column-reverse!important;
+    align-items:stretch!important;
+  }
+
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-process-create-page
+  .fmed-process-form-surface
+  footer
+  button{
+    width:100%!important;
+  }
+}
+
+/* FMED PROCESS ENGINE TEMPLATE UNICO V2 END */

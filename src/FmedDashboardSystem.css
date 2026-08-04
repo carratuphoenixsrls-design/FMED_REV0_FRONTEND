@@ -670,10 +670,13 @@ html body .fmed-dashboard-page .fmed-dashboard-empty{
 }
 
 /* ============================================================
-   SIDEBAR BLU DASHBOARD
+   FMED REV0
+   SIDEBAR GLOBALE UNICA
+   SOSTITUISCE LE SIDEBAR SPECIFICHE DEI SINGOLI MODULI
    ============================================================ */
 
-html body .fmed-app-root:has(.fmed-dashboard-page)
+/* Contenitore reale della sidebar */
+html body .fmed-app-root
 :is(div,aside,section):has(
   > .fmed-sidebar-controls
 ):has(
@@ -696,42 +699,112 @@ html body .fmed-app-root:has(.fmed-dashboard-page)
   box-shadow:6px 0 22px rgba(15,55,92,.16)!important;
 }
 
-/* Tutti i testi della sidebar */
-html body .fmed-app-root:has(.fmed-dashboard-page)
-:is(
-  .fmed-sidebar-controls,
-  .fmed-sidebar-navigation,
-  .fmed-sidebar-footer
-),
-html body .fmed-app-root:has(.fmed-dashboard-page)
-:is(
-  .fmed-sidebar-controls,
-  .fmed-sidebar-navigation,
-  .fmed-sidebar-footer
-) *{
+/* Navigazione: dimensioni identiche su ogni pagina */
+html body .fmed-app-root .fmed-sidebar-navigation{
+  padding-left:9px!important;
+  padding-right:9px!important;
+}
+
+/* Etichette e testi */
+html body .fmed-app-root :is(
+  .fmed-sidebar-wordmark-title,
+  .fmed-sidebar-wordmark-subtitle,
+  .fmed-sidebar-control-label,
+  .fmed-sidebar-group-label,
+  .fmed-sidebar-account-copy,
+  .fmed-sidebar-account-copy strong,
+  .fmed-sidebar-account-copy span,
+  .fmed-sidebar-footer,
+  .fmed-sidebar-footer strong,
+  .fmed-sidebar-footer small
+){
   color:#ffffff!important;
   -webkit-text-fill-color:#ffffff!important;
 }
 
-/* Voci menu */
-html body .fmed-app-root:has(.fmed-dashboard-page)
-.fmed-side-menu-btn{
-  border-color:rgba(255,255,255,.16)!important;
+/* Tutte le voci del menu hanno le dimensioni Dashboard */
+html body .fmed-app-root .fmed-side-menu-btn{
+  min-height:47px!important;
+  height:47px!important;
+
+  padding:0 12px!important;
+  gap:11px!important;
+
+  border:1px solid rgba(255,255,255,.16)!important;
+  border-radius:9px!important;
+
   background:transparent!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+  font-size:11px!important;
+  line-height:1!important;
 }
 
-/* Dashboard attiva */
-html body .fmed-app-root:has(.fmed-dashboard-page)
-.fmed-side-menu-btn.is-active,
-html body .fmed-app-root:has(.fmed-dashboard-page)
-.fmed-side-menu-btn[aria-current="page"]{
+/* Testi interni alle voci */
+html body .fmed-app-root .fmed-side-menu-btn :is(
+  span,
+  strong,
+  small
+){
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* Icone */
+html body .fmed-app-root .fmed-side-menu-btn svg{
+  width:20px!important;
+  height:20px!important;
+
+  color:#ffffff!important;
+  stroke:currentColor!important;
+}
+
+/* Hover uniforme */
+html body .fmed-app-root .fmed-side-menu-btn:hover{
+  border-color:rgba(255,255,255,.28)!important;
+  background:rgba(255,255,255,.10)!important;
+}
+
+/* Voce attiva identica in tutti i moduli */
+html body .fmed-app-root .fmed-side-menu-btn.is-active,
+html body .fmed-app-root .fmed-side-menu-btn[aria-current="page"]{
   border:1px solid rgba(255,255,255,.46)!important;
   background:rgba(255,255,255,.19)!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
 
   box-shadow:
     inset 4px 0 0 #ffffff,
     0 6px 15px rgba(10,48,83,.22)!important;
 }
+
+/* Pulsante riduci menu */
+html body .fmed-app-root .fmed-sidebar-controls button{
+  min-height:44px!important;
+  height:44px!important;
+  font-size:10px!important;
+}
+
+/* Profilo e parte finale */
+html body .fmed-app-root .fmed-sidebar-footer{
+  min-height:62px!important;
+  padding:8px!important;
+}
+
+html body .fmed-app-root .fmed-sidebar-footer strong{
+  font-size:11px!important;
+}
+
+html body .fmed-app-root .fmed-sidebar-footer small{
+  font-size:9px!important;
+}
+
+/* ============================================================
+   FINE SIDEBAR GLOBALE UNICA
+   ============================================================ */
 
 /* ============================================================
    NOTEBOOK 15 POLLICI
@@ -1018,54 +1091,6 @@ html body .fmed-dashboard-page .fmed-dashboard-panel-header button{
 html body .fmed-dashboard-page .fmed-dashboard-empty{
   font-size:10px!important;
   line-height:1.25!important;
-}
-
-/* ============================================================
-   SIDEBAR
-   ============================================================ */
-
-html body .fmed-app-root:has(.fmed-dashboard-page)
-.fmed-sidebar-navigation{
-  padding-left:9px!important;
-  padding-right:9px!important;
-}
-
-html body .fmed-app-root:has(.fmed-dashboard-page)
-.fmed-side-menu-btn{
-  min-height:47px!important;
-  height:47px!important;
-  padding:0 12px!important;
-  gap:11px!important;
-  font-size:11px!important;
-}
-
-html body .fmed-app-root:has(.fmed-dashboard-page)
-.fmed-side-menu-btn svg{
-  width:20px!important;
-  height:20px!important;
-}
-
-html body .fmed-app-root:has(.fmed-dashboard-page)
-.fmed-sidebar-controls button{
-  min-height:44px!important;
-  height:44px!important;
-  font-size:10px!important;
-}
-
-html body .fmed-app-root:has(.fmed-dashboard-page)
-.fmed-sidebar-footer{
-  min-height:62px!important;
-  padding:8px!important;
-}
-
-html body .fmed-app-root:has(.fmed-dashboard-page)
-.fmed-sidebar-footer strong{
-  font-size:11px!important;
-}
-
-html body .fmed-app-root:has(.fmed-dashboard-page)
-.fmed-sidebar-footer small{
-  font-size:9px!important;
 }
 
 /* ============================================================

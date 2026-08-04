@@ -710,7 +710,7 @@ export default function NewAssetWizard({
               <p>Censimento guidato a pagina intera: cataloghi uniformi, controlli anti-duplicato, documenti, QR, collaudo e primo piano manutentivo.</p>
             </div>
           </div>
-          <button type="button" onClick={onClose} aria-label="Torna indietro" title="Torna indietro">←</button>
+          <button type="button" className="fmed-wizard-back" onClick={onClose} aria-label="Torna indietro" title="Torna indietro">TORNA INDIETRO</button>
         </header>
 
         <div className="fmed-wizard-hero-facts" aria-label="Caratteristiche del processo Nuovo Asset">
@@ -920,10 +920,10 @@ export default function NewAssetWizard({
         </main>
 
         <footer className="fmed-wizard-actions">
-          <button type="button" className="secondary" disabled={step === 0 || busy} onClick={() => setStep((current) => current - 1)}>Indietro</button>
+          <button type="button" className="secondary fmed-wizard-prev" disabled={step === 0 || busy} onClick={() => setStep((current) => current - 1)}>PASSAGGIO PRECEDENTE</button>
           <div className="fmed-wizard-progress" aria-label={`Avanzamento ${step + 1} di ${STEPS.length}`}><span style={{ width: `${((step + 1) / STEPS.length) * 100}%` }} /></div>
           {step < STEPS.length - 1
-            ? <button type="button" disabled={busy || masterLoading} onClick={next}>Continua</button>
+            ? <button type="button" className="fmed-wizard-next" disabled={busy || masterLoading} onClick={next}>CONTINUA</button>
             : <button type="button" disabled={busy || masterLoading || inventoryCodeLoading} onClick={submit}>{busy ? "Creazione…" : "Crea asset e completa processo"}</button>}
         </footer>
       </div>

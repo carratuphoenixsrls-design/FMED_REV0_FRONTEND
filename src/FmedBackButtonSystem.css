@@ -1,0 +1,129 @@
+/* FMED BACK BUTTON SYSTEM START */
+
+:root{
+  --fmed-back-bg:#244f78;
+  --fmed-back-bg-hover:#2d6598;
+  --fmed-back-bg-active:#1d4266;
+  --fmed-back-border:#244f78;
+  --fmed-back-focus:rgba(47,118,196,.28);
+  --fmed-back-text:#ffffff;
+}
+
+/*
+ * Standard unico per ogni comando con funzione "Torna indietro".
+ * Nessuna icona, nessuna variante locale, stesso testo e stessa geometria.
+ */
+html body button.fmed-back-standard{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 auto!important;
+  width:154px!important;
+  min-width:154px!important;
+  max-width:154px!important;
+  height:38px!important;
+  min-height:38px!important;
+  padding:0 14px!important;
+  margin:0!important;
+  overflow:hidden!important;
+  border:1px solid var(--fmed-back-border)!important;
+  border-radius:10px!important;
+  background:var(--fmed-back-bg)!important;
+  color:var(--fmed-back-text)!important;
+  -webkit-text-fill-color:currentColor!important;
+  box-shadow:0 4px 10px rgba(18,53,84,.14)!important;
+  font-family:inherit!important;
+  font-size:10px!important;
+  font-weight:800!important;
+  font-style:normal!important;
+  line-height:1!important;
+  letter-spacing:.035em!important;
+  text-align:center!important;
+  text-decoration:none!important;
+  text-indent:0!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+  cursor:pointer!important;
+  opacity:1!important;
+  visibility:visible!important;
+  transition:
+    background-color .16s ease,
+    border-color .16s ease,
+    box-shadow .16s ease,
+    transform .16s ease!important;
+}
+
+html body button.fmed-back-standard:hover{
+  border-color:var(--fmed-back-bg-hover)!important;
+  background:var(--fmed-back-bg-hover)!important;
+  color:#fff!important;
+  transform:translateY(-1px)!important;
+}
+
+html body button.fmed-back-standard:active{
+  border-color:var(--fmed-back-bg-active)!important;
+  background:var(--fmed-back-bg-active)!important;
+  transform:translateY(0)!important;
+}
+
+html body button.fmed-back-standard:focus-visible{
+  outline:0!important;
+  box-shadow:
+    0 0 0 4px var(--fmed-back-focus),
+    0 4px 10px rgba(18,53,84,.14)!important;
+}
+
+html body button.fmed-back-standard:disabled{
+  border-color:#aebdca!important;
+  background:#aebdca!important;
+  color:#f7f9fb!important;
+  box-shadow:none!important;
+  cursor:not-allowed!important;
+  transform:none!important;
+}
+
+/* La testata Nuovo Asset non deve piÃ¹ ridurre il pulsante a un quadrato */
+html body
+.fmed-app-root.fmed-shell-premium
+.fmed-main-content
+.fmed-wizard-page
+.fmed-wizard-head > button.fmed-back-standard{
+  width:154px!important;
+  min-width:154px!important;
+  max-width:154px!important;
+  height:38px!important;
+  min-height:38px!important;
+  padding:0 14px!important;
+  border-radius:10px!important;
+  font-size:10px!important;
+}
+
+/* Footer dei wizard: stessa geometria senza alterare Continua/Salva */
+html body :is(
+  .fmed-wizard-footer,
+  .wizard-footer,
+  .fmed-process-form-actions,
+  .fmed-process-transition-actions
+) button.fmed-back-standard{
+  align-self:center!important;
+}
+
+@media(max-width:720px){
+  html body button.fmed-back-standard,
+  html body
+  .fmed-app-root.fmed-shell-premium
+  .fmed-main-content
+  .fmed-wizard-page
+  .fmed-wizard-head > button.fmed-back-standard{
+    width:138px!important;
+    min-width:138px!important;
+    max-width:138px!important;
+    height:36px!important;
+    min-height:36px!important;
+    padding:0 11px!important;
+    font-size:9px!important;
+  }
+}
+
+/* FMED BACK BUTTON SYSTEM END */

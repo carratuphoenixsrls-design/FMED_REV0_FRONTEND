@@ -58,40 +58,7 @@ html body .fmed-main-content[data-fmed-page="Infrastrutture"]
    TESTATA INFRASTRUTTURE
    ============================================================ */
 
-html body .fmed-main-content[data-fmed-page="Infrastrutture"]
-.p0-operations--infrastructure > .p0-operations__head{
-  box-sizing:border-box!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  gap:22px!important;
 
-  width:100%!important;
-  min-height:123px!important;
-  height:123px!important;
-
-  margin:0!important;
-  padding:18px 24px!important;
-
-  border:0!important;
-  border-radius:17px 17px 0 0!important;
-
-  background:
-    radial-gradient(
-      circle at 84% 12%,
-      rgba(255,255,255,.15) 0 88px,
-      transparent 89px
-    ),
-    linear-gradient(
-      120deg,
-      var(--infra-dark) 0%,
-      var(--infra-main) 56%,
-      var(--infra-light) 100%
-    )!important;
-
-  box-shadow:none!important;
-  overflow:hidden!important;
-}
 
 /* Tutti i testi realmente bianchi */
 html body .fmed-main-content[data-fmed-page="Infrastrutture"]
@@ -370,86 +337,7 @@ html body .fmed-main-content[data-fmed-page="Infrastrutture"]
   white-space:nowrap!important;
 }
 
-/* ============================================================
-   SIDEBAR COMPLETA VERDE
-   ============================================================ */
-
-html body .fmed-app-root:has(
-  .fmed-main-content[data-fmed-page="Infrastrutture"]
-)
-:is(div,aside,section):has(
-  > .fmed-sidebar-controls
-):has(
-  > .fmed-sidebar-navigation
-){
-  background:
-    radial-gradient(
-      circle at 82% 14%,
-      rgba(255,255,255,.14) 0 74px,
-      transparent 75px
-    ),
-    linear-gradient(
-      180deg,
-      #064d38 0%,
-      #076b4e 50%,
-      #118665 100%
-    )!important;
-
-  border-right:1px solid rgba(3,71,50,.40)!important;
-  box-shadow:6px 0 22px rgba(3,70,50,.15)!important;
-}
-
-/* Contenuti sidebar */
-html body .fmed-app-root:has(
-  .fmed-main-content[data-fmed-page="Infrastrutture"]
-) :is(
-  .fmed-sidebar-controls,
-  .fmed-sidebar-navigation,
-  .fmed-sidebar-footer,
-  .fmed-sidebar-account,
-  .fmed-sidebar-menu-group,
-  .fmed-sidebar-group-items
-){
-  color:#ffffff!important;
-}
-
-/* Testi e icone */
-html body .fmed-app-root:has(
-  .fmed-main-content[data-fmed-page="Infrastrutture"]
-) :is(
-  .fmed-sidebar-controls,
-  .fmed-sidebar-navigation,
-  .fmed-sidebar-footer
-) *{
-  color:#ffffff!important;
-  -webkit-text-fill-color:#ffffff!important;
-}
-
-/* Voci menu */
-html body .fmed-app-root:has(
-  .fmed-main-content[data-fmed-page="Infrastrutture"]
-) .fmed-side-menu-btn{
-  border-color:rgba(255,255,255,.16)!important;
-  background:transparent!important;
-  color:#ffffff!important;
-}
-
-/* Voce attiva */
-html body .fmed-app-root:has(
-  .fmed-main-content[data-fmed-page="Infrastrutture"]
-) .fmed-side-menu-btn.is-active,
-html body .fmed-app-root:has(
-  .fmed-main-content[data-fmed-page="Infrastrutture"]
-) .fmed-side-menu-btn[aria-current="page"]{
-  border:1px solid rgba(255,255,255,.46)!important;
-  background:rgba(255,255,255,.19)!important;
-
-  color:#ffffff!important;
-
-  box-shadow:
-    inset 4px 0 0 #ffffff,
-    0 6px 15px rgba(2,54,39,.21)!important;
-}
+/* Sidebar gestita dal sistema globale unico */
 
 /* ============================================================
    TIPOGRAFIA PAGINA

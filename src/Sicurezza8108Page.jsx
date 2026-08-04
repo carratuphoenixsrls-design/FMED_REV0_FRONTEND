@@ -228,37 +228,23 @@ function Sicurezza8108PageInner({ apiBaseUrl }) {
           <span className="p0-operations__icon"><FmedIcon name="shield" /></span>
           <div><span>Conformità · D.Lgs. 81/08</span><h1>Sicurezza</h1><p>Documenti, sedi e categorie in una struttura riconoscibile, verificabile e sempre raggiungibile.</p></div>
         </div>
-        <div className="p0-operations__metric"><strong>{documentCount}</strong><span>documenti indicizzati</span></div>
+        <div className="p0-operations__metrics">
+          <div className="p0-operations__metric">
+            <strong>{documentCount}</strong>
+            <span>Documenti</span>
+          </div>
+          <div className="p0-operations__metric">
+            <strong>{folderCount || sedi.length * categorie.length}</strong>
+            <span>Cartelle</span>
+          </div>
+          <div className="p0-operations__metric">
+            <strong>{unclassifiedCount}</strong>
+            <span>Da classificare</span>
+          </div>
+        </div>
       </header>
 
-      <Sicurezza8108Controls
-        buildOpenUrl={buildOpenUrl}
-        load={load}
-        refreshing={refreshing}
-        search={search}
-        setSearch={setSearch}
-        sede={sede}
-        setSede={setSede}
-        categoria={categoria}
-        setCategoria={setCategoria}
-        sedi={sedi}
-        categorie={categorie}
-        resetFilters={resetFilters}
-        filteredCount={documentiFiltrati.length}
-      />
-
-      <div className="p0-safety-notice">
-        <FmedIcon name="info" /><div><strong>Archivio centralizzato</strong><span>{sourceMessage || "Power Automate indicizza i documenti in FMED; i file originali restano su SharePoint."}</span></div>
-      </div>
-      {error && <div className="p0-safety-notice is-error"><FmedIcon name="alert" /><div><strong>Verifica necessaria</strong><span>{error}</span></div></div>}
-
-      <section className="p0-metric-strip p0-safety-metrics">
-        <article><span className="p0-metric-strip__icon"><FmedIcon name="file" /></span><div><small>Documenti</small><strong>{documentCount}</strong><span>indicizzati in FMED</span></div></article>
-        <article><span className="p0-metric-strip__icon"><FmedIcon name="folder" /></span><div><small>Cartelle</small><strong>{folderCount || sedi.length * categorie.length}</strong><span>struttura documentale</span></div></article>
-        <article><span className="p0-metric-strip__icon"><FmedIcon name="alert" /></span><div><small>Da classificare</small><strong>{unclassifiedCount}</strong><span>senza sede o categoria</span></div></article>
-      </section>
-
-      <section className="p0-safety-library">
+<section className="p0-safety-library">
         <header>
           <div><span className="p0-kicker">Mappa documentale</span><h2>Struttura SharePoint 81/08</h2><p>Le stesse sette categorie, organizzate per ogni sede.</p></div>
           {selectedSite && <a className="p0-btn p0-btn--safety" href={buildOpenUrl(selectedSite.codice)} target="_blank" rel="noreferrer">Apri {selectedSite.label}</a>}
@@ -285,7 +271,28 @@ function Sicurezza8108PageInner({ apiBaseUrl }) {
         </div>
       </section>
 
-      <section className="p0-safety-documents">
+<Sicurezza8108Controls
+        buildOpenUrl={buildOpenUrl}
+        load={load}
+        refreshing={refreshing}
+        search={search}
+        setSearch={setSearch}
+        sede={sede}
+        setSede={setSede}
+        categoria={categoria}
+        setCategoria={setCategoria}
+        sedi={sedi}
+        categorie={categorie}
+        resetFilters={resetFilters}
+        filteredCount={documentiFiltrati.length}
+      />
+
+      <div className="p0-safety-notice">
+        <FmedIcon name="info" /><div><strong>Archivio centralizzato</strong><span>{sourceMessage || "Power Automate indicizza i documenti in FMED; i file originali restano su SharePoint."}</span></div>
+      </div>
+      {error && <div className="p0-safety-notice is-error"><FmedIcon name="alert" /><div><strong>Verifica necessaria</strong><span>{error}</span></div></div>}
+
+<section className="p0-safety-documents">
         <header><div><span className="p0-kicker">Indice FMED</span><h2>Documenti indicizzati</h2><p>{loading ? "Lettura archivio in corso…" : `${documentiFiltrati.length} elementi visibili.`}</p></div></header>
         {loading ? <div className="p0-empty">Caricamento documentazione…</div> : documentiFiltrati.length ? (
           <div className="p0-safety-doc-list">{documentiFiltrati.map((doc, index) => (
@@ -317,3 +324,4 @@ function Sicurezza8108PageInner({ apiBaseUrl }) {
 export default function Sicurezza8108Page(props) {
   return <Sicurezza8108ErrorBoundary><Sicurezza8108PageInner {...props} /></Sicurezza8108ErrorBoundary>;
 }
+

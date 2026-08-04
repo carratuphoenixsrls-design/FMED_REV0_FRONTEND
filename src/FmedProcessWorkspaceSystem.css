@@ -1,0 +1,1713 @@
+/* FMED PROCESSI SAFE FINAL START */
+
+/* ============================================================
+   PROCESSI Ã¢â‚¬â€ SISTEMA GRAFICO FINALE E CONSERVATIVO
+   Solo grafica. Nessuna funzione, API o dato modificato.
+   ============================================================ */
+
+html body .fmed-main-content :is(
+  .fmed-process-page,
+  .fmed-process-create-page,
+  .fmed-process-detail-page,
+  .fmed-new-intervention-page
+){
+  --proc-blue:#286da8;
+  --proc-blue-dark:#184e7e;
+  --proc-blue-light:#3b8bc9;
+  --proc-ink:#15314d;
+  --proc-muted:#61758a;
+  --proc-border:#cad8e5;
+  --proc-soft:#f4f8fb;
+  box-sizing:border-box!important;
+  min-width:0!important;
+}
+
+/* ------------------------------------------------------------
+   FONT UNIFORMI Ã¢â‚¬â€ SENZA INGRANDIMENTI GLOBALI
+   ------------------------------------------------------------ */
+
+html body .fmed-main-content :is(
+  .fmed-process-page,
+  .fmed-process-create-page,
+  .fmed-process-detail-page,
+  .fmed-new-intervention-page
+) :is(label,th,td,input,select,textarea,button){
+  font-family:inherit!important;
+  font-style:normal!important;
+  letter-spacing:.02em!important;
+}
+
+html body .fmed-main-content :is(
+  .fmed-process-create-page,
+  .fmed-process-detail-page,
+  .fmed-new-intervention-page
+) label,
+html body .fmed-main-content :is(
+  .fmed-process-create-page,
+  .fmed-process-detail-page,
+  .fmed-new-intervention-page
+) label > span{
+  color:#314c64!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  line-height:1.15!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content :is(
+  .fmed-process-create-page,
+  .fmed-process-detail-page,
+  .fmed-new-intervention-page
+) :is(input,select,textarea){
+  color:#263f56!important;
+  font-size:10px!important;
+  font-weight:750!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content :is(
+  .fmed-process-create-page,
+  .fmed-process-detail-page,
+  .fmed-new-intervention-page
+) button{
+  font-size:9px!important;
+  font-weight:850!important;
+  line-height:1!important;
+  letter-spacing:.04em!important;
+  text-transform:uppercase!important;
+}
+
+/* ------------------------------------------------------------
+   HOME PROCESSI E MODULI
+   ------------------------------------------------------------ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open){
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  overflow-x:hidden!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+:is(
+  .fmed-process-group,
+  .fmed-process-history,
+  .fmed-process-search,
+  .fmed-process-kpis
+){
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group{
+  border:1px solid var(--proc-border)!important;
+  border-radius:13px!important;
+  background:#fff!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto 30px!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:60px!important;
+  padding:10px 13px!important;
+  border:0!important;
+  border-bottom:1px solid transparent!important;
+  background:#fff!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group[open] > .fmed-process-group-head{
+  border-bottom-color:#d8e2eb!important;
+  background:#f7fafc!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head h3{
+  margin:3px 0 0!important;
+  color:var(--proc-ink)!important;
+  font-size:17px!important;
+  font-weight:850!important;
+  line-height:1.05!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+  overflow-wrap:anywhere!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head :is(span,small){
+  font-size:9px!important;
+  font-weight:800!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-catalog{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  padding:11px!important;
+  background:#fbfdff!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-catalog > *{
+  box-sizing:border-box!important;
+  min-width:0!important;
+  max-width:100%!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-catalog > :only-child,
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-catalog > :last-child:nth-child(odd){
+  grid-column:1 / -1!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-card{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  padding:13px!important;
+  border:1px solid #d3dfea!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-card :is(div,section,article){
+  min-width:0!important;
+  max-width:100%!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-card :is(h3,h4,p,span,strong,small){
+  overflow-wrap:anywhere!important;
+  word-break:normal!important;
+}
+
+/* ------------------------------------------------------------
+   REGISTRO PROCESSI
+   ------------------------------------------------------------ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-history{
+  margin-top:10px!important;
+  border:1px solid var(--proc-border)!important;
+  border-radius:13px!important;
+  background:#fff!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-history-head{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  min-height:58px!important;
+  padding:10px 13px!important;
+  border-bottom:1px solid #d8e3ec!important;
+  background:linear-gradient(180deg,#fff 0%,#f7fafc 100%)!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-history-head h3{
+  margin:0!important;
+  color:var(--proc-ink)!important;
+  font-size:17px!important;
+  font-weight:850!important;
+  line-height:1!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-history-head p{
+  margin:5px 0 0!important;
+  color:var(--proc-muted)!important;
+  font-size:9px!important;
+  font-weight:750!important;
+  line-height:1.2!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table-wrap{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  max-height:420px!important;
+  overflow-y:auto!important;
+  overflow-x:auto!important;
+  scrollbar-width:thin!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table{
+  width:100%!important;
+  min-width:1120px!important;
+  border-collapse:collapse!important;
+  table-layout:fixed!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table th{
+  position:sticky!important;
+  top:0!important;
+  z-index:2!important;
+  padding:9px 8px!important;
+  border-bottom:1px solid #cad7e2!important;
+  background:#edf5fa!important;
+  color:#45617a!important;
+  font-size:8px!important;
+  font-weight:850!important;
+  line-height:1.1!important;
+  text-align:left!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table td{
+  padding:9px 8px!important;
+  border-bottom:1px solid #e1e8ee!important;
+  background:#fff!important;
+  color:#263f56!important;
+  font-size:9px!important;
+  font-weight:750!important;
+  line-height:1.22!important;
+  vertical-align:middle!important;
+  text-transform:uppercase!important;
+  overflow-wrap:anywhere!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table td:first-child{
+  font-size:9.5px!important;
+  font-weight:850!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table td:last-child{
+  text-align:right!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table td:last-child button{
+  min-width:88px!important;
+  min-height:34px!important;
+  height:34px!important;
+  padding:0 10px!important;
+  border:1px solid var(--proc-blue-dark)!important;
+  border-radius:8px!important;
+  background:var(--proc-blue)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:8px!important;
+  font-weight:850!important;
+}
+
+/* ============================================================
+   FMED PROCESS ENGINE · REGOLA 0 · SOTTOFUNZIONI UNIFICATE
+   La home Processi resta invariata.
+   Tutto il vecchio blocco grafico delle sottofunzioni è sostituito.
+   Solo grafica: nessuna funzione, API, dato o logica modificata.
+   ============================================================ */
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background:#edf3f8!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open > :not(.fmed-workspace-page){
+  display:none!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open > :is(
+  .fmed-process-create-page,
+  .fmed-process-detail-page,
+  .fmed-new-intervention-page
+){
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex:1 1 auto!important;
+  flex-direction:column!important;
+  position:relative!important;
+  inset:auto!important;
+  left:auto!important;
+  right:auto!important;
+  transform:none!important;
+  align-self:center!important;
+  width:calc(100% - 48px)!important;
+  max-width:1240px!important;
+  min-width:0!important;
+  height:calc(100% - 32px)!important;
+  min-height:0!important;
+  margin:16px auto!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background:transparent!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open > .fmed-process-create-page > .fmed-process-form-surface,
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open > .fmed-process-detail-page > .fmed-process-detail,
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open > .fmed-new-intervention-page > .fmed-intervention-workspace-surface{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex:1 1 auto!important;
+  flex-direction:column!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:1px solid #c6d5e3!important;
+  border-radius:18px!important;
+  background:#f8fafc!important;
+  box-shadow:0 16px 38px rgba(23,63,99,.14)!important;
+  overflow:hidden!important;
+}
+
+/* TESTATA UNICA */
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open :is(
+  .fmed-process-form-surface > header,
+  .fmed-process-detail > header,
+  .fmed-new-intervention-head
+){
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  flex:0 0 auto!important;
+  gap:22px!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:96px!important;
+  margin:0!important;
+  padding:16px 24px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:
+    radial-gradient(circle at 88% -30%,rgba(255,255,255,.16) 0 105px,transparent 106px),
+    linear-gradient(108deg,#124d86 0%,#246eb2 60%,#3d8dd0 100%)!important;
+  color:#fff!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open :is(
+  .fmed-process-form-surface > header > div,
+  .fmed-process-detail > header > div,
+  .fmed-new-intervention-head-copy
+){
+  display:grid!important;
+  gap:4px!important;
+  min-width:0!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open :is(
+  .fmed-process-form-surface > header span,
+  .fmed-process-detail > header span,
+  .fmed-new-intervention-head-copy > span
+){
+  margin:0!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  letter-spacing:.07em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open :is(
+  .fmed-process-form-surface > header h3,
+  .fmed-process-detail > header h3,
+  .fmed-new-intervention-head-copy > h2
+){
+  margin:0!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:clamp(25px,1.7vw,32px)!important;
+  font-weight:900!important;
+  line-height:1.03!important;
+  letter-spacing:.015em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open :is(
+  .fmed-process-form-surface > header p,
+  .fmed-process-detail > header p,
+  .fmed-new-intervention-head-copy > p
+){
+  margin:0!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:11px!important;
+  font-weight:800!important;
+  line-height:1.25!important;
+  letter-spacing:.02em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open :is(
+  .fmed-process-form-close,
+  .fmed-process-detail > header button,
+  .fmed-new-intervention-back
+){
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 auto!important;
+  min-width:146px!important;
+  height:44px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:0 18px!important;
+  border:1px solid rgba(255,255,255,.5)!important;
+  border-radius:10px!important;
+  background:rgba(17,60,101,.48)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  box-shadow:0 5px 14px rgba(8,39,72,.15)!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  letter-spacing:.045em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+
+/* AREA CONTENUTO */
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open :is(
+  .fmed-process-form-surface > form,
+  .fmed-process-detail,
+  .fmed-intervention-workspace-surface
+){
+  box-sizing:border-box!important;
+  flex:1 1 auto!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-form-surface > form{
+  display:grid!important;
+  grid-template-rows:auto auto auto!important;
+  align-content:start!important;
+  gap:16px!important;
+  padding:18px 24px 0!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+}
+
+/* LABEL E TESTI: PIÙ GRANDI, MAIUSCOLI, GRASSETTO */
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open :is(label,label > span){
+  color:#173552!important;
+  -webkit-text-fill-color:#173552!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  line-height:1.1!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open :is(input,select,textarea,button){
+  font-family:inherit!important;
+  font-style:normal!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open :is(input,select,textarea){
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  border:1px solid #b9cadb!important;
+  border-radius:9px!important;
+  background:#fff!important;
+  color:#193752!important;
+  -webkit-text-fill-color:#193752!important;
+  font-size:13px!important;
+  font-weight:850!important;
+  letter-spacing:.02em!important;
+  box-shadow:inset 0 1px 1px rgba(17,48,77,.03)!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open :is(input,select){
+  height:48px!important;
+  min-height:48px!important;
+  padding:0 14px!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open textarea{
+  min-height:150px!important;
+  height:150px!important;
+  padding:13px 14px!important;
+  line-height:1.35!important;
+  resize:vertical!important;
+}
+
+/* GRIGLIA FORM */
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-form-grid{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  align-items:end!important;
+  gap:14px 16px!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-form-grid > *{
+  box-sizing:border-box!important;
+  min-width:0!important;
+  max-width:100%!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-form-field{
+  display:grid!important;
+  align-content:end!important;
+  gap:7px!important;
+  min-width:0!important;
+  margin:0!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-form-field.is-wide{
+  grid-column:1 / -1!important;
+}
+
+/* WORKFLOW */
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-form-requirements{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:180px repeat(4,minmax(0,1fr))!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:100%!important;
+  min-height:94px!important;
+  margin:0!important;
+  padding:14px 16px!important;
+  border:1px solid #c3dbe5!important;
+  border-radius:14px!important;
+  background:#edf8fa!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-form-requirements > strong{
+  color:#173d5d!important;
+  -webkit-text-fill-color:#173d5d!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  line-height:1.15!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-form-requirements > span{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:54px!important;
+  padding:8px 12px!important;
+  border:1px solid #d1dee8!important;
+  border-radius:11px!important;
+  background:#fff!important;
+  color:#193b59!important;
+  -webkit-text-fill-color:#193b59!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  line-height:1.2!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+  white-space:normal!important;
+}
+
+/* FOOTER E AZIONI */
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-form-surface form > footer{
+  box-sizing:border-box!important;
+  position:sticky!important;
+  z-index:5!important;
+  bottom:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(220px,.7fr) minmax(320px,1.3fr)!important;
+  gap:16px!important;
+  width:calc(100% + 48px)!important;
+  min-height:78px!important;
+  margin:0 -24px!important;
+  padding:12px 24px 16px!important;
+  border-top:1px solid #d4e0ea!important;
+  background:#f8fafc!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-form-surface form > footer button{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  height:50px!important;
+  min-height:50px!important;
+  margin:0!important;
+  padding:0 20px!important;
+  border-radius:10px!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  letter-spacing:.045em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-form-surface form > footer button:last-child{
+  border:1px solid #2168aa!important;
+  background:linear-gradient(180deg,#2f79c5 0%,#2268ad 100%)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* GESTIONE PROCESSO */
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-detail{
+  padding:18px 24px 22px!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-detail-grid{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:12px!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-detail-grid > article,
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-detail-section{
+  box-sizing:border-box!important;
+  border:1px solid #cad8e5!important;
+  border-radius:12px!important;
+  background:#fff!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-detail-grid > article{
+  min-height:78px!important;
+  padding:13px!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open .fmed-process-detail-section{
+  margin-top:12px!important;
+  padding:15px!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open :is(
+  .fmed-process-governance-grid,
+  .fmed-process-attachment-form
+){
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  align-items:end!important;
+  gap:12px!important;
+}
+
+/* ============================================================
+   NUOVO INTERVENTO GUIDATO · REGOLA 0 · SISTEMA AUTONOMO
+   Valido quando la funzione viene aperta da Processi, Asset o Interventi.
+   Non modifica la home Processi né le pagine principali Asset/Interventi.
+   ============================================================ */
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page{
+    --fni-blue-dark:#124d86;
+  --fni-blue:#246eb2;
+  --fni-blue-light:#3d8dd0;
+  --fni-ink:#173552;
+  --fni-muted:#5d7186;
+  --fni-border:#c6d5e3;
+  box-sizing:border-box!important;
+  position:relative!important;
+  inset:auto!important;
+  left:auto!important;
+  right:auto!important;
+  translate:none!important;
+  transform:none!important;
+  display:flex!important;
+  flex-direction:column!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  min-height:100%!important;
+  height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  background:#edf3f8!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page > .fmed-intervention-workspace-surface{
+    box-sizing:border-box!important;
+  display:flex!important;
+  flex:1 1 auto!important;
+  flex-direction:column!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:#f8fafc!important;
+  box-shadow:none!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+}
+
+/* TESTATA IDENTICA ALLE ALTRE SOTTOFUNZIONI */
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-head{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:22px!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:96px!important;
+  margin:0!important;
+  padding:16px 24px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:
+    radial-gradient(circle at 88% -30%,rgba(255,255,255,.16) 0 105px,transparent 106px),
+    linear-gradient(108deg,var(--fni-blue-dark) 0%,var(--fni-blue) 60%,var(--fni-blue-light) 100%)!important;
+  color:#fff!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-head-copy{
+  display:grid!important;
+  gap:4px!important;
+  min-width:0!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-head-copy > span{
+  margin:0!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  letter-spacing:.07em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-head-copy > h2{
+  margin:0!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:clamp(25px,1.7vw,32px)!important;
+  font-weight:900!important;
+  line-height:1.03!important;
+  letter-spacing:.015em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-head-copy > p{
+  max-width:900px!important;
+  margin:0!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:11px!important;
+  font-weight:800!important;
+  line-height:1.25!important;
+  letter-spacing:.02em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-back{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 auto!important;
+  width:auto!important;
+  min-width:146px!important;
+  max-width:none!important;
+  height:44px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:0 18px!important;
+  border:1px solid rgba(255,255,255,.5)!important;
+  border-radius:10px!important;
+  background:rgba(17,60,101,.48)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  box-shadow:0 5px 14px rgba(8,39,72,.15)!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  letter-spacing:.045em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+
+/* KPI INIZIALI */
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-facts{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+  width:calc(100% - 48px)!important;
+  min-width:0!important;
+  margin:16px 24px 0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-facts article{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-width:0!important;
+  min-height:62px!important;
+  padding:11px 13px!important;
+  border:1px solid var(--fni-border)!important;
+  border-radius:11px!important;
+  background:#fff!important;
+  color:var(--fni-ink)!important;
+  box-shadow:0 3px 10px rgba(23,63,99,.05)!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-facts :is(strong,small,span){
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-facts strong{
+  color:var(--fni-ink)!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  line-height:1.15!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-facts small{
+  color:var(--fni-muted)!important;
+  font-size:10px!important;
+  font-weight:750!important;
+  line-height:1.2!important;
+}
+
+/* STEP */
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-steps{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:10px!important;
+  width:calc(100% - 48px)!important;
+  min-width:0!important;
+  margin:12px 24px!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-steps > div{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-width:0!important;
+  min-height:54px!important;
+  padding:10px 12px!important;
+  border:1px solid var(--fni-border)!important;
+  border-radius:11px!important;
+  background:#fff!important;
+  color:var(--fni-ink)!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-steps b{
+  display:grid!important;
+  place-items:center!important;
+  flex:0 0 28px!important;
+  width:28px!important;
+  height:28px!important;
+  border-radius:50%!important;
+  background:#e5edf5!important;
+  color:#274e72!important;
+  font-size:11px!important;
+  font-weight:900!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-steps span{
+  overflow:hidden!important;
+  color:var(--fni-ink)!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  line-height:1.15!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-steps > :is(.is-active,.is-done){
+  border-color:#2d70b5!important;
+  background:#eaf3fc!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-new-intervention-steps > :is(.is-active,.is-done) b{
+  background:#2d70b5!important;
+  color:#fff!important;
+}
+
+/* PANNELLO OPERATIVO */
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-intervention-asset-picker{
+  box-sizing:border-box!important;
+  display:grid!important;
+  gap:14px!important;
+  width:calc(100% - 48px)!important;
+  min-width:0!important;
+  margin:0 24px 22px!important;
+  padding:18px!important;
+  border:1px solid var(--fni-border)!important;
+  border-radius:14px!important;
+  background:#fff!important;
+  box-shadow:0 4px 14px rgba(23,63,99,.06)!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-intervention-asset-picker-head{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:space-between!important;
+  gap:16px!important;
+  min-width:0!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-intervention-asset-picker-head > div:first-child{
+  display:grid!important;
+  gap:4px!important;
+  min-width:0!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-intervention-asset-picker-head > div:first-child > span{
+  color:#2a649f!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  letter-spacing:.07em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-intervention-asset-picker-head h3{
+  margin:0!important;
+  color:var(--fni-ink)!important;
+  font-size:20px!important;
+  font-weight:900!important;
+  line-height:1.08!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-intervention-asset-picker-head p{
+  margin:0!important;
+  color:var(--fni-muted)!important;
+  font-size:11px!important;
+  font-weight:750!important;
+  line-height:1.3!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-intervention-asset-picker-filters{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.55fr) minmax(210px,.7fr) minmax(240px,.8fr)!important;
+  align-items:end!important;
+  gap:14px!important;
+  min-width:0!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page :is(label,label > span){
+  color:var(--fni-ink)!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  line-height:1.1!important;
+  letter-spacing:.03em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page :is(input,select,textarea){
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  border:1px solid #b9cadb!important;
+  border-radius:9px!important;
+  background:#fff!important;
+  color:#193752!important;
+  -webkit-text-fill-color:#193752!important;
+  font-size:12px!important;
+  font-weight:850!important;
+  letter-spacing:.015em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page :is(input,select){
+  height:46px!important;
+  min-height:46px!important;
+  padding:0 13px!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-intervention-search-meta{
+  min-height:34px!important;
+  color:var(--fni-muted)!important;
+  font-size:10px!important;
+  font-weight:800!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page .fmed-intervention-asset-results{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:96px!important;
+  max-height:300px!important;
+  padding:10px!important;
+  border:1px solid #d2dee9!important;
+  border-radius:10px!important;
+  background:#f7fafc!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+section.fmed-new-intervention-page :is(
+  .fmed-intervention-asset-empty,
+  .fmed-intervention-result-limit,
+  .fmed-intervention-asset-picker-note,
+  .fmed-guided-process-waiting
+){
+  box-sizing:border-box!important;
+  margin:0!important;
+  padding:11px 12px!important;
+  border:1px solid #d4e0ea!important;
+  border-radius:9px!important;
+  background:#f7fafc!important;
+  color:var(--fni-muted)!important;
+  font-size:10px!important;
+  font-weight:800!important;
+  line-height:1.3!important;
+  text-transform:uppercase!important;
+}
+
+/* RESPONSIVE SPECIFICO NUOVO INTERVENTO */
+@media (max-width:1280px){
+  html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+  section.fmed-new-intervention-page .fmed-intervention-asset-picker-filters{
+    grid-template-columns:1fr 1fr!important;
+  }
+
+  html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+  section.fmed-new-intervention-page .fmed-intervention-asset-picker-filters > label:first-child{
+    grid-column:1 / -1!important;
+  }
+}
+
+@media (max-width:900px){
+  html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+  section.fmed-new-intervention-page{
+    width:calc(100% - 16px)!important;
+    max-width:calc(100% - 16px)!important;
+    margin:8px auto!important;
+  }
+
+  html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+  section.fmed-new-intervention-page .fmed-new-intervention-head{
+    align-items:flex-start!important;
+    flex-wrap:wrap!important;
+  }
+
+  html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+  section.fmed-new-intervention-page :is(
+    .fmed-new-intervention-facts,
+    .fmed-new-intervention-steps,
+    .fmed-intervention-asset-picker-filters
+  ){
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+
+  html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+  section.fmed-new-intervention-page .fmed-intervention-asset-picker-filters > label:first-child{
+    grid-column:auto!important;
+  }
+}
+
+
+/* ============================================================
+   NUOVO INTERVENTO GUIDATO · SCHERMO INTERO DEFINITIVO
+   Sovrascrive esclusivamente la centratura generica delle sottofunzioni.
+   ============================================================ */
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open > section.fmed-new-intervention-page{
+  box-sizing:border-box!important;
+  position:relative!important;
+  inset:auto!important;
+  left:auto!important;
+  right:auto!important;
+  translate:none!important;
+  transform:none!important;
+  align-self:stretch!important;
+  flex:1 1 auto!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background:#edf3f8!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open > section.fmed-new-intervention-page
+> .fmed-intervention-workspace-surface{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex:1 1 auto!important;
+  flex-direction:column!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+}
+
+/* RESPONSIVE */
+/* CENTRATURA DEFINITIVA SOTTOFUNZIONI PROCESS ENGINE */
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content{
+  overflow-x:hidden!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open{
+  align-items:center!important;
+  justify-content:flex-start!important;
+  padding-inline:0!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open > :is(
+  .fmed-process-create-page,
+  .fmed-process-detail-page,
+  .fmed-new-intervention-page
+){
+  position:relative!important;
+  inset:auto!important;
+  left:auto!important;
+  right:auto!important;
+  translate:none!important;
+  transform:none!important;
+  align-self:center!important;
+  flex:0 1 auto!important;
+  width:calc(100% - 48px)!important;
+  max-width:1240px!important;
+  min-width:0!important;
+  margin:16px auto!important;
+}
+
+html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+.fmed-process-page.is-workspace-open > :is(
+  .fmed-process-create-page,
+  .fmed-process-detail-page,
+  .fmed-new-intervention-page
+) > :is(
+  .fmed-process-form-surface,
+  .fmed-process-detail,
+  .fmed-intervention-workspace-surface
+){
+  position:relative!important;
+  inset:auto!important;
+  left:auto!important;
+  right:auto!important;
+  translate:none!important;
+  transform:none!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:0 auto!important;
+}
+
+@media (max-width:1280px){
+  html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+  .fmed-process-page.is-workspace-open .fmed-process-form-grid,
+  html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+  .fmed-process-page.is-workspace-open :is(
+    .fmed-process-detail-grid,
+    .fmed-process-governance-grid,
+    .fmed-process-attachment-form
+  ){
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+
+  html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+  .fmed-process-page.is-workspace-open .fmed-process-form-requirements{
+    grid-template-columns:160px repeat(2,minmax(0,1fr))!important;
+  }
+}
+
+@media (max-width:900px){
+  html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+  .fmed-process-page.is-workspace-open > :is(
+    .fmed-process-create-page,
+    .fmed-process-detail-page,
+    .fmed-new-intervention-page
+  ){
+    width:calc(100% - 16px)!important;
+    max-width:calc(100% - 16px)!important;
+    height:calc(100% - 16px)!important;
+    margin:8px auto!important;
+  }
+
+  html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+  .fmed-process-page.is-workspace-open :is(
+    .fmed-process-form-grid,
+    .fmed-process-detail-grid,
+    .fmed-process-governance-grid,
+    .fmed-process-attachment-form,
+    .fmed-new-intervention-facts,
+    .fmed-new-intervention-steps,
+    .fmed-intervention-asset-picker-filters,
+    .fmed-process-form-requirements
+  ){
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+
+  html body .fmed-app-root.fmed-shell-premium .fmed-main-content
+  .fmed-process-page.is-workspace-open .fmed-process-form-surface form > footer{
+    grid-template-columns:1fr!important;
+  }
+}
+
+/* Home Processi: stessa regola responsive già presente, nessun restyling. */
+@media (max-width:900px){
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-catalog{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+}
+
+
+
+/* ============================================================
+   HOME PROCESSI · ORDINE DEFINITIVO
+   1 TESTATA · 2 KPI · 3 REGISTRO PROCESSI · 4 RESTO
+   Solo ordine visuale. Nessuna funzione o contenuto modificato.
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open){
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+}
+
+/* Testata e qualsiasi blocco introduttivo restano per primi */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open) > :not(
+  .fmed-process-kpis,
+  .fmed-process-history,
+  .fmed-process-search,
+  .fmed-process-group
+){
+  order:1!important;
+}
+
+/* KPI subito sotto la testata */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open) > .fmed-process-kpis{
+  order:2!important;
+  margin-top:10px!important;
+}
+
+/* Registro Processi subito sotto i KPI */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open) > .fmed-process-history{
+  order:3!important;
+  margin-top:10px!important;
+}
+
+/* Tutto il resto dopo il Registro Processi */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open) > :is(
+  .fmed-process-search,
+  .fmed-process-group
+){
+  order:4!important;
+  margin-top:10px!important;
+}
+
+/* FMED PROCESS ENGINE · REGOLA 0 · FINE */
+
+/* ============================================================
+   HOME PROCESSI · MODULI COMPATTI DEFINITIVI
+   Solo grafica. Nessuna funzione o logica modificata.
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-groups{
+  display:grid!important;
+  gap:7px!important;
+  margin-top:8px!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group{
+  margin:0!important;
+  border:1px solid #cbd9e5!important;
+  border-radius:11px!important;
+  background:#fff!important;
+  box-shadow:0 2px 7px rgba(24,67,102,.04)!important;
+  overflow:hidden!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto 34px!important;
+  align-items:center!important;
+  gap:12px!important;
+  width:100%!important;
+  min-height:48px!important;
+  padding:7px 10px 7px 14px!important;
+  border:0!important;
+  background:#fff!important;
+  cursor:pointer!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head > div{
+  display:flex!important;
+  align-items:center!important;
+  min-width:0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head > div > span{
+  display:none!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head h3{
+  overflow:hidden!important;
+  margin:0!important;
+  color:#102f4d!important;
+  font-size:15px!important;
+  font-weight:900!important;
+  line-height:1.1!important;
+  letter-spacing:.035em!important;
+  text-overflow:ellipsis!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head small{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:26px!important;
+  padding:0 10px!important;
+  border:1px solid #d4e2ec!important;
+  border-radius:999px!important;
+  background:#edf6fa!important;
+  color:#315b79!important;
+  font-size:9px!important;
+  font-weight:850!important;
+  line-height:1!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head i{
+  display:grid!important;
+  place-items:center!important;
+  width:30px!important;
+  height:30px!important;
+  border-radius:8px!important;
+  background:#e8f4f8!important;
+  color:#18708f!important;
+  font-size:15px!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  line-height:1!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group[open] > .fmed-process-group-head{
+  border-bottom:1px solid #d7e3ec!important;
+  background:#f7fafc!important;
+}
+
+
+/* ============================================================
+   HOME PROCESSI · SOLO REGISTRO E FILTRI ARCHIVIO
+   Non agisce sulle sottofunzioni aperte.
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-history{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin-top:10px!important;
+  overflow:visible!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-history-head{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+  width:100%!important;
+  min-height:58px!important;
+  height:auto!important;
+  margin:0!important;
+  padding:10px 13px!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-history-head > div:first-child{
+  flex:1 1 auto!important;
+  min-width:0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-archive-filter{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex:0 0 auto!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:6px!important;
+  width:auto!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-archive-filter button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:auto!important;
+  min-width:78px!important;
+  max-width:none!important;
+  height:32px!important;
+  min-height:32px!important;
+  margin:0!important;
+  padding:0 10px!important;
+  border:1px solid #c7d7e4!important;
+  border-radius:8px!important;
+  background:#f3f7fa!important;
+  color:#31536f!important;
+  font-size:9px!important;
+  font-weight:850!important;
+  line-height:1!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-archive-filter button.is-active{
+  border-color:#236cae!important;
+  background:#236cae!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table-wrap{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow-x:auto!important;
+  overflow-y:visible!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table{
+  display:table!important;
+  width:100%!important;
+  min-width:1120px!important;
+  height:auto!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-row-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:6px!important;
+  white-space:nowrap!important;
+}
+

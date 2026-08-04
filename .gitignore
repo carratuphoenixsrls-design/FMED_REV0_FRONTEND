@@ -19,3 +19,5 @@ Thumbs.db
 
 *.BACKUP*
 *.BASE_*
+.vercel
+.env*

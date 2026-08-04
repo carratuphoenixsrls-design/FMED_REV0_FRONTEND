@@ -57,32 +57,6 @@ html body .fmed-main-content[data-fmed-page="Scadenze"]
 html body .fmed-main-content[data-fmed-page="Scadenze"]
 .p0-operations--deadline > .p0-operations__head{
   order:1!important;
-  box-sizing:border-box!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  gap:22px!important;
-  width:100%!important;
-  min-height:123px!important;
-  height:123px!important;
-  margin:0!important;
-  padding:18px 24px!important;
-  border:0!important;
-  border-radius:17px 17px 0 0!important;
-  background:
-    radial-gradient(
-      circle at 84% 10%,
-      rgba(255,255,255,.15) 0 88px,
-      transparent 89px
-    ),
-    linear-gradient(
-      120deg,
-      var(--scad-dark) 0%,
-      var(--scad-main) 56%,
-      var(--scad-light) 100%
-    )!important;
-  box-shadow:none!important;
-  overflow:hidden!important;
 }
 
 /* Qualsiasi testo della testata diventa realmente bianco */
@@ -411,93 +385,7 @@ html body .fmed-main-content[data-fmed-page="Scadenze"]
   font-weight:900!important;
 }
 
-/* ============================================================
-   SIDEBAR REALE
-   ============================================================ */
-
-html body .fmed-app-root:has(
-  .fmed-main-content[data-fmed-page="Scadenze"]
-)
-:is(div,aside,section):has(
-  > .fmed-sidebar-controls
-):has(
-  > .fmed-sidebar-navigation
-){
-  background:
-    radial-gradient(
-      circle at 82% 14%,
-      rgba(255,255,255,.15) 0 74px,
-      transparent 75px
-    ),
-    linear-gradient(
-      180deg,
-      #771034 0%,
-      #98174b 50%,
-      #b72562 100%
-    )!important;
-  border-right:1px solid rgba(89,8,38,.38)!important;
-  box-shadow:6px 0 22px rgba(83,12,45,.15)!important;
-}
-
-/* Copre anche il contenitore padre nel caso abbia una classe specifica */
-html body .fmed-app-root:has(
-  .fmed-main-content[data-fmed-page="Scadenze"]
-)
-:has(> .fmed-sidebar-controls)
-:has(> .fmed-sidebar-navigation){
-  background-color:#921646!important;
-  background-image:
-    radial-gradient(
-      circle at 82% 14%,
-      rgba(255,255,255,.15) 0 74px,
-      transparent 75px
-    ),
-    linear-gradient(
-      180deg,
-      #771034 0%,
-      #98174b 50%,
-      #b72562 100%
-    )!important;
-}
-
-/* Testi sidebar */
-html body .fmed-app-root:has(
-  .fmed-main-content[data-fmed-page="Scadenze"]
-) :is(
-  .fmed-sidebar-controls,
-  .fmed-sidebar-navigation,
-  .fmed-sidebar-footer
-),
-html body .fmed-app-root:has(
-  .fmed-main-content[data-fmed-page="Scadenze"]
-) :is(
-  .fmed-sidebar-controls,
-  .fmed-sidebar-navigation,
-  .fmed-sidebar-footer
-) *{
-  color:#ffffff!important;
-  -webkit-text-fill-color:#ffffff!important;
-}
-
-/* Voci menu */
-html body .fmed-app-root:has(
-  .fmed-main-content[data-fmed-page="Scadenze"]
-) .fmed-side-menu-btn{
-  border-color:rgba(255,255,255,.18)!important;
-  background:transparent!important;
-  color:#ffffff!important;
-}
-
-/* Voce attiva */
-html body .fmed-app-root:has(
-  .fmed-main-content[data-fmed-page="Scadenze"]
-) .fmed-side-menu-btn.is-active{
-  border:1px solid rgba(255,255,255,.45)!important;
-  background:rgba(255,255,255,.19)!important;
-  box-shadow:
-    inset 4px 0 0 #ffffff,
-    0 6px 15px rgba(64,6,30,.20)!important;
-}
+/* Sidebar gestita dal sistema globale unico */
 
 /* ============================================================
    PANNELLO OBSOLETE IN FONDO
@@ -1091,22 +979,6 @@ html body .fmed-main-content[data-fmed-page="Scadenze"]
 /* SCADENZE HOME TESTO GRANDE START */
 
 /* Titolo principale Agenda tecnica */
-html body .fmed-main-content[data-fmed-page="Scadenze"]
-.p0-command--deadline .p0-kicker{
-  font-size:12px!important;
-  line-height:1!important;
-  font-weight:900!important;
-  letter-spacing:.08em!important;
-}
-
-html body .fmed-main-content[data-fmed-page="Scadenze"]
-.p0-command--deadline .p0-command__intro h2{
-  font-size:29px!important;
-  line-height:1.08!important;
-  font-weight:900!important;
-  max-width:520px!important;
-}
-
 /* Badge visibili e selezionate */
 html body .fmed-main-content[data-fmed-page="Scadenze"]
 .p0-command__facts > span{
