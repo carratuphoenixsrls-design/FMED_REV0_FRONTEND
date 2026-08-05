@@ -1,0 +1,2113 @@
+﻿FMED REV0 - AUDIT REALE NUOVO ASSET
+Generato: 04/08/2026 08:30:58
+Cartella: C:\Users\FabioCarratu\Downloads\FMED_REV0_ALLINEAMENTO_GITHUB_COMPLETO_20260803\combined\FMED_REV0_FRONTEND_ALLINEATO_GITHUB_20260803\FMED_REV0_FRONTEND_CORRETTO_DEPLOY_READY
+
+==============================================================================
+1. ORDINE REALE DEGLI IMPORT CSS IN src/main.jsx
+==============================================================================
+   4: import "./FmedBaseStyles.css";
+   5: import "./FmedErrorBoundary.css";
+   6: import "./ProcessiPage.css";
+   7: import "./ImpostazioniPage.css";
+   8: import "./CoreStandardPage.css";
+   9: import "./SystemAuditPage.css";
+  10: import "./Sicurezza8108Page.css";
+  11: import "./components/ProcessEnginePage.css";
+  12: import "./components/masterdata/CanonicalSelect.css";
+  13: import "./FmedUnifiedVisualSystem.css";
+  14: import "./AssetDetailCompact.css";
+  15: import "./pages/AssetPage.css";
+  16: import "./FmedProfessionalLayoutSystem.css";
+  17: import "./FmedTypographySystem.css";
+  21: import "./FmedScadenzeSystem.css";
+  22: import "./FmedInfrastruttureSystem.css";
+  23: import "./FmedDashboardSystem.css";
+  24: import "./FmedGlobalHeaderSystem.css";
+  25: import "./FmedControlStandardSystem.css";
+  26: import "./FmedProcessWorkspaceSystem.css";
+  27: import "./NewAssetWizard.css";
+
+IMPORT NewAssetWizard.css: 1
+
+==============================================================================
+2. MARKUP REALE DELLA TESTATA IN NewAssetWizard.jsx
+==============================================================================
+ 702:     <section className="fmed-wizard-page" aria-label="Processo guidato Nuovo Asset">
+ 703:       <div className="fmed-wizard-card">
+ 704:         <header className="fmed-wizard-head">
+ 705:           <div className="fmed-banner-heading">
+ 706:             <FmedModuleIcon module="NuovoAsset" />
+ 707:             <div className="fmed-banner-copy">
+ 708:               <span>FMED REV0</span>
+ 709:               <h2>Nuovo Asset</h2>
+ 710:               <p>Censimento guidato a pagina intera: cataloghi uniformi, controlli anti-duplicato, documenti, QR, collaudo e primo piano manutentivo.</p>
+ 711:             </div>
+ 712:           </div>
+ 713:           <button type="button" onClick={onClose} aria-label="Torna indietro" title="Torna indietro">â†</button>
+ 714:         </header>
+ 715: 
+ 716:         <div className="fmed-wizard-hero-facts" aria-label="Caratteristiche del processo Nuovo Asset">
+ 717:           <article><span>01</span><div><strong>5 passaggi guidati</strong><small>Un dato alla volta, senza finestre compresse.</small></div></article>
+ 718:           <article><span>02</span><div><strong>Cataloghi governati</strong><small>Nomi uniformi e nuove varianti sotto controllo.</small></div></article>
+ 719:           <article><span>03</span><div><strong>Storico preservato</strong><small>Nessuna perdita di documenti, collaudi o regole.</small></div></article>
+ 720:         </div>
+ 721: 
+ 722:         <div className={`fmed-wizard-master-status ${masterError ? "error" : masterLoading ? "loading" : "ready"}`}>
+ 723:           <div>
+ 724:             <strong>{masterLoading ? "Sincronizzazione Master Dataâ€¦" : masterError ? "Master Data non sincronizzato" : `${sourceLabel} sincronizzato`}</strong>
+ 725:             <span>{masterLoading
+ 726:               ? "FMED sta caricando dizionari e regole attive."
+ 727:               : masterError
+ 728:                 ? masterError
+ 729:                 : `${regole.length} regole disponibili${masterStatus?.valori_storici_integrati
+ 730:                   ? ` Â· ${masterStatus.valori_storici_integrati} valori operativi recuperati`
+ 731:                   : masterStatus?.fallback_dizionari?.length
+ 732:                     ? ` Â· fallback controllato: ${masterStatus.fallback_dizionari.join(", ")}`
+ 733:                     : ""}.`}</span>
+ 734:           </div>
+ 735:           {!masterLoading && !masterError && <b>LIVE</b>}
+ 736:         </div>
+ 737: 
+ 738:         <nav className="fmed-wizard-steps" aria-label="Passaggi Nuovo Asset">
+ 739:           {STEPS.map(([code, title], index) => (
+ 740:             <button
+ 741:               type="button"
+ 742:               key={code}
+ 743:               className={index === step ? "active" : index < step ? "done" : ""}
+ 744:               onClick={() => index < step && setStep(index)}
+ 745:               aria-current={index === step ? "step" : undefined}
+ 746:             >
+ 747:               <b>{index + 1}</b><span>{title}</span>
+ 748:             </button>
+ 749:           ))}
+ 750:         </nav>
+ 751: 
+ 752:         {errors.length > 0 && <div className="fmed-wizard-errors" role="alert">{errors.map((error) => <div key={error}>â€¢ {error}</div>)}</div>}
+ 753: 
+ 754:         <main className="fmed-wizard-body">
+ 755:           <section className="fmed-wizard-step-intro" aria-live="polite">
+
+==============================================================================
+3. TUTTE LE REGOLE CSS CHE COLPISCONO LA TESTATA E I TRE RIQUADRI
+==============================================================================
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 176
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content :is(small,.fmed-banner-copy,.fmed-module-hero-subtitle)
+REGOLE:
+  color: var(--fmed-muted);
+  font-size: 13px;
+  line-height: 1.45;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 562
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-dashboard-title-icon, .fmed-app-root.fmed-shell-premium .fmed-module-icon
+REGOLE:
+  color: var(--fmed-primary);
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 733
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-module-hero-title, .fmed-app-root.fmed-shell-premium .fmed-costi-title, .fmed-app-root.fmed-shell-premium .fmed-banner-heading
+REGOLE:
+  color: var(--fmed-text-strong);
+  font-size: clamp(20px, 1.55vw, 25px);
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  text-transform: none;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 2248
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-banner-heading
+REGOLE:
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  min-width: 0;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 2255
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-banner-copy
+REGOLE:
+  min-width: 0;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 2600
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-dashboard-title-icon, .fmed-app-root.fmed-shell-premium .fmed-banner-heading>.fmed-module-icon, .fmed-app-root.fmed-shell-premium .fmed-module-hero-heading>.fmed-module-icon
+REGOLE:
+  width:30px;
+  height:30px;
+  min-width:30px;
+  padding:6px;
+  border:1px solid color-mix(in srgb,var(--fmed-primary) 25%,var(--fmed-border));
+  border-radius:9px;
+  background:var(--fmed-primary-soft);
+  color:var(--fmed-primary-strong);
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 2613
+SELETTORE: .fmed-app-root.fmed-shell-premium :is(.fmed-dashboard-title-icon,.fmed-module-icon) svg
+REGOLE:
+  width:18px;
+  height:18px;
+  stroke-width:1.9;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 3526
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content :is(small,.fmed-banner-copy,.fmed-module-hero-subtitle)
+REGOLE:
+  font-size: 12px;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 3574
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content :is(small,.fmed-banner-copy,.fmed-module-hero-subtitle)
+REGOLE:
+  font-size: 13px;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5703
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-wizard-page :is( .fmed-wizard-header, .new-asset-wizard-header, [class*="wizard-hero"] )
+REGOLE:
+  padding: clamp(22px, 2.5vw, 38px);
+  border: 0;
+  border-radius: 24px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 84% -20%, rgba(255,255,255,.22) 0 100px, transparent 101px),
+    linear-gradient(120deg, #173f87, #286fcf 68%, #4b98ea);
+  box-shadow: 0 18px 48px rgba(27,86,163,.19);
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5718
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-wizard-page :is( .fmed-wizard-header, .new-asset-wizard-header, [class*="wizard-hero"] ) :is(h1,h2,h3,p,span,strong,small)
+REGOLE:
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedVisualClean.css | LINEA: 171
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content :is(small,.fmed-banner-copy,.fmed-module-hero-subtitle)
+REGOLE:
+  color: var(--fmed-muted);
+  font-size: 13px;
+  line-height: 1.45;
+
+FILE: .\src\FmedVisualClean.css | LINEA: 557
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-dashboard-title-icon, .fmed-app-root.fmed-shell-premium .fmed-module-icon
+REGOLE:
+  color: var(--fmed-primary);
+
+FILE: .\src\FmedVisualClean.css | LINEA: 728
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-module-hero-title, .fmed-app-root.fmed-shell-premium .fmed-costi-title, .fmed-app-root.fmed-shell-premium .fmed-banner-heading
+REGOLE:
+  color: var(--fmed-text-strong);
+  font-size: clamp(20px, 1.55vw, 25px);
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  text-transform: none;
+
+FILE: .\src\FmedVisualClean.css | LINEA: 2243
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-banner-heading
+REGOLE:
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  min-width: 0;
+
+FILE: .\src\FmedVisualClean.css | LINEA: 2250
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-banner-copy
+REGOLE:
+  min-width: 0;
+
+FILE: .\src\FmedVisualClean.css | LINEA: 2595
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-dashboard-title-icon, .fmed-app-root.fmed-shell-premium .fmed-banner-heading>.fmed-module-icon, .fmed-app-root.fmed-shell-premium .fmed-module-hero-heading>.fmed-module-icon
+REGOLE:
+  width:30px;
+  height:30px;
+  min-width:30px;
+  padding:6px;
+  border:1px solid color-mix(in srgb,var(--fmed-primary) 25%,var(--fmed-border));
+  border-radius:9px;
+  background:var(--fmed-primary-soft);
+  color:var(--fmed-primary-strong);
+
+FILE: .\src\FmedVisualClean.css | LINEA: 2608
+SELETTORE: .fmed-app-root.fmed-shell-premium :is(.fmed-dashboard-title-icon,.fmed-module-icon) svg
+REGOLE:
+  width:18px;
+  height:18px;
+  stroke-width:1.9;
+
+FILE: .\src\FmedVisualClean.css | LINEA: 3522
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content :is(small,.fmed-banner-copy,.fmed-module-hero-subtitle)
+REGOLE:
+  font-size: 12px;
+
+FILE: .\src\FmedVisualClean.css | LINEA: 3570
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content :is(small,.fmed-banner-copy,.fmed-module-hero-subtitle)
+REGOLE:
+  font-size: 13px;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 78
+SELETTORE: /* FMED NUOVO ASSET TESTATA DEFINITIVA START */ /* Testata coerente con il sistema FMED */ html body .fmed-wizard-page .fmed-wizard-head
+REGOLE:
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  min-width:0;
+  min-height:92px;
+  padding:14px 18px;
+  overflow:hidden;
+  border:0;
+  border-radius:15px 15px 0 0;
+  background:linear-gradient(105deg,#1d4e91 0%,#2e76c5 62%,#4694df 100%);
+  color:#fff;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 97
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head::after
+REGOLE:
+  content:"";
+  position:absolute;
+  top:-72px;
+  right:8%;
+  width:190px;
+  height:190px;
+  border-radius:50%;
+  background:rgba(255,255,255,.13);
+  pointer-events:none;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 109
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head > *
+REGOLE:
+  position:relative;
+  z-index:1;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 114
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head .fmed-banner-heading
+REGOLE:
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  min-width:0;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 121
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head .fmed-module-icon
+REGOLE:
+  display:grid;
+  place-items:center;
+  flex:0 0 34px;
+  width:34px;
+  height:34px;
+  margin-top:1px;
+  border:1px solid rgba(255,255,255,.45);
+  border-radius:10px;
+  background:rgba(255,255,255,.14);
+  color:#fff;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 134
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head .fmed-module-icon svg
+REGOLE:
+  width:18px;
+  height:18px;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 139
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head .fmed-banner-copy
+REGOLE:
+  display:grid;
+  gap:2px;
+  min-width:0;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 145
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head .fmed-banner-copy > span
+REGOLE:
+  color:rgba(255,255,255,.86);
+  font-size:10px;
+  font-weight:800;
+  line-height:1.1;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 154
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head h2
+REGOLE:
+  margin:0;
+  color:#fff;
+  font-size:clamp(23px,1.55vw,28px);
+  font-weight:800;
+  line-height:1.05;
+  letter-spacing:.01em;
+  text-transform:uppercase;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 164
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head p
+REGOLE:
+  max-width:1180px;
+  margin:2px 0 0;
+  color:rgba(255,255,255,.9);
+  font-size:12px;
+  font-weight:650;
+  line-height:1.35;
+  letter-spacing:.01em;
+  text-transform:uppercase;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 175
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head > button
+REGOLE:
+  display:grid;
+  place-items:center;
+  flex:0 0 38px;
+  width:38px;
+  height:38px;
+  padding:0;
+  border:1px solid rgba(255,255,255,.42);
+  border-radius:10px;
+  background:rgba(17,43,78,.58);
+  color:#fff;
+  font-size:18px;
+  font-weight:800;
+  line-height:1;
+  cursor:pointer;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 192
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head > button:hover
+REGOLE:
+  background:rgba(17,43,78,.76);
+
+FILE: .\src\NewAssetWizard.css | LINEA: 196
+SELETTORE: /* I tre riquadri informativi non sono piÃ¹ una seconda testata gigante */ html body .fmed-wizard-page .fmed-wizard-hero-facts
+REGOLE:
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:9px;
+  min-width:0;
+  padding:10px 18px;
+  border-bottom:1px solid #d8e4f0;
+  background:#f4f8fc;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 207
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-hero-facts article
+REGOLE:
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+  min-height:52px;
+  padding:8px 11px;
+  border:1px solid #d4e0ed;
+  border-radius:10px;
+  background:#fff;
+  color:#142b46;
+  box-shadow:0 2px 7px rgba(27,69,111,.05);
+
+FILE: .\src\NewAssetWizard.css | LINEA: 221
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-hero-facts article > span
+REGOLE:
+  display:grid;
+  place-items:center;
+  flex:0 0 25px;
+  width:25px;
+  height:25px;
+  border-radius:8px;
+  background:#e7f0fb;
+  color:#245f9f;
+  font-size:10px;
+  font-weight:800;
+  line-height:1;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 235
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-hero-facts article > div
+REGOLE:
+  display:grid;
+  gap:2px;
+  min-width:0;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 241
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-hero-facts strong
+REGOLE:
+  overflow:hidden;
+  color:#142b46;
+  font-size:11px;
+  font-weight:800;
+  line-height:1.2;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  text-transform:uppercase;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 252
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-hero-facts small
+REGOLE:
+  overflow:hidden;
+  color:#5c6f84;
+  font-size:10px;
+  font-weight:600;
+  line-height:1.25;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 262
+SELETTORE: /* Stato Master Data compatto e leggibile */ html body .fmed-wizard-page .fmed-wizard-master-status
+REGOLE:
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  min-width:0;
+  margin:8px 18px 0;
+  padding:8px 10px;
+  border:1px solid #cfe0ee;
+  border-radius:10px;
+  background:#edf6fb;
+  color:#17314e;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 277
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-master-status > div
+REGOLE:
+  display:grid;
+  gap:1px;
+  min-width:0;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 283
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-master-status strong
+REGOLE:
+  color:#17314e;
+  font-size:10px;
+  font-weight:800;
+  line-height:1.2;
+  text-transform:uppercase;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 291
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-master-status span
+REGOLE:
+  overflow:hidden;
+  color:#536b82;
+  font-size:10px;
+  font-weight:600;
+  line-height:1.2;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 301
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-master-status > b
+REGOLE:
+  flex:0 0 auto;
+  padding:4px 7px;
+  border-radius:999px;
+  background:#d7e9f7;
+  color:#245f9f;
+  font-size:9px;
+  font-weight:800;
+  line-height:1;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 312
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-master-status.loading
+REGOLE:
+  border-style:dashed;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 316
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-master-status.error
+REGOLE:
+  border-color:#e5a3a3;
+  background:#fff0f0;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 321
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-master-status.error :is(strong,span)
+REGOLE:
+  color:#8e2020;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 325
+SELETTORE: /* Passaggi visibili, uniformi e senza testi bianchi su fondo bianco */ html body .fmed-wizard-page .fmed-wizard-steps
+REGOLE:
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:7px;
+  min-width:0;
+  padding:8px 18px;
+  border-bottom:1px solid #d8e4f0;
+  background:#fff;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 336
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-steps button
+REGOLE:
+  display:flex;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+  min-height:35px;
+  padding:5px 8px;
+  border:1px solid #d5e0ec;
+  border-radius:9px;
+  background:#f8fafc;
+  color:#20384f;
+  text-align:left;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 350
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-steps b
+REGOLE:
+  display:grid;
+  place-items:center;
+  flex:0 0 20px;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:#e7eef6;
+  color:#35536f;
+  font-size:9px;
+  font-weight:800;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 363
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-steps span
+REGOLE:
+  overflow:hidden;
+  color:#20384f;
+  font-size:10px;
+  font-weight:750;
+  line-height:1.15;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  text-transform:uppercase;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 374
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-steps button.active
+REGOLE:
+  border-color:#2d6fb4;
+  background:#eaf3fc;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 379
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-steps button.active b, html body .fmed-wizard-page .fmed-wizard-steps button.done b
+REGOLE:
+  background:#2d6fb4;
+  color:#fff;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 387
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head
+REGOLE:
+  min-height:86px;
+  padding:12px 14px;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 391
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head p
+REGOLE:
+  font-size:10px;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 395
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-hero-facts
+REGOLE:
+  padding:8px 14px;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 399
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-master-status
+REGOLE:
+  margin:7px 14px 0;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 403
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-steps
+REGOLE:
+  padding:7px 14px;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 410
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head
+REGOLE:
+  align-items:flex-start;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 413
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-head p
+REGOLE:
+  white-space:normal;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 417
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-hero-facts
+REGOLE:
+  grid-template-columns:1fr;
+
+FILE: .\src\NewAssetWizard.css | LINEA: 421
+SELETTORE: html body .fmed-wizard-page .fmed-wizard-steps
+REGOLE:
+  grid-template-columns:repeat(2,minmax(0,1fr));
+
+FILE: .\src\PointZeroCompatibility.css | LINEA: 480
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-wizard-page :is( .fmed-wizard-header, .new-asset-wizard-header, [class*="wizard-hero"] )
+REGOLE:
+  padding: clamp(22px, 2.5vw, 38px);
+  border: 0;
+  border-radius: 24px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 84% -20%, rgba(255,255,255,.22) 0 100px, transparent 101px),
+    linear-gradient(120deg, #173f87, #286fcf 68%, #4b98ea);
+  box-shadow: 0 18px 48px rgba(27,86,163,.19);
+
+FILE: .\src\PointZeroCompatibility.css | LINEA: 495
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-wizard-page :is( .fmed-wizard-header, .new-asset-wizard-header, [class*="wizard-hero"] ) :is(h1,h2,h3,p,span,strong,small)
+REGOLE:
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroFinalFix.css | LINEA: 103
+SELETTORE: /* Wizard Nuovo Asset: le tre schede informative non devono ereditare il testo bianco della testata quando sono visualizzate su superficie chiara. */ .fmed-app-root.fmed-shell-premium .fmed-wizard-page .fmed-wizard-hero-facts article
+REGOLE:
+  color: #10233f;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroFinalFix.css | LINEA: 110
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-wizard-page .fmed-wizard-hero-facts article strong
+REGOLE:
+  color: #10233f;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroFinalFix.css | LINEA: 115
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-wizard-page .fmed-wizard-hero-facts article small
+REGOLE:
+  color: #5e6878;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroFinalFix.css | LINEA: 120
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-wizard-page .fmed-wizard-hero-facts article > span
+REGOLE:
+  color: #315f8c;
+  -webkit-text-fill-color: currentColor;
+
+==============================================================================
+4. REGOLE GLOBALI SOSPETTE: COLORE, TEXT-FILL, VISIBILITA E DIMENSIONI
+==============================================================================
+
+FILE: .\src\CoreStandardPage.css | LINEA: 109
+SELETTORE: .core-sync-copy strong
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  font-size: 13px;
+  line-height: 1.1;
+
+FILE: .\src\CoreStandardPage.css | LINEA: 115
+SELETTORE: .core-sync-copy small
+  color: rgba(255, 255, 255, .82);
+  -webkit-text-fill-color: rgba(255, 255, 255, .82);
+  font-size: 12px;
+  line-height: 1.2;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 77
+SELETTORE: /* ============================================================ PULSANTI STANDARD ============================================================ */ html body .fmed-main-content :is( .p0-btn, .fmed-style-primary-btn, .fmed-style-secondary-btn, .fmed-style-save-btn, .fmed-style-cancel-btn, .fmed-style-close-btn, .fmed-style-action-btn-edit, .fmed-style-action-btn-delete, .fmed-generate-code-button, .fmed-workspace-back, .fmed-process-row-open ), html body .fmed-main-content .core-add-value button, html body .fmed-main-content .core-sync-button, html body .fmed-main-content .core-standard-tabs button, html body .fmed-main-content .core-value-actions button, html body .fmed-main-content .core-value-row > button, html body .fmed-main-content .fmed-process-control-bar button, html body .fmed-main-content .fmed-process-module-filter button, html body .fmed-main-content .fmed-process-card-footer button, html body .fmed-main-content .fmed-process-detail > header button, html body .fmed-main-content .fmed-process-detail-section-head button, html body .fmed-main-content .fmed-process-attachment-form button, html body .fmed-main-content .fmed-process-approval-actions button, html body .fmed-main-content .fmed-process-transition-actions button, html body .fmed-main-content .s8108-tabs button, html body .fmed-main-content .s8108-fatal button, html body .fmed-main-content .fmed-audit-actions button, html body .fmed-main-content .fmed-dashboard-panel-header button, html body .fmed-main-content .fmed-operational-automation-strip button, html body .fmed-main-content .fmed-wizard-page button, html body .fmed-main-content .fmed-new-intervention-page button, html body .fmed-main-content :is( .fmed-style-dictionary-chip-save, .fmed-style-dictionary-chip-cancel, .fmed-style-dictionary-chip-edit, .fmed-style-dictionary-chip-remove )
+  display:inline-flex!important;
+  min-height:var(--fmed-ui-button-height)!important;
+  height:var(--fmed-ui-button-height)!important;
+  background:var(--fmed-ui-neutral-soft)!important;
+  color:var(--fmed-ui-neutral-dark)!important;
+  -webkit-text-fill-color:var(--fmed-ui-neutral-dark)!important;
+  font-size:12px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 269
+SELETTORE: /* ============================================================ COLORI SEMANTICI PULSANTI ============================================================ */ /* Primario blu */ html body .fmed-main-content :is( .fmed-style-primary-btn, .fmed-generate-code-button, .fmed-process-row-open, .p0-btn--new, .p0-btn--tools, .p0-btn--infrastructure ), html body .fmed-main-content .core-add-value button, html body .fmed-main-content .core-sync-button:not(:disabled), html body .fmed-main-content .fmed-audit-actions .primary, html body .fmed-main-content .fmed-wizard-actions button:not(.secondary)
+  border-color:var(--fmed-ui-blue-dark)!important;
+  background:var(--fmed-ui-blue)!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 295
+SELETTORE: /* Conferma e apertura verde */ html body .fmed-main-content :is( .fmed-style-save-btn, .p0-btn--excel, .p0-btn--safety ), html body .fmed-main-content .fmed-process-approval-actions button:not(.is-danger)
+  border-color:var(--fmed-ui-green-dark)!important;
+  background:var(--fmed-ui-green)!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 312
+SELETTORE: /* Consultazione / storico */ html body .fmed-main-content :is( .p0-btn--costs, .p0-btn--history, .p0-btn--asset-history )
+  border-color:#315d7c!important;
+  background:#416f90!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 325
+SELETTORE: /* PDF */ html body .fmed-main-content .p0-btn--pdf
+  border-color:var(--fmed-ui-red-dark)!important;
+  background:var(--fmed-ui-red)!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 334
+SELETTORE: /* Neutro */ html body .fmed-main-content :is( .fmed-style-secondary-btn, .fmed-style-cancel-btn, .fmed-style-close-btn, .fmed-workspace-back, .p0-btn--quiet ), html body .fmed-main-content .fmed-wizard-actions .secondary, html body .fmed-main-content .fmed-process-detail > header button
+  border-color:var(--fmed-ui-border)!important;
+  background:var(--fmed-ui-neutral-soft)!important;
+  color:var(--fmed-ui-neutral-dark)!important;
+  -webkit-text-fill-color:var(--fmed-ui-neutral-dark)!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 351
+SELETTORE: /* Pericolo */ html body .fmed-main-content :is( .fmed-style-action-btn-delete, .fmed-style-asset-action-btn-delete ), html body .fmed-main-content .fmed-process-approval-actions .is-danger
+  border-color:var(--fmed-ui-red-dark)!important;
+  background:var(--fmed-ui-red)!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 367
+SELETTORE: /* ============================================================ AZIONI SCHEDA CESPITE ============================================================ */ html body .fmed-main-content .fmed-asset-detail-workspace .fmed-style-asset-action-btn
+  display:grid!important;
+  min-height:44px!important;
+  height:44px!important;
+  background:#f3f7fb!important;
+  color:#244b70!important;
+  -webkit-text-fill-color:#244b70!important;
+  font-size:11px!important;
+  line-height:1.12!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 410
+SELETTORE: html body .fmed-main-content .fmed-asset-detail-workspace .fmed-style-asset-action-btn > span:last-child
+  display:flex!important;
+  color:inherit!important;
+  -webkit-text-fill-color:inherit!important;
+  line-height:1.12!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 459
+SELETTORE: /* Tutte le azioni cespite neutre */ html body .fmed-main-content .fmed-asset-detail-workspace :is( .fmed-style-asset-action-btn-edit, .fmed-style-asset-action-btn-predictive, .fmed-style-asset-action-btn-scan, .fmed-style-asset-action-btn-accessory )
+  border-color:#bdd0e1!important;
+  background:#edf4fa!important;
+  color:#24577f!important;
+  -webkit-text-fill-color:#24577f!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 474
+SELETTORE: /* Nuovo intervento cespite */ html body .fmed-main-content .fmed-asset-detail-workspace .fmed-style-asset-action-btn-primary
+  border-color:var(--fmed-ui-blue-dark)!important;
+  background:var(--fmed-ui-blue)!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 493
+SELETTORE: /* Ritorno */ html body .fmed-main-content .fmed-asset-detail-workspace .fmed-style-asset-action-btn-back
+  border-color:#315d7c!important;
+  background:#416f90!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 512
+SELETTORE: /* Dismissione / eliminazione */ html body .fmed-main-content .fmed-asset-detail-workspace .fmed-style-asset-action-btn-delete
+  border-color:var(--fmed-ui-red-dark)!important;
+  background:var(--fmed-ui-red)!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 744
+SELETTORE: /* Positivo */ html body .fmed-main-content :is( .core-status.active, .s8108-status.success, .fmed-process-status.is-completato )
+  background:var(--fmed-ui-green-soft)!important;
+  color:var(--fmed-ui-green-dark)!important;
+  -webkit-text-fill-color:var(--fmed-ui-green-dark)!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 755
+SELETTORE: /* Attenzione */ html body .fmed-main-content :is( .s8108-status.warning, .fmed-process-status.is-in_attesa )
+  background:var(--fmed-ui-amber-soft)!important;
+  color:var(--fmed-ui-amber)!important;
+  -webkit-text-fill-color:var(--fmed-ui-amber)!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 765
+SELETTORE: /* Pericolo */ html body .fmed-main-content :is( .s8108-status.danger, .core-status.inactive, .fmed-process-status.is-annullato )
+  background:var(--fmed-ui-red-soft)!important;
+  color:var(--fmed-ui-red-dark)!important;
+  -webkit-text-fill-color:var(--fmed-ui-red-dark)!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 776
+SELETTORE: /* Neutro */ html body .fmed-main-content :is( .s8108-status.neutral, .s8108-status.closed, .s8108-cycle.closed )
+  background:#edf1f5!important;
+  color:#53687c!important;
+  -webkit-text-fill-color:#53687c!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 997
+SELETTORE: /* 1 — Apri registro */ html body .fmed-main-content .p0-operations--maintenance .p0-command__actions > :nth-child(1), html body .fmed-main-content .p0-operations--maintenance .p0-command__actions--complete > :nth-child(1)
+  border-color:#1d568c!important;
+  background:#2b6da8!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1010
+SELETTORE: /* 2 — Nuovo intervento */ html body .fmed-main-content .p0-operations--maintenance .p0-command__actions > :nth-child(2), html body .fmed-main-content .p0-operations--maintenance .p0-command__actions--complete > :nth-child(2)
+  border-color:#176440!important;
+  background:#218156!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1023
+SELETTORE: /* 3 — Analizza costi */ html body .fmed-main-content .p0-operations--maintenance .p0-command__actions > :nth-child(3), html body .fmed-main-content .p0-operations--maintenance .p0-command__actions--complete > :nth-child(3)
+  border-color:#365e78!important;
+  background:#477793!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1036
+SELETTORE: /* 4 — PDF */ html body .fmed-main-content .p0-operations--maintenance .p0-command__actions > :nth-child(4), html body .fmed-main-content .p0-operations--maintenance .p0-command__actions--complete > :nth-child(4)
+  border-color:#992f39!important;
+  background:#bd404b!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1049
+SELETTORE: /* 5 — Excel */ html body .fmed-main-content .p0-operations--maintenance .p0-command__actions > :nth-child(5), html body .fmed-main-content .p0-operations--maintenance .p0-command__actions--complete > :nth-child(5)
+  border-color:#165a39!important;
+  background:#217348!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1062
+SELETTORE: /* 6 — Scheda cespite / storico */ html body .fmed-main-content .p0-operations--maintenance .p0-command__actions > :nth-child(6), html body .fmed-main-content .p0-operations--maintenance .p0-command__actions--complete > :nth-child(6)
+  border-color:#c6d3df!important;
+  background:#edf2f6!important;
+  color:#53687b!important;
+  -webkit-text-fill-color:#53687b!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1075
+SELETTORE: /* 7 — Storico completo */ html body .fmed-main-content .p0-operations--maintenance .p0-command__actions > :nth-child(7), html body .fmed-main-content .p0-operations--maintenance .p0-command__actions--complete > :nth-child(7)
+  border-color:#356884!important;
+  background:#417b99!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1088
+SELETTORE: /* 8 — Azzera filtri */ html body .fmed-main-content .p0-operations--maintenance .p0-command__actions > :nth-child(8), html body .fmed-main-content .p0-operations--maintenance .p0-command__actions--complete > :nth-child(8)
+  border-color:#c74650!important;
+  background:#ffffff!important;
+  color:#b3323d!important;
+  -webkit-text-fill-color:#b3323d!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1101
+SELETTORE: /* Disabled realmente leggibile */ html body .fmed-main-content .p0-operations--maintenance .p0-command__actions > :disabled, html body .fmed-main-content .p0-operations--maintenance .p0-command__actions--complete > :disabled
+  border-color:#d7e0e8!important;
+  background:#edf2f6!important;
+  color:#8797a5!important;
+  -webkit-text-fill-color:#8797a5!important;
+  opacity:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1127
+SELETTORE: html body .fmed-main-content .p0-operations--deadline .p0-register-agenda-actions > :nth-child(1)
+  border-color:#1d568c!important;
+  background:#2b6da8!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1136
+SELETTORE: html body .fmed-main-content .p0-operations--deadline .p0-register-agenda-actions > :nth-child(2)
+  border-color:#1d658d!important;
+  background:#2980ad!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1145
+SELETTORE: html body .fmed-main-content .p0-operations--deadline .p0-register-agenda-actions > :nth-child(3)
+  border-color:#657c8e!important;
+  background:#748b9d!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1154
+SELETTORE: html body .fmed-main-content .p0-operations--deadline .p0-register-agenda-actions > :nth-child(4)
+  border-color:#d8b5ba!important;
+  background:#e4c5c9!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1163
+SELETTORE: html body .fmed-main-content .p0-operations--deadline .p0-register-agenda-actions > :nth-child(5)
+  border-color:#c74650!important;
+  background:#ffffff!important;
+  color:#b3323d!important;
+  -webkit-text-fill-color:#b3323d!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1185
+SELETTORE: html body .fmed-main-content .p0-operations--infrastructure .p0-infrastructure-command-bar > :nth-child(1), html body .fmed-main-content .p0-operations--infrastructure .p0-infrastructure-register-toolbar > :nth-child(1)
+  border-color:#1d568c!important;
+  background:#2b6da8!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1197
+SELETTORE: html body .fmed-main-content .p0-operations--infrastructure .p0-infrastructure-command-bar > :nth-child(2), html body .fmed-main-content .p0-operations--infrastructure .p0-infrastructure-register-toolbar > :nth-child(2)
+  border-color:#176440!important;
+  background:#218156!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1209
+SELETTORE: html body .fmed-main-content .p0-operations--infrastructure .p0-infrastructure-command-bar > :nth-child(3), html body .fmed-main-content .p0-operations--infrastructure .p0-infrastructure-register-toolbar > :nth-child(3)
+  border-color:#165a39!important;
+  background:#217348!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1221
+SELETTORE: html body .fmed-main-content .p0-operations--infrastructure .p0-infrastructure-command-bar > :nth-child(4), html body .fmed-main-content .p0-operations--infrastructure .p0-infrastructure-register-toolbar > :nth-child(4)
+  border-color:#17667a!important;
+  background:#24788b!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1243
+SELETTORE: html body .fmed-main-content .p0-operations--safety .p0-safety-command-bar > :nth-child(1)
+  border-color:#176440!important;
+  background:#218156!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1252
+SELETTORE: html body .fmed-main-content .p0-operations--safety .p0-safety-command-bar > :nth-child(2)
+  border-color:#1d568c!important;
+  background:#2b6da8!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1261
+SELETTORE: html body .fmed-main-content .p0-operations--safety .p0-safety-command-bar > :nth-child(3)
+  border-color:#c8d2dc!important;
+  background:#edf1f4!important;
+  color:#647686!important;
+  -webkit-text-fill-color:#647686!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1393
+SELETTORE: /* ============================================================ TITOLI OPERATIVI INTERNI ============================================================ */ html body .fmed-main-content :is( .p0-asset-search-copy h2, .p0-command--maintenance .p0-command__intro h2, .p0-command--deadline .p0-command__intro h2, .p0-command--infrastructure .p0-command__intro h2, .p0-command--safety .p0-command__intro h2, .p0-safety-library > header h2 )
+  color:var(--fmed-inner-title-color)!important;
+  -webkit-text-fill-color:var(--fmed-inner-title-color)!important;
+  font-size:var(--fmed-inner-title-size)!important;
+  line-height:1.08!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1423
+SELETTORE: /* ============================================================ SOPRATTITOLI ============================================================ */ html body .fmed-main-content :is( .p0-asset-search-copy > span, .p0-command--maintenance .p0-kicker, .p0-command--deadline .p0-kicker, .p0-command--infrastructure .p0-kicker, .p0-command--safety .p0-kicker, .p0-safety-library > header .p0-kicker )
+  display:block!important;
+  color:var(--fmed-inner-kicker-color)!important;
+  -webkit-text-fill-color:var(--fmed-inner-kicker-color)!important;
+  font-size:var(--fmed-inner-kicker-size)!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1452
+SELETTORE: /* ============================================================ DESCRIZIONI ============================================================ */ html body .fmed-main-content :is( .p0-asset-search-copy p, .p0-command--safety .p0-command__intro p, .p0-safety-library > header p )
+  display:block!important;
+  color:var(--fmed-inner-muted-color)!important;
+  -webkit-text-fill-color:var(--fmed-inner-muted-color)!important;
+  font-size:var(--fmed-inner-description-size)!important;
+  line-height:1.3!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1594
+SELETTORE: html body .fmed-main-content :is( .p0-command--maintenance, .p0-command--deadline, .p0-command--infrastructure ) > .p0-advanced > summary > span:first-child > b
+  color:var(--fmed-inner-title-color)!important;
+  -webkit-text-fill-color:var(--fmed-inner-title-color)!important;
+  font-size:16px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1614
+SELETTORE: html body .fmed-main-content :is( .p0-command--maintenance, .p0-command--deadline, .p0-command--infrastructure ) > .p0-advanced > summary > span:first-child > small
+  color:var(--fmed-inner-muted-color)!important;
+  -webkit-text-fill-color:var(--fmed-inner-muted-color)!important;
+  font-size:10px!important;
+  line-height:1.2!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1634
+SELETTORE: /* Contatori a destra */ html body .fmed-main-content :is( .p0-advanced__summary, .p0-search__meta )
+  display:inline-flex!important;
+  min-height:32px!important;
+  background:#f1f6fb!important;
+  color:#245f9e!important;
+  -webkit-text-fill-color:#245f9e!important;
+  font-size:9.5px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1751
+SELETTORE: html body .fmed-dashboard-page .fmed-operational-automation-strip strong
+  color:var(--fmed-inner-title-color)!important;
+  -webkit-text-fill-color:var(--fmed-inner-title-color)!important;
+  font-size:11px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1768
+SELETTORE: html body .fmed-dashboard-page .fmed-operational-automation-strip > div > span
+  display:block!important;
+  color:var(--fmed-inner-muted-color)!important;
+  -webkit-text-fill-color:var(--fmed-inner-muted-color)!important;
+  font-size:9px!important;
+  line-height:1.2!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1808
+SELETTORE: html body .fmed-dashboard-page .fmed-operational-section-head h3
+  color:var(--fmed-inner-title-color)!important;
+  -webkit-text-fill-color:var(--fmed-inner-title-color)!important;
+  font-size:var(--fmed-inner-title-size)!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1867
+SELETTORE: html body .fmed-dashboard-page .fmed-dashboard-panel-header h3
+  color:var(--fmed-inner-title-color)!important;
+  -webkit-text-fill-color:var(--fmed-inner-title-color)!important;
+  font-size:var(--fmed-inner-panel-title-size)!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1944
+SELETTORE: html body .fmed-dashboard-page .fmed-dashboard-priority-list > button span:nth-child(2) > strong
+  display:block!important;
+  color:#173b61!important;
+  -webkit-text-fill-color:#173b61!important;
+  font-size:10.5px!important;
+  line-height:1.15!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 1967
+SELETTORE: html body .fmed-dashboard-page .fmed-dashboard-priority-list > button span:nth-child(2) > small
+  display:block!important;
+  color:#657b8f!important;
+  -webkit-text-fill-color:#657b8f!important;
+  font-size:9px!important;
+  line-height:1.15!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2124
+SELETTORE: /* Soprattitolo */ html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-command--deadline .p0-kicker
+  display:block!important;
+  color:#245f9e!important;
+  -webkit-text-fill-color:#245f9e!important;
+  font-size:10px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2142
+SELETTORE: /* Titolo principale */ html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-command--deadline .p0-command__intro h2
+  color:#0d2d50!important;
+  -webkit-text-fill-color:#0d2d50!important;
+  font-size:22px!important;
+  line-height:1.08!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2420
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-head__identity small
+  color:rgba(255,255,255,.90)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.90)!important;
+  font-size:11px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2436
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-head__identity h1
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-size:36px!important;
+  line-height:1.02!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2452
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-head__identity p
+  color:rgba(255,255,255,.88)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.88)!important;
+  font-size:12px!important;
+  line-height:1.3!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2502
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-head__metric strong
+  display:block!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-size:30px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2517
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-head__metric span
+  display:block!important;
+  color:rgba(255,255,255,.90)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.90)!important;
+  font-size:9px!important;
+  line-height:1.1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2569
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) > .fmed-process-usage > strong
+  color:var(--process-blue-dark)!important;
+  -webkit-text-fill-color:var(--process-blue-dark)!important;
+  font-size:11px!important;
+  line-height:1.15!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2596
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) > .fmed-process-usage > div > span
+  display:block!important;
+  color:#405b73!important;
+  -webkit-text-fill-color:#405b73!important;
+  font-size:10.5px!important;
+  line-height:1.3!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2615
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) > .fmed-process-usage > div > span > b
+  color:var(--process-blue-dark)!important;
+  -webkit-text-fill-color:var(--process-blue-dark)!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2626
+SELETTORE: /* ============================================================ VISTA OPERATIVA / ARCHIVIO ============================================================ */ html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) > .fmed-process-message.is-history-switch
+  display:flex!important;
+  min-height:48px!important;
+  background:#fff8df!important;
+  color:#725309!important;
+  -webkit-text-fill-color:#725309!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2671
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) > .fmed-process-message.is-history-switch > button
+  min-height:38px!important;
+  height:38px!important;
+  background:#ffffff!important;
+  color:#315a7d!important;
+  -webkit-text-fill-color:#315a7d!important;
+  font-size:9.5px!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2738
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-control-summary > * > span:first-child
+  color:#526b82!important;
+  -webkit-text-fill-color:#526b82!important;
+  font-size:10px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2752
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-control-summary strong
+  color:var(--process-ink)!important;
+  -webkit-text-fill-color:var(--process-ink)!important;
+  font-size:25px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2765
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-control-summary small
+  color:#56718b!important;
+  -webkit-text-fill-color:#56718b!important;
+  font-size:9.5px!important;
+  line-height:1.15!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2818
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-control-bar label > span
+  color:#526b82!important;
+  -webkit-text-fill-color:#526b82!important;
+  font-size:9.5px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2834
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-control-bar :is(input,select,button)
+  min-height:42px!important;
+  height:42px!important;
+  background:#ffffff!important;
+  color:#243c54!important;
+  -webkit-text-fill-color:#243c54!important;
+  font-size:11px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2860
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-control-bar button
+  display:inline-flex!important;
+  color:#315a7d!important;
+  -webkit-text-fill-color:#315a7d!important;
+  font-size:10px!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2907
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) > .fmed-process-module-filter > button
+  display:inline-flex!important;
+  min-height:34px!important;
+  height:34px!important;
+  background:#f7fafc!important;
+  color:#405d77!important;
+  -webkit-text-fill-color:#405d77!important;
+  font-size:9.5px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 2944
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) > .fmed-process-module-filter > button.is-active
+  border-color:var(--process-blue-dark)!important;
+  background:var(--process-blue)!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3037
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-group-head::-webkit-details-marker
+  display:none!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3064
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-group-head > div > span
+  color:#16749a!important;
+  -webkit-text-fill-color:#16749a!important;
+  font-size:9.5px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3080
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-group-head h3
+  color:var(--process-ink)!important;
+  -webkit-text-fill-color:var(--process-ink)!important;
+  font-size:18px!important;
+  line-height:1.05!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3098
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-group-head > small
+  color:#58718a!important;
+  -webkit-text-fill-color:#58718a!important;
+  font-size:9.5px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3117
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-group-head > i
+  display:grid!important;
+  height:28px!important;
+  background:#e8f3f7!important;
+  color:#17799d!important;
+  -webkit-text-fill-color:#17799d!important;
+  font-size:11px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3231
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-code
+  color:#16799e!important;
+  -webkit-text-fill-color:#16799e!important;
+  font-size:9.5px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3247
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-card h3
+  color:var(--process-ink)!important;
+  -webkit-text-fill-color:var(--process-ink)!important;
+  font-size:18px!important;
+  line-height:1.15!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3266
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-purpose
+  color:#40586f!important;
+  -webkit-text-fill-color:#40586f!important;
+  font-size:11.5px!important;
+  line-height:1.35!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3315
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-guide span
+  color:#52677c!important;
+  -webkit-text-fill-color:#52677c!important;
+  font-size:9.5px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3331
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-guide p
+  color:#314a63!important;
+  -webkit-text-fill-color:#314a63!important;
+  font-size:11px!important;
+  line-height:1.38!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3370
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) :is( .fmed-process-card-flags, .fmed-process-steps ) > span
+  display:inline-flex!important;
+  min-height:26px!important;
+  background:#eaf3f8!important;
+  color:#17779a!important;
+  -webkit-text-fill-color:#17779a!important;
+  font-size:9.5px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3406
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-steps > span > b
+  color:inherit!important;
+  -webkit-text-fill-color:inherit!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3473
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-card-footer > small
+  color:#61778d!important;
+  -webkit-text-fill-color:#61778d!important;
+  font-size:9.5px!important;
+  line-height:1.2!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3490
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-card-footer > button
+  min-height:38px!important;
+  height:38px!important;
+  background:#f5f9fc!important;
+  color:#36556f!important;
+  -webkit-text-fill-color:#36556f!important;
+  font-size:9.5px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3520
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-card-footer > button:not(:disabled)
+  border-color:var(--process-blue-dark)!important;
+  background:var(--process-blue)!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3559
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-history-head h3
+  color:var(--process-ink)!important;
+  -webkit-text-fill-color:var(--process-ink)!important;
+  font-size:18px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 3575
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-history-head p
+  color:var(--process-muted)!important;
+  -webkit-text-fill-color:var(--process-muted)!important;
+  font-size:10px!important;
+  line-height:1.25!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 4010
+SELETTORE: /* Titolo */ html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-history-head h3
+  color:#142f4d!important;
+  -webkit-text-fill-color:#142f4d!important;
+  font-size:18px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 4030
+SELETTORE: /* Descrizione */ html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-history-head p
+  color:#61778b!important;
+  -webkit-text-fill-color:#61778b!important;
+  font-size:10px!important;
+  line-height:1.25!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 4098
+SELETTORE: /* Intestazioni */ html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-table thead th
+  min-height:42px!important;
+  background:#eef5fa!important;
+  color:#45617a!important;
+  -webkit-text-fill-color:#45617a!important;
+  font-size:9.5px!important;
+  line-height:1.15!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 4133
+SELETTORE: /* Celle */ html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-table tbody td
+  min-height:48px!important;
+  background:#ffffff!important;
+  color:#263e56!important;
+  -webkit-text-fill-color:#263e56!important;
+  font-size:10.5px!important;
+  line-height:1.3!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 4191
+SELETTORE: /* Pulsante apertura riga */ html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-table td:last-child button, html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-row-open
+  display:inline-flex!important;
+  min-height:34px!important;
+  height:34px!important;
+  background:#28659f!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-size:9px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedControlStandardSystem.css | LINEA: 4230
+SELETTORE: /* Nessun risultato */ html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-empty
+  min-height:100px!important;
+  background:#fafcfd!important;
+  color:#667b8e!important;
+  -webkit-text-fill-color:#667b8e!important;
+  font-size:11px!important;
+  line-height:1.3!important;
+
+FILE: .\src\FmedDashboardSystem.css | LINEA: 706
+SELETTORE: /* Etichette e testi */ html body .fmed-app-root :is( .fmed-sidebar-wordmark-title, .fmed-sidebar-wordmark-subtitle, .fmed-sidebar-control-label, .fmed-sidebar-group-label, .fmed-sidebar-account-copy, .fmed-sidebar-account-copy strong, .fmed-sidebar-account-copy span, .fmed-sidebar-footer, .fmed-sidebar-footer strong, .fmed-sidebar-footer small )
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedDashboardSystem.css | LINEA: 743
+SELETTORE: /* Testi interni alle voci */ html body .fmed-app-root .fmed-side-menu-btn :is( span, strong, small )
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedGlobalHeaderSystem.css | LINEA: 133
+SELETTORE: /* ------------------------------------------------------------ TITOLI ------------------------------------------------------------ */ html body .fmed-dashboard-page .fmed-dashboard-title h2, html body .fmed-main-content[data-fmed-page="Interventi"] .p0-operations--maintenance .p0-operations__identity h1, html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-operations--deadline .p0-operations__identity h1, html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-operations--infrastructure .p0-operations__identity h1, html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-operations--safety .p0-operations__identity h1
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-size:36px!important;
+  line-height:1.05!important;
+
+FILE: .\src\FmedGlobalHeaderSystem.css | LINEA: 158
+SELETTORE: /* Eyebrow */ html body .fmed-dashboard-page .fmed-dashboard-title > div > span, html body .fmed-main-content[data-fmed-page="Interventi"] .p0-operations--maintenance .p0-operations__identity > div > span, html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-operations--deadline .p0-operations__identity > div > span, html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-operations--infrastructure .p0-operations__identity > div > span, html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-operations--safety .p0-operations__identity > div > span
+  color:rgba(255,255,255,.90)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.90)!important;
+  font-size:11px!important;
+  line-height:1.1!important;
+
+FILE: .\src\FmedGlobalHeaderSystem.css | LINEA: 179
+SELETTORE: /* Sottotitoli */ html body .fmed-dashboard-page .fmed-dashboard-title p, html body .fmed-main-content[data-fmed-page="Interventi"] .p0-operations--maintenance .p0-operations__identity p, html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-operations--deadline .p0-operations__identity p, html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-operations--infrastructure .p0-operations__identity p, html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-operations--safety .p0-operations__identity p
+  color:rgba(255,255,255,.88)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.88)!important;
+  font-size:12px!important;
+  line-height:1.35!important;
+
+FILE: .\src\FmedGlobalHeaderSystem.css | LINEA: 227
+SELETTORE: /* Valore metrica */ html body .fmed-main-content[data-fmed-page="Interventi"] .p0-operations--maintenance .p0-operations__metric strong, html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-operations--deadline .p0-operations__metric strong, html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-operations--infrastructure .p0-operations__metric strong, html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-operations--safety .p0-operations__metric strong
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-size:30px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedGlobalHeaderSystem.css | LINEA: 243
+SELETTORE: /* Etichetta metrica */ html body .fmed-main-content[data-fmed-page="Interventi"] .p0-operations--maintenance .p0-operations__metric span, html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-operations--deadline .p0-operations__metric span, html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-operations--infrastructure .p0-operations__metric span, html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-operations--safety .p0-operations__metric span
+  color:rgba(255,255,255,.90)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.90)!important;
+  font-size:9px!important;
+  line-height:1.15!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 55
+SELETTORE: /* ============================================================ TESTATA INFRASTRUTTURE ============================================================ */ /* Tutti i testi realmente bianchi */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-operations__head, html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-operations__head *, html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-operations__head :is( div,span,p,h1,h2,h3,strong,small,b )
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 465
+SELETTORE: /* Nuova infrastruttura */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-command--infrastructure .p0-btn--infrastructure
+  display:inline-flex!important;
+  height:48px!important;
+  min-height:48px!important;
+  background:#08795a!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-size:11px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 506
+SELETTORE: /* Elimina la lente separata */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-command--infrastructure .p0-search__mark
+  display:none!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 590
+SELETTORE: html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-command--infrastructure .p0-advanced > summary::-webkit-details-marker
+  display:none!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 619
+SELETTORE: /* Quando chiuso elimina completamente lo spazio vuoto */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-command--infrastructure .p0-advanced:not([open]) .p0-filter-grid
+  display:none!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 692
+SELETTORE: /* Aggiorna dati */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-command--infrastructure .p0-command__actions > .p0-btn:first-child
+  border-color:#176fa3!important;
+  background:#287fb0!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 702
+SELETTORE: /* Azzera filtri */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-command--infrastructure .p0-command__actions > .p0-btn:last-child
+  border-color:#cf3340!important;
+  background:#cf3340!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 1054
+SELETTORE: html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-command--infrastructure .p0-advanced > summary::-webkit-details-marker
+  display:none!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 1876
+SELETTORE: /* Aggiornamento: blu */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-infrastructure-command-bar__refresh
+  border-color:#176e9e!important;
+  background:#287faf!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 1885
+SELETTORE: /* Nuova infrastruttura: verde principale */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-infrastructure-command-bar__new
+  border-color:#076d51!important;
+  background:#087f5e!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 1894
+SELETTORE: /* Excel: verde scuro distinto */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-infrastructure-command-bar__excel
+  border-color:#145d42!important;
+  background:#1d704f!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 1903
+SELETTORE: /* Azzera: rosso */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-infrastructure-command-bar__reset
+  border-color:#bd2d39!important;
+  background:#cf3541!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 1912
+SELETTORE: /* Stato disabilitato coerente */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-infrastructure-command-bar > .p0-btn:disabled
+  border-color:#b6c9c2!important;
+  background:#c5d3ce!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 1981
+SELETTORE: /* Apri patrimonio: petrolio */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-infrastructure-command-bar__open
+  border-color:#075c65!important;
+  background:#087681!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 1990
+SELETTORE: /* ============================================================ PAGINA PRINCIPALE: NESSUNA TABELLA ============================================================ */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-operations--infrastructure:not(.is-infrastructure-register-open) > .p0-register
+  display:none!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 2017
+SELETTORE: /* Nasconde testata, KPI, ricerca e filtri nella vista dedicata */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-operations--infrastructure.is-infrastructure-register-open > :is( .p0-operations__head, .p0-metric-strip, .p0-command--infrastructure )
+  display:none!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 2099
+SELETTORE: /* Chiudi patrimonio */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-infrastructure-register-close
+  display:inline-flex!important;
+  height:50px!important;
+  min-height:50px!important;
+  background:#cf3541!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-size:11px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 2545
+SELETTORE: html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-infrastructure-register-toolbar > .p0-btn
+  display:inline-flex!important;
+  height:50px!important;
+  min-height:50px!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-size:10px!important;
+  line-height:1!important;
+
+FILE: .\src\FmedInfrastruttureSystem.css | LINEA: 2603
+SELETTORE: /* Disabilitati */ html body .fmed-main-content[data-fmed-page="Infrastrutture"] .p0-infrastructure-register-toolbar > .p0-btn:disabled
+  border-color:#bcc9c5!important;
+  background:#c8d2cf!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+
+FILE: .\src\FmedProcessWorkspaceSystem.css | LINEA: 337
+SELETTORE: html body .fmed-main-content .fmed-process-page:not(.is-workspace-open) .fmed-process-table td:last-child button
+  min-height:34px!important;
+  height:34px!important;
+  background:var(--proc-blue)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:8px!important;
+
+FILE: .\src\FmedProcessWorkspaceSystem.css | LINEA: 417
+SELETTORE: html body .fmed-main-content .fmed-process-create-page > .fmed-process-form-surface > header :is(span,h3,p)
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+
+FILE: .\src\FmedProcessWorkspaceSystem.css | LINEA: 449
+SELETTORE: html body .fmed-main-content .fmed-process-create-page .fmed-process-form-close
+  min-height:38px!important;
+  height:38px!important;
+  background:rgba(255,255,255,.13)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+
+FILE: .\src\FmedProcessWorkspaceSystem.css | LINEA: 652
+SELETTORE: html body .fmed-main-content .fmed-process-detail-page > .fmed-process-detail > header :is(span,h3,p)
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+
+FILE: .\src\FmedProcessWorkspaceSystem.css | LINEA: 667
+SELETTORE: html body .fmed-main-content .fmed-process-detail-page > .fmed-process-detail > header button
+  min-height:38px!important;
+  height:38px!important;
+  background:rgba(255,255,255,.13)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 60
+SELETTORE: /* Qualsiasi testo della testata diventa realmente bianco */ html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-operations__head, html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-operations__head *, html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-operations__head :is( span,div,p,h1,h2,h3,strong,small,b )
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 320
+SELETTORE: html body .fmed-main-content[data-fmed-page="Scadenze"] details.p0-advanced > summary::-webkit-details-marker
+  display:none!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 649
+SELETTORE: /* 1 — Apri agenda */ html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-command__actions > .p0-btn:nth-child(1)
+  border-color:#a81451!important;
+  background:#b2185a!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 658
+SELETTORE: /* 2 — Seleziona visibili */ html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-command__actions > .p0-btn:nth-child(2)
+  border-color:#176b9d!important;
+  background:#237caf!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 667
+SELETTORE: /* 3 — Deseleziona */ html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-command__actions > .p0-btn:nth-child(3)
+  border-color:#536c82!important;
+  background:#647d92!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 676
+SELETTORE: /* 4 — PDF */ html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-command__actions > .p0-btn:nth-child(4)
+  border-color:#b92c38!important;
+  background:#cc3944!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 685
+SELETTORE: /* 5 — Azzera filtri */ html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-command__actions > .p0-btn:nth-child(5)
+  border-color:#d02f3c!important;
+  background:#ffffff!important;
+  color:#c32633!important;
+  -webkit-text-fill-color:#c32633!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 694
+SELETTORE: /* Pulsante disabilitato sempre leggibile */ html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-command__actions > .p0-btn:disabled
+  border-color:#d6b2b8!important;
+  background:#d9a5ac!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 887
+SELETTORE: html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-register td:last-child .p0-btn
+  display:inline-flex!important;
+  height:46px!important;
+  min-height:46px!important;
+  background:#b51d59!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-size:10px!important;
+  line-height:1!important;
+  opacity:1!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 1145
+SELETTORE: /* SCADENZE HOME TESTO GRANDE END */ /* SCADENZE AGENDA STRUTTURA UNICA START */ /* ============================================================ MODALITÀ AGENDA: NASCONDE SOLO LA HOME ============================================================ */ html body .fmed-main-content[data-fmed-page="Scadenze"]:has(.p0-register) .p0-operations--deadline > :is( .p0-operations__head, .fmed-module-hero-scadenze, .p0-metric-strip, .p0-command--deadline )
+  display:none!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 1163
+SELETTORE: html body .fmed-main-content[data-fmed-page="Scadenze"]:has(.p0-register) > :is( .fmed-operational4-expired-toolbar, .fmed-operational8-expired-toolbar )
+  display:none!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 1337
+SELETTORE: html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-register-agenda-actions__select
+  background:#267caf!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 1345
+SELETTORE: html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-register-agenda-actions__clear
+  background:#647d92!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 1353
+SELETTORE: html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-register-agenda-actions__pdf
+  background:#cb3743!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 1361
+SELETTORE: html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-register-agenda-actions__pdf:disabled
+  border-color:#d6a3aa!important;
+  background:#d6a3aa!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 1518
+SELETTORE: /* Elimina qualunque spazio artificiale */ html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-register::before, html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-register::after, html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-table-wrap::before, html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-table-wrap::after
+  display:none!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 1595
+SELETTORE: /* Excel */ html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-register-agenda-actions__excel
+  background:#1d8a62!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 1605
+SELETTORE: html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-register-agenda-actions__excel:disabled
+  border-color:#a9cabc!important;
+  background:#a9cabc!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 1850
+SELETTORE: /* Excel verde, accanto a PDF */ html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-register-agenda-actions__excel
+  background:#1d8a62!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 1865
+SELETTORE: html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-register-agenda-actions__excel:disabled
+  border-color:#a9cabc!important;
+  background:#a9cabc!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+
+FILE: .\src\FmedScadenzeSystem.css | LINEA: 1874
+SELETTORE: /* Impedisce che il pulsante Excel appaia fuori dalla barra */ html body .fmed-main-content[data-fmed-page="Scadenze"] .p0-register > .p0-register-agenda-actions__excel
+  display:none!important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 772
+SELETTORE: /* ----------------------------- Buttons ----------------------------- */ .fmed-app-root.fmed-shell-premium .fmed-main-content :is( .fmed-btn-primary,.fmed-dashboard-button-primary,.core-primary-button,.fmed-login-submit, .s8108-btn.primary,.fmed-canonical-save )
+  min-height: var(--fmed-control-h);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--fmed-primary) 88%, #fff), var(--fmed-primary-strong));
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  font-size: 12.5px;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 790
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content :is( .fmed-btn-secondary,.fmed-dashboard-button-secondary,.s8108-btn,.fmed-canonical-cancel, .fmed-dashboard-reset,.fmed-operational8-open-list-btn )
+  min-height: var(--fmed-control-h);
+  background: var(--fmed-surface);
+  color: var(--fmed-text);
+  -webkit-text-fill-color: currentColor;
+  font-size: 12.5px;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 820
+SELETTORE: /* ----------------------------- Forms ----------------------------- */ .fmed-app-root.fmed-shell-premium .fmed-main-content :is(input,select,textarea)
+  min-height: var(--fmed-control-h);
+  background: var(--fmed-surface);
+  color: var(--fmed-text);
+  -webkit-text-fill-color: currentColor;
+  font-size: 13px;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 958
+SELETTORE: /* ----------------------------- Pagine operative secondarie ----------------------------- */ .fmed-app-root.fmed-shell-premium .fmed-main-content[data-fmed-workspace-open="true"] > :not(.fmed-workspace-page), .fmed-app-root.fmed-shell-premium :is( .fmed-dashboard-page, .fmed-asset-page, .fmed-process-page, .fmed-infrastructure-root ).is-workspace-open > :not(.fmed-workspace-page)
+  display: none;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 1563
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 2726
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content :is(button,a,input,select,textarea)
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 3768
+SELETTORE: .fmed-app-root.fmed-shell-premium :is( .fmed-module-hero, .fmed-process-head, .core-standard-head, .fmed-settings-head, .fmed-audit-head, .fmed-costi-hero, .fmed-report-hero ) :is(h1, h2, h3, strong)
+  color: #ffffff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 3781
+SELETTORE: .fmed-app-root.fmed-shell-premium :is( .fmed-module-hero, .fmed-process-head, .core-standard-head, .fmed-settings-head, .fmed-audit-head, .fmed-costi-hero, .fmed-report-hero ) :is(p, span, small, em)
+  color: rgba(255, 255, 255, .88);
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 3813
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-module-hero-metric :is(strong, span, small)
+  color: #ffffff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 3879
+SELETTORE: .fmed-app-root.fmed-shell-premium :is( .fmed-operational-kpi-card, .fmed-dashboard-kpi-card, .fmed-summary-card, .fmed-stat-card, [class*="kpi-card"] ) :is(strong, [class*="value"])
+  color: var(--r0-ink);
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 3891
+SELETTORE: .fmed-app-root.fmed-shell-premium :is( .fmed-operational-kpi-card, .fmed-dashboard-kpi-card, .fmed-summary-card, .fmed-stat-card, [class*="kpi-card"] ) :is(span, small, em, [class*="label"], [class*="hint"])
+  color: var(--r0-muted);
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 4024
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content :is( .fmed-primary-btn, .fmed-btn-primary, .fmed-action-primary, .fmed-style-primary-btn, button[class*="primary"], button[class*="save"] )
+  border-color: transparent;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--r0-accent-deep, #244a73), var(--r0-accent, #315f8c));
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5018
+SELETTORE: .p0-smart-row span
+  display: none;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5036
+SELETTORE: .p0-advanced summary small, .p0-advanced__summary
+  display: none;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5244
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-dashboard-page .fmed-dashboard-title h2
+  color: #07192f;
+  -webkit-text-fill-color: currentColor;
+  font-size: clamp(27px, 2.15vw, 36px);
+  line-height: 1.04;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5273
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content .fmed-dashboard-page .fmed-dashboard-header .fmed-dashboard-live
+  display: inline-flex;
+  min-height: 40px;
+  color: #123624;
+  -webkit-text-fill-color: currentColor;
+  background: #e9f8ef;
+  font-size: 12px;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5298
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content .fmed-dashboard-page .fmed-dashboard-header .fmed-dashboard-header-actions button
+  min-height: 40px;
+  color: #07192f;
+  -webkit-text-fill-color: currentColor;
+  background: rgba(255,255,255,.78);
+  font-size: 12px;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5317
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content .fmed-dashboard-page .fmed-dashboard-header .fmed-dashboard-header-actions button:disabled
+  border-color: #c8d4e1;
+  color: #5b6878;
+  -webkit-text-fill-color: currentColor;
+  background: rgba(255,255,255,.62);
+  opacity: 1;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5325
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content .fmed-dashboard-page .fmed-dashboard-header .fmed-dashboard-header-actions .fmed-dashboard-button-primary
+  border-color: #7da5d4;
+  color: #07192f;
+  -webkit-text-fill-color: currentColor;
+  background: #d6e8ff;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5483
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-style-asset-hero-card :is( .fmed-style-asset-hero-label, .fmed-style-asset-hero-code, h1,h2,h3,p,span,strong,small )
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5663
+SELETTORE: .fmed-app-root.fmed-shell-premium :is( .fmed-intervention-form-header, .fmed-new-intervention-header, .fmed-edit-intervention-header ) :is(h1,h2,h3,p,span,strong,small)
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5718
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-wizard-page :is( .fmed-wizard-header, .new-asset-wizard-header, [class*="wizard-hero"] ) :is(h1,h2,h3,p,span,strong,small)
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5757
+SELETTORE: .fmed-app-root.fmed-shell-premium :is(.core-standard-head,.fmed-audit-head) :is(h1,h2,h3,p,span,strong,small)
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5793
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-costi-hero :is(h1,h2,h3,p,span,strong,small)
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5828
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-report-hero :is(h1,h2,h3,p,span,strong,small)
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 5866
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-sharepoint-page :is( .fmed-sharepoint-head, .fmed-sharepoint-hero ) :is(h1,h2,h3,p,span,strong,small)
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 7759
+SELETTORE: .fmed-app-root.fmed-shell-premium .p0-asset-searchbar > span
+  display: none;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 8361
+SELETTORE: .fmed-app-root.fmed-shell-premium .is-predictive-page .fmed-style-predictive-header>span
+  display:none!important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 9287
+SELETTORE: html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-safety-site > header a
+  color:#604900 !important;
+  -webkit-text-fill-color:#604900 !important;
+  font-size:7px !important;
+  line-height:1 !important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 9387
+SELETTORE: /* COMANDO APRI */ html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-safety-categories :is(a,small)
+  color:#604900 !important;
+  -webkit-text-fill-color:#604900 !important;
+  font-size:7px !important;
+  line-height:1 !important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 9549
+SELETTORE: /* APRI SHAREPOINT: BIANCO, APERTURA ESTERNA */ html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-safety-command-bar__sharepoint
+  background:#ffffff !important;
+  color:#6b5000 !important;
+  -webkit-text-fill-color:#6b5000 !important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 9562
+SELETTORE: /* AGGIORNA INDICE: BLU, SINCRONIZZAZIONE DATI */ html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-safety-command-bar__refresh
+  background:#2f7fb5 !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 9575
+SELETTORE: /* AZZERA FILTRI: GRIGIO, AZIONE NEUTRA */ html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-safety-command-bar__reset
+  background:#68737d !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 9620
+SELETTORE: /* FINE SICUREZZA 81/08 - BARRA COMANDI AFFIANCATA DEFINITIVA */ /* SICUREZZA 81/08 - FIX TESTO PULSANTE APRI */ html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-safety-doc__actions a, html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-safety-doc__actions a span, html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-safety-doc__actions .p0-btn-primary, html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-safety-doc__actions .is-primary, html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-safety-doc__actions button:first-child
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 9874
+SELETTORE: /* FINE SICUREZZA 81/08 - TITOLI ARCHIVIO E MAPPA DOCUMENTALE V1 */ /* SICUREZZA 81/08 - PULSANTE SHAREPOINT VERDE */ html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-safety-command-bar__sharepoint
+  background:#0b8f65 !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 9890
+SELETTORE: html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-safety-command-bar__sharepoint:hover
+  border-color:#066b4c !important;
+  background:#087a57 !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 9899
+SELETTORE: html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-safety-command-bar__sharepoint, html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"] .p0-safety-command-bar__sharepoint *
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 9953
+SELETTORE: /* Marchio e testi sidebar */ html body .fmed-app-root.fmed-shell-premium > aside :is( .fmed-sidebar-wordmark-title, .fmed-sidebar-wordmark-subtitle, .fmed-sidebar-control-label, .fmed-sidebar-account-copy strong, .fmed-sidebar-account-copy span )
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 10080
+SELETTORE: /* Testi Dashboard */ html body .fmed-app-root.fmed-shell-premium .fmed-main-content .fmed-dashboard-header :is( h1,h2,h3,p, .fmed-dashboard-title, .fmed-dashboard-title *, .fmed-dashboard-live )
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 10094
+SELETTORE: /* Testi hero dei moduli */ html body .fmed-app-root.fmed-shell-premium .fmed-main-content .fmed-module-hero :is( .fmed-module-hero-heading, .fmed-module-hero-copy, .fmed-module-hero-eyebrow, .fmed-module-hero-title, .fmed-module-hero-subtitle, .fmed-module-hero-metric, .fmed-module-hero-metric-value, .fmed-module-hero-metric-label, .fmed-module-hero-metric-sub )
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 10113
+SELETTORE: /* Compatibilità con le classi visuali specifiche esistenti */ html body .fmed-app-root.fmed-shell-premium .fmed-main-content .fmed-module-hero [class*="fmed-style-"], html body .fmed-app-root.fmed-shell-premium .fmed-main-content .fmed-module-hero [class*="fmed-style-"] *
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+
+FILE: .\src\FmedUnifiedVisualSystem.css | LINEA: 10126
+SELETTORE: /* Testata Sicurezza e altre pagine p0 */ html body .fmed-app-root.fmed-shell-premium .fmed-main-content .p0-operations__head :is( .p0-operations__identity, .p0-operations__identity *, .p0-operations__metric, .p0-operations__metric * )
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+
+FILE: .\src\FmedVisualClean.css | LINEA: 767
+SELETTORE: /* ----------------------------- Buttons ----------------------------- */ .fmed-app-root.fmed-shell-premium .fmed-main-content :is( .fmed-btn-primary,.fmed-dashboard-button-primary,.core-primary-button,.fmed-login-submit, .s8108-btn.primary,.fmed-canonical-save )
+  min-height: var(--fmed-control-h);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--fmed-primary) 88%, #fff), var(--fmed-primary-strong));
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  font-size: 12.5px;
+
+FILE: .\src\FmedVisualClean.css | LINEA: 785
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content :is( .fmed-btn-secondary,.fmed-dashboard-button-secondary,.s8108-btn,.fmed-canonical-cancel, .fmed-dashboard-reset,.fmed-operational8-open-list-btn )
+  min-height: var(--fmed-control-h);
+  background: var(--fmed-surface);
+  color: var(--fmed-text);
+  -webkit-text-fill-color: currentColor;
+  font-size: 12.5px;
+
+FILE: .\src\FmedVisualClean.css | LINEA: 815
+SELETTORE: /* ----------------------------- Forms ----------------------------- */ .fmed-app-root.fmed-shell-premium .fmed-main-content :is(input,select,textarea)
+  min-height: var(--fmed-control-h);
+  background: var(--fmed-surface);
+  color: var(--fmed-text);
+  -webkit-text-fill-color: currentColor;
+  font-size: 13px;
+
+FILE: .\src\FmedVisualClean.css | LINEA: 953
+SELETTORE: /* ----------------------------- Pagine operative secondarie ----------------------------- */ .fmed-app-root.fmed-shell-premium .fmed-main-content[data-fmed-workspace-open="true"] > :not(.fmed-workspace-page), .fmed-app-root.fmed-shell-premium :is( .fmed-dashboard-page, .fmed-asset-page, .fmed-process-page, .fmed-infrastructure-root ).is-workspace-open > :not(.fmed-workspace-page)
+  display: none;
+
+FILE: .\src\FmedVisualClean.css | LINEA: 1558
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\FmedVisualClean.css | LINEA: 2721
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content :is(button,a,input,select,textarea)
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\pages\OperationsPointZero.css | LINEA: 259
+SELETTORE: .p0-smart-row span
+  display: none;
+
+FILE: .\src\pages\OperationsPointZero.css | LINEA: 277
+SELETTORE: .p0-advanced summary small, .p0-advanced__summary
+  display: none;
+
+FILE: .\src\PointZeroCompatibility.css | LINEA: 260
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-style-asset-hero-card :is( .fmed-style-asset-hero-label, .fmed-style-asset-hero-code, h1,h2,h3,p,span,strong,small )
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroCompatibility.css | LINEA: 440
+SELETTORE: .fmed-app-root.fmed-shell-premium :is( .fmed-intervention-form-header, .fmed-new-intervention-header, .fmed-edit-intervention-header ) :is(h1,h2,h3,p,span,strong,small)
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroCompatibility.css | LINEA: 495
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-wizard-page :is( .fmed-wizard-header, .new-asset-wizard-header, [class*="wizard-hero"] ) :is(h1,h2,h3,p,span,strong,small)
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroCompatibility.css | LINEA: 534
+SELETTORE: .fmed-app-root.fmed-shell-premium :is(.core-standard-head,.fmed-audit-head) :is(h1,h2,h3,p,span,strong,small)
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroCompatibility.css | LINEA: 570
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-costi-hero :is(h1,h2,h3,p,span,strong,small)
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroCompatibility.css | LINEA: 605
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-report-hero :is(h1,h2,h3,p,span,strong,small)
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroCompatibility.css | LINEA: 643
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-sharepoint-page :is( .fmed-sharepoint-head, .fmed-sharepoint-hero ) :is(h1,h2,h3,p,span,strong,small)
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroFinalFix.css | LINEA: 65
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-process-page .fmed-process-head__identity :is( small, span:first-child )
+  color: rgba(255,255,255,.82);
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroFinalFix.css | LINEA: 103
+SELETTORE: /* Wizard Nuovo Asset: le tre schede informative non devono ereditare il testo bianco della testata quando sono visualizzate su superficie chiara. */ .fmed-app-root.fmed-shell-premium .fmed-wizard-page .fmed-wizard-hero-facts article
+  color: #10233f;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroFinalFix.css | LINEA: 110
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-wizard-page .fmed-wizard-hero-facts article strong
+  color: #10233f;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroFinalFix.css | LINEA: 115
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-wizard-page .fmed-wizard-hero-facts article small
+  color: #5e6878;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroFinalFix.css | LINEA: 120
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-wizard-page .fmed-wizard-hero-facts article > span
+  color: #315f8c;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroPolish.css | LINEA: 1
+SELETTORE: /* * FMED REV0 · Punto 0 · rifinitura visiva finale * Corregge contrasto, densità, allineamenti e overflow rilevati dal collaudo * browser a 1366×768, 1536×864 e 1920×1080. */ /* Testate colorate: contrasto assoluto e gerarchia coerente. */ .fmed-app-root.fmed-shell-premium .p0-asset-hero :is(h1,h2,h3,p,span,small,strong), .fmed-app-root.fmed-shell-premium .p0-operations__head :is(h1,h2,h3,p,span,small,strong), .fmed-app-root.fmed-shell-premium .p0-governance__head :is(h1,h2,h3,p,span,small,strong), .fmed-app-root.fmed-shell-premium .fmed-process-head :is(h1,h2,h3,p,span,small,strong)
+  color: #ffffff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroPolish.css | LINEA: 15
+SELETTORE: .fmed-app-root.fmed-shell-premium .p0-asset-hero > div > span, .fmed-app-root.fmed-shell-premium .p0-operations__identity > div > span, .fmed-app-root.fmed-shell-premium .p0-governance__head > div > div > span, .fmed-app-root.fmed-shell-premium .fmed-process-head__identity small
+  color: rgba(255,255,255,.82);
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroPolish.css | LINEA: 88
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-dashboard-page .fmed-dashboard-title :is(h2,p), .fmed-app-root.fmed-shell-premium .fmed-dashboard-page .fmed-dashboard-live
+  color: #ffffff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroPolish.css | LINEA: 435
+SELETTORE: .fmed-app-root.fmed-shell-premium .p0-governance--catalogs .core-standard-head :is(h1,h2,h3,p,span,small,strong)
+  color: #10233f;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\PointZeroPolish.css | LINEA: 444
+SELETTORE: .fmed-app-root.fmed-shell-premium .p0-governance--catalogs .core-standard-head [class*="kicker"], .fmed-app-root.fmed-shell-premium .p0-governance--catalogs .core-standard-head > div > span
+  color: #c52e67;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\Regola0VisualSystem.css | LINEA: 182
+SELETTORE: .fmed-app-root.fmed-shell-premium :is( .fmed-dashboard-header, .fmed-module-hero, .fmed-process-head, .core-standard-head, .fmed-settings-head, .fmed-audit-head, .fmed-costi-hero, .fmed-report-hero ) :is(h1, h2, h3, strong)
+  color: #ffffff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\Regola0VisualSystem.css | LINEA: 196
+SELETTORE: .fmed-app-root.fmed-shell-premium :is( .fmed-dashboard-header, .fmed-module-hero, .fmed-process-head, .core-standard-head, .fmed-settings-head, .fmed-audit-head, .fmed-costi-hero, .fmed-report-hero ) :is(p, span, small, em)
+  color: rgba(255, 255, 255, .88);
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\Regola0VisualSystem.css | LINEA: 229
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-module-hero-metric :is(strong, span, small)
+  color: #ffffff;
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\Regola0VisualSystem.css | LINEA: 295
+SELETTORE: .fmed-app-root.fmed-shell-premium :is( .fmed-operational-kpi-card, .fmed-dashboard-kpi-card, .fmed-summary-card, .fmed-stat-card, [class*="kpi-card"] ) :is(strong, [class*="value"])
+  color: var(--r0-ink);
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\Regola0VisualSystem.css | LINEA: 307
+SELETTORE: .fmed-app-root.fmed-shell-premium :is( .fmed-operational-kpi-card, .fmed-dashboard-kpi-card, .fmed-summary-card, .fmed-stat-card, [class*="kpi-card"] ) :is(span, small, em, [class*="label"], [class*="hint"])
+  color: var(--r0-muted);
+  -webkit-text-fill-color: currentColor;
+
+FILE: .\src\Regola0VisualSystem.css | LINEA: 440
+SELETTORE: .fmed-app-root.fmed-shell-premium .fmed-main-content :is( .fmed-primary-btn, .fmed-btn-primary, .fmed-action-primary, .fmed-style-primary-btn, button[class*="primary"], button[class*="save"] )
+  border-color: transparent;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--r0-accent-deep, #244a73), var(--r0-accent, #315f8c));
+
+==============================================================================
+5. VERIFICA DEL BLOCCO INSERITO
+==============================================================================
+Marker START: 1
+Marker END  : 1
+Dimensione NewAssetWizard.css: 13906 byte

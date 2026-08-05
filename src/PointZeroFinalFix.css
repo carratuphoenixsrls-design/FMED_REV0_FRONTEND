@@ -1,0 +1,110 @@
+/*
+ * FMED REV0 · Punto 0 · correzioni finali bloccanti
+ * Derivate dal collaudo browser reale a 1366×768, 1536×864 e 1920×1080.
+ * Nessuna logica, API o funzione viene modificata.
+ */
+
+/* Scheda cespite: tutti i gruppi e pannelli devono usare la larghezza reale
+   dell’ispettore, senza compressioni, ritagli o scroll annidati. */
+.fmed-app-root.fmed-shell-premium .fmed-asset-detail-workspace .fmed-style-asset-actions-grouped {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-asset-detail-workspace .fmed-style-asset-actions-group-block {
+  width: 100%;
+  min-width: 0;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-asset-detail-workspace .fmed-asset-detail-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-asset-detail-workspace :is(
+  .fmed-asset-detail-grid > div,
+  .fmed-predictive-column
+) {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-asset-detail-workspace .fmed-style-asset-actions-panel {
+  flex: 0 0 auto;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-asset-detail-workspace :is(
+  .fmed-style-asset-hero-card,
+  .fmed-style-asset-kpi-ribbon,
+  .fmed-asset-detail-grid
+) {
+  flex: 0 0 auto;
+}
+
+/* Processi: il track della griglia non può espandersi oltre il viewport utile. */
+.fmed-app-root.fmed-shell-premium .fmed-process-page {
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-process-page > :is(
+  header,
+  aside,
+  section,
+  div,
+  details
+) {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-process-page .fmed-process-head__identity :is(
+  small,
+  span:first-child
+) {
+  color: rgba(255,255,255,.82);
+  -webkit-text-fill-color: currentColor;
+}
+
+/* Pulsanti di azione: colore e testo devono restare leggibili anche dopo
+   gli override visuali generali caricati per ultimi. */
+.fmed-app-root.fmed-shell-premium .p0-operations--maintenance .p0-btn.p0-btn--maintenance {
+  border-color: #a85604;
+  background: #a85604;
+  color: #ffffff;
+  -webkit-text-fill-color: currentColor;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-operations--deadline .p0-btn.p0-btn--deadline {
+  border-color: #a91e4d;
+  background: #a91e4d;
+  color: #ffffff;
+  -webkit-text-fill-color: currentColor;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-operations--infrastructure .p0-btn.p0-btn--infrastructure {
+  border-color: #5b35b2;
+  background: #5b35b2;
+  color: #ffffff;
+  -webkit-text-fill-color: currentColor;
+}
+
+.fmed-app-root.fmed-shell-premium .p0-operations--safety .p0-btn.p0-btn--safety {
+  border-color: #8a6400;
+  background: #8a6400;
+  color: #ffffff;
+  -webkit-text-fill-color: currentColor;
+}
+/* Codice cespite nel pannello azioni: contrasto pieno su fondo chiaro. */
+.fmed-app-root.fmed-shell-premium .fmed-asset-detail-workspace .fmed-style-asset-actions-code {
+  color: #2a507d;
+  -webkit-text-fill-color: currentColor;
+  background: #f7f9fc;
+  border-color: #cbd8e7;
+}

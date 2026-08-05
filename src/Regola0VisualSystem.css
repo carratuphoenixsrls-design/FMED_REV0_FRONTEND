@@ -1,0 +1,745 @@
+/*
+ * FMED REV0 · REGOLA 0 · Visual System integrale
+ *
+ * Strato esclusivamente grafico applicato dopo gli stili stabili.
+ * Non modifica DOM, stato, API, permessi, routing o logica applicativa.
+ * Obiettivo: un'unica identità visiva coerente per pagine primarie,
+ * secondarie e terziarie, mantenendo intatti tutti i contratti funzionali.
+ */
+
+.fmed-app-root.fmed-shell-premium {
+  --r0-ink: #101b2d;
+  --r0-ink-soft: #273a55;
+  --r0-muted: #687b93;
+  --r0-line: #d5e0ec;
+  --r0-line-strong: #bccbdd;
+  --r0-canvas: #eef3f8;
+  --r0-surface: #ffffff;
+  --r0-surface-soft: #f6f9fc;
+  --r0-shadow: 0 18px 48px rgba(16, 42, 76, .10);
+  --r0-shadow-soft: 0 8px 24px rgba(16, 42, 76, .075);
+  --r0-radius-xl: 24px;
+  --r0-radius-lg: 18px;
+  --r0-radius-md: 13px;
+  --r0-radius-sm: 9px;
+  --r0-transition: .18s ease;
+  color: var(--r0-ink);
+  background: var(--r0-canvas);
+}
+
+/* --------------------------------------------------------------------------
+   1. Shell, sidebar e contenuto principale
+   -------------------------------------------------------------------------- */
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content {
+  background:
+    radial-gradient(circle at 92% 0%, rgba(59, 130, 246, .08), transparent 28%),
+    linear-gradient(180deg, #f6f9fc 0%, var(--r0-canvas) 100%);
+}
+
+.fmed-app-root.fmed-shell-premium aside.fmed-side-rail,
+body[data-theme="light"] .fmed-app-root.fmed-shell-premium aside.fmed-side-rail {
+  background:
+    radial-gradient(circle at 15% 100%, rgba(67, 170, 203, .13), transparent 32%),
+    linear-gradient(180deg, #19314f 0%, #12263f 52%, #0d1b2f 100%);
+  border-right: 1px solid rgba(197, 224, 239, .14);
+  box-shadow: 14px 0 40px rgba(5, 22, 42, .15);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn {
+  min-height: 38px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  transition:
+    background var(--r0-transition),
+    border-color var(--r0-transition),
+    transform var(--r0-transition),
+    color var(--r0-transition);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn:hover {
+  border-color: color-mix(in srgb, var(--menu-accent, #8da1b7) 30%, transparent);
+  background: color-mix(in srgb, var(--menu-accent, #8da1b7) 10%, transparent);
+  transform: translateX(1px);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn.is-active {
+  border-color: color-mix(in srgb, var(--menu-accent, #8da1b7) 55%, transparent);
+  background:
+    linear-gradient(90deg,
+      color-mix(in srgb, var(--menu-accent, #8da1b7) 22%, transparent),
+      color-mix(in srgb, var(--menu-accent, #8da1b7) 8%, transparent));
+  box-shadow: inset 3px 0 0 var(--menu-accent, #8da1b7);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-icon {
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-sidebar-group-label {
+  color: #88a9ba;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .075em;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-sidebar-account {
+  border: 1px solid rgba(196, 221, 235, .13);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, .045);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+/* --------------------------------------------------------------------------
+   2. Identità cromatica dei moduli
+   -------------------------------------------------------------------------- */
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-dashboard-page,
+  .fmed-asset-page,
+  .fmed-interventi-operativi,
+  .fmed-scadenze-operative,
+  .fmed-infrastructure-root,
+  .s8108-page,
+  .fmed-process-page,
+  .core-standard-page,
+  .fmed-settings-page,
+  .fmed-costi-page,
+  .fmed-export-page,
+  .fmed-sharepoint-page,
+  .fmed-audit-page,
+  .fmed-wizard-page
+) {
+  --r0-accent: var(--module-accent, var(--fmed-primary, #315f8c));
+  --r0-accent-deep: color-mix(in srgb, var(--r0-accent) 72%, #10233f);
+  --r0-accent-soft: color-mix(in srgb, var(--r0-accent) 10%, #ffffff);
+  min-width: 0;
+  color: var(--r0-ink);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-dashboard-page { --r0-accent: #4f46e5; }
+.fmed-app-root.fmed-shell-premium :is(.fmed-asset-page, .fmed-wizard-page) { --r0-accent: #2f76e8; }
+.fmed-app-root.fmed-shell-premium .fmed-interventi-operativi { --r0-accent: #d17805; }
+.fmed-app-root.fmed-shell-premium .fmed-scadenze-operative { --r0-accent: #c52e67; }
+.fmed-app-root.fmed-shell-premium .fmed-infrastructure-root { --r0-accent: #7446d3; }
+.fmed-app-root.fmed-shell-premium .s8108-page { --r0-accent: #a87a00; }
+.fmed-app-root.fmed-shell-premium .fmed-process-page { --r0-accent: #1688a4; }
+.fmed-app-root.fmed-shell-premium .core-standard-page { --r0-accent: #c53472; }
+.fmed-app-root.fmed-shell-premium :is(.fmed-settings-page, .fmed-audit-page) { --r0-accent: #2494a9; }
+.fmed-app-root.fmed-shell-premium .fmed-costi-page { --r0-accent: #7c4dcc; }
+.fmed-app-root.fmed-shell-premium .fmed-export-page { --r0-accent: #24718d; }
+.fmed-app-root.fmed-shell-premium .fmed-sharepoint-page { --r0-accent: #287fbe; }
+
+/* --------------------------------------------------------------------------
+   3. Testate e presentazioni di pagina
+   -------------------------------------------------------------------------- */
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-dashboard-header,
+  .fmed-module-hero,
+  .fmed-process-head,
+  .core-standard-head,
+  .fmed-settings-head,
+  .fmed-audit-head,
+  .fmed-costi-hero,
+  .fmed-report-hero
+) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--r0-radius-xl);
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 84% 10%, rgba(255, 255, 255, .17) 0 10%, transparent 10.3%),
+    linear-gradient(118deg, var(--r0-accent-deep) 0%, var(--r0-accent) 70%, color-mix(in srgb, var(--r0-accent) 78%, #68aaf0) 100%);
+  box-shadow: 0 18px 48px color-mix(in srgb, var(--r0-accent) 18%, transparent);
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-dashboard-header,
+  .fmed-module-hero,
+  .fmed-process-head,
+  .core-standard-head,
+  .fmed-settings-head,
+  .fmed-audit-head,
+  .fmed-costi-hero,
+  .fmed-report-hero
+)::after {
+  position: absolute;
+  z-index: -1;
+  top: -54px;
+  right: 7%;
+  width: 180px;
+  height: 180px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .06);
+  content: "";
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-dashboard-header,
+  .fmed-module-hero,
+  .fmed-process-head,
+  .core-standard-head,
+  .fmed-settings-head,
+  .fmed-audit-head,
+  .fmed-costi-hero,
+  .fmed-report-hero
+) :is(h1, h2, h3, strong) {
+  color: #ffffff;
+  -webkit-text-fill-color: currentColor;
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-dashboard-header,
+  .fmed-module-hero,
+  .fmed-process-head,
+  .core-standard-head,
+  .fmed-settings-head,
+  .fmed-audit-head,
+  .fmed-costi-hero,
+  .fmed-report-hero
+) :is(p, span, small, em) {
+  color: rgba(255, 255, 255, .88);
+  -webkit-text-fill-color: currentColor;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-module-hero-icon,
+.fmed-app-root.fmed-shell-premium :is(.fmed-process-head, .core-standard-head, .fmed-settings-head, .fmed-audit-head) [class*="icon"] {
+  border: 1px solid rgba(255, 255, 255, .34);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .11);
+  color: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .10);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-module-hero-metric,
+.fmed-app-root.fmed-shell-premium :is(.fmed-dashboard-header, .fmed-costi-hero, .fmed-report-hero) [class*="metric"] {
+  border: 1px solid rgba(255, 255, 255, .30);
+  border-left: 1px solid rgba(255, 255, 255, .30);
+  border-radius: 16px;
+  background: rgba(16, 42, 76, .20);
+  color: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-module-hero-metric :is(strong, span, small) {
+  color: #ffffff;
+  -webkit-text-fill-color: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   4. Superfici, card, pannelli e stati
+   -------------------------------------------------------------------------- */
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-style-card,
+  .fmed-operational-filters,
+  .fmed-operational-table-card,
+  .fmed-workspace-surface,
+  .fmed-process-card,
+  .core-standard-card,
+  .fmed-settings-card,
+  .fmed-audit-card,
+  .fmed-costi-card,
+  .fmed-report-card,
+  .fmed-sharepoint-card,
+  .s8108-card,
+  .fmed-banner,
+  .fmed-empty-state,
+  .fmed-loading-state
+) {
+  border: 1px solid var(--r0-line);
+  border-radius: var(--r0-radius-lg);
+  background: var(--r0-surface);
+  color: var(--r0-ink);
+  box-shadow: var(--r0-shadow-soft);
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-operational-kpi-card,
+  .fmed-dashboard-kpi-card,
+  .fmed-summary-card,
+  .fmed-stat-card,
+  [class*="kpi-card"]
+) {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--r0-line);
+  border-radius: 16px;
+  background: var(--r0-surface);
+  color: var(--r0-ink);
+  box-shadow: 0 8px 24px rgba(16, 42, 76, .065);
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-operational-kpi-card,
+  .fmed-dashboard-kpi-card,
+  .fmed-summary-card,
+  .fmed-stat-card,
+  [class*="kpi-card"]
+)::after {
+  position: absolute;
+  right: 16px;
+  bottom: 0;
+  left: 16px;
+  height: 3px;
+  border-radius: 4px 4px 0 0;
+  background: var(--r0-accent, var(--fmed-primary));
+  content: "";
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-operational-kpi-card,
+  .fmed-dashboard-kpi-card,
+  .fmed-summary-card,
+  .fmed-stat-card,
+  [class*="kpi-card"]
+) :is(strong, [class*="value"]) {
+  color: var(--r0-ink);
+  -webkit-text-fill-color: currentColor;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-operational-kpi-card,
+  .fmed-dashboard-kpi-card,
+  .fmed-summary-card,
+  .fmed-stat-card,
+  [class*="kpi-card"]
+) :is(span, small, em, [class*="label"], [class*="hint"]) {
+  color: var(--r0-muted);
+  -webkit-text-fill-color: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   5. Titoli, testo e gerarchie
+   -------------------------------------------------------------------------- */
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--r0-ink);
+  font-weight: 700;
+  letter-spacing: -.025em;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(p, li, td, label, input, select, textarea) {
+  color: var(--r0-ink-soft);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(small, em, [class*="subtitle"], [class*="description"], [class*="hint"], [class*="muted"]) {
+  color: var(--r0-muted);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is([class*="eyebrow"], [class*="kicker"]) {
+  color: var(--r0-accent, var(--fmed-primary));
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .075em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   6. Form, filtri, ricerca e selezioni
+   -------------------------------------------------------------------------- */
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(input, select, textarea) {
+  max-width: 100%;
+  border: 1px solid var(--r0-line-strong);
+  border-radius: 10px;
+  outline: 0;
+  background: #ffffff;
+  color: var(--r0-ink);
+  box-shadow: inset 0 1px 1px rgba(16, 42, 76, .025);
+  transition: border-color var(--r0-transition), box-shadow var(--r0-transition), background var(--r0-transition);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(input, select) {
+  min-height: 40px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content textarea {
+  min-height: 94px;
+  resize: vertical;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(input, select, textarea):focus {
+  border-color: color-mix(in srgb, var(--r0-accent, #315f8c) 68%, #ffffff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--r0-accent, #315f8c) 13%, transparent);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(input, select, textarea):disabled {
+  border-color: #dce4ed;
+  background: #f2f5f8;
+  color: #8796a8;
+  cursor: not-allowed;
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-operational-filters,
+  .fmed-filter-panel,
+  .fmed-search-panel,
+  .fmed-command-panel,
+  [class*="filter-card"],
+  [class*="search-card"]
+) {
+  border: 1px solid var(--r0-line);
+  border-radius: var(--r0-radius-lg);
+  background: rgba(255, 255, 255, .96);
+  box-shadow: var(--r0-shadow-soft);
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-filter-grid,
+  .fmed-operational-filter-grid,
+  [class*="filters-grid"],
+  [class*="filter-grid"]
+) {
+  gap: 9px;
+}
+
+/* --------------------------------------------------------------------------
+   7. Pulsanti e azioni
+   -------------------------------------------------------------------------- */
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content button {
+  min-height: 38px;
+  border: 1px solid var(--r0-line-strong);
+  border-radius: 10px;
+  color: #294d75;
+  background: #ffffff;
+  box-shadow: 0 2px 7px rgba(16, 42, 76, .045);
+  transition:
+    transform var(--r0-transition),
+    border-color var(--r0-transition),
+    background var(--r0-transition),
+    color var(--r0-transition),
+    box-shadow var(--r0-transition);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content button:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--r0-accent, #315f8c) 45%, var(--r0-line));
+  background: var(--r0-accent-soft, #edf4fb);
+  box-shadow: 0 7px 17px rgba(16, 42, 76, .09);
+  transform: translateY(-1px);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content button:disabled {
+  color: #8c99a9;
+  background: #f0f3f6;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(
+  .fmed-primary-btn,
+  .fmed-btn-primary,
+  .fmed-action-primary,
+  .fmed-style-primary-btn,
+  button[class*="primary"],
+  button[class*="save"]
+) {
+  border-color: transparent;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--r0-accent-deep, #244a73), var(--r0-accent, #315f8c));
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--r0-accent, #315f8c) 20%, transparent);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(
+  .fmed-primary-btn,
+  .fmed-btn-primary,
+  .fmed-action-primary,
+  .fmed-style-primary-btn,
+  button[class*="primary"],
+  button[class*="save"]
+):hover:not(:disabled) {
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--r0-accent-deep, #244a73), color-mix(in srgb, var(--r0-accent, #315f8c) 84%, #ffffff));
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(
+  button[class*="danger"],
+  button[class*="delete"],
+  button[class*="remove"]
+) {
+  border-color: #efc7cc;
+  color: #a63746;
+  background: #fff4f5;
+}
+
+/* --------------------------------------------------------------------------
+   8. Tabelle, elenchi e righe operative
+   -------------------------------------------------------------------------- */
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-style-table-wrap,
+  .fmed-table-wrap,
+  .fmed-asset-table-wrap,
+  .fmed-operational-table-wrap,
+  [class*="table-wrap"]
+) {
+  max-width: 100%;
+  border: 1px solid var(--r0-line);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(16, 42, 76, .055);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: var(--r0-ink-soft);
+  background: #ffffff;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content thead th {
+  border-bottom: 1px solid var(--r0-line-strong);
+  background: #eef3f8;
+  color: #52677f;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content tbody td {
+  border-bottom: 1px solid #e8eef4;
+  background: #ffffff;
+  color: var(--r0-ink-soft);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content tbody tr {
+  transition: background var(--r0-transition), box-shadow var(--r0-transition);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content tbody tr:hover td {
+  background: color-mix(in srgb, var(--r0-accent, #315f8c) 4%, #ffffff);
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-asset-row,
+  .fmed-list-row,
+  .fmed-result-row,
+  [class*="result-item"],
+  [class*="list-item"]
+) {
+  border: 1px solid var(--r0-line);
+  border-radius: 13px;
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(16, 42, 76, .04);
+}
+
+/* --------------------------------------------------------------------------
+   9. Badge, stati, avvisi e messaggi
+   -------------------------------------------------------------------------- */
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(
+  [class*="badge"],
+  [class*="pill"],
+  [class*="status"],
+  [class*="tag"]
+) {
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-alert,
+  .fmed-notice,
+  .fmed-info-banner,
+  .fmed-warning-banner,
+  [role="alert"]
+) {
+  border-radius: 13px;
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-empty-state,
+  .fmed-loading-state,
+  .fmed-error-state,
+  [class*="empty"],
+  [class*="loading"]
+) {
+  color: var(--r0-muted);
+}
+
+/* --------------------------------------------------------------------------
+   10. Modali, schede, pannelli contestuali e wizard
+   -------------------------------------------------------------------------- */
+
+.fmed-app-root.fmed-shell-premium :is(
+  [role="dialog"],
+  .fmed-modal,
+  .fmed-modal-card,
+  .fmed-dialog,
+  .fmed-workspace-page,
+  .fmed-asset-detail-page,
+  .fmed-intervention-form-page,
+  [class*="modal-content"],
+  [class*="dialog-content"]
+) {
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 24px);
+  border: 1px solid var(--r0-line-strong);
+  border-radius: 20px;
+  background: #ffffff;
+  color: var(--r0-ink);
+  box-shadow: 0 28px 90px rgba(8, 28, 55, .25);
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-modal-overlay,
+  .fmed-dialog-overlay,
+  [class*="modal-backdrop"],
+  [class*="dialog-backdrop"]
+) {
+  background: rgba(10, 25, 45, .48);
+  backdrop-filter: blur(4px);
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-workspace-header,
+  .fmed-modal-header,
+  .fmed-dialog-header,
+  [class*="modal-head"],
+  [class*="dialog-head"]
+) {
+  border-bottom: 1px solid var(--r0-line);
+  background: linear-gradient(180deg, #ffffff, #f6f9fc);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-wizard-page {
+  background: transparent;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-wizard-page :is(
+  .fmed-wizard-shell,
+  .fmed-wizard-card,
+  .fmed-wizard-step,
+  [class*="wizard-panel"]
+) {
+  border: 1px solid var(--r0-line);
+  border-radius: var(--r0-radius-lg);
+  background: #ffffff;
+  box-shadow: var(--r0-shadow-soft);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-wizard-page :is(
+  [class*="step-indicator"],
+  [class*="step-number"]
+) {
+  border-color: color-mix(in srgb, var(--r0-accent) 35%, var(--r0-line));
+  background: var(--r0-accent-soft);
+  color: var(--r0-accent-deep);
+}
+
+/* --------------------------------------------------------------------------
+   11. Focus, tastiera e accessibilità
+   -------------------------------------------------------------------------- */
+
+.fmed-app-root.fmed-shell-premium :is(button, a, input, select, textarea):focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--r0-accent, #315f8c) 24%, transparent);
+  outline-offset: 2px;
+}
+
+.fmed-app-root.fmed-shell-premium a {
+  color: color-mix(in srgb, var(--r0-accent, #315f8c) 82%, #10233f);
+}
+
+/* --------------------------------------------------------------------------
+   12. Responsive: notebook 15", desktop e monitor ampi
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1440px) {
+  .fmed-app-root.fmed-shell-premium {
+    --r0-radius-xl: 20px;
+    --r0-radius-lg: 15px;
+  }
+
+  .fmed-app-root.fmed-shell-premium :is(
+    .fmed-dashboard-header,
+    .fmed-module-hero,
+    .fmed-process-head,
+    .core-standard-head,
+    .fmed-settings-head,
+    .fmed-audit-head,
+    .fmed-costi-hero,
+    .fmed-report-hero
+  ) {
+    min-height: 94px;
+    padding: 14px 16px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-main-content :is(input, select) {
+    min-height: 36px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-main-content button {
+    min-height: 35px;
+  }
+}
+
+@media (max-width: 1180px) {
+  .fmed-app-root.fmed-shell-premium :is(
+    .fmed-dashboard-header,
+    .fmed-module-hero,
+    .fmed-process-head,
+    .core-standard-head,
+    .fmed-settings-head,
+    .fmed-audit-head,
+    .fmed-costi-hero,
+    .fmed-report-hero
+  ) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-module-hero-metric {
+    justify-self: stretch;
+    width: 100%;
+  }
+}
+
+@media (min-width: 1800px) {
+  .fmed-app-root.fmed-shell-premium :is(
+    .fmed-dashboard-header,
+    .fmed-module-hero,
+    .fmed-process-head,
+    .core-standard-head,
+    .fmed-settings-head,
+    .fmed-audit-head,
+    .fmed-costi-hero,
+    .fmed-report-hero
+  ) {
+    min-height: 124px;
+    padding: 22px 26px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-main-content :is(input, select) {
+    min-height: 42px;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-main-content button {
+    min-height: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fmed-app-root.fmed-shell-premium *,
+  .fmed-app-root.fmed-shell-premium *::before,
+  .fmed-app-root.fmed-shell-premium *::after {
+    scroll-behavior: auto;
+    transition-duration: .01ms;
+    animation-duration: .01ms;
+    animation-iteration-count: 1;
+  }
+}

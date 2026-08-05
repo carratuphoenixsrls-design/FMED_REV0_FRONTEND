@@ -1,0 +1,19 @@
+{
+  "product": "FMED REV0",
+  "release": "RICOSTRUZIONE_COMPLETA_REGOLA0_FINAL",
+  "generated_at": "2026-07-30T01:03:00+02:00",
+  "source_base": "FMED_REV0_PUNTO0_SOURCE_SNAPSHOT.zip",
+  "visual_system": "src/FmedUnifiedVisualSystem.css",
+  "pwa_cache_version": "fmed-rev0-complete-reconstruction-20260730-2",
+  "production_modified": false,
+  "backend_modified": false,
+  "environment_secrets_included": false,
+  "checks": {
+    "verify_rev0": "passed",
+    "verify_regola0": "passed_57",
+    "browser_qa": "passed_32_failed_0",
+    "css_parse_errors": 0,
+    "important_rules": 0,
+    "global_zoom_or_scale": 0
+  }
+}
