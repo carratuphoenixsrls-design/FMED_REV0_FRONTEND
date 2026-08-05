@@ -1,0 +1,4832 @@
+/* ============================================================
+   FMED CONTROL STANDARD SYSTEM START
+
+   Standard definitivo:
+   - font
+   - pulsanti
+   - icone
+   - toolbar
+   - celle
+   - badge e stati
+   - allineamenti
+   - colori semantici
+
+   Nessuna modifica a funzioni, API, dati o logica.
+   ============================================================ */
+
+html body .fmed-main-content{
+  --fmed-ui-font:
+    "Futura PT",
+    "Futura",
+    "Century Gothic",
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  --fmed-ui-blue:#28659f;
+  --fmed-ui-blue-dark:#194f85;
+  --fmed-ui-blue-soft:#eef5fc;
+
+  --fmed-ui-green:#24764f;
+  --fmed-ui-green-dark:#185d3c;
+  --fmed-ui-green-soft:#eaf7ef;
+
+  --fmed-ui-red:#b73b46;
+  --fmed-ui-red-dark:#922a34;
+  --fmed-ui-red-soft:#fbecee;
+
+  --fmed-ui-amber:#a66c05;
+  --fmed-ui-amber-soft:#fff3dc;
+
+  --fmed-ui-neutral:#53687c;
+  --fmed-ui-neutral-dark:#354b60;
+  --fmed-ui-neutral-soft:#f4f7fa;
+
+  --fmed-ui-border:#c8d6e3;
+  --fmed-ui-text:#263746;
+  --fmed-ui-muted:#607182;
+
+  --fmed-ui-button-height:40px;
+  --fmed-ui-button-radius:10px;
+
+  font-family:var(--fmed-ui-font)!important;
+}
+
+html body .fmed-main-content :is(
+  button,
+  input,
+  select,
+  textarea,
+  table,
+  th,
+  td,
+  label
+){
+  font-family:var(--fmed-ui-font)!important;
+}
+
+html body .fmed-main-content :is(
+  input,
+  select,
+  textarea
+){
+  color:var(--fmed-ui-text)!important;
+  font-size:12px!important;
+  font-weight:600!important;
+  line-height:1.25!important;
+}
+
+/* ============================================================
+   PULSANTI STANDARD
+   ============================================================ */
+
+html body .fmed-main-content :is(
+  .p0-btn,
+  .fmed-style-primary-btn,
+  .fmed-style-secondary-btn,
+  .fmed-style-save-btn,
+  .fmed-style-cancel-btn,
+  .fmed-style-close-btn,
+  .fmed-style-action-btn-edit,
+  .fmed-style-action-btn-delete,
+  .fmed-generate-code-button,
+  .fmed-workspace-back,
+  .fmed-process-row-open
+),
+html body .fmed-main-content .core-add-value button,
+html body .fmed-main-content .core-sync-button,
+html body .fmed-main-content .core-standard-tabs button,
+html body .fmed-main-content .core-value-actions button,
+html body .fmed-main-content .core-value-row > button,
+html body .fmed-main-content .fmed-process-control-bar button,
+html body .fmed-main-content .fmed-process-module-filter button,
+html body .fmed-main-content .fmed-process-card-footer button,
+html body .fmed-main-content .fmed-process-detail > header button,
+html body .fmed-main-content .fmed-process-detail-section-head button,
+html body .fmed-main-content .fmed-process-attachment-form button,
+html body .fmed-main-content .fmed-process-approval-actions button,
+html body .fmed-main-content .fmed-process-transition-actions button,
+html body .fmed-main-content .s8108-tabs button,
+html body .fmed-main-content .s8108-fatal button,
+html body .fmed-main-content .fmed-audit-actions button,
+html body .fmed-main-content .fmed-new-intervention-page button,
+html body .fmed-main-content :is(
+  .fmed-style-dictionary-chip-save,
+  .fmed-style-dictionary-chip-cancel,
+  .fmed-style-dictionary-chip-edit,
+  .fmed-style-dictionary-chip-remove
+){
+  box-sizing:border-box!important;
+
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+
+  min-width:0!important;
+  min-height:var(--fmed-ui-button-height)!important;
+  height:var(--fmed-ui-button-height)!important;
+
+  margin:0!important;
+  padding:0 14px!important;
+
+  border:1px solid var(--fmed-ui-border)!important;
+  border-radius:var(--fmed-ui-button-radius)!important;
+
+  background:var(--fmed-ui-neutral-soft)!important;
+  color:var(--fmed-ui-neutral-dark)!important;
+  -webkit-text-fill-color:var(--fmed-ui-neutral-dark)!important;
+
+  font-size:12px!important;
+  font-weight:800!important;
+  line-height:1!important;
+
+  letter-spacing:.025em!important;
+  text-align:center!important;
+  text-decoration:none!important;
+  text-transform:uppercase!important;
+
+  white-space:nowrap!important;
+  vertical-align:middle!important;
+
+  box-shadow:0 3px 9px rgba(35,69,99,.08)!important;
+
+  cursor:pointer!important;
+}
+
+/* Testo interno */
+html body .fmed-main-content :is(
+  .p0-btn,
+  .fmed-style-primary-btn,
+  .fmed-style-secondary-btn,
+  .fmed-style-save-btn,
+  .fmed-style-cancel-btn,
+  .fmed-style-close-btn,
+  .fmed-style-action-btn-edit,
+  .fmed-style-action-btn-delete,
+  .fmed-generate-code-button,
+  .fmed-process-row-open
+) > span{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  min-width:0!important;
+
+  font:inherit!important;
+  line-height:1!important;
+
+  white-space:nowrap!important;
+}
+
+/* Icone standard */
+html body .fmed-main-content :is(
+  .p0-btn,
+  .fmed-style-primary-btn,
+  .fmed-style-secondary-btn,
+  .fmed-style-save-btn,
+  .fmed-style-cancel-btn,
+  .fmed-style-close-btn,
+  .fmed-style-action-btn-edit,
+  .fmed-style-action-btn-delete,
+  .fmed-generate-code-button,
+  .fmed-process-row-open
+) svg,
+html body .fmed-main-content .core-standard-tabs button svg,
+html body .fmed-main-content .core-value-actions button svg,
+html body .fmed-main-content .fmed-process-module-filter button svg,
+html body .fmed-main-content .fmed-process-approval-actions button svg,
+html body .fmed-main-content .fmed-process-transition-actions button svg{
+  display:block!important;
+
+  flex:0 0 17px!important;
+
+  width:17px!important;
+  min-width:17px!important;
+  height:17px!important;
+
+  margin:0!important;
+}
+
+/* Hover e focus */
+html body .fmed-main-content :is(
+  .p0-btn,
+  .fmed-style-primary-btn,
+  .fmed-style-secondary-btn,
+  .fmed-style-save-btn,
+  .fmed-style-cancel-btn,
+  .fmed-style-close-btn,
+  .fmed-style-action-btn-edit,
+  .fmed-style-action-btn-delete,
+  .fmed-generate-code-button,
+  .fmed-workspace-back,
+  .fmed-process-row-open
+):not(:disabled):hover,
+html body .fmed-main-content .core-add-value button:not(:disabled):hover,
+html body .fmed-main-content .core-sync-button:not(:disabled):hover,
+html body .fmed-main-content .core-standard-tabs button:not(:disabled):hover,
+html body .fmed-main-content .core-value-actions button:not(:disabled):hover,
+html body .fmed-main-content .fmed-process-control-bar button:not(:disabled):hover,
+html body .fmed-main-content .fmed-process-module-filter button:not(:disabled):hover,
+html body .fmed-main-content .fmed-process-card-footer button:not(:disabled):hover,
+html body .fmed-main-content .fmed-process-approval-actions button:not(:disabled):hover,
+html body .fmed-main-content .fmed-process-transition-actions button:not(:disabled):hover,
+html body .fmed-main-content .s8108-tabs button:not(:disabled):hover,
+html body .fmed-main-content .fmed-audit-actions button:not(:disabled):hover,
+html body .fmed-main-content .fmed-wizard-page button:not(:disabled):hover{
+  filter:brightness(.96)!important;
+  box-shadow:0 5px 13px rgba(35,69,99,.13)!important;
+}
+
+/* Disabled */
+html body .fmed-main-content :is(
+  .p0-btn,
+  .fmed-style-primary-btn,
+  .fmed-style-secondary-btn,
+  .fmed-style-save-btn,
+  .fmed-style-cancel-btn,
+  .fmed-style-close-btn,
+  .fmed-style-action-btn-edit,
+  .fmed-style-action-btn-delete,
+  .fmed-generate-code-button,
+  .fmed-process-row-open
+):disabled,
+html body .fmed-main-content button:disabled{
+  opacity:.54!important;
+  filter:none!important;
+  box-shadow:none!important;
+  cursor:not-allowed!important;
+}
+
+/* Focus tastiera */
+html body .fmed-main-content button:focus-visible,
+html body .fmed-main-content a.p0-btn:focus-visible{
+  outline:2px solid rgba(40,101,159,.40)!important;
+  outline-offset:2px!important;
+}
+
+/* ============================================================
+   COLORI SEMANTICI PULSANTI
+   ============================================================ */
+
+/* Primario blu */
+html body .fmed-main-content :is(
+  .fmed-style-primary-btn,
+  .fmed-generate-code-button,
+  .fmed-process-row-open,
+  .p0-btn--new,
+  .p0-btn--tools,
+  .p0-btn--infrastructure
+),
+html body .fmed-main-content .core-add-value button,
+html body .fmed-main-content .core-sync-button:not(:disabled),
+html body .fmed-main-content .fmed-audit-actions .primary,
+html body .fmed-main-content .fmed-wizard-actions button:not(.secondary){
+  border-color:var(--fmed-ui-blue-dark)!important;
+  background:var(--fmed-ui-blue)!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+  box-shadow:0 5px 13px rgba(40,101,159,.20)!important;
+}
+
+/* Conferma e apertura verde */
+html body .fmed-main-content :is(
+  .fmed-style-save-btn,
+  .p0-btn--excel,
+  .p0-btn--safety
+),
+html body .fmed-main-content
+.fmed-process-approval-actions button:not(.is-danger){
+  border-color:var(--fmed-ui-green-dark)!important;
+  background:var(--fmed-ui-green)!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+  box-shadow:0 5px 13px rgba(36,118,79,.18)!important;
+}
+
+/* Consultazione / storico */
+html body .fmed-main-content :is(
+  .p0-btn--costs,
+  .p0-btn--history,
+  .p0-btn--asset-history
+){
+  border-color:#315d7c!important;
+  background:#416f90!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* PDF */
+html body .fmed-main-content .p0-btn--pdf{
+  border-color:var(--fmed-ui-red-dark)!important;
+  background:var(--fmed-ui-red)!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* Neutro */
+html body .fmed-main-content :is(
+  .fmed-style-secondary-btn,
+  .fmed-style-cancel-btn,
+  .fmed-style-close-btn,
+  .fmed-workspace-back,
+  .p0-btn--quiet
+),
+html body .fmed-main-content .fmed-wizard-actions .secondary,
+html body .fmed-main-content .fmed-process-detail > header button{
+  border-color:var(--fmed-ui-border)!important;
+  background:var(--fmed-ui-neutral-soft)!important;
+
+  color:var(--fmed-ui-neutral-dark)!important;
+  -webkit-text-fill-color:var(--fmed-ui-neutral-dark)!important;
+}
+
+/* Pericolo */
+html body .fmed-main-content :is(
+  .fmed-style-action-btn-delete,
+  .fmed-style-asset-action-btn-delete
+),
+html body .fmed-main-content
+.fmed-process-approval-actions .is-danger{
+  border-color:var(--fmed-ui-red-dark)!important;
+  background:var(--fmed-ui-red)!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+  box-shadow:0 5px 13px rgba(183,59,70,.18)!important;
+}
+
+/* ============================================================
+   AZIONI SCHEDA CESPITE
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-asset-detail-workspace
+.fmed-style-asset-action-btn{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  grid-template-columns:28px minmax(0,1fr)!important;
+  align-items:center!important;
+  justify-content:stretch!important;
+  gap:8px!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:42px!important;
+  height:auto!important;
+
+  margin:0!important;
+  padding:0 10px!important;
+
+  border:1px solid #c7d6e4!important;
+  border-radius:10px!important;
+
+  background:#f3f7fb!important;
+  color:#244b70!important;
+  -webkit-text-fill-color:#244b70!important;
+
+  font-size:11px!important;
+  font-weight:800!important;
+  line-height:1.12!important;
+
+  letter-spacing:.02em!important;
+  text-align:left!important;
+  text-transform:uppercase!important;
+
+  box-shadow:0 3px 9px rgba(35,69,99,.07)!important;
+
+  overflow:visible!important;
+}
+
+html body .fmed-main-content
+.fmed-asset-detail-workspace
+.fmed-style-asset-action-btn > span:last-child{
+  display:flex!important;
+  align-items:center!important;
+
+  min-width:0!important;
+
+  color:inherit!important;
+  -webkit-text-fill-color:inherit!important;
+
+  font:inherit!important;
+  line-height:1.12!important;
+
+  text-align:left!important;
+  white-space:normal!important;
+
+  overflow-wrap:break-word!important;
+}
+
+html body .fmed-main-content
+.fmed-asset-detail-workspace
+.fmed-style-asset-action-icon{
+  display:grid!important;
+  place-items:center!important;
+
+  width:28px!important;
+  min-width:28px!important;
+  height:28px!important;
+
+  margin:0!important;
+
+  border-radius:8px!important;
+
+  background:#dfeaf4!important;
+  color:#285c89!important;
+}
+
+html body .fmed-main-content
+.fmed-asset-detail-workspace
+.fmed-style-asset-action-icon svg{
+  display:block!important;
+
+  width:16px!important;
+  height:16px!important;
+
+  margin:0!important;
+}
+
+/* Tutte le azioni cespite neutre */
+html body .fmed-main-content
+.fmed-asset-detail-workspace :is(
+  .fmed-style-asset-action-btn-edit,
+  .fmed-style-asset-action-btn-predictive,
+  .fmed-style-asset-action-btn-scan,
+  .fmed-style-asset-action-btn-accessory
+){
+  border-color:#bdd0e1!important;
+  background:#edf4fa!important;
+
+  color:#24577f!important;
+  -webkit-text-fill-color:#24577f!important;
+}
+
+/* Nuovo intervento cespite */
+html body .fmed-main-content
+.fmed-asset-detail-workspace
+.fmed-style-asset-action-btn-primary{
+  border-color:var(--fmed-ui-blue-dark)!important;
+  background:var(--fmed-ui-blue)!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content
+.fmed-asset-detail-workspace
+.fmed-style-asset-action-btn-primary
+.fmed-style-asset-action-icon{
+  background:rgba(255,255,255,.17)!important;
+  color:#ffffff!important;
+}
+
+/* Ritorno */
+html body .fmed-main-content
+.fmed-asset-detail-workspace
+.fmed-style-asset-action-btn-back{
+  border-color:#315d7c!important;
+  background:#416f90!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content
+.fmed-asset-detail-workspace
+.fmed-style-asset-action-btn-back
+.fmed-style-asset-action-icon{
+  background:rgba(255,255,255,.17)!important;
+  color:#ffffff!important;
+}
+
+/* Dismissione / eliminazione */
+html body .fmed-main-content
+.fmed-asset-detail-workspace
+.fmed-style-asset-action-btn-delete{
+  border-color:var(--fmed-ui-red-dark)!important;
+  background:var(--fmed-ui-red)!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content
+.fmed-asset-detail-workspace
+.fmed-style-asset-action-btn-delete
+.fmed-style-asset-action-icon{
+  background:rgba(255,255,255,.17)!important;
+  color:#ffffff!important;
+}
+
+/* ============================================================
+   BARRE AZIONI E ALLINEAMENTI
+   ============================================================ */
+
+html body .fmed-main-content :is(
+  .p0-command__actions,
+  .p0-command__actions--complete,
+  .p0-infrastructure-command-bar,
+  .p0-infrastructure-register-toolbar,
+  .p0-safety-command-bar,
+  .p0-register-agenda-actions,
+  .fmed-workspace-actions,
+  .fmed-audit-actions,
+  .fmed-process-approval-actions,
+  .fmed-process-transition-actions
+){
+  box-sizing:border-box!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:8px!important;
+  flex-wrap:wrap!important;
+
+  min-width:0!important;
+}
+
+html body .fmed-main-content :is(
+  .p0-row-actions,
+  .p0-safety-doc__actions,
+  .fmed-style-row-action-group,
+  .core-value-actions
+){
+  box-sizing:border-box!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  flex-wrap:nowrap!important;
+
+  min-width:0!important;
+}
+
+/* Pulsanti compatti dentro le celle */
+html body .fmed-main-content
+.p0-register td:last-child .p0-btn,
+html body .fmed-main-content
+.p0-row-actions > button,
+html body .fmed-main-content
+.p0-safety-doc__actions > :is(button,a){
+  min-height:34px!important;
+  height:34px!important;
+
+  padding:0 10px!important;
+
+  border-radius:8px!important;
+
+  font-size:10.5px!important;
+  line-height:1!important;
+}
+
+/* ============================================================
+   TABELLE E CELLE
+   ============================================================ */
+
+html body .fmed-main-content :is(
+  .p0-register,
+  .p0-table-wrap,
+  .fmed-process-table,
+  .s8108-table-wrap,
+  .fmed-style-table-wrap-compact
+) th{
+  color:#526779!important;
+
+  font-size:11px!important;
+  font-weight:800!important;
+  line-height:1.2!important;
+
+  letter-spacing:.045em!important;
+  text-align:left!important;
+  text-transform:uppercase!important;
+  vertical-align:middle!important;
+
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content :is(
+  .p0-register,
+  .p0-table-wrap,
+  .fmed-process-table,
+  .s8108-table-wrap,
+  .fmed-style-table-wrap-compact
+) td{
+  color:var(--fmed-ui-text)!important;
+
+  font-size:12px!important;
+  font-weight:600!important;
+  line-height:1.3!important;
+
+  text-align:left!important;
+  vertical-align:middle!important;
+
+  overflow-wrap:break-word!important;
+}
+
+html body .fmed-main-content :is(
+  .core-table-head,
+  .core-quality-table-head
+){
+  color:#526779!important;
+
+  font-size:11px!important;
+  font-weight:800!important;
+  line-height:1.2!important;
+
+  letter-spacing:.045em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content :is(
+  .core-value-row,
+  .core-quality-row,
+  .core-rule-row
+){
+  color:var(--fmed-ui-text)!important;
+
+  font-size:12px!important;
+  font-weight:600!important;
+  line-height:1.3!important;
+}
+
+/* Campi della scheda cespite */
+html body .fmed-main-content
+.fmed-style-asset-info-table > div{
+  align-items:center!important;
+
+  min-height:52px!important;
+}
+
+html body .fmed-main-content
+.fmed-style-asset-info-table > div > span:first-child,
+html body .fmed-main-content
+.fmed-style-detail-label{
+  margin:0!important;
+
+  color:var(--fmed-ui-muted)!important;
+
+  font-size:10px!important;
+  font-weight:800!important;
+  line-height:1.15!important;
+
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-style-asset-info-table > div > :is(span,strong):last-child,
+html body .fmed-main-content
+.fmed-style-detail-value{
+  margin:0!important;
+
+  color:var(--fmed-ui-text)!important;
+
+  font-size:12px!important;
+  font-weight:650!important;
+  line-height:1.25!important;
+
+  letter-spacing:0!important;
+  text-transform:none!important;
+
+  overflow-wrap:break-word!important;
+}
+
+/* ============================================================
+   BADGE E STATI
+   ============================================================ */
+
+html body .fmed-main-content :is(
+  .p0-state,
+  .p0-asset-state,
+  .fmed-style-asset-status-badge,
+  .fmed-process-status,
+  .core-status,
+  .s8108-status,
+  .s8108-cycle,
+  .fmed-style-dictionary-accordion-badge
+){
+  box-sizing:border-box!important;
+
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+
+  min-height:28px!important;
+
+  margin:0!important;
+  padding:0 10px!important;
+
+  border-radius:999px!important;
+
+  font-size:10.5px!important;
+  font-weight:850!important;
+  line-height:1!important;
+
+  letter-spacing:.04em!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+
+  white-space:nowrap!important;
+}
+
+/* Positivo */
+html body .fmed-main-content :is(
+  .core-status.active,
+  .s8108-status.success,
+  .fmed-process-status.is-completato
+){
+  background:var(--fmed-ui-green-soft)!important;
+  color:var(--fmed-ui-green-dark)!important;
+  -webkit-text-fill-color:var(--fmed-ui-green-dark)!important;
+}
+
+/* Attenzione */
+html body .fmed-main-content :is(
+  .s8108-status.warning,
+  .fmed-process-status.is-in_attesa
+){
+  background:var(--fmed-ui-amber-soft)!important;
+  color:var(--fmed-ui-amber)!important;
+  -webkit-text-fill-color:var(--fmed-ui-amber)!important;
+}
+
+/* Pericolo */
+html body .fmed-main-content :is(
+  .s8108-status.danger,
+  .core-status.inactive,
+  .fmed-process-status.is-annullato
+){
+  background:var(--fmed-ui-red-soft)!important;
+  color:var(--fmed-ui-red-dark)!important;
+  -webkit-text-fill-color:var(--fmed-ui-red-dark)!important;
+}
+
+/* Neutro */
+html body .fmed-main-content :is(
+  .s8108-status.neutral,
+  .s8108-status.closed,
+  .s8108-cycle.closed
+){
+  background:#edf1f5!important;
+  color:#53687c!important;
+  -webkit-text-fill-color:#53687c!important;
+}
+
+/* ============================================================
+   TAB E LISTE
+   ============================================================ */
+
+html body .fmed-main-content
+.core-dictionary-list button{
+  box-sizing:border-box!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:8px!important;
+
+  width:100%!important;
+  min-height:40px!important;
+
+  padding:0 12px!important;
+
+  border-radius:9px!important;
+
+  font-size:12px!important;
+  font-weight:750!important;
+  line-height:1.15!important;
+
+  text-align:left!important;
+}
+
+html body .fmed-main-content :is(
+  .core-standard-tabs,
+  .fmed-process-module-filter,
+  .s8108-tabs
+){
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  flex-wrap:wrap!important;
+}
+
+/* ============================================================
+   NOTEBOOK
+   ============================================================ */
+
+@media (max-width:1440px){
+
+  html body .fmed-main-content{
+    --fmed-ui-button-height:38px;
+  }
+
+  html body .fmed-main-content :is(
+    .p0-btn,
+    .fmed-style-primary-btn,
+    .fmed-style-secondary-btn,
+    .fmed-style-save-btn,
+    .fmed-style-cancel-btn,
+    .fmed-style-close-btn,
+    .fmed-style-action-btn-edit,
+    .fmed-style-action-btn-delete,
+    .fmed-generate-code-button,
+    .fmed-workspace-back,
+    .fmed-process-row-open
+  ),
+  html body .fmed-main-content .core-add-value button,
+  html body .fmed-main-content .core-sync-button,
+  html body .fmed-main-content .core-standard-tabs button,
+  html body .fmed-main-content .fmed-process-module-filter button,
+  html body .fmed-main-content .fmed-process-card-footer button,
+  html body .fmed-main-content .fmed-audit-actions button,
+  html body .fmed-main-content .fmed-wizard-page button{
+    padding-right:12px!important;
+    padding-left:12px!important;
+
+    font-size:11px!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-asset-detail-workspace
+  .fmed-style-asset-action-btn{
+    min-height:42px!important;
+    height:auto!important;
+
+    font-size:10.5px!important;
+  }
+
+  html body .fmed-main-content :is(
+    .p0-register,
+    .p0-table-wrap,
+    .fmed-process-table,
+    .s8108-table-wrap,
+    .fmed-style-table-wrap-compact
+  ) td{
+    font-size:11.5px!important;
+  }
+}
+
+@media (max-width:1180px){
+
+  html body .fmed-main-content :is(
+    .p0-command__actions,
+    .p0-command__actions--complete,
+    .p0-infrastructure-command-bar,
+    .p0-infrastructure-register-toolbar,
+    .p0-safety-command-bar,
+    .p0-register-agenda-actions,
+    .fmed-workspace-actions,
+    .fmed-audit-actions,
+    .fmed-process-approval-actions,
+    .fmed-process-transition-actions
+  ){
+    justify-content:flex-start!important;
+  }
+}
+
+/* ============================================================
+   FMED CONTROL STANDARD SYSTEM END
+   ============================================================ */
+
+
+/* FMED OPERATIONAL ACTION LAYOUT START */
+
+/* ============================================================
+   STANDARD COMUNE BARRE OPERATIVE
+   ============================================================ */
+
+html body .fmed-main-content :is(
+  .p0-operations--maintenance .p0-command__actions,
+  .p0-operations--maintenance .p0-command__actions--complete,
+  .p0-operations--deadline .p0-register-agenda-actions,
+  .p0-operations--infrastructure .p0-infrastructure-command-bar,
+  .p0-operations--infrastructure .p0-infrastructure-register-toolbar,
+  .p0-operations--safety .p0-safety-command-bar
+){
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  align-items:stretch!important;
+
+  width:100%!important;
+  min-width:0!important;
+
+  margin:0!important;
+  gap:8px!important;
+
+  flex-wrap:unset!important;
+  overflow:visible!important;
+}
+
+/* Pulsanti delle barre operative */
+html body .fmed-main-content
+.p0-operations--maintenance
+.p0-command__actions > :is(button,a),
+html body .fmed-main-content
+.p0-operations--maintenance
+.p0-command__actions--complete > :is(button,a),
+html body .fmed-main-content
+.p0-operations--deadline
+.p0-register-agenda-actions > :is(button,a),
+html body .fmed-main-content
+.p0-operations--infrastructure
+.p0-infrastructure-command-bar > :is(button,a),
+html body .fmed-main-content
+.p0-operations--infrastructure
+.p0-infrastructure-register-toolbar > :is(button,a),
+html body .fmed-main-content
+.p0-operations--safety
+.p0-safety-command-bar > :is(button,a){
+  box-sizing:border-box!important;
+
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+
+  height:40px!important;
+  min-height:40px!important;
+
+  margin:0!important;
+  padding:0 9px!important;
+
+  border-radius:9px!important;
+
+  font-size:10.5px!important;
+  font-weight:800!important;
+  line-height:1!important;
+
+  letter-spacing:.025em!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+/* ============================================================
+
+/* ============================================================
+   INTERVENTI — SISTEMA GRAFICO CONSOLIDATO
+   ============================================================ */
+
+html body .fmed-app-root
+.fmed-main-content[data-fmed-page="Interventi"]
+> .p0-operations--maintenance{
+  --p0-accent:#e58a18;
+  --p0-accent-dark:#9b4c08;
+  --p0-accent-soft:#fff3df;
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:0!important;
+  width:100%!important;
+  max-width:2100px!important;
+  min-width:0!important;
+  margin:0 auto!important;
+  padding:10px 12px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance > .p0-operations__head{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:18px!important;
+  width:100%!important;
+  min-height:88px!important;
+  height:auto!important;
+  flex:0 0 auto!important;
+  margin:0!important;
+  padding:12px 18px!important;
+  border:0!important;
+  border-radius:16px 16px 0 0!important;
+  color:#ffffff!important;
+  background:
+    radial-gradient(circle at 86% -42%,rgba(255,255,255,.18) 0 86px,transparent 87px),
+    linear-gradient(118deg,#174f7e 0%,#236b9f 54%,#3b8fc6 100%)!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-operations__identity{
+  display:flex!important;
+  align-items:center!important;
+  gap:13px!important;
+  min-width:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-operations__icon{
+  box-sizing:border-box!important;
+  display:grid!important;
+  place-items:center!important;
+  flex:0 0 46px!important;
+  width:46px!important;
+  min-width:46px!important;
+  height:46px!important;
+  border:1px solid rgba(255,255,255,.34)!important;
+  border-radius:13px!important;
+  color:#ffffff!important;
+  background:rgba(255,255,255,.11)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-operations__icon svg{
+  width:23px!important;
+  height:23px!important;
+  color:#ffffff!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-operations__identity > div > span{
+  display:block!important;
+  margin:0 0 4px!important;
+  color:rgba(255,255,255,.82)!important;
+  font-size:9.5px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  letter-spacing:.12em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-operations__identity h1{
+  margin:0!important;
+  color:#ffffff!important;
+  font-size:30px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  letter-spacing:.005em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-operations__identity p{
+  max-width:760px!important;
+  margin:5px 0 0!important;
+  color:rgba(255,255,255,.88)!important;
+  font-size:11.5px!important;
+  line-height:1.25!important;
+  font-weight:500!important;
+  letter-spacing:.01em!important;
+  white-space:normal!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-operations__metric{
+  box-sizing:border-box!important;
+  display:grid!important;
+  align-content:center!important;
+  min-width:154px!important;
+  min-height:58px!important;
+  padding:8px 14px!important;
+  border:1px solid rgba(255,255,255,.32)!important;
+  border-radius:12px!important;
+  color:#ffffff!important;
+  background:rgba(255,255,255,.1)!important;
+  backdrop-filter:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-operations__metric strong{
+  color:#ffffff!important;
+  font-size:27px!important;
+  line-height:1!important;
+  font-weight:800!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-operations__metric span{
+  margin-top:4px!important;
+  color:rgba(255,255,255,.86)!important;
+  font-size:9.5px!important;
+  line-height:1.1!important;
+  font-weight:700!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance > .p0-metric-strip{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:0!important;
+  width:100%!important;
+  min-height:70px!important;
+  height:auto!important;
+  margin:-1px 0 10px!important;
+  padding:0!important;
+  border:1px solid #d7e2ec!important;
+  border-top:0!important;
+  border-radius:0 0 16px 16px!important;
+  background:#ffffff!important;
+  box-shadow:0 7px 18px rgba(15,42,67,.065)!important;
+  overflow:visible!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance > .p0-metric-strip > article{
+  position:relative!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:34px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:9px!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:70px!important;
+  height:auto!important;
+  margin:0!important;
+  padding:9px 13px!important;
+  border:0!important;
+  border-right:1px solid #e1e8f0!important;
+  border-radius:0!important;
+  background:#ffffff!important;
+  box-shadow:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance > .p0-metric-strip > article:last-child{
+  border-right:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance > .p0-metric-strip > article::after{
+  content:""!important;
+  position:absolute!important;
+  right:13px!important;
+  bottom:0!important;
+  left:13px!important;
+  height:3px!important;
+  border-radius:3px 3px 0 0!important;
+  background:var(--p0-accent)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-metric-strip__icon{
+  box-sizing:border-box!important;
+  display:grid!important;
+  place-items:center!important;
+  width:34px!important;
+  min-width:34px!important;
+  height:34px!important;
+  border-radius:10px!important;
+  color:#c6680b!important;
+  background:var(--p0-accent-soft)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-metric-strip__icon svg{
+  width:17px!important;
+  height:17px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-metric-strip article > div{
+  display:grid!important;
+  align-content:center!important;
+  min-width:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-metric-strip small{
+  margin:0!important;
+  color:#5c7187!important;
+  font-size:9.5px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  letter-spacing:.045em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-metric-strip strong{
+  margin:3px 0 0!important;
+  overflow:visible!important;
+  color:#112f52!important;
+  font-size:22px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  letter-spacing:-.01em!important;
+  text-overflow:clip!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-metric-strip article > div > span{
+  margin-top:3px!important;
+  color:#6a7f94!important;
+  font-size:9px!important;
+  line-height:1.1!important;
+  font-weight:600!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance :is(.p0-command,.p0-history-switch,.p0-register){
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  border:1px solid #d7e2ec!important;
+  border-radius:14px!important;
+  background:#ffffff!important;
+  box-shadow:0 7px 18px rgba(15,42,67,.055)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command{
+  margin:0 0 10px!important;
+  overflow:visible!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__primary{
+  padding:13px 16px 12px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__intro{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-kicker{
+  color:#276492!important;
+  font-size:9.5px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  letter-spacing:.11em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__intro h2{
+  margin:3px 0 0!important;
+  color:#112f52!important;
+  font-size:18px!important;
+  line-height:1.1!important;
+  font-weight:800!important;
+  letter-spacing:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-btn{
+  box-sizing:border-box!important;
+  min-height:38px!important;
+  height:38px!important;
+  padding:0 13px!important;
+  border-radius:9px!important;
+  font-size:10.5px!important;
+  line-height:1.1!important;
+  font-weight:750!important;
+  letter-spacing:.01em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__intro > .p0-btn--maintenance{
+  border-color:#b95c09!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  background:#c9680c!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-search{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:22px minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:8px!important;
+  width:100%!important;
+  height:42px!important;
+  margin:11px 0 0!important;
+  padding:0 10px!important;
+  border:1px solid #c9d7e5!important;
+  border-radius:10px!important;
+  background:#fbfcfe!important;
+  box-shadow:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-search:focus-within{
+  border-color:#4d8dbc!important;
+  box-shadow:0 0 0 3px rgba(60,137,190,.14)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-search__mark{
+  display:block!important;
+  color:#a8540b!important;
+  font-size:20px!important;
+  line-height:1!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-search input{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:40px!important;
+  height:40px!important;
+  margin:0!important;
+  padding:0 3px!important;
+  border:0!important;
+  border-radius:0!important;
+  outline:0!important;
+  color:#193858!important;
+  background:transparent!important;
+  font-size:11.5px!important;
+  font-weight:600!important;
+  text-transform:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-search__meta{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:124px!important;
+  height:28px!important;
+  padding:0 10px!important;
+  border:1px solid #efcf9d!important;
+  border-radius:999px!important;
+  color:#99500c!important;
+  background:#fff4e2!important;
+  font-size:9.5px!important;
+  font-weight:750!important;
+  letter-spacing:.02em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-smart-results{
+  max-height:260px!important;
+  margin-top:8px!important;
+  border:1px solid #d8e3ee!important;
+  border-radius:11px!important;
+  overflow:auto!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-smart-row{
+  box-sizing:border-box!important;
+  grid-template-columns:110px 1.15fr .9fr 1.2fr auto!important;
+  min-height:44px!important;
+  height:auto!important;
+  padding:9px 12px!important;
+  font-size:11px!important;
+  line-height:1.25!important;
+  text-transform:none!important;
+  white-space:normal!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-advanced{
+  border-top:1px solid #e0e8f0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-advanced > summary{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:16px!important;
+  min-height:40px!important;
+  padding:9px 14px!important;
+  color:#173653!important;
+  background:#f6f8fb!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-advanced > summary span:first-child{
+  display:flex!important;
+  align-items:baseline!important;
+  gap:8px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-advanced > summary b{
+  font-size:13.5px!important;
+  line-height:1.1!important;
+  font-weight:800!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-advanced > summary small{
+  color:#62778e!important;
+  font-size:10px!important;
+  font-weight:600!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-advanced__summary{
+  color:#276492!important;
+  font-size:10px!important;
+  line-height:1.1!important;
+  font-weight:700!important;
+  text-align:right!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-filter-grid{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:10px!important;
+  padding:13px 14px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-field{
+  display:grid!important;
+  gap:5px!important;
+  min-width:0!important;
+  color:#334e6a!important;
+  font-size:10px!important;
+  line-height:1.1!important;
+  font-weight:750!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-field :is(select,input){
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:40px!important;
+  height:40px!important;
+  padding:0 11px!important;
+  border:1px solid #c7d5e3!important;
+  border-radius:9px!important;
+  color:#183653!important;
+  background:#ffffff!important;
+  font-size:11px!important;
+  font-weight:600!important;
+  letter-spacing:0!important;
+  text-transform:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__actions,
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__actions--complete{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:
+    minmax(0,1.05fr)
+    minmax(0,1.14fr)
+    minmax(0,.98fr)
+    minmax(0,.88fr)
+    minmax(0,.94fr)
+    minmax(0,1.34fr)
+    minmax(0,1.08fr)
+    minmax(0,.92fr)!important;
+  align-items:center!important;
+  gap:7px!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:7px 10px!important;
+  border-top:1px solid #dfe7ef!important;
+  background:#f5f7fa!important;
+  overflow:visible!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__actions--complete > .p0-btn{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  min-height:38px!important;
+  height:38px!important;
+  margin:0!important;
+  padding:0 7px!important;
+  font-size:9.5px!important;
+  line-height:1.08!important;
+  font-weight:750!important;
+  letter-spacing:.005em!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+}
+
+/* 1 — Apri registro */
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__actions--complete > :nth-child(1){
+  border-color:#1d568c!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  background:#2b6da8!important;
+}
+
+/* 2 — Nuovo intervento */
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__actions--complete > :nth-child(2){
+  border-color:#176440!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  background:#218156!important;
+}
+
+/* 3 — Analizza costi */
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__actions--complete > :nth-child(3){
+  border-color:#365e78!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  background:#477793!important;
+}
+
+/* 4 — PDF */
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__actions--complete > :nth-child(4){
+  border-color:#992f39!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  background:#bd404b!important;
+}
+
+/* 5 — Excel */
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__actions--complete > :nth-child(5){
+  border-color:#165a39!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  background:#217348!important;
+}
+
+/* 6 — Scheda cespite / storico */
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__actions--complete > :nth-child(6){
+  border-color:#c6d3df!important;
+  color:#53687b!important;
+  -webkit-text-fill-color:#53687b!important;
+  background:#edf2f6!important;
+}
+
+/* 7 — Storico completo */
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__actions--complete > :nth-child(7){
+  border-color:#356884!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  background:#417b99!important;
+}
+
+/* 8 — Azzera filtri */
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__actions--complete > :nth-child(8){
+  border-color:#c74650!important;
+  color:#b3323d!important;
+  -webkit-text-fill-color:#b3323d!important;
+  background:#ffffff!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-command__actions--complete > :disabled{
+  border-color:#d7e0e8!important;
+  color:#8797a5!important;
+  -webkit-text-fill-color:#8797a5!important;
+  background:#edf2f6!important;
+  opacity:1!important;
+  box-shadow:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-history-switch{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+  min-height:54px!important;
+  margin:0 0 10px!important;
+  padding:8px 13px!important;
+  border-left:4px solid var(--p0-accent)!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-history-switch > div{
+  display:grid!important;
+  gap:2px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-history-switch b{
+  color:#173653!important;
+  font-size:13.5px!important;
+  line-height:1.1!important;
+  font-weight:800!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-history-switch span{
+  color:#60758c!important;
+  font-size:11px!important;
+  line-height:1.2!important;
+  font-weight:550!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-history-switch .p0-btn{
+  flex:0 0 auto!important;
+  border-color:#c8d6e4!important;
+  color:#294863!important;
+  background:#f8fafc!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-register{
+  margin:0!important;
+  overflow:visible!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-register > header{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+  min-height:70px!important;
+  padding:10px 14px!important;
+  border-bottom:1px solid #dfe7ef!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-register > header h2{
+  margin:2px 0!important;
+  color:#112f52!important;
+  font-size:20px!important;
+  line-height:1.05!important;
+  font-weight:800!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-register > header p{
+  margin:0!important;
+  color:#60758c!important;
+  font-size:10.5px!important;
+  line-height:1.2!important;
+  font-weight:550!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-register > header .p0-btn--quiet{
+  margin-left:auto!important;
+  border-color:#c8d6e4!important;
+  color:#294863!important;
+  background:#f8fafc!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-table-wrap{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-height:clamp(320px,calc(100vh - 500px),680px)!important;
+  border-radius:0 0 14px 14px!important;
+  overflow:auto!important;
+  scrollbar-gutter:stable!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-table-wrap table{
+  width:100%!important;
+  min-width:960px!important;
+  table-layout:fixed!important;
+  border-collapse:collapse!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-table-wrap :is(th,td):nth-child(1){width:16%!important;}
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-table-wrap :is(th,td):nth-child(2){width:18%!important;}
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-table-wrap :is(th,td):nth-child(3){width:23%!important;}
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-table-wrap :is(th,td):nth-child(4){width:17%!important;}
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-table-wrap :is(th,td):nth-child(5){width:9%!important;}
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-table-wrap :is(th,td):nth-child(6){width:8%!important;}
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-table-wrap :is(th,td):nth-child(7){width:9%!important;}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-table-wrap th{
+  position:sticky!important;
+  top:0!important;
+  z-index:2!important;
+  padding:9px 10px!important;
+  border-bottom:1px solid #d8e2ec!important;
+  color:#536a81!important;
+  background:#f4f7fa!important;
+  font-size:10.5px!important;
+  line-height:1.15!important;
+  font-weight:750!important;
+  letter-spacing:.045em!important;
+  text-align:left!important;
+  text-transform:uppercase!important;
+  white-space:normal!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-table-wrap td{
+  box-sizing:border-box!important;
+  height:auto!important;
+  padding:9px 10px!important;
+  border-top:1px solid #e1e8ef!important;
+  color:#263f59!important;
+  background:#ffffff!important;
+  font-size:11.5px!important;
+  line-height:1.28!important;
+  font-weight:550!important;
+  vertical-align:middle!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-table-wrap td b{
+  color:#193858!important;
+  font-size:11.5px!important;
+  line-height:1.25!important;
+  font-weight:750!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-table-wrap td small{
+  display:block!important;
+  margin-top:3px!important;
+  color:#667c92!important;
+  font-size:10px!important;
+  line-height:1.2!important;
+  font-weight:550!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-table-link{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  min-height:30px!important;
+  height:auto!important;
+  padding:3px 9px!important;
+  border:1px solid #bfd2e4!important;
+  border-radius:8px!important;
+  color:#215b8d!important;
+  background:#ffffff!important;
+  font-size:10.5px!important;
+  line-height:1.1!important;
+  font-weight:800!important;
+  text-transform:none!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-tag{
+  display:inline-flex!important;
+  margin:4px 4px 0 0!important;
+  padding:3px 6px!important;
+  border-radius:999px!important;
+  color:#915015!important;
+  background:#fff1da!important;
+  font-size:9px!important;
+  line-height:1.1!important;
+  font-weight:700!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-row-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:6px!important;
+  min-width:70px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-row-actions > button{
+  box-sizing:border-box!important;
+  display:grid!important;
+  place-items:center!important;
+  flex:0 0 31px!important;
+  width:31px!important;
+  min-width:31px!important;
+  height:31px!important;
+  min-height:31px!important;
+  padding:0!important;
+  border:1px solid #bfd2e4!important;
+  border-radius:8px!important;
+  color:#245f91!important;
+  background:#ffffff!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-row-actions > button.is-danger{
+  border-color:#f0cbd0!important;
+  color:#b53b47!important;
+  background:#fff7f8!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-row-actions svg{
+  width:14px!important;
+  height:14px!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Interventi"]
+.p0-operations--maintenance .p0-register__more{
+  display:block!important;
+  margin:10px auto!important;
+}
+
+@media (max-width:1440px){
+  html body .fmed-app-root
+  .fmed-main-content[data-fmed-page="Interventi"]
+  > .p0-operations--maintenance{
+    padding:10px 12px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance > .p0-operations__head{
+    min-height:82px!important;
+    padding:10px 16px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance .p0-operations__identity h1{
+    font-size:28px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance > .p0-metric-strip,
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance > .p0-metric-strip > article{
+    min-height:66px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance > .p0-metric-strip > article{
+    padding:8px 11px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance .p0-command__primary{
+    padding:11px 14px 10px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance .p0-table-wrap{
+    max-height:max(300px,calc(100vh - 475px))!important;
+  }
+}
+
+@media (max-width:1100px){
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance .p0-command__actions--complete{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance .p0-filter-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+
+@media (max-width:760px){
+  html body .fmed-app-root
+  .fmed-main-content[data-fmed-page="Interventi"]
+  > .p0-operations--maintenance{
+    padding:8px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance > .p0-operations__head{
+    grid-template-columns:1fr!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance .p0-operations__metric{
+    width:100%!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance > .p0-metric-strip{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance .p0-command__intro,
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance .p0-history-switch{
+    align-items:stretch!important;
+    flex-direction:column!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance .p0-search{
+    grid-template-columns:22px minmax(0,1fr)!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance .p0-search__meta{
+    grid-column:1 / -1!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance .p0-filter-grid,
+  html body .fmed-main-content[data-fmed-page="Interventi"]
+  .p0-operations--maintenance .p0-command__actions--complete{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+/* ============================================================
+   SCADENZE — CINQUE AZIONI
+   ============================================================ */
+
+html body .fmed-main-content
+.p0-operations--deadline
+.p0-register-agenda-actions{
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+}
+
+html body .fmed-main-content
+.p0-operations--deadline
+.p0-register-agenda-actions > :nth-child(1){
+  border-color:#1d568c!important;
+  background:#2b6da8!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content
+.p0-operations--deadline
+.p0-register-agenda-actions > :nth-child(2){
+  border-color:#1d658d!important;
+  background:#2980ad!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content
+.p0-operations--deadline
+.p0-register-agenda-actions > :nth-child(3){
+  border-color:#657c8e!important;
+  background:#748b9d!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content
+.p0-operations--deadline
+.p0-register-agenda-actions > :nth-child(4){
+  border-color:#d8b5ba!important;
+  background:#e4c5c9!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content
+.p0-operations--deadline
+.p0-register-agenda-actions > :nth-child(5){
+  border-color:#c74650!important;
+  background:#ffffff!important;
+  color:#b3323d!important;
+  -webkit-text-fill-color:#b3323d!important;
+}
+
+/* ============================================================
+   INFRASTRUTTURE — QUATTRO AZIONI
+   ============================================================ */
+
+html body .fmed-main-content
+.p0-operations--infrastructure
+.p0-infrastructure-command-bar,
+html body .fmed-main-content
+.p0-operations--infrastructure
+.p0-infrastructure-register-toolbar{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+}
+
+html body .fmed-main-content
+.p0-operations--infrastructure
+.p0-infrastructure-command-bar > :nth-child(1),
+html body .fmed-main-content
+.p0-operations--infrastructure
+.p0-infrastructure-register-toolbar > :nth-child(1){
+  border-color:#1d568c!important;
+  background:#2b6da8!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content
+.p0-operations--infrastructure
+.p0-infrastructure-command-bar > :nth-child(2),
+html body .fmed-main-content
+.p0-operations--infrastructure
+.p0-infrastructure-register-toolbar > :nth-child(2){
+  border-color:#176440!important;
+  background:#218156!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content
+.p0-operations--infrastructure
+.p0-infrastructure-command-bar > :nth-child(3),
+html body .fmed-main-content
+.p0-operations--infrastructure
+.p0-infrastructure-register-toolbar > :nth-child(3){
+  border-color:#165a39!important;
+  background:#217348!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content
+.p0-operations--infrastructure
+.p0-infrastructure-command-bar > :nth-child(4),
+html body .fmed-main-content
+.p0-operations--infrastructure
+.p0-infrastructure-register-toolbar > :nth-child(4){
+  border-color:#17667a!important;
+  background:#24788b!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* ============================================================
+   SICUREZZA — TRE AZIONI
+   ============================================================ */
+
+html body .fmed-main-content
+.p0-operations--safety
+.p0-safety-command-bar{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+}
+
+html body .fmed-main-content
+.p0-operations--safety
+.p0-safety-command-bar > :nth-child(1){
+  border-color:#176440!important;
+  background:#218156!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content
+.p0-operations--safety
+.p0-safety-command-bar > :nth-child(2){
+  border-color:#1d568c!important;
+  background:#2b6da8!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+html body .fmed-main-content
+.p0-operations--safety
+.p0-safety-command-bar > :nth-child(3){
+  border-color:#c8d2dc!important;
+  background:#edf1f4!important;
+  color:#647686!important;
+  -webkit-text-fill-color:#647686!important;
+}
+
+/* ============================================================
+   ALLINEAMENTO TESTO E ICONE
+   ============================================================ */
+
+html body .fmed-main-content :is(
+  .p0-command__actions,
+  .p0-command__actions--complete,
+  .p0-register-agenda-actions,
+  .p0-infrastructure-command-bar,
+  .p0-infrastructure-register-toolbar,
+  .p0-safety-command-bar
+) :is(button,a) > span{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  min-width:0!important;
+
+  font:inherit!important;
+  line-height:1!important;
+
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content :is(
+  .p0-command__actions,
+  .p0-command__actions--complete,
+  .p0-register-agenda-actions,
+  .p0-infrastructure-command-bar,
+  .p0-infrastructure-register-toolbar,
+  .p0-safety-command-bar
+) :is(button,a) svg{
+  display:block!important;
+
+  flex:0 0 16px!important;
+
+  width:16px!important;
+  min-width:16px!important;
+  height:16px!important;
+
+  margin:0!important;
+}
+
+/* ============================================================
+   RESPONSIVE NOTEBOOK
+   ============================================================ */
+
+@media (max-width:1440px){
+
+  html body .fmed-main-content
+  .p0-operations--maintenance
+  .p0-command__actions > :is(button,a),
+  html body .fmed-main-content
+  .p0-operations--maintenance
+  .p0-command__actions--complete > :is(button,a){
+    height:38px!important;
+    min-height:38px!important;
+
+    padding-right:6px!important;
+    padding-left:6px!important;
+
+    font-size:9.5px!important;
+    letter-spacing:.015em!important;
+  }
+}
+
+@media (max-width:1180px){
+
+  html body .fmed-main-content
+  .p0-operations--maintenance
+  .p0-command__actions,
+  html body .fmed-main-content
+  .p0-operations--maintenance
+  .p0-command__actions--complete{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+
+  html body .fmed-main-content
+  .p0-operations--deadline
+  .p0-register-agenda-actions{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+
+  html body .fmed-main-content
+  .p0-operations--infrastructure
+  .p0-infrastructure-command-bar,
+  html body .fmed-main-content
+  .p0-operations--infrastructure
+  .p0-infrastructure-register-toolbar,
+  html body .fmed-main-content
+  .p0-operations--safety
+  .p0-safety-command-bar{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+
+/* FMED OPERATIONAL ACTION LAYOUT END */
+
+
+/* FMED INTERNAL TYPOGRAPHY SYSTEM START */
+
+/* ============================================================
+   GERARCHIA INTERNA UNICA
+
+   Soprattitoli: 10 px
+   Titoli operativi: 22 px
+   Descrizioni: 10 px
+   Titoli pannello Dashboard: 18 px
+
+   Le testate blu principali sono escluse.
+   ============================================================ */
+
+html body .fmed-main-content{
+  --fmed-inner-kicker-size:10px;
+  --fmed-inner-title-size:22px;
+  --fmed-inner-description-size:10px;
+  --fmed-inner-panel-title-size:18px;
+
+  --fmed-inner-title-color:#0d2d50;
+  --fmed-inner-kicker-color:#245f9e;
+  --fmed-inner-muted-color:#607589;
+}
+
+/* ============================================================
+   TITOLI OPERATIVI INTERNI
+   ============================================================ */
+
+html body .fmed-main-content :is(
+  .p0-command--maintenance .p0-command__intro h2,
+  .p0-command--deadline .p0-command__intro h2,
+  .p0-command--infrastructure .p0-command__intro h2,
+  .p0-command--safety .p0-command__intro h2,
+  .p0-safety-library > header h2
+){
+  margin:0!important;
+
+  max-width:760px!important;
+
+  color:var(--fmed-inner-title-color)!important;
+  -webkit-text-fill-color:var(--fmed-inner-title-color)!important;
+
+  font-size:var(--fmed-inner-title-size)!important;
+  font-weight:850!important;
+  line-height:1.08!important;
+
+  letter-spacing:.015em!important;
+  text-transform:uppercase!important;
+
+  text-wrap:balance!important;
+  overflow-wrap:break-word!important;
+}
+
+/* ============================================================
+   SOPRATTITOLI
+   ============================================================ */
+
+html body .fmed-main-content :is(
+  .p0-command--maintenance .p0-kicker,
+  .p0-command--deadline .p0-kicker,
+  .p0-command--infrastructure .p0-kicker,
+  .p0-command--safety .p0-kicker,
+  .p0-safety-library > header .p0-kicker
+){
+  display:block!important;
+
+  margin:0 0 5px!important;
+
+  color:var(--fmed-inner-kicker-color)!important;
+  -webkit-text-fill-color:var(--fmed-inner-kicker-color)!important;
+
+  font-size:var(--fmed-inner-kicker-size)!important;
+  font-weight:850!important;
+  line-height:1!important;
+
+  letter-spacing:.10em!important;
+  text-transform:uppercase!important;
+
+  white-space:normal!important;
+}
+
+/* ============================================================
+   DESCRIZIONI
+   ============================================================ */
+
+html body .fmed-main-content :is(
+  .p0-command--safety .p0-command__intro p,
+  .p0-safety-library > header p
+){
+  display:block!important;
+
+  margin:5px 0 0!important;
+
+  max-width:780px!important;
+
+  color:var(--fmed-inner-muted-color)!important;
+  -webkit-text-fill-color:var(--fmed-inner-muted-color)!important;
+
+  font-size:var(--fmed-inner-description-size)!important;
+  font-weight:600!important;
+  line-height:1.3!important;
+
+  letter-spacing:.015em!important;
+  text-transform:none!important;
+
+  white-space:normal!important;
+  overflow-wrap:break-word!important;
+}
+
+/* ============================================================
+   CONTENITORI INTRO
+   ============================================================ */
+
+html body .fmed-main-content :is(
+  .p0-command--maintenance .p0-command__intro,
+  .p0-command--deadline .p0-command__intro,
+  .p0-command--infrastructure .p0-command__intro,
+  .p0-command--safety .p0-command__intro
+){
+  box-sizing:border-box!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:18px!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:48px!important;
+
+  margin:0!important;
+}
+
+html body .fmed-main-content :is(
+  .p0-command--maintenance .p0-command__intro,
+  .p0-command--deadline .p0-command__intro,
+  .p0-command--infrastructure .p0-command__intro,
+  .p0-command--safety .p0-command__intro
+) > div:first-child{
+  display:grid!important;
+  align-content:center!important;
+  gap:0!important;
+
+  min-width:0!important;
+}
+
+/* ============================================================
+   AFFINA REGISTRO / AGENDA / PATRIMONIO
+   ============================================================ */
+
+html body .fmed-main-content :is(
+  .p0-command--maintenance,
+  .p0-command--deadline,
+  .p0-command--infrastructure
+) > .p0-advanced > summary{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:16px!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:52px!important;
+
+  margin:0!important;
+  padding:10px 14px!important;
+}
+
+html body .fmed-main-content :is(
+  .p0-command--maintenance,
+  .p0-command--deadline,
+  .p0-command--infrastructure
+) > .p0-advanced > summary > span:first-child{
+  display:flex!important;
+  align-items:baseline!important;
+  gap:10px!important;
+  flex-wrap:wrap!important;
+
+  min-width:0!important;
+}
+
+html body .fmed-main-content :is(
+  .p0-command--maintenance,
+  .p0-command--deadline,
+  .p0-command--infrastructure
+) > .p0-advanced > summary > span:first-child > b{
+  margin:0!important;
+
+  color:var(--fmed-inner-title-color)!important;
+  -webkit-text-fill-color:var(--fmed-inner-title-color)!important;
+
+  font-size:16px!important;
+  font-weight:850!important;
+  line-height:1!important;
+
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
+
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content :is(
+  .p0-command--maintenance,
+  .p0-command--deadline,
+  .p0-command--infrastructure
+) > .p0-advanced > summary > span:first-child > small{
+  margin:0!important;
+
+  color:var(--fmed-inner-muted-color)!important;
+  -webkit-text-fill-color:var(--fmed-inner-muted-color)!important;
+
+  font-size:10px!important;
+  font-weight:650!important;
+  line-height:1.2!important;
+
+  letter-spacing:.015em!important;
+  text-transform:uppercase!important;
+
+  white-space:normal!important;
+}
+
+/* Contatori a destra */
+html body .fmed-main-content :is(
+  .p0-advanced__summary,
+  .p0-search__meta
+){
+  box-sizing:border-box!important;
+
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  min-height:32px!important;
+
+  margin:0!important;
+  padding:0 11px!important;
+
+  border:1px solid #c8d8e7!important;
+  border-radius:999px!important;
+
+  background:#f1f6fb!important;
+
+  color:#245f9e!important;
+  -webkit-text-fill-color:#245f9e!important;
+
+  font-size:9.5px!important;
+  font-weight:800!important;
+  line-height:1!important;
+
+  letter-spacing:.035em!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+
+  white-space:nowrap!important;
+}
+
+/* Contatori Scadenze in testata */
+html body .fmed-main-content
+.p0-command--deadline
+.p0-command__facts{
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  flex-wrap:nowrap!important;
+}
+
+html body .fmed-main-content
+.p0-command--deadline
+.p0-command__facts > span{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  place-items:center!important;
+
+  min-width:66px!important;
+  min-height:36px!important;
+
+  margin:0!important;
+  padding:5px 10px!important;
+
+  font-size:9px!important;
+  font-weight:750!important;
+  line-height:1.05!important;
+
+  letter-spacing:.025em!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.p0-command--deadline
+.p0-command__facts > span > b{
+  margin:0!important;
+
+  font-size:13px!important;
+  font-weight:850!important;
+  line-height:1!important;
+}
+
+/* ============================================================
+   SICUREZZA — MAPPA E ARCHIVIO
+   ============================================================ */
+
+html body .fmed-main-content
+.p0-safety-library > header{
+  box-sizing:border-box!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:18px!important;
+
+  min-height:72px!important;
+
+  padding:12px 16px!important;
+}
+
+html body .fmed-main-content
+.p0-safety-library > header > div{
+  display:grid!important;
+  align-content:center!important;
+
+  min-width:0!important;
+}
+
+/* ============================================================
+   DASHBOARD — AUTOMAZIONI
+   ============================================================ */
+
+/* ============================================================
+   DASHBOARD — DA FARE ORA
+   ============================================================ */
+
+/* ============================================================
+   DASHBOARD — PRIORITÀ E ATTIVITÀ APERTE
+   ============================================================ */
+
+/* ============================================================
+   DASHBOARD — RIGHE ATTIVITÀ
+   ============================================================ */
+
+/* ============================================================
+   DASHBOARD — AZIONI RAPIDE
+   ============================================================ */
+
+/* ============================================================
+   NOTEBOOK
+   ============================================================ */
+
+@media (max-width:1440px){
+
+  html body .fmed-main-content{
+    --fmed-inner-title-size:20px;
+    --fmed-inner-panel-title-size:17px;
+  }
+
+  html body .fmed-main-content :is(
+    .p0-command--maintenance,
+    .p0-command--deadline,
+    .p0-command--infrastructure
+  ) > .p0-advanced > summary > span:first-child > b{
+    font-size:15px!important;
+  }
+}
+
+@media (max-width:1180px){
+
+  html body .fmed-main-content :is(
+    .p0-command--maintenance .p0-command__intro,
+    .p0-command--deadline .p0-command__intro,
+    .p0-command--infrastructure .p0-command__intro,
+    .p0-command--safety .p0-command__intro
+  ){
+    align-items:flex-start!important;
+    flex-wrap:wrap!important;
+  }
+
+  html body .fmed-main-content :is(
+    .p0-command--maintenance,
+    .p0-command--deadline,
+    .p0-command--infrastructure
+  ) > .p0-advanced > summary{
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:8px!important;
+  }
+}
+
+/* FMED SCADENZE INTRO BALANCE START */
+
+/* Titolo e contatori su due aree realmente separate */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command--deadline .p0-command__intro{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  justify-content:stretch!important;
+  gap:22px!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:68px!important;
+
+  margin:0!important;
+}
+
+/* Area titolo */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command--deadline .p0-command__intro > div:first-child{
+  display:grid!important;
+  align-content:center!important;
+  gap:0!important;
+
+  min-width:0!important;
+  max-width:none!important;
+}
+
+/* Soprattitolo */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command--deadline .p0-kicker{
+  display:block!important;
+
+  margin:0 0 5px!important;
+
+  color:#245f9e!important;
+  -webkit-text-fill-color:#245f9e!important;
+
+  font-size:10px!important;
+  font-weight:850!important;
+  line-height:1!important;
+
+  letter-spacing:.10em!important;
+  text-transform:uppercase!important;
+}
+
+/* Titolo principale */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command--deadline .p0-command__intro h2{
+  margin:0!important;
+
+  width:auto!important;
+  max-width:760px!important;
+
+  color:#0d2d50!important;
+  -webkit-text-fill-color:#0d2d50!important;
+
+  font-size:22px!important;
+  font-weight:850!important;
+  line-height:1.08!important;
+
+  letter-spacing:.015em!important;
+  text-transform:uppercase!important;
+
+  white-space:normal!important;
+  text-wrap:balance!important;
+  overflow-wrap:normal!important;
+}
+
+/* Contatori visibili e selezionate */
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command--deadline .p0-command__facts{
+  display:grid!important;
+  grid-template-columns:repeat(2,66px)!important;
+  align-items:center!important;
+  justify-content:end!important;
+  gap:8px!important;
+
+  flex:0 0 auto!important;
+  min-width:140px!important;
+
+  margin:0!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command--deadline .p0-command__facts > span{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  place-items:center!important;
+  align-content:center!important;
+  gap:2px!important;
+
+  width:66px!important;
+  min-width:66px!important;
+  min-height:40px!important;
+
+  margin:0!important;
+  padding:5px 6px!important;
+
+  border-radius:999px!important;
+
+  font-size:8px!important;
+  font-weight:800!important;
+  line-height:1!important;
+
+  letter-spacing:.025em!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content[data-fmed-page="Scadenze"]
+.p0-command--deadline .p0-command__facts > span > b{
+  display:block!important;
+
+  margin:0!important;
+
+  font-size:13px!important;
+  font-weight:900!important;
+  line-height:1!important;
+}
+
+/* Notebook 15 pollici */
+@media (max-width:1440px){
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .p0-command--deadline .p0-command__intro{
+    gap:16px!important;
+    min-height:64px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .p0-command--deadline .p0-command__intro h2{
+    max-width:680px!important;
+    font-size:20px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .p0-command--deadline .p0-command__facts{
+    grid-template-columns:repeat(2,62px)!important;
+    min-width:132px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .p0-command--deadline .p0-command__facts > span{
+    width:62px!important;
+    min-width:62px!important;
+  }
+}
+
+/* Schermi più stretti: contatori sotto senza sovrapposizioni */
+@media (max-width:980px){
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .p0-command--deadline .p0-command__intro{
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:10px!important;
+  }
+
+  html body .fmed-main-content[data-fmed-page="Scadenze"]
+  .p0-command--deadline .p0-command__facts{
+    justify-content:start!important;
+  }
+}
+
+/* FMED SCADENZE INTRO BALANCE END */
+/* FMED INTERNAL TYPOGRAPHY SYSTEM END */
+
+
+/* FMED PROCESSI PROFESSIONAL SYSTEM START */
+
+/* ============================================================
+   PROCESSI — SISTEMA PROFESSIONALE DEFINITIVO
+
+   Solo home Processi.
+   Le pagine operative aperte e i relativi form restano invariati.
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open){
+  --process-blue:#28659f;
+  --process-blue-dark:#194f85;
+  --process-blue-soft:#edf5fc;
+
+  --process-ink:#142f4d;
+  --process-muted:#62778b;
+  --process-border:#ccd9e5;
+  --process-surface:#ffffff;
+  --process-soft:#f5f8fb;
+
+  box-sizing:border-box!important;
+
+  display:flex!important;
+  flex-direction:column!important;
+  gap:10px!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+
+  margin:0!important;
+}
+
+/* ============================================================
+   TESTATA BLU FMED
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-head{
+  box-sizing:border-box!important;
+
+  position:relative!important;
+  isolation:isolate!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:24px!important;
+
+  width:100%!important;
+  min-width:0!important;
+
+  min-height:132px!important;
+  height:132px!important;
+  flex:0 0 132px!important;
+
+  margin:0!important;
+  padding:20px 22px!important;
+
+  border:0!important;
+  border-radius:18px!important;
+  outline:0!important;
+
+  background:
+    radial-gradient(
+      circle at 84% 10%,
+      rgba(255,255,255,.14) 0 88px,
+      transparent 89px
+    ),
+    linear-gradient(
+      118deg,
+      #174775 0%,
+      #24689d 52%,
+      #3283c4 100%
+    )!important;
+
+  color:#ffffff!important;
+
+  box-shadow:
+    0 12px 28px rgba(20,66,105,.16)!important;
+
+  overflow:hidden!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-head > *{
+  position:relative!important;
+  z-index:1!important;
+}
+
+/* Identità testata */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-head__identity{
+  display:flex!important;
+  align-items:center!important;
+  gap:17px!important;
+
+  min-width:0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-head__identity > span{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  place-items:center!important;
+
+  flex:0 0 64px!important;
+
+  width:64px!important;
+  min-width:64px!important;
+  height:64px!important;
+
+  margin:0!important;
+
+  border:1px solid rgba(255,255,255,.28)!important;
+  border-radius:16px!important;
+
+  background:rgba(255,255,255,.15)!important;
+  color:#ffffff!important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.20),
+    0 8px 18px rgba(12,50,85,.16)!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-head__identity > span svg{
+  display:block!important;
+
+  width:28px!important;
+  height:28px!important;
+
+  color:#ffffff!important;
+  stroke:currentColor!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-head__identity > div{
+  display:grid!important;
+  align-content:center!important;
+  gap:3px!important;
+
+  min-width:0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-head__identity small{
+  margin:0!important;
+
+  color:rgba(255,255,255,.90)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.90)!important;
+
+  font-size:11px!important;
+  font-weight:750!important;
+  line-height:1!important;
+
+  letter-spacing:.12em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-head__identity h1{
+  margin:0!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+  font-size:36px!important;
+  font-weight:750!important;
+  line-height:1.02!important;
+
+  letter-spacing:-.025em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-head__identity p{
+  margin:0!important;
+
+  max-width:820px!important;
+
+  color:rgba(255,255,255,.88)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.88)!important;
+
+  font-size:12px!important;
+  font-weight:600!important;
+  line-height:1.3!important;
+
+  letter-spacing:.015em!important;
+  text-transform:none!important;
+
+  white-space:normal!important;
+}
+
+/* Metrica testata */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-head__metric{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  place-items:end!important;
+  align-content:center!important;
+  gap:5px!important;
+
+  flex:0 0 170px!important;
+
+  min-width:170px!important;
+  min-height:68px!important;
+
+  margin:0!important;
+  padding:8px 0 8px 22px!important;
+
+  border:0!important;
+  border-left:1px solid rgba(255,255,255,.34)!important;
+  border-radius:0!important;
+
+  background:transparent!important;
+
+  color:#ffffff!important;
+
+  text-align:right!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-head__metric strong{
+  display:block!important;
+
+  margin:0!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+  font-size:30px!important;
+  font-weight:800!important;
+  line-height:1!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-head__metric span{
+  display:block!important;
+
+  margin:0!important;
+
+  color:rgba(255,255,255,.90)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.90)!important;
+
+  font-size:9px!important;
+  font-weight:750!important;
+  line-height:1.1!important;
+
+  letter-spacing:.06em!important;
+  text-align:right!important;
+  text-transform:uppercase!important;
+
+  white-space:nowrap!important;
+}
+
+/* ============================================================
+   REGOLA OPERATIVA
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-usage{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  grid-template-columns:140px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:16px!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:64px!important;
+
+  margin:0!important;
+  padding:10px 14px!important;
+
+  border:1px solid #c8dce8!important;
+  border-radius:14px!important;
+
+  background:#f4faff!important;
+
+  color:var(--process-ink)!important;
+
+  box-shadow:0 4px 12px rgba(30,73,108,.05)!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-usage > strong{
+  margin:0!important;
+
+  color:var(--process-blue-dark)!important;
+  -webkit-text-fill-color:var(--process-blue-dark)!important;
+
+  font-size:11px!important;
+  font-weight:850!important;
+  line-height:1.15!important;
+
+  letter-spacing:.055em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-usage > div{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  align-items:center!important;
+  gap:7px 22px!important;
+
+  min-width:0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-usage > div > span{
+  display:block!important;
+
+  min-width:0!important;
+  margin:0!important;
+
+  color:#405b73!important;
+  -webkit-text-fill-color:#405b73!important;
+
+  font-size:10.5px!important;
+  font-weight:600!important;
+  line-height:1.3!important;
+
+  letter-spacing:.01em!important;
+  text-transform:none!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-usage > div > span > b{
+  margin-right:4px!important;
+
+  color:var(--process-blue-dark)!important;
+  -webkit-text-fill-color:var(--process-blue-dark)!important;
+
+  font-weight:850!important;
+}
+
+/* ============================================================
+   VISTA OPERATIVA / ARCHIVIO
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-message.is-history-switch{
+  box-sizing:border-box!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:48px!important;
+
+  margin:0!important;
+  padding:6px 10px 6px 14px!important;
+
+  border:1px solid #ead590!important;
+  border-radius:13px!important;
+
+  background:#fff8df!important;
+
+  color:#725309!important;
+  -webkit-text-fill-color:#725309!important;
+
+  box-shadow:0 4px 12px rgba(126,93,16,.05)!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-message.is-history-switch > span{
+  min-width:0!important;
+
+  font-size:10.5px!important;
+  font-weight:700!important;
+  line-height:1.25!important;
+
+  letter-spacing:.02em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-message.is-history-switch > button{
+  flex:0 0 auto!important;
+
+  min-width:142px!important;
+  min-height:38px!important;
+  height:38px!important;
+
+  padding:0 13px!important;
+
+  border:1px solid #c5d4e1!important;
+  border-radius:9px!important;
+
+  background:#ffffff!important;
+
+  color:#315a7d!important;
+  -webkit-text-fill-color:#315a7d!important;
+
+  font-size:9.5px!important;
+  font-weight:800!important;
+
+  box-shadow:0 3px 8px rgba(44,77,105,.06)!important;
+}
+
+/* ============================================================
+   KPI PROCESSI
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-control-summary{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:8px!important;
+
+  width:100%!important;
+  min-width:0!important;
+
+  margin:0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-control-summary > *{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  align-content:center!important;
+  gap:4px!important;
+
+  min-width:0!important;
+  min-height:82px!important;
+
+  margin:0!important;
+  padding:11px 13px!important;
+
+  border:1px solid var(--process-border)!important;
+  border-radius:13px!important;
+
+  background:#ffffff!important;
+
+  box-shadow:0 5px 14px rgba(32,68,99,.06)!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-control-summary > * > span:first-child{
+  color:#526b82!important;
+  -webkit-text-fill-color:#526b82!important;
+
+  font-size:10px!important;
+  font-weight:800!important;
+  line-height:1!important;
+
+  letter-spacing:.05em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-control-summary strong{
+  margin:0!important;
+
+  color:var(--process-ink)!important;
+  -webkit-text-fill-color:var(--process-ink)!important;
+
+  font-size:25px!important;
+  font-weight:800!important;
+  line-height:1!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-control-summary small{
+  color:#56718b!important;
+  -webkit-text-fill-color:#56718b!important;
+
+  font-size:9.5px!important;
+  font-weight:700!important;
+  line-height:1.15!important;
+
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
+}
+
+/* ============================================================
+   RICERCA E FILTRI
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-control-bar{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  grid-template-columns:minmax(260px,1fr) 220px 150px!important;
+  align-items:end!important;
+  gap:8px!important;
+
+  width:100%!important;
+  min-width:0!important;
+
+  margin:0!important;
+  padding:8px!important;
+
+  border:1px solid var(--process-border)!important;
+  border-radius:13px!important;
+
+  background:#ffffff!important;
+
+  box-shadow:0 4px 12px rgba(32,68,99,.05)!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-control-bar label{
+  display:grid!important;
+  align-content:end!important;
+  gap:5px!important;
+
+  min-width:0!important;
+  margin:0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-control-bar label > span{
+  margin:0!important;
+
+  color:#526b82!important;
+  -webkit-text-fill-color:#526b82!important;
+
+  font-size:9.5px!important;
+  font-weight:800!important;
+  line-height:1!important;
+
+  letter-spacing:.045em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-control-bar :is(input,select,button){
+  box-sizing:border-box!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:42px!important;
+  height:42px!important;
+
+  margin:0!important;
+  padding:0 12px!important;
+
+  border:1px solid #c5d4e1!important;
+  border-radius:10px!important;
+
+  background:#ffffff!important;
+
+  color:#243c54!important;
+  -webkit-text-fill-color:#243c54!important;
+
+  font-size:11px!important;
+  font-weight:700!important;
+  line-height:1!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-control-bar button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+
+  color:#315a7d!important;
+  -webkit-text-fill-color:#315a7d!important;
+
+  font-size:10px!important;
+  font-weight:800!important;
+  text-transform:uppercase!important;
+}
+
+/* ============================================================
+   FILTRO MODULI
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-module-filter{
+  box-sizing:border-box!important;
+
+  display:flex!important;
+  align-items:center!important;
+  gap:6px!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:48px!important;
+
+  margin:0!important;
+  padding:6px!important;
+
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+
+  border:1px solid var(--process-border)!important;
+  border-radius:12px!important;
+
+  background:#ffffff!important;
+
+  scrollbar-width:thin!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-module-filter > button{
+  box-sizing:border-box!important;
+
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  flex:0 0 auto!important;
+
+  min-height:34px!important;
+  height:34px!important;
+
+  margin:0!important;
+  padding:0 11px!important;
+
+  border:1px solid #c8d6e3!important;
+  border-radius:9px!important;
+
+  background:#f7fafc!important;
+
+  color:#405d77!important;
+  -webkit-text-fill-color:#405d77!important;
+
+  font-size:9.5px!important;
+  font-weight:800!important;
+  line-height:1!important;
+
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
+
+  white-space:nowrap!important;
+
+  box-shadow:none!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-module-filter > button.is-active{
+  border-color:var(--process-blue-dark)!important;
+  background:var(--process-blue)!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* ============================================================
+   GRUPPI MODULO
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-groups{
+  box-sizing:border-box!important;
+
+  display:flex!important;
+  flex-direction:column!important;
+  gap:10px!important;
+
+  width:100%!important;
+  min-width:0!important;
+
+  margin:0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group{
+  box-sizing:border-box!important;
+
+  width:100%!important;
+  min-width:0!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  border:1px solid var(--process-border)!important;
+  border-radius:14px!important;
+  outline:0!important;
+
+  background:#ffffff!important;
+
+  box-shadow:0 5px 15px rgba(34,69,99,.055)!important;
+
+  overflow:hidden!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group:focus,
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group:focus-visible{
+  outline:0!important;
+}
+
+/* Intestazione modulo */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto 30px!important;
+  align-items:center!important;
+  gap:12px!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:64px!important;
+
+  margin:0!important;
+  padding:9px 13px!important;
+
+  border:0!important;
+  border-radius:0!important;
+  outline:0!important;
+
+  background:#ffffff!important;
+
+  color:var(--process-ink)!important;
+
+  box-shadow:none!important;
+
+  cursor:pointer!important;
+
+  list-style:none!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head::-webkit-details-marker{
+  display:none!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group[open] > .fmed-process-group-head{
+  border:0!important;
+  border-bottom:1px solid #d9e3ec!important;
+
+  background:#f8fbfe!important;
+
+  box-shadow:none!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head > div{
+  display:grid!important;
+  align-content:center!important;
+  gap:4px!important;
+
+  min-width:0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head > div > span{
+  margin:0!important;
+
+  color:#16749a!important;
+  -webkit-text-fill-color:#16749a!important;
+
+  font-size:9.5px!important;
+  font-weight:850!important;
+  line-height:1!important;
+
+  letter-spacing:.07em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head h3{
+  margin:0!important;
+
+  color:var(--process-ink)!important;
+  -webkit-text-fill-color:var(--process-ink)!important;
+
+  font-size:18px!important;
+  font-weight:800!important;
+  line-height:1.05!important;
+
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
+
+  white-space:normal!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head > small{
+  margin:0!important;
+
+  color:#58718a!important;
+  -webkit-text-fill-color:#58718a!important;
+
+  font-size:9.5px!important;
+  font-weight:750!important;
+  line-height:1!important;
+
+  letter-spacing:.035em!important;
+  text-align:right!important;
+  text-transform:uppercase!important;
+
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group-head > i{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  place-items:center!important;
+
+  width:28px!important;
+  min-width:28px!important;
+  height:28px!important;
+
+  margin:0!important;
+
+  border-radius:9px!important;
+
+  background:#e8f3f7!important;
+
+  color:#17799d!important;
+  -webkit-text-fill-color:#17799d!important;
+
+  font-size:11px!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  line-height:1!important;
+
+  transition:transform .16s ease!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-group[open] > .fmed-process-group-head > i{
+  transform:rotate(180deg)!important;
+}
+
+/* ============================================================
+   CATALOGO PROCESSI
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-catalog{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  gap:10px!important;
+
+  width:100%!important;
+  min-width:0!important;
+
+  margin:0!important;
+  padding:12px!important;
+
+  background:#fbfdff!important;
+}
+
+/* Con un numero dispari, l'ultima scheda occupa tutta la riga */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-catalog
+> .fmed-process-card:last-child:nth-child(odd){
+  grid-column:1 / -1!important;
+}
+
+/* ============================================================
+   SCHEDA PROCESSO
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-card{
+  box-sizing:border-box!important;
+
+  display:flex!important;
+  flex-direction:column!important;
+
+  min-width:0!important;
+  min-height:0!important;
+
+  margin:0!important;
+  padding:14px!important;
+
+  border:1px solid #d3dfea!important;
+  border-radius:14px!important;
+  outline:0!important;
+
+  background:#ffffff!important;
+
+  box-shadow:0 4px 12px rgba(31,65,94,.045)!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-card-top{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+
+  min-width:0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-card-top > div{
+  display:grid!important;
+  align-content:start!important;
+  gap:5px!important;
+
+  min-width:0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-code{
+  margin:0!important;
+
+  color:#16799e!important;
+  -webkit-text-fill-color:#16799e!important;
+
+  font-size:9.5px!important;
+  font-weight:850!important;
+  line-height:1!important;
+
+  letter-spacing:.045em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-card h3{
+  margin:0!important;
+
+  color:var(--process-ink)!important;
+  -webkit-text-fill-color:var(--process-ink)!important;
+
+  font-size:18px!important;
+  font-weight:800!important;
+  line-height:1.15!important;
+
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
+
+  white-space:normal!important;
+  overflow-wrap:break-word!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-purpose{
+  margin:7px 0 10px!important;
+
+  color:#40586f!important;
+  -webkit-text-fill-color:#40586f!important;
+
+  font-size:11.5px!important;
+  font-weight:650!important;
+  line-height:1.35!important;
+
+  letter-spacing:.01em!important;
+  text-transform:none!important;
+
+  white-space:normal!important;
+  overflow-wrap:break-word!important;
+}
+
+/* Tre riquadri informativi */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-guide{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  gap:8px!important;
+
+  min-width:0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-guide > div{
+  box-sizing:border-box!important;
+
+  display:grid!important;
+  align-content:start!important;
+  gap:5px!important;
+
+  min-width:0!important;
+  padding:10px!important;
+
+  border:1px solid #e3ebf2!important;
+  border-radius:10px!important;
+
+  background:#f5f8fb!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-guide span{
+  margin:0!important;
+
+  color:#52677c!important;
+  -webkit-text-fill-color:#52677c!important;
+
+  font-size:9.5px!important;
+  font-weight:850!important;
+  line-height:1!important;
+
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-guide p{
+  margin:0!important;
+
+  color:#314a63!important;
+  -webkit-text-fill-color:#314a63!important;
+
+  font-size:11px!important;
+  font-weight:650!important;
+  line-height:1.38!important;
+
+  letter-spacing:0!important;
+  text-transform:none!important;
+
+  white-space:normal!important;
+  overflow-wrap:break-word!important;
+}
+
+/* ============================================================
+   CHIP E PASSAGGI
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+:is(
+  .fmed-process-card-flags,
+  .fmed-process-steps
+){
+  display:flex!important;
+  align-items:center!important;
+  flex-wrap:wrap!important;
+  gap:6px!important;
+
+  min-width:0!important;
+
+  margin:8px 0 0!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+:is(
+  .fmed-process-card-flags,
+  .fmed-process-steps
+) > span{
+  box-sizing:border-box!important;
+
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:4px!important;
+
+  min-height:26px!important;
+
+  margin:0!important;
+  padding:0 8px!important;
+
+  border:0!important;
+  border-radius:999px!important;
+
+  background:#eaf3f8!important;
+
+  color:#17779a!important;
+  -webkit-text-fill-color:#17779a!important;
+
+  font-size:9.5px!important;
+  font-weight:800!important;
+  line-height:1!important;
+
+  letter-spacing:.015em!important;
+  text-transform:uppercase!important;
+
+  white-space:nowrap!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-steps > span > b{
+  margin:0!important;
+
+  color:inherit!important;
+  -webkit-text-fill-color:inherit!important;
+
+  font:inherit!important;
+  line-height:1!important;
+}
+
+/* ============================================================
+   STATO PROCESSO
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-status{
+  box-sizing:border-box!important;
+
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  flex:0 0 auto!important;
+
+  min-height:28px!important;
+
+  margin:0!important;
+  padding:0 10px!important;
+
+  border-radius:999px!important;
+
+  font-size:9.5px!important;
+  font-weight:850!important;
+  line-height:1!important;
+
+  letter-spacing:.035em!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+
+  white-space:nowrap!important;
+}
+
+/* ============================================================
+   PIEDE SCHEDA
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-card-footer{
+  box-sizing:border-box!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+
+  min-width:0!important;
+
+  margin-top:auto!important;
+  padding-top:10px!important;
+
+  border-top:1px solid #dbe5ed!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-card-footer > small{
+  min-width:0!important;
+  margin:0!important;
+
+  color:#61778d!important;
+  -webkit-text-fill-color:#61778d!important;
+
+  font-size:9.5px!important;
+  font-weight:700!important;
+  line-height:1.2!important;
+
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-card-footer > button{
+  flex:0 0 auto!important;
+
+  min-width:124px!important;
+  min-height:38px!important;
+  height:38px!important;
+
+  margin:0!important;
+  padding:0 13px!important;
+
+  border:1px solid #c2d2df!important;
+  border-radius:9px!important;
+
+  background:#f5f9fc!important;
+
+  color:#36556f!important;
+  -webkit-text-fill-color:#36556f!important;
+
+  font-size:9.5px!important;
+  font-weight:800!important;
+  line-height:1!important;
+
+  letter-spacing:.03em!important;
+  text-transform:uppercase!important;
+
+  box-shadow:0 3px 8px rgba(35,68,97,.06)!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-card-footer > button:not(:disabled){
+  border-color:var(--process-blue-dark)!important;
+  background:var(--process-blue)!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+}
+
+/* ============================================================
+   REGISTRO PROCESSI
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-history{
+  box-sizing:border-box!important;
+
+  width:100%!important;
+  min-width:0!important;
+
+  margin:0!important;
+  padding:12px!important;
+
+  border:1px solid var(--process-border)!important;
+  border-radius:14px!important;
+
+  background:#ffffff!important;
+
+  box-shadow:0 5px 14px rgba(32,68,99,.05)!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-history-head{
+  margin:0 0 9px!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-history-head h3{
+  margin:0!important;
+
+  color:var(--process-ink)!important;
+  -webkit-text-fill-color:var(--process-ink)!important;
+
+  font-size:18px!important;
+  font-weight:800!important;
+  line-height:1!important;
+
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-history-head p{
+  margin:5px 0 0!important;
+
+  color:var(--process-muted)!important;
+  -webkit-text-fill-color:var(--process-muted)!important;
+
+  font-size:10px!important;
+  font-weight:650!important;
+  line-height:1.25!important;
+
+  letter-spacing:.02em!important;
+  text-transform:uppercase!important;
+}
+
+/* ============================================================
+   NOTEBOOK 15 POLLICI
+   ============================================================ */
+
+@media (max-width:1440px){
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  > .fmed-process-head{
+    min-height:120px!important;
+    height:120px!important;
+    flex-basis:120px!important;
+
+    padding:16px 18px!important;
+
+    gap:18px!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-head__identity > span{
+    flex-basis:56px!important;
+
+    width:56px!important;
+    min-width:56px!important;
+    height:56px!important;
+
+    border-radius:14px!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-head__identity h1{
+    font-size:34px!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-usage{
+    min-height:58px!important;
+    padding:8px 12px!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-control-summary > *{
+    min-height:74px!important;
+    padding:9px 11px!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-control-summary strong{
+    font-size:23px!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-group-head{
+    min-height:60px!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-card{
+    padding:12px!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-card h3{
+    font-size:16px!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-guide p{
+    font-size:10.5px!important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width:1180px){
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  > .fmed-process-usage{
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:8px!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  > .fmed-process-usage > div{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-control-summary{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-control-bar{
+    grid-template-columns:minmax(0,1fr) 180px auto!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-catalog{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-catalog
+  > .fmed-process-card{
+    grid-column:auto!important;
+  }
+}
+
+@media (max-width:860px){
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  > .fmed-process-head{
+    min-height:auto!important;
+    height:auto!important;
+    flex-basis:auto!important;
+
+    align-items:flex-start!important;
+    flex-wrap:wrap!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-head__metric{
+    place-items:start!important;
+
+    flex-basis:100%!important;
+
+    min-width:0!important;
+    min-height:0!important;
+
+    padding:10px 0 0!important;
+
+    border-left:0!important;
+    border-top:1px solid rgba(255,255,255,.30)!important;
+
+    text-align:left!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-control-summary{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-control-bar{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-guide{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-group-head{
+    grid-template-columns:minmax(0,1fr) 28px!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-group-head > small{
+    grid-column:1 / -1!important;
+    grid-row:2!important;
+
+    text-align:left!important;
+  }
+}
+
+
+/* FMED PROCESSI STAMPATELLO START */
+
+/*
+   Tutta la pagina Processi utilizza:
+   - stampatello maiuscolo;
+   - peso grassetto;
+   - stile non corsivo;
+   - spaziatura professionale uniforme.
+*/
+
+html body .fmed-main-content
+.fmed-process-page :is(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span,
+  small,
+  strong,
+  b,
+  label,
+  button,
+  input,
+  select,
+  textarea,
+  option,
+  th,
+  td
+){
+  font-family:inherit!important;
+  font-style:normal!important;
+  font-weight:800!important;
+
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+}
+
+/* Testi inseriti nei campi */
+html body .fmed-main-content
+.fmed-process-page :is(
+  input,
+  textarea
+)::placeholder{
+  font-family:inherit!important;
+  font-style:normal!important;
+  font-weight:800!important;
+
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+
+  opacity:1!important;
+}
+
+/* Titoli principali */
+html body .fmed-main-content
+.fmed-process-page :is(
+  .fmed-process-head__identity h1,
+  .fmed-process-group-head h3,
+  .fmed-process-card h3,
+  .fmed-process-history-head h3,
+  .fmed-process-form-surface h3
+){
+  font-weight:850!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+}
+
+/* Soprattitoli, etichette e codici */
+html body .fmed-main-content
+.fmed-process-page :is(
+  .fmed-process-code,
+  .fmed-process-kicker,
+  .fmed-process-group-head > div > span,
+  .fmed-process-guide span,
+  .fmed-process-control-bar label > span,
+  .fmed-process-card-footer small,
+  .fmed-process-status,
+  .fmed-process-sla
+){
+  font-weight:850!important;
+  letter-spacing:.055em!important;
+  text-transform:uppercase!important;
+}
+
+/* Descrizioni lunghe: sempre maiuscole e grassetto,
+   ma con spaziatura controllata per restare leggibili */
+html body .fmed-main-content
+.fmed-process-page :is(
+  .fmed-process-head__identity p,
+  .fmed-process-purpose,
+  .fmed-process-guide p,
+  .fmed-process-usage span,
+  .fmed-process-history-head p,
+  .fmed-process-form-surface p
+){
+  font-style:normal!important;
+  font-weight:800!important;
+
+  letter-spacing:.018em!important;
+  text-transform:uppercase!important;
+}
+
+/* Pulsanti, filtri e controlli */
+html body .fmed-main-content
+.fmed-process-page :is(
+  button,
+  input,
+  select,
+  textarea,
+  option
+){
+  font-style:normal!important;
+  font-weight:800!important;
+
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+}
+
+/* Tabelle */
+html body .fmed-main-content
+.fmed-process-page :is(
+  th,
+  td
+){
+  font-style:normal!important;
+  font-weight:800!important;
+
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
+}
+
+/* Chip e passaggi */
+html body .fmed-main-content
+.fmed-process-page :is(
+  .fmed-process-card-flags,
+  .fmed-process-steps,
+  .fmed-process-required-tags
+) > span{
+  font-style:normal!important;
+  font-weight:850!important;
+
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+}
+
+/* FMED PROCESSI STAMPATELLO END */
+/* FMED PROCESSI PROFESSIONAL SYSTEM END */
+
+
+/* FMED PROCESSI REGISTRO VISUAL START */
+
+/* ============================================================
+   REGISTRO PROCESSI
+   Sezione operativa reale, collegata alla tabella sottostante.
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+> .fmed-process-history{
+  box-sizing:border-box!important;
+
+  display:block!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:150px!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  border:1px solid #ccd9e5!important;
+  border-radius:14px!important;
+  outline:0!important;
+
+  background:#ffffff!important;
+
+  box-shadow:
+    0 5px 15px rgba(32,68,99,.06)!important;
+
+  overflow:hidden!important;
+}
+
+/* Testata della sezione */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-history-head{
+  box-sizing:border-box!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:16px!important;
+
+  width:100%!important;
+  min-width:0!important;
+  min-height:66px!important;
+
+  margin:0!important;
+  padding:12px 16px!important;
+
+  border:0!important;
+  border-bottom:1px solid #d7e2eb!important;
+  border-radius:0!important;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f7fafc 100%
+    )!important;
+
+  box-shadow:none!important;
+}
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-history-head > div{
+  display:grid!important;
+  align-content:center!important;
+  gap:5px!important;
+
+  min-width:0!important;
+}
+
+/* Titolo */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-history-head h3{
+  margin:0!important;
+
+  color:#142f4d!important;
+  -webkit-text-fill-color:#142f4d!important;
+
+  font-size:18px!important;
+  font-style:normal!important;
+  font-weight:850!important;
+  line-height:1!important;
+
+  letter-spacing:.04em!important;
+  text-transform:uppercase!important;
+
+  white-space:normal!important;
+}
+
+/* Descrizione */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-history-head p{
+  margin:0!important;
+
+  color:#61778b!important;
+  -webkit-text-fill-color:#61778b!important;
+
+  font-size:10px!important;
+  font-style:normal!important;
+  font-weight:800!important;
+  line-height:1.25!important;
+
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+
+  white-space:normal!important;
+}
+
+/* ============================================================
+   CONTENITORE TABELLA
+   ============================================================ */
+
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table-wrap{
+  box-sizing:border-box!important;
+
+  display:block!important;
+
+  width:100%!important;
+  min-width:0!important;
+  max-height:520px!important;
+
+  margin:0!important;
+  padding:0!important;
+
+  border:0!important;
+  border-radius:0!important;
+
+  background:#ffffff!important;
+
+  overflow:auto!important;
+
+  scrollbar-width:thin!important;
+  scrollbar-color:#9eb4c7 #edf3f7!important;
+}
+
+/* Tabella */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table{
+  box-sizing:border-box!important;
+
+  width:100%!important;
+  min-width:1180px!important;
+
+  margin:0!important;
+
+  border-collapse:separate!important;
+  border-spacing:0!important;
+
+  background:#ffffff!important;
+
+  table-layout:auto!important;
+}
+
+/* Intestazioni */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table thead th{
+  position:sticky!important;
+  top:0!important;
+  z-index:2!important;
+
+  box-sizing:border-box!important;
+
+  min-height:42px!important;
+
+  padding:11px 10px!important;
+
+  border:0!important;
+  border-bottom:1px solid #ccd9e5!important;
+
+  background:#eef5fa!important;
+
+  color:#45617a!important;
+  -webkit-text-fill-color:#45617a!important;
+
+  font-size:9.5px!important;
+  font-style:normal!important;
+  font-weight:850!important;
+  line-height:1.15!important;
+
+  letter-spacing:.045em!important;
+  text-align:left!important;
+  text-transform:uppercase!important;
+  vertical-align:middle!important;
+
+  white-space:nowrap!important;
+}
+
+/* Celle */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table tbody td{
+  box-sizing:border-box!important;
+
+  min-height:48px!important;
+
+  padding:10px!important;
+
+  border:0!important;
+  border-bottom:1px solid #e1e8ef!important;
+
+  background:#ffffff!important;
+
+  color:#263e56!important;
+  -webkit-text-fill-color:#263e56!important;
+
+  font-size:10.5px!important;
+  font-style:normal!important;
+  font-weight:800!important;
+  line-height:1.3!important;
+
+  letter-spacing:.025em!important;
+  text-align:left!important;
+  text-transform:uppercase!important;
+  vertical-align:middle!important;
+
+  overflow-wrap:break-word!important;
+}
+
+/* Riga alternata */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table tbody tr:nth-child(even) td{
+  background:#f9fbfd!important;
+}
+
+/* Evidenziazione al passaggio */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table tbody tr:hover td{
+  background:#eef6fc!important;
+}
+
+/* Ultima colonna azioni */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table th:last-child,
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table td:last-child{
+  width:120px!important;
+
+  text-align:right!important;
+  white-space:nowrap!important;
+}
+
+/* Pulsante apertura riga */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table td:last-child button,
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-row-open{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+
+  min-width:96px!important;
+  min-height:34px!important;
+  height:34px!important;
+
+  margin:0!important;
+  padding:0 10px!important;
+
+  border:1px solid #194f85!important;
+  border-radius:8px!important;
+
+  background:#28659f!important;
+
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+
+  font-size:9px!important;
+  font-style:normal!important;
+  font-weight:850!important;
+  line-height:1!important;
+
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+
+  box-shadow:
+    0 3px 8px rgba(40,101,159,.15)!important;
+}
+
+/* Nessun risultato */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-empty{
+  box-sizing:border-box!important;
+
+  min-height:100px!important;
+
+  padding:34px 16px!important;
+
+  background:#fafcfd!important;
+
+  color:#667b8e!important;
+  -webkit-text-fill-color:#667b8e!important;
+
+  font-size:11px!important;
+  font-style:normal!important;
+  font-weight:800!important;
+  line-height:1.3!important;
+
+  letter-spacing:.035em!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+}
+
+/* Stati e avanzamento dentro il registro */
+html body .fmed-main-content
+.fmed-process-page:not(.is-workspace-open)
+.fmed-process-table :is(
+  .fmed-process-status,
+  .fmed-process-sla
+){
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  min-height:27px!important;
+
+  padding:0 9px!important;
+
+  border-radius:999px!important;
+
+  font-size:9px!important;
+  font-style:normal!important;
+  font-weight:850!important;
+  line-height:1!important;
+
+  letter-spacing:.035em!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+
+  white-space:nowrap!important;
+}
+
+/* Notebook */
+@media (max-width:1440px){
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-history-head{
+    min-height:60px!important;
+    padding:10px 13px!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-history-head h3{
+    font-size:17px!important;
+  }
+
+  html body .fmed-main-content
+  .fmed-process-page:not(.is-workspace-open)
+  .fmed-process-table tbody td{
+    padding:9px 8px!important;
+    font-size:10px!important;
+  }
+}
+
+/* FMED PROCESSI REGISTRO VISUAL END */

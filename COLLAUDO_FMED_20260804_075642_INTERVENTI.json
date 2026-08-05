@@ -1,0 +1,49 @@
+﻿{
+    "run_id":  "COLLAUDO_FMED_20260804_075642",
+    "avviato_il":  "2026-08-04T07:56:42.3367824+02:00",
+    "terminato_il":  "2026-08-04T07:57:51.7189103+02:00",
+    "backend":  "https://fmed-backend.onrender.com",
+    "esito_finale":  "FALLITO",
+    "messaggio_finale":  "Creazione intervento fallita.",
+    "record_temporaneo":  "TEST_INT_20260804075750",
+    "cleanup_eseguito":  false,
+    "cleanup_riuscito":  false,
+    "controlli":  [
+                      {
+                          "timestamp":  "2026-08-04T07:57:47.6399717+02:00",
+                          "nome":  "Backend disponibile",
+                          "esito":  "OK",
+                          "dettaglio":  "Health check HTTP 200."
+                      },
+                      {
+                          "timestamp":  "2026-08-04T07:57:49.0124820+02:00",
+                          "nome":  "Login FMED",
+                          "esito":  "OK",
+                          "dettaglio":  "Accesso eseguito come fabio.carratu@marilab.it, ruolo Admin."
+                      },
+                      {
+                          "timestamp":  "2026-08-04T07:57:49.0172294+02:00",
+                          "nome":  "Autorizzazione cleanup",
+                          "esito":  "OK",
+                          "dettaglio":  "Ruolo Admin verificato."
+                      },
+                      {
+                          "timestamp":  "2026-08-04T07:57:50.4857647+02:00",
+                          "nome":  "Valori catalogo esistenti",
+                          "esito":  "OK",
+                          "dettaglio":  "Sede \u0027Marilab Center\u0027 e attivitÃ  \u0027MANUTENZIONE PREVENTIVA / VERIFICA PARTICOLARE\u0027 recuperate da record esistenti."
+                      },
+                      {
+                          "timestamp":  "2026-08-04T07:57:50.7875849+02:00",
+                          "nome":  "Validazione campi obbligatori",
+                          "esito":  "ATTESO",
+                          "dettaglio":  "Il backend ha rifiutato correttamente l\u0027intervento senza data ultimo intervento (HTTP 422)."
+                      },
+                      {
+                          "timestamp":  "2026-08-04T07:57:51.6988599+02:00",
+                          "nome":  "Creazione intervento",
+                          "esito":  "ERRORE",
+                          "dettaglio":  "HTTP 500 Internal Server Error"
+                      }
+                  ]
+}
