@@ -1241,8 +1241,8 @@ html body .fmed-main-content[data-fmed-page="Scadenze"]
   order:1!important;
 
   width:100%!important;
-  min-height:96px!important;
-  height:96px!important;
+  min-height:76px!important;
+  height:76px!important;
 
   margin:0!important;
   padding:16px 20px!important;
@@ -1453,7 +1453,7 @@ html body .fmed-main-content[data-fmed-page="Scadenze"]
   display:table-row!important;
   position:static!important;
 
-  height:96px!important;
+  height:76px!important;
 
   visibility:visible!important;
   opacity:1!important;
@@ -1475,7 +1475,7 @@ html body .fmed-main-content[data-fmed-page="Scadenze"]
 .p0-register td{
   box-sizing:border-box!important;
 
-  height:96px!important;
+  height:76px!important;
   padding:14px!important;
 
   border-bottom:1px solid #dce5ed!important;
@@ -1804,8 +1804,8 @@ html body .fmed-main-content[data-fmed-page="Scadenze"]
 .p0-register tbody tr,
 html body .fmed-main-content[data-fmed-page="Scadenze"]
 .p0-register td{
-  height:96px!important;
-  min-height:96px!important;
+  height:76px!important;
+  min-height:76px!important;
 }
 
 /* SCADENZE COLONNE ED EXCEL END */
