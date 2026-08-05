@@ -1,0 +1,32 @@
+{
+  "product": "FMED",
+  "release": "REV0",
+  "build": "FMED_REV0",
+  "frontend": true,
+  "backend_required": "FMED REV0",
+  "target_domain": "fmed512clean.vercel.app",
+  "features": [
+    "Una sola cascata CSS runtime con contrasto, icone, tabelle e pagine operative integrate",
+    "Sidebar petrolio compatta, icone SVG leggibili, testi funzione visibili e Mover tra i collegamenti normali",
+    "Tema chiaro unico senza selettori o logica per il tema scuro",
+    "Login desktop a due pannelli con autenticazione invariata",
+    "Griglie Dashboard, KPI, filtri, tabelle, Strumenti, Cataloghi e Processi ottimizzate per notebook da 15 pollici a zoom 100%",
+    "Dashboard aperta automaticamente dopo il login; pagina Scopo e Missione rimossa",
+    "Codice inventario generato dal backend sul Censimento reale e confermato nel wizard Nuovo Asset",
+    "Tipologie, reparti, locazioni e altri valori operativi reali integrati nei menu anche con cataloghi parziali",
+    "Relazioni Master Data obsolete o basate su alias non bloccano più il processo Nuovo Asset",
+    "Tipologie Asset e Categorie Asset mantenute in cataloghi, stato, controlli, riepilogo e payload separati",
+    "Famiglia unica di icone SVG e azioni tabellari compatte, leggibili e accessibili",
+    "Processi raccolti in pannelli espandibili senza rimuovere funzioni operative",
+    "Nuovo e modifica Asset, Interventi, Infrastrutture, analisi, documentazione e Process Engine aperti come pagine complete nell’area FMED",
+    "Eliminati contenitori overlay, dialog, drawer e prompt numerici dalle procedure operative",
+    "Flusso verticale naturale nell’area principale; scroll interno riservato alle sole tabelle e raccolte documentali estese",
+    "Stili statici centralizzati in CSS; nel JSX restano soltanto valori determinati dal runtime",
+    "Letture e scritture backend protette da sessione FMED e ruolo",
+    "Menu operativi alimentati dai Master Data senza dati pilota o implementazioni locali obsolete",
+    "Gate di rilascio visuale e funzionale obbligatorio prima di dev e build"
+  ],
+  "description": "Base unica ufficiale FMED: funzioni e struttura preservate, codice operativo consolidato e regola di sostituzione integrale obbligatoria.",
+  "version": "REV0",
+  "label": "FMED REV0"
+}
