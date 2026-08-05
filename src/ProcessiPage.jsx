@@ -485,11 +485,6 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
 
       <ProcessiControls loading={loading} onRefresh={loadData} stats={stats} search={search} onSearchChange={setSearch} statusFilter={statusFilter} onStatusFilterChange={setStatusFilter} />
 
-      <div className="fmed-process-module-filter">
-        <button type="button" className={moduleFilter === "TUTTI" ? "is-active" : ""} onClick={() => setModuleFilter("TUTTI")}>Tutti i moduli</button>
-        {groupedProcesses.map(([moduleCode]) => <button type="button" key={moduleCode} className={moduleFilter === moduleCode ? "is-active" : ""} onClick={() => setModuleFilter(moduleCode)}>{MODULE_LABELS[moduleCode] || moduleCode.replaceAll("_", " ")}</button>)}
-      </div>
-
       {message && <div className="fmed-process-message">{message}</div>}
 
       <section className="fmed-process-lifecycle" aria-label="Come si gestiscono i processi">
