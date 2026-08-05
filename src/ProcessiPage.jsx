@@ -492,27 +492,6 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
 
       {message && <div className="fmed-process-message">{message}</div>}
 
-      <div className="fmed-process-groups">
-        {groupedProcesses.filter(([moduleCode]) => moduleFilter === "TUTTI" || moduleFilter === moduleCode).map(([moduleCode, moduleProcesses]) => <details className="fmed-process-group" key={moduleCode}>
-          <summary className="fmed-process-group-head"><div><span>Modulo</span><h3>{MODULE_LABELS[moduleCode] || moduleCode.replaceAll("_", " ")}</h3></div><small>{moduleProcesses.length} processi disponibili</small><i aria-hidden="true">⌄</i></summary>
-          <div className="fmed-process-catalog">{moduleProcesses.map((process) => {
-              const code = String(process.codice || "").toUpperCase();const last = lastByProcess.get(code);const guide = processGuidance(process);
-              return <article className="fmed-process-card" key={code}>
-              <div className="fmed-process-card-top"><div><span className="fmed-process-code">{code.replaceAll("_", " ")}</span><h3>{process.titolo}</h3></div>{last && <span className={`fmed-process-status is-${String(last.stato || "APERTO").toLowerCase()}`}>{STATUS_LABELS[String(last.stato || "").toUpperCase()] || last.stato}</span>}</div>
-              <p className="fmed-process-purpose">{process.descrizione}</p>
-              <div className="fmed-process-guide">
-                <div><span>Quando usarlo</span><p>{guide.when}</p></div>
-                <div><span>Cosa serve</span><p>{guide.needs}</p></div>
-                <div className="is-result"><span>Risultato finale</span><p>{guide.result}</p></div>
-              </div>
-              <div className="fmed-process-card-flags"><span>{String(process.modalita || "GENERICO").toUpperCase() === "DEDICATO" ? "Procedura dedicata" : "Workflow completo"}</span>{process.governa_ciclo && <span>Collegato ai cicli</span>}{process.approvazione_obbligatoria && <span>Approvazione richiesta</span>}{process.allegati_obbligatori?.length > 0 && <span>{process.allegati_obbligatori.length} evidenze</span>}</div>
-              <div className="fmed-process-steps">{(process.passi || []).map((step, index) => <span key={step}><b>{index + 1}</b>{humanizeStep(step)}</span>)}</div>
-              <div className="fmed-process-card-footer"><small>{last ? `Ultimo aggiornamento: ${formatDate(last.aggiornato_il || last.created_at)}` : "Nessuna esecuzione registrata"}</small><button type="button" onClick={() => launchProcess(process)} disabled={!canManage}>{processActionLabel(process)}</button></div>
-            </article>;
-            })}</div>
-        </details>)}
-      </div>
-
       <section className="fmed-process-lifecycle" aria-label="Come si gestiscono i processi">
         <div className="fmed-process-lifecycle-copy"><span>COME FUNZIONA</span><h3>Ogni processo ha un ciclo chiaro</h3><p>Apri il processo, completa checklist e documenti, usa <strong>Gestisci</strong> per avanzare di stato e, quando è concluso, archivialo. L’archivio conserva integralmente lo storico; non è necessario eliminare il processo.</p></div>
         <div className="fmed-process-lifecycle-steps"><span><b>1</b>Aperto</span><i>→</i><span><b>2</b>In corso</span><i>→</i><span><b>3</b>Completato</span><i>→</i><span><b>4</b>Archiviato</span></div>
@@ -541,8 +520,6 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
               })}
         </tbody></table></div>
       </section>
-
-      {launching && <ProcessEnginePage process={launching} apiBaseUrl={apiBaseUrl} onClose={() => setLaunching(null)} onCreated={(execution, warning) => {setLaunching(null);setMessage(warning || "Processo aperto correttamente.");if (execution?.id) refreshSelected(execution.id);loadData();}} />}
 
       {selectedExecution && <section className="fmed-workspace-page fmed-process-detail-page">
         <div className="fmed-workspace-surface fmed-process-detail is-complete">
