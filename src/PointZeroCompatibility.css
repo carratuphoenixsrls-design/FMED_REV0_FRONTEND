@@ -1,0 +1,812 @@
+/*
+ * FMED REV0 · Punto 0 · strato di compatibilità completo
+ * Applica il nuovo linguaggio grafico alle funzioni stabili senza modificare
+ * API, stato, permessi, routing, Supabase o contratti operativi.
+ */
+
+.fmed-app-root.fmed-shell-premium {
+  --p0-shell: #edf3f9;
+  --p0-surface: #ffffff;
+  --p0-surface-soft: #f5f8fc;
+  --p0-ink: #10233f;
+  --p0-copy: #314760;
+  --p0-muted: #71839a;
+  --p0-line: #d5e0ec;
+  --p0-line-strong: #bdcde0;
+  --p0-blue: #286fcf;
+  --p0-blue-dark: #174b94;
+  --p0-cyan: #1688a4;
+  --p0-amber: #d17805;
+  --p0-rose: #c52e67;
+  --p0-violet: #7446d3;
+  --p0-gold: #a87a00;
+  --p0-shadow: 0 18px 52px rgba(17, 48, 88, .12);
+  --p0-shadow-soft: 0 9px 28px rgba(17, 48, 88, .075);
+  --p0-radius-xl: 26px;
+  --p0-radius-lg: 20px;
+  --p0-radius-md: 14px;
+  color: var(--p0-ink);
+  background: var(--p0-shell);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content {
+  padding: 0;
+  background:
+    radial-gradient(circle at 93% 1%, rgba(66, 139, 226, .13), transparent 27%),
+    linear-gradient(180deg, #f4f8fc 0%, var(--p0-shell) 100%);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content > :is(
+  .fmed-dashboard-page,
+  .fmed-costi-page,
+  .fmed-export-page,
+  .fmed-sharepoint-page,
+  .core-standard-page,
+  .fmed-audit-page,
+  .fmed-wizard-page
+) {
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+  padding: clamp(14px, 1.35vw, 24px);
+}
+
+/* Sidebar definitiva */
+.fmed-app-root.fmed-shell-premium aside.fmed-side-rail,
+body[data-theme="light"] .fmed-app-root.fmed-shell-premium aside.fmed-side-rail {
+  background:
+    radial-gradient(circle at 30% 105%, rgba(69, 166, 205, .16), transparent 34%),
+    linear-gradient(180deg, #18314f 0%, #11253d 52%, #0b192b 100%);
+  border-right: 1px solid rgba(205, 229, 242, .13);
+  box-shadow: 16px 0 48px rgba(6, 25, 48, .16);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-sidebar-wordmark-title {
+  font-size: 18px;
+  letter-spacing: .08em;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn {
+  min-height: 39px;
+  border-radius: 11px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-side-menu-btn.is-active {
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--menu-accent, #7aa8df) 23%, transparent),
+    color-mix(in srgb, var(--menu-accent, #7aa8df) 8%, transparent));
+  box-shadow: inset 3px 0 0 var(--menu-accent, #7aa8df), 0 8px 20px rgba(0,0,0,.08);
+}
+
+/* Dashboard / ingresso operativo */
+.fmed-dashboard-page {
+  display: grid;
+  gap: 14px;
+}
+
+.fmed-dashboard-page .fmed-dashboard-header {
+  min-height: 150px;
+  padding: clamp(24px, 2.5vw, 40px);
+  border: 0;
+  border-radius: var(--p0-radius-xl);
+  color: #fff;
+  background:
+    radial-gradient(circle at 82% -15%, rgba(255,255,255,.23) 0 105px, transparent 106px),
+    linear-gradient(118deg, #173f87 0%, #286fcf 60%, #4e9aee 130%);
+  box-shadow: 0 20px 54px rgba(28, 87, 164, .20);
+}
+
+.fmed-dashboard-page .fmed-dashboard-title {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.fmed-dashboard-page .fmed-dashboard-title-icon {
+  width: 58px;
+  height: 58px;
+  padding: 15px;
+  border: 1px solid rgba(255,255,255,.38);
+  border-radius: 18px;
+  background: rgba(255,255,255,.12);
+}
+
+.fmed-dashboard-page .fmed-dashboard-title h2 {
+  margin: 0 0 5px;
+  color: #fff;
+  font-size: clamp(31px, 3vw, 46px);
+  line-height: 1;
+  letter-spacing: -.045em;
+}
+
+.fmed-dashboard-page .fmed-dashboard-title p,
+.fmed-dashboard-page .fmed-dashboard-live {
+  color: rgba(255,255,255,.84);
+}
+
+.fmed-dashboard-page .fmed-dashboard-header-actions button {
+  border-color: rgba(255,255,255,.34);
+  color: #fff;
+  background: rgba(255,255,255,.12);
+}
+
+.fmed-dashboard-page .fmed-dashboard-button-primary {
+  background: #fff;
+  color: #205da8;
+}
+
+.fmed-dashboard-page :is(
+  .fmed-operational-automation-strip,
+  .fmed-dashboard-panel,
+  .fmed-dashboard-warning
+) {
+  border: 1px solid var(--p0-line);
+  border-radius: var(--p0-radius-lg);
+  background: #fff;
+  box-shadow: var(--p0-shadow-soft);
+}
+
+.fmed-dashboard-page .fmed-dashboard-quick-actions {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0,1fr));
+  gap: 10px;
+}
+
+.fmed-dashboard-page .fmed-dashboard-quick-actions > button {
+  min-height: 76px;
+  border: 1px solid var(--p0-line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 7px 20px rgba(17,48,88,.055);
+}
+
+.fmed-dashboard-page .fmed-dashboard-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0,1fr));
+  gap: 10px;
+}
+
+.fmed-dashboard-page .fmed-dashboard-kpi {
+  min-height: 118px;
+  padding: 17px;
+  border: 1px solid var(--p0-line);
+  border-radius: 17px;
+  background: #fff;
+  box-shadow: var(--p0-shadow-soft);
+}
+
+.fmed-dashboard-page .fmed-dashboard-kpi-copy strong {
+  color: var(--p0-ink);
+  font-size: 29px;
+}
+
+/* Pagine operative Punto 0 */
+.p0-asset-page,
+.p0-operations,
+.p0-governance {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.p0-asset-page button,
+.p0-operations button,
+.p0-governance button {
+  font-family: inherit;
+}
+
+.p0-asset-page :is(input,select,textarea),
+.p0-operations :is(input,select,textarea),
+.p0-governance :is(input,select,textarea) {
+  box-sizing: border-box;
+  color: var(--p0-ink);
+}
+
+/* Scheda cespite: inspector laterale realmente contestuale */
+.fmed-app-root.fmed-shell-premium .fmed-asset-detail-workspace {
+  position: fixed;
+  z-index: 160;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  left: auto;
+  width: min(780px, calc(100vw - var(--fmed-sidebar-w, 220px) - 36px));
+  max-width: calc(100vw - 28px);
+  min-width: min(560px, calc(100vw - 28px));
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid #b9cbe0;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: -22px 0 80px rgba(10, 37, 75, .27);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-asset-detail-workspace .fmed-asset-detail-page {
+  width: 100%;
+  max-width: none;
+  min-height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 18px;
+  border: 0;
+  border-radius: 0;
+  background: #f4f7fb;
+  box-shadow: none;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-asset-detail-close {
+  position: sticky;
+  z-index: 8;
+  top: 0;
+  display: flex;
+  width: max-content;
+  margin: 0 0 12px auto;
+  border: 1px solid #c4d3e4;
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 7px 18px rgba(17,48,88,.10);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-asset-hero-card {
+  min-height: 112px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 0;
+  border-radius: 18px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(255,255,255,.17) 0 70px, transparent 71px),
+    linear-gradient(122deg, #174282, #2b77d2 72%, #4b98ea);
+  box-shadow: 0 16px 36px rgba(24, 83, 156, .18);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-asset-hero-card :is(
+  .fmed-style-asset-hero-label,
+  .fmed-style-asset-hero-code,
+  h1,h2,h3,p,span,strong,small
+) {
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-asset-hero-code {
+  font-size: clamp(25px, 2.6vw, 38px);
+  font-weight: 800;
+  letter-spacing: -.035em;
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-style-asset-actions-panel,
+  .fmed-style-edit-panel,
+  .fmed-style-asset-detail-card,
+  .fmed-style-predictive-panel,
+  .fmed-style-recommendation-panel,
+  .fmed-style-intervention-history-card,
+  .fmed-style-link-edit-box
+) {
+  margin-top: 12px;
+  border: 1px solid var(--p0-line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(17,48,88,.06);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-asset-actions-panel {
+  padding: 15px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-asset-actions-group-block {
+  padding: 13px 0;
+  border-top: 1px solid #e3eaf2;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-asset-actions-group-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 7px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-asset-action-btn {
+  min-height: 52px;
+  display: grid;
+  grid-template-columns: 30px minmax(0,1fr);
+  gap: 8px;
+  align-items: center;
+  padding: 7px 9px;
+  border: 1px solid #cdd9e7;
+  border-radius: 11px;
+  background: #fff;
+  color: #294c72;
+  text-align: left;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-asset-action-icon {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  padding: 7px;
+  border-radius: 9px;
+  color: #286fcf;
+  background: #edf5ff;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-asset-action-btn-primary {
+  border-color: transparent;
+  color: #fff;
+  background: linear-gradient(135deg, #1b57aa, #2f7cda);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-asset-action-btn-primary .fmed-style-asset-action-icon {
+  color: #fff;
+  background: rgba(255,255,255,.15);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-edit-panel {
+  padding: 16px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 10px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-edit-field {
+  min-width: 0;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-edit-field :is(input,select,textarea) {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #c8d6e6;
+  border-radius: 10px;
+  background: #fbfcfe;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-style-edit-actions {
+  position: sticky;
+  z-index: 5;
+  bottom: -16px;
+  margin: 14px -16px -16px;
+  padding: 12px 16px;
+  border-top: 1px solid #d9e3ee;
+  background: rgba(255,255,255,.97);
+}
+
+/* Workspaces secondari e terziari */
+.fmed-app-root.fmed-shell-premium .fmed-workspace-page:not(.fmed-asset-detail-workspace) {
+  position: fixed;
+  z-index: 150;
+  inset: 10px 10px 10px calc(var(--fmed-sidebar-w, 220px) + 10px);
+  overflow: auto;
+  padding: 16px;
+  background: #eef3f8;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-workspace-page:not(.fmed-asset-detail-workspace) > .fmed-workspace-surface {
+  width: 100%;
+  min-height: 100%;
+  max-width: none;
+  padding: clamp(18px, 2vw, 30px);
+  border: 1px solid var(--p0-line-strong);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 28px 90px rgba(8,28,55,.20);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-workspace-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  border: 1px solid #c6d5e5;
+  border-radius: 10px;
+  color: #2a507d;
+  background: #fff;
+}
+
+/* Interventi: modali e schede */
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-intervention-workspace,
+  .fmed-new-intervention-workspace,
+  .fmed-edit-intervention-workspace,
+  .fmed-intervention-form-page
+) {
+  --p0-form-accent: var(--p0-amber);
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-intervention-workspace,
+  .fmed-new-intervention-workspace,
+  .fmed-edit-intervention-workspace
+) .fmed-workspace-surface {
+  background:
+    linear-gradient(180deg, #fff 0 150px, #f5f8fc 150px 100%);
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-intervention-form-header,
+  .fmed-new-intervention-header,
+  .fmed-edit-intervention-header
+) {
+  margin: -1px -1px 18px;
+  padding: 24px;
+  border: 0;
+  border-radius: 20px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 84% -20%, rgba(255,255,255,.23) 0 90px, transparent 91px),
+    linear-gradient(118deg, #7c3702, #b25f05 60%, #ed9b22 130%);
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-intervention-form-header,
+  .fmed-new-intervention-header,
+  .fmed-edit-intervention-header
+) :is(h1,h2,h3,p,span,strong,small) {
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-intervention-form-grid,
+  .fmed-intervention-editor-grid,
+  .fmed-new-intervention-grid
+) {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 12px;
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-intervention-form-card,
+  .fmed-intervention-selected-summary,
+  .fmed-intervention-asset-picker,
+  .fmed-intervention-editor-section
+) {
+  border: 1px solid var(--p0-line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: var(--p0-shadow-soft);
+}
+
+/* Wizard nuovo asset */
+.fmed-app-root.fmed-shell-premium .fmed-wizard-page {
+  display: grid;
+  gap: 14px;
+  background:
+    radial-gradient(circle at 92% 2%, rgba(50,126,218,.14), transparent 28%),
+    #edf3f9;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-wizard-page :is(
+  .fmed-wizard-header,
+  .new-asset-wizard-header
+) {
+  padding: clamp(22px, 2.5vw, 38px);
+  border: 0;
+  border-radius: 24px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 84% -20%, rgba(255,255,255,.22) 0 100px, transparent 101px),
+    linear-gradient(120deg, #173f87, #286fcf 68%, #4b98ea);
+  box-shadow: 0 18px 48px rgba(27,86,163,.19);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-wizard-page :is(
+  .fmed-wizard-header,
+  .new-asset-wizard-header
+) :is(h1,h2,h3,p,span,strong,small) {
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-wizard-page :is(
+  fieldset,
+  .fmed-wizard-card,
+  .new-asset-wizard-card,
+  [class*="wizard-section"]
+) {
+  border: 1px solid var(--p0-line);
+  border-radius: 17px;
+  background: #fff;
+  box-shadow: var(--p0-shadow-soft);
+}
+
+/* Cataloghi, qualità e audit */
+.fmed-app-root.fmed-shell-premium :is(.core-standard-page,.fmed-audit-page) {
+  display: grid;
+  gap: 14px;
+}
+
+.fmed-app-root.fmed-shell-premium :is(.core-standard-head,.fmed-audit-head) {
+  min-height: 132px;
+  padding: 26px;
+  border: 0;
+  border-radius: 24px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 84% -20%, rgba(255,255,255,.20) 0 94px, transparent 95px),
+    linear-gradient(118deg, #7b1948, #bd326e 62%, #e45c92 130%);
+  box-shadow: 0 18px 46px rgba(168,42,96,.18);
+}
+
+.fmed-app-root.fmed-shell-premium :is(.core-standard-head,.fmed-audit-head) :is(h1,h2,h3,p,span,strong,small) {
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .core-standard-card,
+  .core-standard-panel,
+  .fmed-audit-card,
+  .fmed-data-quality-panel,
+  .core-rules-panel
+) {
+  border: 1px solid var(--p0-line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--p0-shadow-soft);
+}
+
+/* Costi */
+.fmed-app-root.fmed-shell-premium .fmed-costi-page {
+  display: grid;
+  gap: 14px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-costi-hero {
+  min-height: 142px;
+  padding: 28px;
+  border: 0;
+  border-radius: 24px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 84% -20%, rgba(255,255,255,.20) 0 94px, transparent 95px),
+    linear-gradient(118deg, #4a277f, #7545be 62%, #a17ae2 130%);
+  box-shadow: 0 18px 46px rgba(92,53,150,.19);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-costi-hero :is(h1,h2,h3,p,span,strong,small) {
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-costi-page :is(
+  .fmed-costi-card,
+  .fmed-costi-summary,
+  .fmed-costi-chart-card,
+  .fmed-costi-ranking-card
+) {
+  border: 1px solid var(--p0-line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--p0-shadow-soft);
+}
+
+/* Report */
+.fmed-app-root.fmed-shell-premium .fmed-export-page {
+  display: grid;
+  gap: 14px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-report-hero {
+  min-height: 140px;
+  padding: 28px;
+  border: 0;
+  border-radius: 24px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 84% -20%, rgba(255,255,255,.20) 0 94px, transparent 95px),
+    linear-gradient(118deg, #174b67, #24718d 62%, #4ba2be 130%);
+  box-shadow: 0 18px 46px rgba(31,100,124,.18);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-report-hero :is(h1,h2,h3,p,span,strong,small) {
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-export-page :is(
+  .fmed-report-card,
+  .fmed-report-advanced,
+  .fmed-style-export-filter-box,
+  .fmed-report-audit-card
+) {
+  border: 1px solid var(--p0-line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--p0-shadow-soft);
+}
+
+/* SharePoint */
+.fmed-app-root.fmed-shell-premium .fmed-sharepoint-page {
+  display: grid;
+  gap: 14px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-sharepoint-page :is(
+  .fmed-sharepoint-head,
+  .fmed-sharepoint-hero
+) {
+  min-height: 138px;
+  padding: 27px;
+  border: 0;
+  border-radius: 24px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 84% -20%, rgba(255,255,255,.20) 0 94px, transparent 95px),
+    linear-gradient(118deg, #154f7c, #287fbe 62%, #56a7dd 130%);
+  box-shadow: 0 18px 46px rgba(32,103,153,.18);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-sharepoint-page :is(
+  .fmed-sharepoint-head,
+  .fmed-sharepoint-hero
+) :is(h1,h2,h3,p,span,strong,small) {
+  color: #fff;
+  -webkit-text-fill-color: currentColor;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-sharepoint-page :is(
+  .fmed-sharepoint-card,
+  .fmed-sharepoint-panel,
+  .fmed-sharepoint-browser
+) {
+  border: 1px solid var(--p0-line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--p0-shadow-soft);
+}
+
+/* Tabelle, form e stati in tutte le pagine */
+.fmed-app-root.fmed-shell-premium .fmed-main-content table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content thead th {
+  background: #f1f5f9;
+  color: #566b83;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content tbody td {
+  border-color: #e3eaf2;
+  color: #2b405a;
+  background: #fff;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content tbody tr:hover td {
+  background: #f8fbfe;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(input,select,textarea) {
+  border-color: #c8d6e6;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(input,select,textarea):focus {
+  border-color: #6c9fda;
+  box-shadow: 0 0 0 3px rgba(47,118,232,.12);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-main-content button:focus-visible,
+.fmed-app-root.fmed-shell-premium .fmed-main-content a:focus-visible,
+.fmed-app-root.fmed-shell-premium .fmed-main-content :is(input,select,textarea):focus-visible {
+  outline: 3px solid rgba(47,118,232,.32);
+  outline-offset: 2px;
+}
+
+/* Login */
+body :is(.fmed-login-page,.fmed-login-shell,.fmed-auth-page) {
+  background:
+    radial-gradient(circle at 85% 10%, rgba(63,139,230,.18), transparent 28%),
+    linear-gradient(135deg, #e9f1f9, #f8fbfe);
+}
+
+body :is(.fmed-login-card,.fmed-auth-card,.fmed-login-panel) {
+  border: 1px solid #c7d6e6;
+  border-radius: 24px;
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 28px 90px rgba(10,37,75,.20);
+}
+
+/* Densità notebook 15" */
+@media (max-width: 1440px) {
+  .fmed-dashboard-page .fmed-dashboard-header,
+  .p0-operations__head {
+    min-height: 118px;
+    padding: 20px 22px;
+  }
+
+  .fmed-dashboard-page .fmed-dashboard-kpi-grid {
+    grid-template-columns: repeat(3, minmax(0,1fr));
+  }
+
+  .fmed-dashboard-page .fmed-dashboard-quick-actions {
+    grid-template-columns: repeat(3, minmax(0,1fr));
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-style-asset-actions-group-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+
+@media (max-width: 1180px) {
+  .fmed-app-root.fmed-shell-premium .fmed-asset-detail-workspace {
+    width: calc(100vw - var(--fmed-sidebar-collapsed-w, 64px) - 24px);
+    min-width: 0;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-workspace-page:not(.fmed-asset-detail-workspace) {
+    left: calc(var(--fmed-sidebar-collapsed-w, 64px) + 8px);
+  }
+
+  .fmed-app-root.fmed-shell-premium :is(
+    .fmed-intervention-form-grid,
+    .fmed-intervention-editor-grid,
+    .fmed-new-intervention-grid
+  ) {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .fmed-dashboard-page .fmed-dashboard-kpi-grid,
+  .fmed-dashboard-page .fmed-dashboard-quick-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-asset-detail-workspace {
+    inset: 6px;
+    width: auto;
+    max-width: none;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-style-edit-grid,
+  .fmed-app-root.fmed-shell-premium :is(
+    .fmed-intervention-form-grid,
+    .fmed-intervention-editor-grid,
+    .fmed-new-intervention-grid
+  ) {
+    grid-template-columns: 1fr;
+  }
+
+  .fmed-app-root.fmed-shell-premium .fmed-style-asset-actions-group-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1800px) {
+  .fmed-app-root.fmed-shell-premium .fmed-main-content > :is(
+    .fmed-dashboard-page,
+    .fmed-costi-page,
+    .fmed-export-page,
+    .fmed-sharepoint-page,
+    .core-standard-page,
+    .fmed-audit-page,
+    .fmed-wizard-page
+  ) {
+    padding: 26px 30px;
+  }
+
+  .fmed-dashboard-page .fmed-dashboard-header,
+  .p0-operations__head {
+    min-height: 168px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fmed-app-root.fmed-shell-premium *,
+  .fmed-app-root.fmed-shell-premium *::before,
+  .fmed-app-root.fmed-shell-premium *::after {
+    animation-duration: .01ms;
+    animation-iteration-count: 1;
+    transition-duration: .01ms;
+  }
+}

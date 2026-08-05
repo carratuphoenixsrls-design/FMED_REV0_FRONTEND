@@ -1,0 +1,227 @@
+﻿===== AUDIT COMPLETO PAGINE PROCESSI =====
+
+===== fmed-process-create-page =====
+src\components\ProcessEnginePage.css · RIGA 1: .fmed-process-create-page {
+src\components\ProcessEnginePage.jsx · RIGA 158: <section className="fmed-workspace-page fmed-process-create-page" aria-labelledby="fmed-process-page-title">
+src\FmedProcessWorkspaceSystem.css · RIGA 131: .fmed-process-create-page .fmed-process-form-surface > form{
+src\FmedProcessWorkspaceSystem.css · RIGA 142: .fmed-process-create-page .fmed-process-form-grid{
+src\FmedProcessWorkspaceSystem.css · RIGA 151: .fmed-process-create-page .fmed-process-form-field{
+src\FmedProcessWorkspaceSystem.css · RIGA 160: .fmed-process-create-page .fmed-process-form-field.is-wide{
+src\FmedProcessWorkspaceSystem.css · RIGA 165: .fmed-process-create-page .fmed-process-form-field > span{
+src\FmedProcessWorkspaceSystem.css · RIGA 175: .fmed-process-create-page .fmed-process-form-grid :is(input,select){
+src\FmedProcessWorkspaceSystem.css · RIGA 188: .fmed-process-create-page .fmed-process-form-grid textarea{
+src\FmedProcessWorkspaceSystem.css · RIGA 202: .fmed-process-create-page .fmed-process-form-requirements{
+src\FmedProcessWorkspaceSystem.css · RIGA 216: .fmed-process-create-page .fmed-process-form-requirements > strong{
+src\FmedProcessWorkspaceSystem.css · RIGA 224: .fmed-process-create-page .fmed-process-form-requirements > span{
+src\FmedProcessWorkspaceSystem.css · RIGA 238: .fmed-process-create-page .fmed-process-form-surface form > footer{
+src\FmedProcessWorkspaceSystem.css · RIGA 250: .fmed-process-create-page .fmed-process-form-surface form > footer button{
+src\FmedProcessWorkspaceSystem.css · RIGA 347: .fmed-process-create-page .fmed-process-form-grid{
+
+===== fmed-process-detail-page =====
+src\FmedProcessWorkspaceSystem.css · RIGA 258: .fmed-process-detail-page .fmed-process-detail-grid{
+src\FmedProcessWorkspaceSystem.css · RIGA 266: .fmed-process-detail-page .fmed-process-detail-grid > article{
+src\FmedProcessWorkspaceSystem.css · RIGA 280: .fmed-process-detail-page .fmed-process-detail-section{
+src\FmedProcessWorkspaceSystem.css · RIGA 291: .fmed-process-detail-page .fmed-process-detail-section-head{
+src\FmedProcessWorkspaceSystem.css · RIGA 301: .fmed-process-detail-page .fmed-process-governance-grid{
+src\FmedProcessWorkspaceSystem.css · RIGA 309: .fmed-process-detail-page .fmed-process-attachment-form{
+src\FmedProcessWorkspaceSystem.css · RIGA 317: .fmed-process-detail-page .fmed-process-transition-note{
+src\FmedProcessWorkspaceSystem.css · RIGA 324: .fmed-process-detail-page .fmed-process-transition-note textarea{
+src\FmedProcessWorkspaceSystem.css · RIGA 335: .fmed-process-detail-page .fmed-process-transition-actions{
+src\FmedProcessWorkspaceSystem.css · RIGA 352: .fmed-process-detail-page :is(
+src\FmedProcessWorkspaceSystem.css · RIGA 360: .fmed-process-detail-page .fmed-process-attachment-form{
+src\ProcessiPage.jsx · RIGA 416: {selectedExecution && <section className="fmed-workspace-page fmed-process-detail-page">
+
+===== fmed-process-form-surface =====
+src\components\ProcessEnginePage.css · RIGA 5: .fmed-process-form-surface {
+src\components\ProcessEnginePage.css · RIGA 11: .fmed-process-form-surface > header {
+src\components\ProcessEnginePage.css · RIGA 22: .fmed-process-form-surface > header span {
+src\components\ProcessEnginePage.css · RIGA 29: .fmed-process-form-surface > header h3 {
+src\components\ProcessEnginePage.css · RIGA 35: .fmed-process-form-surface > header p {
+src\components\ProcessEnginePage.css · RIGA 55: .fmed-process-form-surface form {
+src\components\ProcessEnginePage.css · RIGA 149: .fmed-process-form-surface footer {
+src\components\ProcessEnginePage.css · RIGA 161: .fmed-process-form-surface footer button {
+src\components\ProcessEnginePage.css · RIGA 172: .fmed-process-form-surface footer button.is-secondary {
+src\components\ProcessEnginePage.css · RIGA 178: .fmed-process-form-surface footer button:disabled {
+src\components\ProcessEnginePage.jsx · RIGA 159: <div className="fmed-workspace-surface fmed-process-form-surface">
+src\FmedControlStandardSystem.css · RIGA 3848: .fmed-process-form-surface h3
+src\FmedControlStandardSystem.css · RIGA 3881: .fmed-process-form-surface p
+src\FmedProcessWorkspaceSystem.css · RIGA 16: .fmed-process-form-surface,
+src\FmedProcessWorkspaceSystem.css · RIGA 37: .fmed-process-form-surface,
+src\FmedProcessWorkspaceSystem.css · RIGA 56: .fmed-process-form-surface,
+src\FmedProcessWorkspaceSystem.css · RIGA 66: .fmed-process-form-surface,
+src\FmedProcessWorkspaceSystem.css · RIGA 77: .fmed-process-form-surface,
+src\FmedProcessWorkspaceSystem.css · RIGA 87: .fmed-process-form-surface,
+src\FmedProcessWorkspaceSystem.css · RIGA 98: .fmed-process-form-surface,
+src\FmedProcessWorkspaceSystem.css · RIGA 131: .fmed-process-create-page .fmed-process-form-surface > form{
+src\FmedProcessWorkspaceSystem.css · RIGA 238: .fmed-process-create-page .fmed-process-form-surface form > footer{
+src\FmedProcessWorkspaceSystem.css · RIGA 250: .fmed-process-create-page .fmed-process-form-surface form > footer button{
+
+===== fmed-process-detail =====
+src\FmedControlStandardSystem.css · RIGA 104: html body .fmed-main-content .fmed-process-detail > header button,
+src\FmedControlStandardSystem.css · RIGA 105: html body .fmed-main-content .fmed-process-detail-section-head button,
+src\FmedControlStandardSystem.css · RIGA 345: html body .fmed-main-content .fmed-process-detail > header button{
+src\FmedProcessWorkspaceSystem.css · RIGA 17: .fmed-process-detail
+src\FmedProcessWorkspaceSystem.css · RIGA 38: .fmed-process-detail
+src\FmedProcessWorkspaceSystem.css · RIGA 57: .fmed-process-detail
+src\FmedProcessWorkspaceSystem.css · RIGA 67: .fmed-process-detail
+src\FmedProcessWorkspaceSystem.css · RIGA 78: .fmed-process-detail
+src\FmedProcessWorkspaceSystem.css · RIGA 88: .fmed-process-detail
+src\FmedProcessWorkspaceSystem.css · RIGA 99: .fmed-process-detail
+src\FmedProcessWorkspaceSystem.css · RIGA 111: .fmed-process-detail > header button
+src\FmedProcessWorkspaceSystem.css · RIGA 258: .fmed-process-detail-page .fmed-process-detail-grid{
+src\FmedProcessWorkspaceSystem.css · RIGA 266: .fmed-process-detail-page .fmed-process-detail-grid > article{
+src\FmedProcessWorkspaceSystem.css · RIGA 280: .fmed-process-detail-page .fmed-process-detail-section{
+src\FmedProcessWorkspaceSystem.css · RIGA 291: .fmed-process-detail-page .fmed-process-detail-section-head{
+src\FmedProcessWorkspaceSystem.css · RIGA 301: .fmed-process-detail-page .fmed-process-governance-grid{
+src\FmedProcessWorkspaceSystem.css · RIGA 309: .fmed-process-detail-page .fmed-process-attachment-form{
+src\FmedProcessWorkspaceSystem.css · RIGA 317: .fmed-process-detail-page .fmed-process-transition-note{
+src\FmedProcessWorkspaceSystem.css · RIGA 324: .fmed-process-detail-page .fmed-process-transition-note textarea{
+src\FmedProcessWorkspaceSystem.css · RIGA 335: .fmed-process-detail-page .fmed-process-transition-actions{
+src\FmedProcessWorkspaceSystem.css · RIGA 352: .fmed-process-detail-page :is(
+src\FmedProcessWorkspaceSystem.css · RIGA 353: .fmed-process-detail-grid,
+src\FmedProcessWorkspaceSystem.css · RIGA 360: .fmed-process-detail-page .fmed-process-attachment-form{
+src\FmedUnifiedVisualSystem.css · RIGA 495: .fmed-process-group,.fmed-process-card,.fmed-process-detail-section,
+src\FmedVisualClean.css · RIGA 490: .fmed-process-group,.fmed-process-card,.fmed-process-detail-section,
+src\ProcessiPage.css · RIGA 241: .fmed-process-detail-section-head {
+src\ProcessiPage.css · RIGA 405: .fmed-process-detail {
+src\ProcessiPage.css · RIGA 411: .fmed-process-detail > header {
+src\ProcessiPage.css · RIGA 425: .fmed-process-detail > header h3 {
+src\ProcessiPage.css · RIGA 430: .fmed-process-detail > header p {
+src\ProcessiPage.css · RIGA 436: .fmed-process-detail > header button {
+src\ProcessiPage.css · RIGA 447: .fmed-process-detail-grid {
+src\ProcessiPage.css · RIGA 453: .fmed-process-detail-grid article,
+src\ProcessiPage.css · RIGA 454: .fmed-process-detail-section {
+src\ProcessiPage.css · RIGA 461: .fmed-process-detail-grid article {
+src\ProcessiPage.css · RIGA 465: .fmed-process-detail-grid :is(span, strong) {
+src\ProcessiPage.css · RIGA 469: .fmed-process-detail-grid span,
+src\ProcessiPage.css · RIGA 470: .fmed-process-detail-section-head span {
+src\ProcessiPage.css · RIGA 476: .fmed-process-detail-grid strong {
+src\ProcessiPage.css · RIGA 481: .fmed-process-detail-section-head h4 {
+src\ProcessiPage.css · RIGA 551: .fmed-process-detail-section-head button,
+src\ProcessiPage.css · RIGA 573: .fmed-process-detail-grid,
+src\ProcessiPage.jsx · RIGA 416: {selectedExecution && <section className="fmed-workspace-page fmed-process-detail-page">
+src\ProcessiPage.jsx · RIGA 417: <div className="fmed-workspace-surface fmed-process-detail is-complete">
+src\ProcessiPage.jsx · RIGA 420: <div className="fmed-process-detail-grid">
+src\ProcessiPage.jsx · RIGA 427: <section className="fmed-process-detail-section"><div className="fmed-process-detail-section-head"><div><span>Governance</span><h4>Responsabilità e tempi</h4></div><button type="button" onClick={saveGovernance} disabled={detailBusy}>Salva</button></div>
+src\ProcessiPage.jsx · RIGA 436: <section className="fmed-process-detail-section"><div className="fmed-process-detail-section-head"><div><span>Controlli obbligatori</span><h4>Checklist del processo</h4></div><small>{requirements.checklist_completa ? "Completa" : "Da completare"}</small></div>
+src\ProcessiPage.jsx · RIGA 443: <section className="fmed-process-detail-section"><div className="fmed-process-detail-section-head"><div><span>Evidenze</span><h4>Allegati e documenti richiesti</h4></div><small>{requirements.allegati_completi ? "Completi" : `${requirements.allegati_mancanti?.length || 0} mancanti`}</small></div>
+src\ProcessiPage.jsx · RIGA 454: {requirements.approvazione_obbligatoria && <section className="fmed-process-detail-section"><div className="fmed-process-detail-section-head"><div><span>Controllo finale</span><h4>Approvazione</h4></div><small>{humanizeStep(approval?.stato || selectedExecution.approvazione_stato)}</small></div>
+src\ProcessiPage.jsx · RIGA 461: <section className="fmed-process-detail-section is-timeline"><div className="fmed-process-detail-section-head"><div><span>Audit</span><h4>Storico del processo</h4></div><small>{detail.eventi.length} eventi</small></div><div className="fmed-process-timeline">{detail.eventi.slice().reverse().map((event) => <article key={event.id}><span>{formatDate(event.creato_il)}</span><strong>{humanizeStep(event.evento)}</strong><p>{event.nota || `${humanizeStep(event.stato_da)} → ${humanizeStep(event.stato_a)}`}</p></article>)}</div></section>
+
+===== fmed-workspace-page =====
+src\components\alerts\AlertMailPage.jsx · RIGA 58: <section className="fmed-workspace-page fmed-alert-mail-page" aria-labelledby="fmed-alert-page-title">
+src\components\ProcessEnginePage.jsx · RIGA 158: <section className="fmed-workspace-page fmed-process-create-page" aria-labelledby="fmed-process-page-title">
+src\pages\DashboardPage.jsx · RIGA 174: {drilldown && <section className="fmed-workspace-page fmed-dashboard-drilldown-page" aria-label={drilldown.title}><div className="fmed-workspace-surface fmed-dashboard-drilldown-surface"><div className="fmed-dashboard-drilldown-header"><div><h3>{drilldown.title}</h3><p>{drilldown.rows.length} record</p></div><button type="button" className="fmed-workspace-back" onClick={() => setDrilldown(null)}>Torna indietro</button></div><div className="fmed-dashboard-drilldown-list">{drilldown.rows.slice(0, 100).map((row, index) => <article key={`${row.tipo}-${row.id}-${index}`}><span className={`fmed-dashboard-record-type ${row.tipo === "SCADENZA" ? "deadline" : "process"}`}>{row.tipo}</span><div><strong>{row.titolo}</strong><small>{row.riferimento} · {row.sede} · {row.modulo_label}</small></div><div className="fmed-dashboard-record-status"><b>{humanize(row.stato)}</b><small>{formatDate(row.scadenza)}</small></div></article>)}{!drilldown.rows.length && <div className="fmed-dashboard-empty">Nessun record.</div>}</div><div className="fmed-dashboard-drilldown-footer"><button type="button" className="fmed-dashboard-button-secondary" onClick={() => downloadCsv(drilldown.rows)}>Esporta</button><button type="button" className="fmed-dashboard-button-primary" onClick={() => { setPagina(drilldown.page || "Dashboard"); setDrilldown(null); }}>Apri modulo</button></div></div></section>}
+src\AssetDetailCompact.css · RIGA 2292: .fmed-app-root.fmed-shell-premium section.fmed-workspace-page.fmed-intervention-workspace { box-sizing:border-box; width:100%; max-width:none; height:calc(100dvh - 8px); min-height:0; margin:0; padding:8px; overflow:hidden; }
+src\AssetDetailCompact.css · RIGA 2307: .fmed-app-root.fmed-shell-premium section.fmed-workspace-page.fmed-intervention-workspace { box-sizing:border-box; width:100%; max-width:none; height:calc(100dvh - 8px); min-height:0; margin:0; padding:0; overflow:hidden; background:#fff; }
+src\FmedApp.jsx · RIGA 7645: {nuovoInterventoOpen && <section className="fmed-workspace-page fmed-intervention-workspace fmed-new-intervention-page" aria-labelledby="fmed-new-intervention-title">
+src\FmedApp.jsx · RIGA 7793: {modificaInterventoOpen && <section className="fmed-workspace-page fmed-intervention-workspace fmed-edit-intervention-page" aria-labelledby="fmed-edit-intervention-title">
+src\FmedApp.jsx · RIGA 7922: {nuovoCespiteOpen && <section className="fmed-workspace-page fmed-asset-capture-workspace" aria-labelledby="fmed-asset-capture-title">
+src\FmedApp.jsx · RIGA 8354: {gestioneDizionariOpen && <section className="fmed-workspace-page fmed-dictionary-workspace" aria-labelledby="fmed-dictionary-workspace-title">
+src\FmedApp.jsx · RIGA 8406: {cespiteSelezionato && <section className={["fmed-workspace-page", "fmed-asset-detail-workspace", analisiPredittivaAperta && "is-predictive-page"].filter(Boolean).join(" ")} aria-label={`SCHEDA CESPITE ${cespiteSelezionato.codicestrumento || ""}`}>
+src\FmedProcessWorkspaceSystem.css · RIGA 5: .fmed-process-page.is-workspace-open > .fmed-workspace-page{
+src\FmedUnifiedVisualSystem.css · RIGA 961: .fmed-app-root.fmed-shell-premium .fmed-main-content[data-fmed-workspace-open="true"] > :not(.fmed-workspace-page),
+src\FmedUnifiedVisualSystem.css · RIGA 967: ).is-workspace-open > :not(.fmed-workspace-page) {
+src\FmedUnifiedVisualSystem.css · RIGA 987: .fmed-app-root.fmed-shell-premium .fmed-workspace-page {
+src\FmedUnifiedVisualSystem.css · RIGA 4169: .fmed-workspace-page,
+src\FmedUnifiedVisualSystem.css · RIGA 5600: .fmed-app-root.fmed-shell-premium .fmed-workspace-page:not(.fmed-asset-detail-workspace) {
+src\FmedUnifiedVisualSystem.css · RIGA 5609: .fmed-app-root.fmed-shell-premium .fmed-workspace-page:not(.fmed-asset-detail-workspace) > .fmed-workspace-surface {
+src\FmedUnifiedVisualSystem.css · RIGA 5975: .fmed-app-root.fmed-shell-premium .fmed-workspace-page:not(.fmed-asset-detail-workspace) {
+src\FmedUnifiedVisualSystem.css · RIGA 6733: .fmed-app-root.fmed-shell-premium .fmed-workspace-page:not(.fmed-asset-detail-workspace) {
+src\FmedUnifiedVisualSystem.css · RIGA 6739: .fmed-app-root.fmed-shell-premium .fmed-workspace-page:not(.fmed-asset-detail-workspace) > .fmed-workspace-surface {
+src\FmedUnifiedVisualSystem.css · RIGA 7583: .fmed-app-root.fmed-shell-premium .fmed-workspace-page:not(.fmed-asset-detail-workspace) > .fmed-workspace-surface {
+src\FmedUnifiedVisualSystem.css · RIGA 8319: /* FMED: sfondo chiaro riposante */ .fmed-app-root.fmed-shell-premium .fmed-main-content.fmed-style-main{background:#eef3f7!important}.fmed-app-root.fmed-shell-premium :is(.fmed-workspace-page,section.fmed-asset-detail-workspace){background:#eef3f7!important}.fmed-app-root.fmed-shell-premium .fmed-workspace-page>.fmed-workspace-surface,.fmed-app-root.fmed-shell-premium section.fmed-asset-detail-workspace .fmed-asset-detail-page,.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page>.fmed-intervention-workspace-surface,.fmed-app-root.fmed-shell-premium .fmed-edit-intervention-page>.fmed-intervention-workspace-surface,.fmed-app-root.fmed-shell-premium .fmed-asset-edit-page-panel{background:#f6f8fb!important}.fmed-app-root.fmed-shell-premium :is(input,select,textarea){background:#fff!important}
+src\FmedVisualClean.css · RIGA 956: .fmed-app-root.fmed-shell-premium .fmed-main-content[data-fmed-workspace-open="true"] > :not(.fmed-workspace-page),
+src\FmedVisualClean.css · RIGA 962: ).is-workspace-open > :not(.fmed-workspace-page) {
+src\FmedVisualClean.css · RIGA 982: .fmed-app-root.fmed-shell-premium .fmed-workspace-page {
+src\PointZeroCompatibility.css · RIGA 377: .fmed-app-root.fmed-shell-premium .fmed-workspace-page:not(.fmed-asset-detail-workspace) {
+src\PointZeroCompatibility.css · RIGA 386: .fmed-app-root.fmed-shell-premium .fmed-workspace-page:not(.fmed-asset-detail-workspace) > .fmed-workspace-surface {
+src\PointZeroCompatibility.css · RIGA 748: .fmed-app-root.fmed-shell-premium .fmed-workspace-page:not(.fmed-asset-detail-workspace) {
+src\ProcessiPage.jsx · RIGA 416: {selectedExecution && <section className="fmed-workspace-page fmed-process-detail-page">
+src\Regola0VisualSystem.css · RIGA 585: .fmed-workspace-page,
+
+===== fmed-process-form-grid =====
+src\components\ProcessEnginePage.css · RIGA 62: .fmed-process-form-grid {
+src\components\ProcessEnginePage.css · RIGA 184: .fmed-process-form-grid {
+src\components\ProcessEnginePage.jsx · RIGA 170: <div className="fmed-process-form-grid">
+src\FmedProcessWorkspaceSystem.css · RIGA 142: .fmed-process-create-page .fmed-process-form-grid{
+src\FmedProcessWorkspaceSystem.css · RIGA 175: .fmed-process-create-page .fmed-process-form-grid :is(input,select){
+src\FmedProcessWorkspaceSystem.css · RIGA 188: .fmed-process-create-page .fmed-process-form-grid textarea{
+src\FmedProcessWorkspaceSystem.css · RIGA 347: .fmed-process-create-page .fmed-process-form-grid{
+
+===== fmed-process-detail-grid =====
+src\FmedProcessWorkspaceSystem.css · RIGA 258: .fmed-process-detail-page .fmed-process-detail-grid{
+src\FmedProcessWorkspaceSystem.css · RIGA 266: .fmed-process-detail-page .fmed-process-detail-grid > article{
+src\FmedProcessWorkspaceSystem.css · RIGA 353: .fmed-process-detail-grid,
+src\ProcessiPage.css · RIGA 447: .fmed-process-detail-grid {
+src\ProcessiPage.css · RIGA 453: .fmed-process-detail-grid article,
+src\ProcessiPage.css · RIGA 461: .fmed-process-detail-grid article {
+src\ProcessiPage.css · RIGA 465: .fmed-process-detail-grid :is(span, strong) {
+src\ProcessiPage.css · RIGA 469: .fmed-process-detail-grid span,
+src\ProcessiPage.css · RIGA 476: .fmed-process-detail-grid strong {
+src\ProcessiPage.css · RIGA 573: .fmed-process-detail-grid,
+src\ProcessiPage.jsx · RIGA 420: <div className="fmed-process-detail-grid">
+
+===== fmed-process-governance-grid =====
+src\FmedProcessWorkspaceSystem.css · RIGA 301: .fmed-process-detail-page .fmed-process-governance-grid{
+src\FmedProcessWorkspaceSystem.css · RIGA 354: .fmed-process-governance-grid
+src\ProcessiPage.css · RIGA 485: .fmed-process-governance-grid {
+src\ProcessiPage.css · RIGA 574: .fmed-process-governance-grid {
+src\ProcessiPage.jsx · RIGA 428: <div className="fmed-process-governance-grid">
+
+===== fmed-process-attachment-form =====
+src\FmedControlStandardSystem.css · RIGA 106: html body .fmed-main-content .fmed-process-attachment-form button,
+src\FmedProcessWorkspaceSystem.css · RIGA 309: .fmed-process-detail-page .fmed-process-attachment-form{
+src\FmedProcessWorkspaceSystem.css · RIGA 360: .fmed-process-detail-page .fmed-process-attachment-form{
+src\ProcessiPage.css · RIGA 498: .fmed-process-attachment-form :is(input, select, button) {
+src\ProcessiPage.css · RIGA 523: .fmed-process-attachment-form {
+src\ProcessiPage.css · RIGA 552: .fmed-process-attachment-form button {
+src\ProcessiPage.jsx · RIGA 445: <form className="fmed-process-attachment-form" onSubmit={addAttachment}>
+
+===== fmed-process-history =====
+src\FmedControlStandardSystem.css · RIGA 3538: > .fmed-process-history{
+src\FmedControlStandardSystem.css · RIGA 3557: .fmed-process-history-head{
+src\FmedControlStandardSystem.css · RIGA 3563: .fmed-process-history-head h3{
+src\FmedControlStandardSystem.css · RIGA 3579: .fmed-process-history-head p{
+src\FmedControlStandardSystem.css · RIGA 3847: .fmed-process-history-head h3,
+src\FmedControlStandardSystem.css · RIGA 3880: .fmed-process-history-head p,
+src\FmedControlStandardSystem.css · RIGA 3946: > .fmed-process-history{
+src\FmedControlStandardSystem.css · RIGA 3973: .fmed-process-history-head{
+src\FmedControlStandardSystem.css · RIGA 4004: .fmed-process-history-head > div{
+src\FmedControlStandardSystem.css · RIGA 4015: .fmed-process-history-head h3{
+src\FmedControlStandardSystem.css · RIGA 4035: .fmed-process-history-head p{
+src\FmedControlStandardSystem.css · RIGA 4291: .fmed-process-history-head{
+src\FmedControlStandardSystem.css · RIGA 4298: .fmed-process-history-head h3{
+src\ProcessiPage.css · RIGA 10: .fmed-process-history,
+src\ProcessiPage.css · RIGA 341: .fmed-process-history {
+src\ProcessiPage.css · RIGA 348: .fmed-process-history-head {
+src\ProcessiPage.css · RIGA 352: .fmed-process-history h3,
+src\ProcessiPage.css · RIGA 353: .fmed-process-history p {
+src\ProcessiPage.css · RIGA 357: .fmed-process-history p {
+src\ProcessiPage.jsx · RIGA 391: <section className="fmed-process-history"><div className="fmed-process-history-head"><div><h3>Registro processi</h3><p>Stato, SLA, responsabilità, approvazione e avanzamento delle esecuzioni.</p></div></div>
+
+===== fmed-process-table-wrap =====
+src\FmedControlStandardSystem.css · RIGA 4058: .fmed-process-table-wrap{
+src\FmedUnifiedVisualSystem.css · RIGA 886: .fmed-app-root.fmed-shell-premium .fmed-main-content :is(.fmed-process-table-wrap,.fmed-sharepoint-table-wrap,[class*="table-wrap"]) {
+src\FmedVisualClean.css · RIGA 881: .fmed-app-root.fmed-shell-premium .fmed-main-content :is(.fmed-process-table-wrap,.fmed-sharepoint-table-wrap,[class*="table-wrap"]) {
+src\ProcessiPage.css · RIGA 362: .fmed-process-table-wrap {
+src\ProcessiPage.jsx · RIGA 392: <div className="fmed-process-table-wrap"><table className="fmed-process-table"><thead><tr><th>Processo</th><th>Modulo</th><th>Stato</th><th>SLA</th><th>Responsabile</th><th>Scadenza</th><th>Checklist</th><th>Approvazione</th><th /></tr></thead><tbody>
+
+===== NUOVO INTERVENTO GUIDATO =====
+src\FmedApp.jsx · RIGA 7651: <h2 id="fmed-new-intervention-title" className="fmed-style-workspace-title">{processoNuovoInterventoGuidato ? "NUOVO INTERVENTO guidato" : "NUOVO INTERVENTO"}</h2>
+
+===== TROVA E SELEZIONA IL CESPITE =====
+src\components\interventi\NewInterventionAssetPicker.jsx · RIGA 92: <h3>Trova e seleziona il cespite</h3>
+
+===== TORNA AI PROCESSI =====
+src\components\ProcessEnginePage.jsx · RIGA 166: <button type="button" className="fmed-process-form-close" onClick={onClose} disabled={busy}>Torna ai processi</button>
+src\ProcessiPage.jsx · RIGA 418: <header><div><span>{MODULE_LABELS[String(selectedExecution.modulo || selectedExecution.riferimento_modulo || "").toUpperCase()] || "Process Engine"}</span><h3>{selectedExecution.titolo || processByCode.get(String(selectedExecution.processo || "").toUpperCase())?.titolo || selectedExecution.processo}</h3><p>{selectedExecution.sede || "Sede non indicata"}{selectedExecution.riferimento_id ? ` · ${selectedExecution.riferimento_id}` : ""}</p></div><button type="button" onClick={() => setSelectedExecution(null)}>Torna ai processi</button></header>
+
+===== CONTROLLI WORKFLOW =====
+src\components\ProcessEnginePage.jsx · RIGA 276: <strong>Controlli workflow</strong>
+src\FmedProcessWorkspaceSystem.css · RIGA 200: /* Controlli workflow */
+
+===== REGISTRO PROCESSI =====
+src\FmedControlStandardSystem.css · RIGA 3533: REGISTRO PROCESSI
+src\FmedControlStandardSystem.css · RIGA 3940: REGISTRO PROCESSI
+src\ProcessiPage.jsx · RIGA 391: <section className="fmed-process-history"><div className="fmed-process-history-head"><div><h3>Registro processi</h3><p>Stato, SLA, responsabilità, approvazione e avanzamento delle esecuzioni.</p></div></div>
