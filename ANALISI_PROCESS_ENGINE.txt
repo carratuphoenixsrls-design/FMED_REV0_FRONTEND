@@ -1,0 +1,483 @@
+=== PROCESS ENGINE JSX ===
+    1: import { useEffect, useMemo, useState } from "react";
+    2: import CanonicalSelect from "./masterdata/CanonicalSelect.jsx";
+    3: import { fmedAuthHeaders, fmedFetchJson, fmedSession } from "../fmedApiClient.js";
+    4: 
+    5: const EMPTY_FORM = {
+    6:   titolo: "",
+    7:   sede: "",
+    8:   riferimento_id: "",
+    9:   attivita: "",
+   10:   priorita: "MEDIA",
+   11:   responsabile: "",
+   12:   sostituto: "",
+   13:   approvatore: "",
+   14:   scadenza: "",
+   15:   descrizione: "",
+   16: };
+   17: 
+   18: function actor() {
+   19:   const session = fmedSession();
+   20:   return String(session?.email || session?.nome || "FMED_USER");
+   21: }
+   22: 
+   23: function elementLabel(moduleCode) {
+   24:   const key = String(moduleCode || "").toUpperCase();
+   25:   if (key === "INFRASTRUTTURE") return "Codice infrastruttura o impianto";
+   26:   if (key === "ASSET") return "Codice cespite";
+   27:   if (key === "SICUREZZA_81_08") return "Documento o adempimento collegato";
+   28:   if (key === "FORMAZIONE") return "Corso, gruppo o riferimento";
+   29:   if (key === "SORVEGLIANZA_SANITARIA") return "Gruppo o riferimento amministrativo";
+   30:   if (key === "CONTRATTI") return "Contratto o servizio collegato";
+   31:   return "Elemento o riferimento collegato";
+   32: }
+   33: 
+   34: export default function ProcessEnginePage({ process, apiBaseUrl, onClose, onCreated }) {
+   35:   const [form, setForm] = useState(EMPTY_FORM);
+   36:   const [busy, setBusy] = useState(false);
+   37:   const [message, setMessage] = useState("");
+   38:   const [elementOptions, setElementOptions] = useState([]);
+   39:   const [elementsLoading, setElementsLoading] = useState(false);
+   40: 
+   41:   useEffect(() => {
+   42:     setForm({
+   43:       ...EMPTY_FORM,
+   44:       titolo: process?.titolo || "",
+   45:       priorita: "MEDIA",
+   46:     });
+   47:     setMessage("");
+   48:   }, [process]);
+   49: 
+   50:   useEffect(() => {
+   51:     let cancelled = false;
+   52:     async function loadElements() {
+   53:       const moduleCode = String(process?.modulo || "").toUpperCase();
+   54:       setElementsLoading(true);
+   55:       setElementOptions([]);
+   56:       try {
+   57:         let options = [];
+   58:         if (moduleCode === "INFRASTRUTTURE") {
+   59:           const rows = await fmedFetchJson("/infrastrutture", { apiBaseUrl, retries: 1, timeoutMs: 60000 });
+   60:           options = (Array.isArray(rows) ? rows : []).map(row => ({
+   61:             value: String(row?.codice || row?.id || "").trim(),
+   62:             label: [row?.codice || `INF-${row?.id || ""}`, row?.descrizione, row?.sede].filter(Boolean).join(" · "),
+   63:             sede: row?.sede || "",
+   64:           })).filter(item => item.value);
+   65:         } else if (moduleCode === "ASSET") {
+   66:           const rows = await fmedFetchJson("/censimento?limit=5000", { apiBaseUrl, retries: 1, timeoutMs: 60000 });
+   67:           options = (Array.isArray(rows) ? rows : []).map(row => ({
+   68:             value: String(row?.codicestrumento || row?.codice_strumento || row?.codice || "").trim(),
+   69:             label: [row?.codicestrumento || row?.codice_strumento, row?.tipologia, row?.costruttore, row?.modello, row?.sede].filter(Boolean).join(" · "),
+   70:             sede: row?.sede || "",
+   71:           })).filter(item => item.value);
+   72:         } else if (moduleCode === "SICUREZZA_81_08") {
+   73:           const data = await fmedFetchJson("/sicurezza-81-08/documenti?max_items=5000", { apiBaseUrl, retries: 1, timeoutMs: 60000 });
+   74:           options = (Array.isArray(data?.documenti) ? data.documenti : []).map(row => ({
+   75:             value: String(row?.id || row?.percorso || row?.nome || "").trim(),
+   76:             label: [row?.nome, row?.categoria_label || row?.categoria, row?.sede_label || row?.sede].filter(Boolean).join(" · "),
+   77:             sede: row?.sede_label || row?.sede || "",
+   78:           })).filter(item => item.value);
+   79:         }
+   80:         if (!cancelled) setElementOptions(options);
+   81:       } catch {
+   82:         if (!cancelled) setElementOptions([]);
+   83:       } finally {
+   84:         if (!cancelled) setElementsLoading(false);
+   85:       }
+   86:     }
+   87:     loadElements();
+   88:     return () => { cancelled = true; };
+   89:   }, [process, apiBaseUrl]);
+   90: 
+   91:   const activityDictionary = useMemo(
+   92:     () => process?.attivita_dizionario || (process?.modulo === "INFRASTRUTTURE" ? "ATTIVITA_INFRASTRUTTURE" : "ATTIVITA_PROCESSO"),
+   93:     [process],
+   94:   );
+   95: 
+   96:   if (!process) return null;
+   97: 
+   98:   function update(field, value) {
+   99:     setForm(previous => ({ ...previous, [field]: value }));
+  100:   }
+  101: 
+  102:   async function submit(event) {
+  103:     event.preventDefault();
+  104:     if (!form.sede) {
+  105:       setMessage("Seleziona la sede.");
+  106:       return;
+  107:     }
+  108:     if (process.richiede_elemento && !form.riferimento_id.trim()) {
+  109:       setMessage("Inserisci o seleziona l'elemento interessato.");
+  110:       return;
+  111:     }
+  112:     setBusy(true);
+  113:     setMessage("");
+  114:     try {
+  115:       const data = await fmedFetchJson("/process-engine/esecuzioni", {
+  116:         apiBaseUrl,
+  117:         method: "POST",
+  118:         headers: fmedAuthHeaders(),
+  119:         retries: 1,
+  120:         timeoutMs: 60000,
+  121:         body: JSON.stringify({
+  122:           processo: process.codice,
+  123:           titolo: form.titolo || process.titolo,
+  124:           sede: form.sede,
+  125:           priorita: form.priorita,
+  126:           responsabile: form.responsabile || null,
+  127:           assegnato_a: form.responsabile || null,
+  128:           sostituto: form.sostituto || null,
+  129:           approvatore: form.approvatore || null,
+  130:           scadenza: form.scadenza || null,
+  131:           attivita: form.attivita || null,
+  132:           descrizione: form.descrizione || null,
+  133:           riferimento_modulo: process.modulo,
+  134:           riferimento_id: form.riferimento_id.trim() || null,
+  135:           avviato_da: actor(),
+  136:           dati: {
+  137:             sede: form.sede,
+  138:             elemento_codice: form.riferimento_id.trim() || null,
+  139:             attivita: form.attivita || null,
+  140:             descrizione: form.descrizione || null,
+  141:             responsabile: form.responsabile || null,
+  142:             sostituto: form.sostituto || null,
+  143:             approvatore: form.approvatore || null,
+  144:             priorita: form.priorita,
+  145:             scadenza: form.scadenza || null,
+  146:           },
+  147:         }),
+  148:       });
+  149:       onCreated?.(data?.esecuzione, data?.warning);
+  150:     } catch (error) {
+  151:       setMessage(error?.message || "Creazione processo non riuscita.");
+  152:     } finally {
+  153:       setBusy(false);
+  154:     }
+  155:   }
+  156: 
+  157:   return (
+  158:     <section className="fmed-workspace-page fmed-process-create-page" aria-labelledby="fmed-process-page-title">
+  159:       <div className="fmed-workspace-surface fmed-process-form-surface">
+  160:         <header>
+  161:           <div>
+  162:             <span>{process.modulo?.replaceAll("_", " ")}</span>
+  163:             <h3 id="fmed-process-page-title">{process.titolo}</h3>
+  164:             <p>{process.descrizione}</p>
+  165:           </div>
+  166:           <button type="button" className="fmed-process-form-close" onClick={onClose} disabled={busy}>Torna ai processi</button>
+  167:         </header>
+  168: 
+  169:         <form onSubmit={submit}>
+  170:           <div className="fmed-process-form-grid">
+  171:             <label className="fmed-process-form-field is-wide">
+  172:               <span>Titolo operativo</span>
+  173:               <input value={form.titolo} onChange={event => update("titolo", event.target.value)} maxLength={300} required />
+  174:             </label>
+  175: 
+  176:             <CanonicalSelect
+  177:               label="Sede"
+  178:               field="sede"
+  179:               dictionary="SEDI"
+  180:               value={form.sede}
+  181:               onChange={value => update("sede", value)}
+  182:               apiBaseUrl={apiBaseUrl}
+  183:               form={form}
+  184:               allowQuickAdd
+  185:             />
+  186: 
+  187:             {(process.richiede_elemento || elementOptions.length > 0) && <label className="fmed-process-form-field">
+  188:               <span>{elementLabel(process.modulo)}</span>
+  189:               <select
+  190:                 value={form.riferimento_id}
+  191:                 onChange={event => {
+  192:                   const selected = elementOptions.find(item => item.value === event.target.value);
+  193:                   setForm(previous => ({
+  194:                     ...previous,
+  195:                     riferimento_id: event.target.value,
+  196:                     sede: selected?.sede || previous.sede,
+  197:                   }));
+  198:                 }}
+  199:                 required={Boolean(process.richiede_elemento)}
+  200:                 disabled={elementsLoading}
+  201:               >
+  202:                 <option value="">{elementsLoading ? "Caricamento elementi…" : "Seleziona dal catalogo FMED"}</option>
+  203:                 {elementOptions.map(item => <option key={item.value} value={item.value}>{item.label}</option>)}
+  204:               </select>
+  205:               {!elementsLoading && process.richiede_elemento && elementOptions.length === 0 && <small>Nessun elemento disponibile nel catalogo del modulo. Crealo prima tramite il Quick Add o il modulo dedicato.</small>}
+  206:             </label>}
+  207: 
+  208:             <CanonicalSelect
+  209:               label="Attività standard"
+  210:               field="attivita"
+  211:               dictionary={activityDictionary}
+  212:               value={form.attivita}
+  213:               onChange={value => update("attivita", value)}
+  214:               apiBaseUrl={apiBaseUrl}
+  215:               form={{ ...form, ambito: process.modulo }}
+  216:               allowQuickAdd
+  217:             />
+  218: 
+  219:             <CanonicalSelect
+  220:               label="Priorità"
+  221:               field="priorita"
+  222:               dictionary="PRIORITA"
+  223:               value={form.priorita}
+  224:               onChange={value => update("priorita", value)}
+  225:               options={["BASSA", "MEDIA", "ALTA", "URGENTE"]}
+  226:               apiBaseUrl={apiBaseUrl}
+  227:               form={form}
+  228:               allowQuickAdd={false}
+  229:             />
+  230: 
+  231:             <CanonicalSelect
+  232:               label="Responsabile"
+  233:               field="responsabile"
+  234:               dictionary="RESPONSABILI"
+  235:               value={form.responsabile}
+  236:               onChange={value => update("responsabile", value)}
+  237:               apiBaseUrl={apiBaseUrl}
+  238:               form={form}
+  239:               allowQuickAdd
+  240:             />
+  241: 
+  242:             <CanonicalSelect
+  243:               label="Sostituto"
+  244:               field="sostituto"
+  245:               dictionary="RESPONSABILI"
+  246:               value={form.sostituto}
+  247:               onChange={value => update("sostituto", value)}
+  248:               apiBaseUrl={apiBaseUrl}
+  249:               form={form}
+  250:               allowQuickAdd
+  251:             />
+  252: 
+  253:             {process.approvazione_obbligatoria && <CanonicalSelect
+  254:               label="Approvatore"
+  255:               field="approvatore"
+  256:               dictionary="RESPONSABILI"
+  257:               value={form.approvatore}
+  258:               onChange={value => update("approvatore", value)}
+  259:               apiBaseUrl={apiBaseUrl}
+  260:               form={form}
+  261:               allowQuickAdd
+  262:             />}
+  263: 
+  264:             <label className="fmed-process-form-field">
+  265:               <span>Scadenza</span>
+  266:               <input type="date" value={form.scadenza} onChange={event => update("scadenza", event.target.value)} />
+  267:             </label>
+  268: 
+  269:             <label className="fmed-process-form-field is-wide">
+  270:               <span>Descrizione e obiettivo</span>
+  271:               <textarea value={form.descrizione} onChange={event => update("descrizione", event.target.value)} rows="4" placeholder="Testo narrativo: descrivi problema, risultato atteso o note operative." />
+  272:             </label>
+  273:           </div>
+  274: 
+  275:           <aside className="fmed-process-form-requirements">
+  276:             <strong>Controlli workflow</strong>
+  277:             <span>{process.checklist?.length || 0} attività di checklist</span>
+  278:             <span>{process.allegati_obbligatori?.length || 0} evidenze obbligatorie</span>
+  279:             <span>{process.approvazione_obbligatoria ? "Approvazione finale richiesta" : "Approvazione non richiesta"}</span>
+  280:             <span>Scadenza automatica secondo priorità se non indicata</span>
+  281:           </aside>
+  282: 
+  283:           {message && <div className="fmed-process-form-message">{message}</div>}
+  284: 
+  285:           <footer>
+  286:             <button type="button" className="is-secondary" onClick={onClose} disabled={busy}>Annulla</button>
+  287:             <button type="submit" disabled={busy}>{busy ? "Apertura in corso…" : "Apri processo"}</button>
+  288:           </footer>
+  289:         </form>
+  290:       </div>
+  291:     </section>
+  292:   );
+  293: }
+
+=== PROCESS ENGINE CSS ===
+    1: .fmed-process-create-page {
+    2:   min-height: 0;
+    3: }
+    4: 
+    5: .fmed-process-form-surface {
+    6:   display: flex;
+    7:   flex-direction: column;
+    8:   min-height: 0;
+    9: }
+   10: 
+   11: .fmed-process-form-surface > header {
+   12:   display: flex;
+   13:   flex: 0 0 auto;
+   14:   align-items: flex-start;
+   15:   justify-content: space-between;
+   16:   gap: 20px;
+   17:   padding: 18px 20px 15px;
+   18:   border-bottom: 1px solid var(--fmed-border, #d8dee7);
+   19:   background: linear-gradient(135deg, rgba(236, 248, 247, .9), rgba(255, 255, 255, .9));
+   20: }
+   21: 
+   22: .fmed-process-form-surface > header span {
+   23:   color: var(--fmed-primary, #315f8c);
+   24:   font-size:12px;
+   25:   font-weight: 800;
+   26:   letter-spacing: .08em;
+   27: }
+   28: 
+   29: .fmed-process-form-surface > header h3 {
+   30:   margin: 4px 0 0;
+   31:   color: var(--fmed-text, #172033);
+   32:   font-size: 24px;
+   33: }
+   34: 
+   35: .fmed-process-form-surface > header p {
+   36:   max-width: 920px;
+   37:   margin: 6px 0 0;
+   38:   color: var(--fmed-muted, #5e6878);
+   39:   font-size: 13px;
+   40:   line-height: 1.45;
+   41: }
+   42: 
+   43: .fmed-process-form-close {
+   44:   min-height: 36px;
+   45:   padding: 0 13px;
+   46:   border: 1px solid var(--fmed-border, #d8dee7);
+   47:   border-radius: 10px;
+   48:   background: #fff;
+   49:   color: var(--fmed-text, #172033);
+   50:   font-weight: 700;
+   51:   cursor: pointer;
+   52:   white-space: nowrap;
+   53: }
+   54: 
+   55: .fmed-process-form-surface form {
+   56:   flex: 1 1 auto;
+   57:   min-height: 0;
+   58:   padding: 16px 20px 18px;
+   59:   overflow: auto;
+   60: }
+   61: 
+   62: .fmed-process-form-grid {
+   63:   display: grid;
+   64:   grid-template-columns: repeat(3, minmax(0, 1fr));
+   65:   gap: 12px;
+   66: }
+   67: 
+   68: .fmed-process-form-field {
+   69:   display: flex;
+   70:   flex-direction: column;
+   71:   gap: 6px;
+   72:   min-width: 0;
+   73: }
+   74: 
+   75: .fmed-process-form-field.is-wide {
+   76:   grid-column: 1 / -1;
+   77: }
+   78: 
+   79: .fmed-process-form-field > span {
+   80:   color: var(--fmed-muted, #5e6878);
+   81:   font-size:12px;
+   82:   font-weight: 800;
+   83:   letter-spacing: .04em;
+   84: }
+   85: 
+   86: .fmed-process-form-field :is(input, select, textarea) {
+   87:   width: 100%;
+   88:   box-sizing: border-box;
+   89:   border: 1px solid var(--fmed-border, #d8dee7);
+   90:   border-radius: 10px;
+   91:   background: #fff;
+   92:   color: var(--fmed-text, #172033);
+   93:   font: inherit;
+   94: }
+   95: 
+   96: .fmed-process-form-field :is(input, select) {
+   97:   height: 38px;
+   98:   padding: 0 11px;
+   99: }
+  100: 
+  101: .fmed-process-form-field textarea {
+  102:   min-height: 84px;
+  103:   padding: 10px 11px;
+  104:   resize: vertical;
+  105: }
+  106: 
+  107: .fmed-process-form-field small {
+  108:   color: var(--fmed-muted, #5e6878);
+  109:   font-size:12px;
+  110:   line-height: 1.35;
+  111: }
+  112: 
+  113: .fmed-process-form-requirements {
+  114:   display: flex;
+  115:   flex-wrap: wrap;
+  116:   gap: 7px;
+  117:   margin-top: 14px;
+  118:   padding: 10px;
+  119:   border: 1px solid rgba(49, 95, 140, .2);
+  120:   border-radius: 11px;
+  121:   background: rgba(235, 248, 247, .82);
+  122: }
+  123: 
+  124: .fmed-process-form-requirements strong {
+  125:   width: 100%;
+  126:   color: var(--fmed-primary, #315f8c);
+  127:   font-size:12px;
+  128: }
+  129: 
+  130: .fmed-process-form-requirements span {
+  131:   padding: 4px 7px;
+  132:   border-radius: 999px;
+  133:   background: #fff;
+  134:   color: var(--fmed-text, #172033);
+  135:   font-size: 12px;
+  136:   font-weight: 700;
+  137: }
+  138: 
+  139: .fmed-process-form-message {
+  140:   margin-top: 12px;
+  141:   padding: 9px 11px;
+  142:   border: 1px solid #e3cb7e;
+  143:   border-radius: 10px;
+  144:   background: #fff7dc;
+  145:   color: #66500f;
+  146:   font-size: 12px;
+  147: }
+  148: 
+  149: .fmed-process-form-surface footer {
+  150:   position: sticky;
+  151:   bottom: -18px;
+  152:   display: flex;
+  153:   justify-content: flex-end;
+  154:   gap: 9px;
+  155:   margin-top: 15px;
+  156:   padding: 12px 0 0;
+  157:   border-top: 1px solid var(--fmed-border, #d8dee7);
+  158:   background: #fff;
+  159: }
+  160: 
+  161: .fmed-process-form-surface footer button {
+  162:   min-height: 38px;
+  163:   padding: 0 15px;
+  164:   border: 1px solid var(--fmed-primary, #315f8c);
+  165:   border-radius: 10px;
+  166:   background: var(--fmed-primary, #315f8c);
+  167:   color: #fff;
+  168:   font-weight: 800;
+  169:   cursor: pointer;
+  170: }
+  171: 
+  172: .fmed-process-form-surface footer button.is-secondary {
+  173:   border-color: var(--fmed-border, #d8dee7);
+  174:   background: #fff;
+  175:   color: var(--fmed-text, #172033);
+  176: }
+  177: 
+  178: .fmed-process-form-surface footer button:disabled {
+  179:   opacity: .55;
+  180:   cursor: not-allowed;
+  181: }
+  182: 
+  183: @media (max-width: 1366px) {
+  184:   .fmed-process-form-grid {
+  185:     grid-template-columns: repeat(2, minmax(0, 1fr));
+  186:   }
+  187: }

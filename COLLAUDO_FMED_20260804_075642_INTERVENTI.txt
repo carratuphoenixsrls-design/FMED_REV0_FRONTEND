@@ -1,0 +1,16 @@
+﻿FMED REV0 - COLLAUDO FUNZIONALE INTERVENTI
+Run ID: COLLAUDO_FMED_20260804_075642
+Backend: https://fmed-backend.onrender.com
+Esito finale: FALLITO
+Messaggio: Creazione intervento fallita.
+Record temporaneo: TEST_INT_20260804075750
+Cleanup eseguito: False
+Cleanup riuscito: False
+
+CONTROLLI:
+[OK] Backend disponibile - Health check HTTP 200.
+[OK] Login FMED - Accesso eseguito come fabio.carratu@marilab.it, ruolo Admin.
+[OK] Autorizzazione cleanup - Ruolo Admin verificato.
+[OK] Valori catalogo esistenti - Sede 'Marilab Center' e attivitÃ  'MANUTENZIONE PREVENTIVA / VERIFICA PARTICOLARE' recuperate da record esistenti.
+[ATTESO] Validazione campi obbligatori - Il backend ha rifiutato correttamente l'intervento senza data ultimo intervento (HTTP 422).
+[ERRORE] Creazione intervento - HTTP 500 Internal Server Error

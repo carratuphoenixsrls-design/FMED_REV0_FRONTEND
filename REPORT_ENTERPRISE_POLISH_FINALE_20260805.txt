@@ -1,0 +1,26 @@
+FMED REV0 - ENTERPRISE POLISH FINALE - 05/08/2026
+
+Ambito: esclusivamente CSS, pagina Nuovo Intervento e uniformità controlli correlati.
+
+Interventi:
+- label campi leggermente più leggibili e uniformi;
+- bordi/focus coerenti su input, select e textarea;
+- pulsanti "+" quadrati 40x40, centrati e allineati ai campi;
+- CanonicalSelect riallineato alla griglia;
+- icone calendario distanziate dal bordo;
+- textarea Descrizione attività più equilibrata;
+- pulsante Torna indietro riallineato alla famiglia secondaria;
+- barra azioni resa più leggibile senza coprire stato o contenuti.
+
+Vincoli preservati:
+- nessuna modifica JSX o React;
+- nessuna modifica logica, handler, API, backend, Supabase o dati;
+- nessun override universale !important;
+- nessun zoom o scale globale.
+
+Verifiche eseguite nell'ambiente disponibile:
+- verify_rev0.mjs: superato;
+- verify_regola0.mjs: 56 controlli superati;
+- struttura CSS bilanciata.
+
+Build locale nell'ambiente ChatGPT non completata per indisponibilità del pacchetto zod-validation-error@4.0.2 nel registry interno. Eseguire sul PC dell'utente: npm ci e npm run build.
