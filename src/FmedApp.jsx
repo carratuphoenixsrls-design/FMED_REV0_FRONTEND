@@ -6411,30 +6411,57 @@ ${messaggio}`);
         alert(`Errore durante la creazione dell'intervento (${response.status})`);
         return;
       }
-      const eraProcessoGuidato = processoNuovoInterventoGuidato;
       const idCreato = rispostaIntervento?.dati_creati?.id_intervento || rispostaIntervento?.risultato?.risultato?.[0]?.id_intervento || null;
-      let processoCompletato = true;
-      if (eraProcessoGuidato && processoGuidatoEsecuzioneId) {
-        processoCompletato = await aggiornaProcessoNuovoIntervento({
-          stato: "COMPLETATO",
-          passo_corrente: "CONFERMA",
-          percentuale: 100,
-          titolo: `Intervento ${codice}${datiDaSalvare.attivita ? ` · ${datiDaSalvare.attivita}` : ""}`,
-          sede: datiDaSalvare.sede || null,
-          descrizione: datiDaSalvare.descrizione_attivita || datiDaSalvare.attivita || null,
-          riferimento_modulo: "INTERVENTI",
-          riferimento_id: idCreato || codice,
-          dati: {
+      let processoCompletato = false;
+      let esecuzioneProcessoId = processoGuidatoEsecuzioneId || null;
+
+      try {
+        if (!esecuzioneProcessoId) {
+          const processoCreato = await creaEsecuzioneProcessoFmed("NUOVO_INTERVENTO", {
+            titolo: `Intervento ${codice}${datiDaSalvare.attivita ? ` - ${datiDaSalvare.attivita}` : ""}`,
+            sede: datiDaSalvare.sede || "",
+            attivita: datiDaSalvare.attivita || "",
+            descrizione: datiDaSalvare.descrizione_attivita || datiDaSalvare.attivita || "",
+            riferimento_modulo: "INTERVENTI",
+            riferimento_id: idCreato || codice,
+            elemento_codice: codice,
             codice_strumento: codice,
             id_intervento: idCreato,
-            attivita: datiDaSalvare.attivita,
-            esito: datiDaSalvare.esito
-          }
-        });
+            esito: datiDaSalvare.esito || null
+          });
+          esecuzioneProcessoId = processoCreato?.id || null;
+        }
+
+        if (esecuzioneProcessoId) {
+          await chiamataApiAutenticataFmed(`/core/processi/esecuzioni/${esecuzioneProcessoId}`, {
+            method: "PATCH",
+            body: JSON.stringify({
+              stato: "COMPLETATO",
+              passo_corrente: "CONFERMA",
+              percentuale: 100,
+              titolo: `Intervento ${codice}${datiDaSalvare.attivita ? ` - ${datiDaSalvare.attivita}` : ""}`,
+              sede: datiDaSalvare.sede || null,
+              descrizione: datiDaSalvare.descrizione_attivita || datiDaSalvare.attivita || null,
+              riferimento_modulo: "INTERVENTI",
+              riferimento_id: idCreato || codice,
+              dati: {
+                codice_strumento: codice,
+                elemento_codice: codice,
+                id_intervento: idCreato,
+                attivita: datiDaSalvare.attivita,
+                descrizione_attivita: datiDaSalvare.descrizione_attivita,
+                esito: datiDaSalvare.esito,
+                origine_operativa: "MODULO_INTERVENTI"
+              }
+            })
+          });
+          processoCompletato = true;
+        }
+      } catch (processError) {
+        console.warn("Intervento salvato, ma registrazione automatica del processo non riuscita:", processError);
       }
       await ricaricaDatiInterventi(codice);
       const ritornoCespite = cespiteRitornoOperazione; setNuovoInterventoOpen(false); resetFormNuovoIntervento(null); setProcessoNuovoInterventoGuidato(false); setProcessoGuidatoEsecuzioneId(null); setCespiteRitornoOperazione(null); if (ritornoCespite) await apriSchedaCespite(ritornoCespite);
-      if (eraProcessoGuidato) setPagina("Processi");
       alert(processoCompletato ?
       "Intervento inserito correttamente. Storico, scadenze e analisi predittiva aggiornati." :
       "Intervento inserito correttamente, ma il registro del processo non è stato chiuso. L'esecuzione resta disponibile nei Processi per il recupero.");
