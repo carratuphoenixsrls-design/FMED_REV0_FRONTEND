@@ -1,0 +1,459 @@
+/* FMED REV0 · Button System e polish Nuovo Intervento
+   Solo presentazione: nessuna modifica a logica, DOM, API o dati. */
+
+.fmed-app-root.fmed-shell-premium {
+  --fmed-btn-h: 40px;
+  --fmed-btn-h-compact: 32px;
+  --fmed-btn-radius: 11px;
+  --fmed-btn-font: 12px;
+  --fmed-btn-weight: 700;
+}
+
+/* Famiglia operativa standard */
+.fmed-app-root.fmed-shell-premium :is(
+  .p0-btn,
+  .fmed-workspace-back,
+  .fmed-new-intervention-back,
+  .fmed-style-edit-actions > button,
+  .fmed-workspace-actions > button,
+  .fmed-dashboard-header-actions > button,
+  .fmed-dashboard-button-primary,
+  .fmed-dashboard-button-secondary,
+  .core-sync-button
+) {
+  box-sizing: border-box;
+  min-height: var(--fmed-btn-h);
+  padding: 0 15px;
+  border-radius: var(--fmed-btn-radius);
+  font-family: inherit;
+  font-size: var(--fmed-btn-font);
+  font-weight: var(--fmed-btn-weight);
+  line-height: 1;
+  letter-spacing: .01em;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease, background-color .16s ease;
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .p0-btn,
+  .fmed-workspace-back,
+  .fmed-new-intervention-back,
+  .fmed-style-edit-actions > button,
+  .fmed-workspace-actions > button,
+  .fmed-dashboard-header-actions > button,
+  .fmed-dashboard-button-primary,
+  .fmed-dashboard-button-secondary,
+  .core-sync-button
+):not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .p0-btn,
+  .fmed-workspace-back,
+  .fmed-new-intervention-back,
+  .fmed-style-edit-actions > button,
+  .fmed-workspace-actions > button,
+  .fmed-dashboard-header-actions > button,
+  .core-sync-button
+):disabled {
+  opacity: .48;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Secondario / indietro */
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-new-intervention-back,
+  .fmed-workspace-back,
+  .fmed-dashboard-button-secondary,
+  .p0-btn--quiet
+) {
+  border: 1px solid #c5d4e4;
+  background: #f7fafd;
+  color: #294866;
+  box-shadow: 0 3px 10px rgba(28, 59, 91, .06);
+}
+
+.fmed-app-root.fmed-shell-premium :is(
+  .fmed-new-intervention-back,
+  .fmed-workspace-back,
+  .fmed-dashboard-button-secondary,
+  .p0-btn--quiet
+):not(:disabled):hover {
+  border-color: #8fa9c2;
+  background: #eef5fb;
+}
+
+/* Compatti, tabelle e add */
+.fmed-app-root.fmed-shell-premium :is(
+  .p0-btn--small,
+  .p0-row-actions button,
+  .fmed-icon-action,
+  .fmed-table-icon-action,
+  .fmed-style-edit-field > button,
+  .core-value-actions button
+) {
+  box-sizing: border-box;
+  min-height: var(--fmed-btn-h-compact);
+  min-width: var(--fmed-btn-h-compact);
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Focus unico */
+.fmed-app-root.fmed-shell-premium :is(button, [role="button"]):focus-visible {
+  outline: 3px solid rgba(47, 104, 157, .25);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   NUOVO INTERVENTO · gerarchia e uso dello spazio
+   ============================================================ */
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page .fmed-intervention-workspace-surface {
+  gap: 12px;
+  padding: 20px 24px 18px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #dbe5ef;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-head-copy {
+  min-width: 0;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-head-copy > span {
+  display: block;
+  margin-bottom: 5px;
+  color: #2e638f;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .11em;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-head-copy h2 {
+  margin: 0;
+  color: #102b45;
+  font-size: clamp(21px, 1.7vw, 27px);
+  font-weight: 760;
+  line-height: 1.08;
+  letter-spacing: .015em;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-head-copy p {
+  margin: 8px 0 0;
+  color: #526b84;
+  font-size: 12px;
+  font-weight: 550;
+  line-height: 1.4;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-back {
+  flex: 0 0 auto;
+  min-width: 142px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-facts article {
+  display: grid;
+  grid-template-columns: 34px minmax(0,1fr);
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid #dbe5ef;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-facts article > span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #e9f2fb;
+  color: #285f91;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-facts article div {
+  min-width: 0;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-facts strong,
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-facts small {
+  display: block;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-facts strong {
+  margin-bottom: 2px;
+  color: #173653;
+  font-size: 11px;
+  font-weight: 780;
+  text-transform: uppercase;
+  letter-spacing: .025em;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-facts small {
+  color: #61778d;
+  font-size: 10.5px;
+  line-height: 1.3;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  overflow: hidden;
+  border: 1px solid #d3dfeb;
+  border-radius: 12px;
+  background: #f7f9fc;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-steps > div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 0 14px;
+  color: #6a7d91;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-steps > div + div {
+  border-left: 1px solid #dbe5ef;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-steps b {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #e7edf4;
+  color: #5a7087;
+  font-size: 10px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-steps .is-active {
+  background: #edf5fd;
+  color: #1f588a;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-steps .is-active b {
+  background: #2c6a9f;
+  color: #fff;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-steps .is-done {
+  color: #287258;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-steps .is-done b {
+  background: #dcefe7;
+  color: #287258;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page .fmed-intervention-asset-picker {
+  margin-top: 0;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page .fmed-style-edit-actions {
+  min-height: 58px;
+  padding: 9px 0 0;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page .fmed-style-edit-actions > button {
+  min-width: 138px;
+}
+
+@media (max-width: 900px) {
+  .fmed-app-root.fmed-shell-premium .fmed-new-intervention-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .fmed-app-root.fmed-shell-premium .fmed-new-intervention-back {
+    align-self: flex-start;
+  }
+  .fmed-app-root.fmed-shell-premium .fmed-new-intervention-facts {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .fmed-app-root.fmed-shell-premium .fmed-new-intervention-page .fmed-intervention-workspace-surface {
+    padding: 14px 12px;
+  }
+  .fmed-app-root.fmed-shell-premium .fmed-new-intervention-steps {
+    grid-template-columns: 1fr;
+  }
+  .fmed-app-root.fmed-shell-premium .fmed-new-intervention-steps > div + div {
+    border-top: 1px solid #dbe5ef;
+    border-left: 0;
+  }
+}
+
+/* ============================================================
+   ENTERPRISE POLISH FINALE · Nuovo Intervento
+   Micro-allineamenti esclusivamente visivi.
+   ============================================================ */
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page {
+  --fmed-intervention-label: #173653;
+  --fmed-intervention-border: #bfd0e1;
+  --fmed-intervention-focus: #4c8fd1;
+}
+
+/* Label più leggibili e coerenti, senza aumentare l'ingombro. */
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page :is(
+  .fmed-style-edit-label,
+  .fmed-canonical-label,
+  .fmed-intervention-asset-picker label
+) {
+  color: var(--fmed-intervention-label);
+  font-size: 11px;
+  font-weight: 760;
+  letter-spacing: .012em;
+}
+
+/* Campi e select: medesimo bordo, altezza e stato focus. */
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page :is(
+  .fmed-style-edit-input,
+  .fmed-style-edit-textarea,
+  .fmed-canonical-select,
+  .fmed-intervention-asset-picker input,
+  .fmed-intervention-asset-picker select
+) {
+  border-color: var(--fmed-intervention-border);
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page :is(
+  .fmed-style-edit-input,
+  .fmed-style-edit-textarea,
+  .fmed-canonical-select,
+  .fmed-intervention-asset-picker input,
+  .fmed-intervention-asset-picker select
+):focus {
+  border-color: var(--fmed-intervention-focus);
+  box-shadow: 0 0 0 3px rgba(76, 143, 209, .13);
+  outline: 0;
+}
+
+/* Pulsanti + perfettamente quadrati, centrati e integrati ai campi. */
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page :is(
+  .fmed-canonical-add,
+  .fmed-style-edit-field > button
+) {
+  flex: 0 0 40px;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  min-height: 40px;
+  padding: 0;
+  border: 1px solid #c3d3e3;
+  border-radius: 10px;
+  background: #f5f9fd;
+  color: #285f91;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(28, 59, 91, .04);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page :is(
+  .fmed-canonical-add,
+  .fmed-style-edit-field > button
+):not(:disabled):hover {
+  border-color: #8eacc8;
+  background: #edf5fc;
+  transform: translateY(-1px);
+}
+
+/* Il selettore canonico mantiene la stessa proporzione del resto della griglia. */
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page .fmed-canonical-row {
+  grid-template-columns: minmax(0, 1fr) 40px;
+  gap: 7px;
+}
+
+/* Calendario con respiro corretto dal bordo. */
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page input[type="date"] {
+  padding-right: 12px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page input[type="date"]::-webkit-calendar-picker-indicator {
+  margin-right: 2px;
+  opacity: .72;
+}
+
+/* Descrizione attività: più equilibrata e meno dominante. */
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page .fmed-style-edit-textarea {
+  min-height: 78px;
+  padding: 11px 12px;
+  border-width: 1.5px;
+  line-height: 1.45;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page .fmed-style-edit-textarea::placeholder {
+  color: #71859a;
+  opacity: 1;
+}
+
+/* Pulsante indietro appartenente alla stessa famiglia secondaria. */
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page .fmed-new-intervention-back {
+  min-width: 132px;
+  min-height: 40px;
+  padding-inline: 16px;
+  border-color: #c3d3e3;
+  background: #f7fafd;
+  color: #294866;
+  box-shadow: 0 3px 10px rgba(28, 59, 91, .06);
+}
+
+/* Barra azioni: separazione visiva senza coprire testo o campi. */
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page .fmed-new-intervention-form {
+  padding-bottom: 66px;
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page .fmed-style-edit-actions {
+  margin-top: -56px;
+  padding: 10px 0 8px;
+  border-top: 1px solid #d7e2ed;
+  background: rgba(255, 255, 255, .97);
+  box-shadow: 0 -8px 16px rgba(24, 61, 99, .045);
+  backdrop-filter: blur(5px);
+}
+
+.fmed-app-root.fmed-shell-premium .fmed-new-intervention-page .fmed-new-intervention-status {
+  margin-top: 8px;
+  padding-bottom: 8px;
+}
+
+@media (max-width: 1180px) {
+  .fmed-app-root.fmed-shell-premium .fmed-new-intervention-page .fmed-new-intervention-form {
+    padding-bottom: 72px;
+  }
+}

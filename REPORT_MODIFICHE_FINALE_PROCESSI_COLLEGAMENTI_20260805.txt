@@ -1,0 +1,8 @@
+FMED REV0 — MODIFICHE FINALI PREVIEW
+
+- Rimossa la cornice esterna e l'ombra delle superfici operative; card e pannelli interni restano invariati.
+- Modulo Processi reso più chiaro con ciclo Aperto → In corso → Completato → Archiviato.
+- Il pulsante Gestisci riapre la stessa esecuzione, non crea duplicati.
+- I processi completati possono essere archiviati dagli amministratori mantenendo storico, checklist, eventi, approvazioni e allegati.
+- Nessuna funzione di eliminazione dati è stata introdotta.
+- Aggiunti in sidebar, sotto Marilab Mover: Outlook e SharePoint Infrastrutture, entrambi in nuova scheda.
