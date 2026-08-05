@@ -253,7 +253,7 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
   const groupedProcesses = useMemo(() => {
     const groups = new Map();
     for (const item of visibleProcesses) {
-      const moduleCode = String(item.modulo || "PROCESS_ENGINE").toUpperCase();
+      const moduleCode = String(item.modulo || "DA_CLASSIFICARE").toUpperCase();
       if (!groups.has(moduleCode)) groups.set(moduleCode, []);
       groups.get(moduleCode).push(item);
     }
@@ -277,7 +277,7 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
     const query = normalize(search);
     return executions.filter((item) => {
       const status = String(item.stato || "").toUpperCase();
-      const moduleCode = String(item.modulo || item.riferimento_modulo || "PROCESS_ENGINE").toUpperCase();
+      const moduleCode = String(item.modulo || item.riferimento_modulo || "DA_CLASSIFICARE").toUpperCase();
       if (statusFilter !== "TUTTI" && status !== statusFilter) return false;
       if (moduleFilter !== "TUTTI" && moduleCode !== moduleFilter) return false;
       const config = processByCode.get(String(item.processo || "").toUpperCase());
@@ -498,12 +498,12 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
           {filteredExecutions.map((item) => {
                 const config = processByCode.get(String(item.processo || "").toUpperCase());
                 const percentage = Math.max(0, Math.min(100, Number(item.percentuale || 0)));
-                const moduleCode = String(item.modulo || item.riferimento_modulo || "PROCESS_ENGINE").toUpperCase();
+                const moduleCode = String(item.modulo || item.riferimento_modulo || "DA_CLASSIFICARE").toUpperCase();
                 const slaCode = String(item?.sla?.codice || item.stato_sla || "REGOLARE").toUpperCase();
                 return <tr key={item.id || `${item.processo}-${item.aggiornato_il}`} className={selectedProcessIds.includes(Number(item.id)) ? "is-selected" : ""}>
               {canDelete && <td className="fmed-process-select-cell"><input type="checkbox" aria-label={`Seleziona ${item.titolo || item.processo}`} checked={selectedProcessIds.includes(Number(item.id))} onChange={() => toggleProcessSelection(item.id)} /></td>}
               <td><strong>{processDisplayTitle(item, config)}</strong><small>{processDisplayMeta(item)}</small>{item._archivio_storico && <small>Archivio pre-2023</small>}</td>
-              <td>{MODULE_LABELS[moduleCode] || moduleCode.replaceAll("_", " ")}</td>
+              <td>{moduleCode === "PROCESS_ENGINE" ? "FMED" : (MODULE_LABELS[moduleCode] || moduleCode.replaceAll("_", " "))}</td>
               <td><span className={`fmed-process-status is-${String(item.stato || "APERTO").toLowerCase()}`}>{STATUS_LABELS[String(item.stato || "").toUpperCase()] || item.stato}</span></td>
               <td><span className={`fmed-process-sla is-${slaCode.toLowerCase()}`}>{SLA_LABELS[slaCode] || slaCode}</span></td>
               <td>{item.responsabile || item.assegnato_a || "Da assegnare"}</td>
@@ -518,7 +518,7 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
 
       {selectedExecution && <section className="fmed-workspace-page fmed-process-detail-page">
         <div className="fmed-workspace-surface fmed-process-detail is-complete">
-          <header><div><span>{MODULE_LABELS[String(selectedExecution.modulo || selectedExecution.riferimento_modulo || "").toUpperCase()] || "Process Engine"}</span><h3>{processDisplayTitle(selectedExecution, processByCode.get(String(selectedExecution.processo || "").toUpperCase()))}</h3><p>{processDisplayMeta(selectedExecution)}</p></div><button type="button" onClick={() => setSelectedExecution(null)}>Torna ai processi</button></header>
+          <header><div><span>{MODULE_LABELS[String(selectedExecution.modulo || selectedExecution.riferimento_modulo || "").toUpperCase()] || "FMED"}</span><h3>{processDisplayTitle(selectedExecution, processByCode.get(String(selectedExecution.processo || "").toUpperCase()))}</h3><p>{processDisplayMeta(selectedExecution)}</p></div><button type="button" onClick={() => setSelectedExecution(null)}>Torna ai processi</button></header>
 
           <div className="fmed-process-detail-grid">
             <article><span>Stato</span><strong>{STATUS_LABELS[String(selectedExecution.stato || "").toUpperCase()] || selectedExecution.stato}</strong></article>
