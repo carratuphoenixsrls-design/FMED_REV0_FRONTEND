@@ -49,6 +49,8 @@ const API_BASE_URL = ENV_API_BASE_URL || (IS_LOCAL_FRONTEND ? "http://127.0.0.1:
 const API_BASE_CANDIDATES = [API_BASE_URL, ...(ENV_API_BASE_URL ? [] : IS_LOCAL_FRONTEND ? ["http://localhost:8000", "http://10.10.10.31:8000"] : [])].filter((value, index, array) => value && array.indexOf(value) === index);
 
 const MARILAB_MOVER_URL = String(import.meta.env?.VITE_MARILAB_MOVER_URL || "https://marilab-mover.vercel.app").trim();
+const MARILAB_OUTLOOK_URL = "https://outlook.office.com/mail/?realm=marilab.it&login_hint=fabio.carratu@marilab.it";
+const MARILAB_SHAREPOINT_URL = "https://marilab.sharepoint.com/sites/marilab2/Documenti%20condivisi/Forms/AllItems.aspx?id=%2Fsites%2Fmarilab2%2FDocumenti%20condivisi%2FINFRASTRUTTURE&viewid=77809e0e%2D1cfa%2D4e59%2D856e%2D5c6177e9ab1d&newTargetListUrl=%2Fsites%2Fmarilab2%2FDocumenti%20condivisi&viewpath=%2Fsites%2Fmarilab2%2FDocumenti%20condivisi%2FForms%2FAllItems%2Easpx";
 
 // Versione frontend visibile per evitare dubbi da cache, browser o PWA.
 const MRDB_APP_VERSION = "FMED_REV0";
@@ -1392,11 +1394,50 @@ function AppNuovoCore({
     };
   }, [ricaricaDizionariCoreFmed]);
   const creaEsecuzioneProcessoFmed = useCallback(async (codiceProcesso, datiProcesso = {}) => {
+    const sorgente = datiProcesso && typeof datiProcesso === "object" ? datiProcesso : {};
+    const riferimentoId = String(
+      sorgente.riferimento_id ||
+      sorgente.elemento_codice ||
+      sorgente.codice_strumento ||
+      ""
+    ).trim();
+    const sedeProcesso = String(sorgente.sede || "").trim();
+    const attivitaProcesso = String(sorgente.attivita || "").trim();
+    const descrizioneProcesso = String(
+      sorgente.descrizione ||
+      sorgente.descrizione_attivita ||
+      ""
+    ).trim();
+    const riferimentoModulo = String(
+      sorgente.riferimento_modulo ||
+      (codiceProcesso === "NUOVO_INTERVENTO" ? "ASSET" : "")
+    ).trim();
+    const titoloProcesso = String(
+      sorgente.titolo ||
+      (
+        codiceProcesso === "NUOVO_INTERVENTO" && riferimentoId
+          ? `Intervento ${riferimentoId}${attivitaProcesso ? ` · ${attivitaProcesso}` : ""}`
+          : ""
+      )
+    ).trim();
+    const datiCompleti = {
+      ...sorgente,
+      ...(riferimentoId && !sorgente.elemento_codice
+        ? { elemento_codice: riferimentoId }
+        : {})
+    };
+
     const data = await chiamataApiAutenticataFmed("/process-engine/esecuzioni", {
       method: "POST",
       body: JSON.stringify({
         processo: codiceProcesso,
-        dati: datiProcesso,
+        dati: datiCompleti,
+        ...(titoloProcesso ? { titolo: titoloProcesso } : {}),
+        ...(sedeProcesso ? { sede: sedeProcesso } : {}),
+        ...(attivitaProcesso ? { attivita: attivitaProcesso } : {}),
+        ...(descrizioneProcesso ? { descrizione: descrizioneProcesso } : {}),
+        ...(riferimentoModulo ? { riferimento_modulo: riferimentoModulo } : {}),
+        ...(riferimentoId ? { riferimento_id: riferimentoId } : {}),
         avviato_da: utenteCorrenteFmed || sessioneFmed?.email || "FMED"
       })
     });
@@ -6378,6 +6419,9 @@ ${messaggio}`);
           stato: "COMPLETATO",
           passo_corrente: "CONFERMA",
           percentuale: 100,
+          titolo: `Intervento ${codice}${datiDaSalvare.attivita ? ` · ${datiDaSalvare.attivita}` : ""}`,
+          sede: datiDaSalvare.sede || null,
+          descrizione: datiDaSalvare.descrizione_attivita || datiDaSalvare.attivita || null,
           riferimento_modulo: "INTERVENTI",
           riferimento_id: idCreato || codice,
           dati: {
@@ -6920,6 +6964,32 @@ ${messaggio}`);
                   </svg>
                 </span>
                 {!sidebarCompattata && <span className="fmed-side-menu-label">Marilab Mover</span>}
+              </a>
+              <a
+                className="fmed-side-menu-btn fmed-external-menu-item fmed-outlook-menu-item"
+                data-module="Outlook"
+                href={MARILAB_OUTLOOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Apri Outlook Marilab in una nuova scheda"
+                aria-label="Apri Outlook Marilab in una nuova scheda">
+                <span className="fmed-side-menu-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M4 6.5h16v11H4zM4.5 7l7.5 6 7.5-6M8.5 11.2 4.5 17M15.5 11.2l4 5.8" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </span>
+                {!sidebarCompattata && <span className="fmed-side-menu-label">Outlook</span>}
+              </a>
+              <a
+                className="fmed-side-menu-btn fmed-external-menu-item fmed-sharepoint-menu-item"
+                data-module="SharePoint esterno"
+                href={MARILAB_SHAREPOINT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Apri SharePoint Infrastrutture in una nuova scheda"
+                aria-label="Apri SharePoint Infrastrutture in una nuova scheda">
+                <span className="fmed-side-menu-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M8 13a4 4 0 1 1 .5-5.97M16 11a4 4 0 1 1-.5 5.97M8 12h8" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
+                </span>
+                {!sidebarCompattata && <span className="fmed-side-menu-label">SharePoint</span>}
               </a>
             </div>
           </section>

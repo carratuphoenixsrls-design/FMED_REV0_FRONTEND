@@ -28,6 +28,55 @@ function safeObject(value) {
   if (typeof value === "object") return value;
   try {return JSON.parse(value);} catch {return {};}
 }
+function processDisplayTitle(item, config = null) {
+  const data = safeObject(item?.dati);
+  const processCode = String(item?.processo || "").trim().toUpperCase();
+  const savedTitle = String(item?.titolo || "").trim();
+  const standardTitle = String(config?.titolo || "").trim();
+  const activity = String(
+    data.attivita ||
+    data.descrizione_attivita ||
+    data.descrizione ||
+    ""
+  ).trim();
+  const assetCode = String(
+    data.codice_strumento ||
+    data.elemento_codice ||
+    (
+      String(item?.riferimento_modulo || "").toUpperCase() === "ASSET"
+        ? item?.riferimento_id
+        : ""
+    ) ||
+    ""
+  ).trim();
+
+  if (processCode === "NUOVO_INTERVENTO") {
+    if (assetCode && activity) return `Intervento ${assetCode} · ${activity}`;
+    if (assetCode) return `Intervento ${assetCode}`;
+    if (activity) return `Intervento · ${activity}`;
+  }
+
+  return savedTitle ||
+    activity ||
+    String(data.descrizione || "").trim() ||
+    standardTitle ||
+    String(item?.processo || "").replaceAll("_", " ") ||
+    "Processo FMED";
+}
+
+function processDisplayMeta(item) {
+  const data = safeObject(item?.dati);
+  const site = String(item?.sede || data.sede || "").trim() || "Sede non indicata";
+  const reference = String(
+    item?.riferimento_id ||
+    data.id_intervento ||
+    data.codice_strumento ||
+    data.elemento_codice ||
+    ""
+  ).trim();
+
+  return reference ? `${site} · ${reference}` : site;
+}
 function formatDate(value, dateOnly = false) {
   if (!value) return "—";
   const date = new Date(value);
@@ -163,6 +212,8 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
   const [detailBusy, setDetailBusy] = useState(false);
   const [governanceForm, setGovernanceForm] = useState({ responsabile: "", sostituto: "", approvatore: "", scadenza: "" });
   const [attachmentForm, setAttachmentForm] = useState({ tipo: "", nome: "", url: "" });
+  const [selectedProcessIds, setSelectedProcessIds] = useState([]);
+  const [deleteBusy, setDeleteBusy] = useState(false);
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -340,18 +391,52 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
 
   const approval = detail.approvazioni?.[0];
   const requirements = detail.requisiti || {};
-  const canArchive = String(fmedSession()?.ruolo || "").trim().toUpperCase() === "ADMIN";
+  const sessionRole = String(fmedSession()?.ruolo || fmedSession()?.role || "").trim().toUpperCase();
+  const isAdministrator = sessionRole.includes("ADMIN") || sessionRole.includes("AMMINISTRATORE");
+  const canArchive = canManage === true || isAdministrator;
+  const canDelete = canManage === true || isAdministrator;
+
+  function toggleProcessSelection(id) {
+    const numericId = Number(id);
+    setSelectedProcessIds((current) => current.includes(numericId) ? current.filter((value) => value !== numericId) : [...current, numericId]);
+  }
+
+  function toggleVisibleSelection() {
+    const visibleIds = filteredExecutions.map((item) => Number(item.id)).filter(Boolean);
+    const allSelected = visibleIds.length > 0 && visibleIds.every((id) => selectedProcessIds.includes(id));
+    setSelectedProcessIds((current) => allSelected ? current.filter((id) => !visibleIds.includes(id)) : [...new Set([...current, ...visibleIds])]);
+  }
+
+  async function deleteSelectedProcesses() {
+    if (!canDelete || deleteBusy || selectedProcessIds.length === 0) return;
+    const reason = window.prompt(`Stai per eliminare definitivamente ${selectedProcessIds.length} processi e tutti i relativi dati. Indica il motivo:`);
+    if (!String(reason || "").trim()) return;
+    if (!window.confirm("Confermi l’eliminazione definitiva? Verranno rimossi processo, checklist, allegati, approvazioni, eventi e solleciti. Questa operazione non è reversibile.")) return;
+    setDeleteBusy(true); setMessage("");
+    try {
+      const data = await fmedFetchJson("/process-engine/esecuzioni/elimina", {
+        apiBaseUrl, method: "POST", headers: fmedAuthHeaders(), retries: 1, timeoutMs: 60000,
+        body: JSON.stringify({ ids: selectedProcessIds, motivo: String(reason).trim(), eliminato_da: actor() })
+      });
+      setMessage(`${data?.eliminati || selectedProcessIds.length} processi eliminati definitivamente.`);
+      setSelectedProcessIds([]);
+      setSelectedExecution(null);
+      await loadData();
+    } catch (error) {
+      setMessage(error?.message || "Eliminazione processi non riuscita.");
+    } finally { setDeleteBusy(false); }
+  }
 
   async function archiveExecution(item) {
-    if (!item?.id || !canArchive) return;
+    if (!item?.id || !canArchive) return false;
     const state = String(item.stato || "").toUpperCase();
-    if (!["BOZZA", "ANNULLATO", "ERRORE"].includes(state)) {
-      setMessage("È possibile archiviare soltanto processi in stato Bozza, Annullato o Errore.");
-      return;
+    if (!["BOZZA", "COMPLETATO", "ANNULLATO", "ERRORE"].includes(state)) {
+      setMessage("Prima completa o annulla il processo. L’archiviazione conserva checklist, eventi, approvazioni e allegati.");
+      return false;
     }
     const reason = window.prompt("Indicare il motivo dell’archiviazione:");
-    if (!String(reason || "").trim()) return;
-    if (!window.confirm("Archiviare questo processo? Checklist, eventi, approvazioni e allegati resteranno conservati.")) return;
+    if (!String(reason || "").trim()) return false;
+    if (!window.confirm("Archiviare questo processo? Checklist, eventi, approvazioni e allegati resteranno conservati.")) return false;
     try {
       await fmedFetchJson(`/process-engine/esecuzioni/${item.id}`, {
         apiBaseUrl,
@@ -370,8 +455,10 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
       });
       setMessage("Processo archiviato correttamente.");
       await loadData();
+      return true;
     } catch (error) {
       setMessage(error?.message || "Archiviazione non riuscita.");
+      return false;
     }
   }
 
@@ -426,16 +513,22 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
         </details>)}
       </div>
 
-      <section className="fmed-process-history"><div className="fmed-process-history-head"><div><h3>Registro processi</h3><p>Stato, SLA, responsabilità, approvazione e avanzamento delle esecuzioni.</p></div><div className="fmed-process-archive-filter"><button type="button" className={archiveView === "ATTIVI" ? "is-active" : ""} onClick={() => setArchiveView("ATTIVI")}>Attivi</button><button type="button" className={archiveView === "ARCHIVIATI" ? "is-active" : ""} onClick={() => setArchiveView("ARCHIVIATI")}>Archiviati</button><button type="button" className={archiveView === "TUTTI" ? "is-active" : ""} onClick={() => setArchiveView("TUTTI")}>Tutti</button></div></div>
-        <div className="fmed-process-table-wrap"><table className="fmed-process-table"><thead><tr><th>Processo</th><th>Modulo</th><th>Stato</th><th>SLA</th><th>Responsabile</th><th>Scadenza</th><th>Checklist</th><th>Approvazione</th><th /></tr></thead><tbody>
-          {!loading && filteredExecutions.length === 0 && <tr><td colSpan="9" className="fmed-process-empty">Nessuna esecuzione corrispondente.</td></tr>}
+      <section className="fmed-process-lifecycle" aria-label="Come si gestiscono i processi">
+        <div className="fmed-process-lifecycle-copy"><span>COME FUNZIONA</span><h3>Ogni processo ha un ciclo chiaro</h3><p>Apri il processo, completa checklist e documenti, usa <strong>Gestisci</strong> per avanzare di stato e, quando è concluso, archivialo. L’archivio conserva integralmente lo storico; non è necessario eliminare il processo.</p></div>
+        <div className="fmed-process-lifecycle-steps"><span><b>1</b>Aperto</span><i>→</i><span><b>2</b>In corso</span><i>→</i><span><b>3</b>Completato</span><i>→</i><span><b>4</b>Archiviato</span></div>
+      </section>
+
+      <section className="fmed-process-history"><div className="fmed-process-history-head"><div><h3>Registro processi</h3><p><strong>Gestisci</strong> apre il processo senza duplicarlo. Gli Admin possono selezionare più righe e cancellarle definitivamente.</p></div><div className="fmed-process-history-tools"><div className="fmed-process-archive-filter"><button type="button" className={archiveView === "ATTIVI" ? "is-active" : ""} onClick={() => setArchiveView("ATTIVI")}>Attivi</button><button type="button" className={archiveView === "ARCHIVIATI" ? "is-active" : ""} onClick={() => setArchiveView("ARCHIVIATI")}>Archiviati</button><button type="button" className={archiveView === "TUTTI" ? "is-active" : ""} onClick={() => setArchiveView("TUTTI")}>Tutti</button></div>{canDelete && <button type="button" className="fmed-process-delete-selected" onClick={deleteSelectedProcesses} disabled={deleteBusy || selectedProcessIds.length === 0}>{deleteBusy ? "Eliminazione…" : `Elimina selezionati (${selectedProcessIds.length})`}</button>}</div></div>
+        <div className="fmed-process-table-wrap"><table className="fmed-process-table"><thead><tr>{canDelete && <th className="fmed-process-select-cell"><input type="checkbox" aria-label="Seleziona tutti i processi visibili" checked={filteredExecutions.length > 0 && filteredExecutions.every((item) => selectedProcessIds.includes(Number(item.id)))} onChange={toggleVisibleSelection} /></th>}<th>Processo</th><th>Modulo</th><th>Stato</th><th>SLA</th><th>Responsabile</th><th>Scadenza</th><th>Checklist</th><th>Approvazione</th><th /></tr></thead><tbody>
+          {!loading && filteredExecutions.length === 0 && <tr><td colSpan={canDelete ? "10" : "9"} className="fmed-process-empty">Nessuna esecuzione corrispondente.</td></tr>}
           {filteredExecutions.map((item) => {
                 const config = processByCode.get(String(item.processo || "").toUpperCase());
                 const percentage = Math.max(0, Math.min(100, Number(item.percentuale || 0)));
                 const moduleCode = String(item.modulo || item.riferimento_modulo || "PROCESS_ENGINE").toUpperCase();
                 const slaCode = String(item?.sla?.codice || item.stato_sla || "REGOLARE").toUpperCase();
-                return <tr key={item.id || `${item.processo}-${item.aggiornato_il}`}>
-              <td><strong>{item.titolo || config?.titolo || String(item.processo || "").replaceAll("_", " ")}</strong><small>{item.sede || "Sede non indicata"}{item.riferimento_id ? ` · ${item.riferimento_id}` : ""}</small>{item._archivio_storico && <small>Archivio pre-2023</small>}</td>
+                return <tr key={item.id || `${item.processo}-${item.aggiornato_il}`} className={selectedProcessIds.includes(Number(item.id)) ? "is-selected" : ""}>
+              {canDelete && <td className="fmed-process-select-cell"><input type="checkbox" aria-label={`Seleziona ${item.titolo || item.processo}`} checked={selectedProcessIds.includes(Number(item.id))} onChange={() => toggleProcessSelection(item.id)} /></td>}
+              <td><strong>{processDisplayTitle(item, config)}</strong><small>{processDisplayMeta(item)}</small>{item._archivio_storico && <small>Archivio pre-2023</small>}</td>
               <td>{MODULE_LABELS[moduleCode] || moduleCode.replaceAll("_", " ")}</td>
               <td><span className={`fmed-process-status is-${String(item.stato || "APERTO").toLowerCase()}`}>{STATUS_LABELS[String(item.stato || "").toUpperCase()] || item.stato}</span></td>
               <td><span className={`fmed-process-sla is-${slaCode.toLowerCase()}`}>{SLA_LABELS[slaCode] || slaCode}</span></td>
@@ -443,7 +536,7 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
               <td>{formatDate(item.scadenza, true)}</td>
               <td><div className="fmed-process-progress"><span style={{ width: `${percentage}%` }} /></div><small>{item.checklist_completata || 0}/{item.checklist_totale || 0} · {humanizeStep(item.passo_corrente)}</small></td>
               <td>{humanizeStep(item.approvazione_stato || "NON_RICHIESTA")}</td>
-              <td><div className="fmed-process-row-actions"><button type="button" className="fmed-process-row-open" onClick={() => refreshSelected(item.id)}>Gestisci</button>{canArchive && !safeObject(item.dati).archiviato && ["BOZZA", "ANNULLATO", "ERRORE"].includes(String(item.stato || "").toUpperCase()) && <button type="button" className="fmed-process-row-archive" onClick={() => archiveExecution(item)}>Archivia</button>}</div></td>
+              <td><div className="fmed-process-row-actions"><button type="button" className="fmed-process-row-open" onClick={() => refreshSelected(item.id)}>Gestisci</button>{canArchive && !safeObject(item.dati).archiviato && ["BOZZA", "COMPLETATO", "ANNULLATO", "ERRORE"].includes(String(item.stato || "").toUpperCase()) && <button type="button" className="fmed-process-row-archive" onClick={() => archiveExecution(item)}>Archivia</button>}</div></td>
             </tr>;
               })}
         </tbody></table></div>
@@ -453,7 +546,7 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
 
       {selectedExecution && <section className="fmed-workspace-page fmed-process-detail-page">
         <div className="fmed-workspace-surface fmed-process-detail is-complete">
-          <header><div><span>{MODULE_LABELS[String(selectedExecution.modulo || selectedExecution.riferimento_modulo || "").toUpperCase()] || "Process Engine"}</span><h3>{selectedExecution.titolo || processByCode.get(String(selectedExecution.processo || "").toUpperCase())?.titolo || selectedExecution.processo}</h3><p>{selectedExecution.sede || "Sede non indicata"}{selectedExecution.riferimento_id ? ` · ${selectedExecution.riferimento_id}` : ""}</p></div><button type="button" onClick={() => setSelectedExecution(null)}>Torna ai processi</button></header>
+          <header><div><span>{MODULE_LABELS[String(selectedExecution.modulo || selectedExecution.riferimento_modulo || "").toUpperCase()] || "Process Engine"}</span><h3>{processDisplayTitle(selectedExecution, processByCode.get(String(selectedExecution.processo || "").toUpperCase()))}</h3><p>{processDisplayMeta(selectedExecution)}</p></div><button type="button" onClick={() => setSelectedExecution(null)}>Torna ai processi</button></header>
 
           <div className="fmed-process-detail-grid">
             <article><span>Stato</span><strong>{STATUS_LABELS[String(selectedExecution.stato || "").toUpperCase()] || selectedExecution.stato}</strong></article>
@@ -493,8 +586,29 @@ export default function ProcessiPage({ apiBaseUrl, processes = [], onLaunchProce
             <div className="fmed-process-approval-actions"><button type="button" onClick={() => decideApproval("APPROVATA")} disabled={detailBusy}>Approva</button><button type="button" className="is-danger" onClick={() => decideApproval("RESPINTA")} disabled={detailBusy}>Respingi</button></div>
           </section>}
 
+          <section className="fmed-process-close-panel" aria-label="Avanzamento e chiusura del processo">
+            <div className="fmed-process-close-copy">
+              <span>Stato del processo</span>
+              <strong>{STATUS_LABELS[String(selectedExecution.stato || "").toUpperCase()] || selectedExecution.stato}</strong>
+              <p>{String(selectedExecution.stato || "").toUpperCase() === "COMPLETATO"
+                ? "Processo completato. Puoi archiviarlo: resteranno disponibili checklist, allegati e storico."
+                : String(selectedExecution.stato || "").toUpperCase() === "ANNULLATO"
+                  ? "Questo processo è annullato. Usa Riapri processo per riprendere la lavorazione."
+                  : requirements.checklist_completa && requirements.allegati_completi && requirements.approvazione_completa
+                    ? "Tutti i requisiti risultano completi. Puoi completare subito il processo oppure scegliere un altro avanzamento."
+                    : "Completa i requisiti mancanti; FMED abiliterà la chiusura quando checklist, evidenze e approvazioni saranno valide."}</p>
+              <div className="fmed-process-readiness"><span className={requirements.checklist_completa ? "is-ok" : "is-missing"}>Checklist {requirements.checklist_completa ? "completa" : "da completare"}</span><span className={requirements.allegati_completi ? "is-ok" : "is-missing"}>Evidenze {requirements.allegati_completi ? "complete" : "incomplete"}</span><span className={requirements.approvazione_completa ? "is-ok" : "is-missing"}>Approvazione {requirements.approvazione_completa ? "valida" : "mancante"}</span></div>
+            </div>
+            <div className="fmed-process-close-actions">
+              {(selectedExecution.transizioni_disponibili || []).some((option) => String(option.codice || "").toUpperCase() === "COMPLETATO") && <button type="button" className="is-primary" onClick={() => applyTransition("COMPLETATO")} disabled={transitionBusy || detailBusy || !requirements.pronto_per_chiusura} title={!requirements.pronto_per_chiusura ? "Completa checklist, evidenze e approvazione prima della chiusura" : ""}>{transitionBusy ? "Chiusura..." : requirements.pronto_per_chiusura ? "Completa processo" : "Chiusura non ancora disponibile"}</button>}
+              {(selectedExecution.transizioni_disponibili || []).filter((option) => !["COMPLETATO", "ANNULLATO"].includes(String(option.codice || "").toUpperCase())).map((option) => <button type="button" key={option.codice} className={String(option.codice || "").toUpperCase() === "RIAPERTO" ? "is-primary" : "is-secondary"} onClick={() => applyTransition(option.codice)} disabled={transitionBusy || detailBusy}>{transitionBusy ? "Aggiornamento…" : String(option.codice || "").toUpperCase() === "RIAPERTO" ? "Riapri processo" : option.etichetta}</button>)}
+              {(selectedExecution.transizioni_disponibili || []).some((option) => String(option.codice || "").toUpperCase() === "ANNULLATO") && <button type="button" className="is-danger" onClick={() => applyTransition("ANNULLATO")} disabled={transitionBusy || detailBusy}>Annulla processo</button>}
+              {canArchive && String(selectedExecution.stato || "").toUpperCase() === "COMPLETATO" && !safeObject(selectedExecution.dati).archiviato && <button type="button" className="is-primary" onClick={async () => { const archived = await archiveExecution(selectedExecution); if (archived) setSelectedExecution(null); }} disabled={transitionBusy || detailBusy}>Archivia processo</button>}
+              <button type="button" className="is-secondary" onClick={() => setSelectedExecution(null)}>Torna al registro</button>
+            </div>
+          </section>
+
           <label className="fmed-process-transition-note"><span>Nota della transizione o decisione</span><textarea rows="3" value={transitionNote} onChange={(event) => setTransitionNote(event.target.value)} placeholder="Motivazione, esito o informazione utile per l’audit." /></label>
-          <div className="fmed-process-transition-actions">{(selectedExecution.transizioni_disponibili || []).map((option) => <button type="button" key={option.codice} onClick={() => applyTransition(option.codice)} disabled={transitionBusy || detailBusy}>{transitionBusy ? "Aggiornamento…" : option.etichetta}</button>)}{(selectedExecution.transizioni_disponibili || []).length === 0 && <p>Nessuna transizione disponibile per lo stato corrente.</p>}</div>
 
           <section className="fmed-process-detail-section is-timeline"><div className="fmed-process-detail-section-head"><div><span>Audit</span><h4>Storico del processo</h4></div><small>{detail.eventi.length} eventi</small></div><div className="fmed-process-timeline">{detail.eventi.slice().reverse().map((event) => <article key={event.id}><span>{formatDate(event.creato_il)}</span><strong>{humanizeStep(event.evento)}</strong><p>{event.nota || `${humanizeStep(event.stato_da)} → ${humanizeStep(event.stato_a)}`}</p></article>)}</div></section>
         </div>
