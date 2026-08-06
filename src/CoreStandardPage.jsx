@@ -223,141 +223,19 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
   }, [catalogo, dictionarySearch]);
   const filteredValues = useMemo(() => {
     const q = normalizeText(valueSearch);
-    return (current?.valori || []).filter(v => {
-      const pending = String(v.stato_governance || "").toUpperCase() === "RICHIESTA_APPROVAZIONE";
-      return (showInactive || v.attivo !== false || pending) && (!q || normalizeText(`${v.codice} ${v.etichetta} ${v.stato_governance || ""}`).includes(q));
-    });
-  }, [current, valueSearch, showInactive]);
-
-  async function saveValue() {
-    const dictionaryCode = current?.codice || selected || draft.dizionario;
-    if (!dictionaryCode || !draft.etichetta.trim()) return setMessage("Dizionario ed etichetta sono obbligatori.");
-    setSaving(true); setMessage("");
-    try {
-      const payload = {
-        ...draft,
-        dizionario: dictionaryCode,
-        codice: null,
-        etichetta: draft.etichetta.trim(),
-      };
-      const data = await fmedFetchJson("/core/dizionari/valori", { apiBaseUrl, method: "POST", headers: apiHeaders(), body: JSON.stringify(payload), retries: 1 });
-      const savedCode = data?.codice || nextCode || "codice automatico";
-      setDraft({ ...emptyValue, dizionario: dictionaryCode });
-      await load();
-      await loadNextCode(dictionaryCode);
-      await onDataChanged?.({ tipo: "DIZIONARIO_VALORE", dizionario: dictionaryCode, codice: savedCode, etichetta: payload.etichetta });
-      setMessage(`Valore salvato con codice stabile ${savedCode} e sincronizzato con i menu operativi FMED.`);
-    } catch (error) { setMessage(typeof error.message === "string" ? error.message : "Salvataggio non riuscito"); }
-    finally { setSaving(false); }
-  }
-
-  async function toggleValue(value) {
-    if (!canManage) return;
-    setSaving(true);
-    try {
-      const pending = String(value.stato_governance || "").toUpperCase() === "RICHIESTA_APPROVAZIONE";
-      const session = fmedSession();
-      const actor = String(session?.email || session?.nome || "FMED_ADMIN");
-      const patch = pending || value.attivo === false
-        ? { attivo: true, stato_governance: "APPROVATO", approvato_da: actor }
-        : { attivo: false };
-      await fmedFetchJson(`/core/dizionari/valori/${value.id}`, { apiBaseUrl, method: "PATCH", headers: apiHeaders(), body: JSON.stringify(patch), retries: 1 });
-      await load();
-      await onDataChanged?.({ tipo: pending ? "DIZIONARIO_APPROVATO" : "DIZIONARIO_STATO", dizionario: value.dizionario, codice: value.codice });
-      setMessage(pending ? `Voce ${value.etichetta} approvata e resa disponibile nei menu.` : "Stato della voce aggiornato.");
-    } catch (error) { setMessage(error.message); }
-    finally { setSaving(false); }
-  }
-
-  function startMerge(value) {
-    setMergeSource(value);
-    setMergeTargetId("");
-    setMessage("");
-  }
-
-  async function applyMerge() {
-    if (!canManage || !mergeSource?.id || !mergeTargetId) return;
-    const target = (current?.valori || []).find((item) => String(item.id) === String(mergeTargetId));
-    if (!target) return setMessage("Seleziona la voce canonica di destinazione.");
-    if (!window.confirm(`Confermi l'unificazione di “${mergeSource.etichetta}” dentro “${target.etichetta}”? Il valore precedente resterà nello storico come alias e non verrà eliminato.`)) return;
-    setSaving(true);
-    try {
-      const session = fmedSession();
-      const actor = String(session?.email || session?.nome || "FMED_ADMIN");
-      const data = await fmedFetchJson("/core/dizionari/valori/unifica", {
-        apiBaseUrl, method: "POST", headers: apiHeaders(), retries: 1,
-        body: JSON.stringify({
-          dizionario: current?.codice || mergeSource.dizionario,
-          valore_canonico_id: Number(mergeTargetId),
-          valori_alias_id: [Number(mergeSource.id)],
-          utente: actor,
-        }),
-      });
-      setMergeSource(null);
-      setMergeTargetId("");
-      await load();
-      await onDataChanged?.({ tipo: "CATALOGO_UNIFICATO", risultato: data });
-      setMessage(`Voce unificata: ${mergeSource.etichetta} è ora alias di ${target.etichetta}.`);
-    } catch (error) { setMessage(error.message || "Unificazione non riuscita"); }
-    finally { setSaving(false); }
-  }
-
-  function startEditValue(value) {
-    setEditingValueId(value.id);
-    setEditingLabel(String(value.etichetta || ""));
-    setMessage("");
-  }
-
-  function cancelEditValue() {
-    setEditingValueId(null);
-    setEditingLabel("");
-  }
-
-  async function saveValueLabel(value) {
-    const label = editingLabel.trim();
-    if (!label) return setMessage("L'etichetta non può essere vuota.");
-    setSaving(true); setMessage("");
-    try {
-      await fmedFetchJson(`/core/dizionari/valori/${value.id}`, {
-        apiBaseUrl,
-        method: "PATCH",
-        headers: apiHeaders(),
-        body: JSON.stringify({ etichetta: label }),
-        retries: 1,
-      });
-      cancelEditValue();
-      await load();
-      await onDataChanged?.({ tipo: "DIZIONARIO_ETICHETTA", dizionario: value.dizionario, codice: value.codice, etichetta: label });
-      setMessage(`Etichetta aggiornata. Il codice stabile ${value.codice} non è stato modificato.`);
-    } catch (error) { setMessage(error.message); }
-    finally { setSaving(false); }
-  }
-
-  return (
-    <section className="core-standard-page">
-      <header className="core-standard-head">
-        <div className="fmed-banner-heading">
-          <FmedModuleIcon module="Dizionari" />
-          <div className="fmed-banner-copy">
-            <span className="core-standard-kicker">CATALOGO CANONICO GLOBALE</span>
-            <h2>Dizionari FMED</h2>
-            <p>Aggiungi e modifica i valori utilizzati nei menu a tendina di Asset, Interventi, Infrastrutture, Sicurezza 81/08 e degli altri moduli. Le modifiche restano centralizzate e sincronizzate.</p>
-          </div>
+    return (
+    <section className="core-cataloghi-page">
+      <header className="core-cataloghi-header">
+        <FmedModuleIcon module="Dizionari" />
+        <div>
+          <span>CATALOGO CANONICO GLOBALE</span>
+          <h2>Dizionari FMED</h2>
+          <p>Gestione centralizzata dei valori utilizzati nei moduli FMED.</p>
         </div>
-        <button type="button" className="core-primary-button core-sync-button" onClick={load} disabled={loading} title="Ricarica dizionari e regole operative dal Master Data centrale">
-          <span className="core-sync-icon" aria-hidden="true">↻</span>
-          <span className="core-sync-copy"><strong>{loading ? "Sincronizzazione…" : "Sincronizza dati"}</strong><small>Ricarica valori e regole</small></span>
+        <button type="button" className="core-primary-button" onClick={load} disabled={loading}>
+          {loading ? "Sincronizzazione..." : "Sincronizza dati"}
         </button>
       </header>
-
-      <div className="core-summary-grid">
-        <article><span>Dizionari</span><strong>{catalogo.length}</strong><small>fonti dati centrali</small></article>
-        <article><span>Valori attivi</span><strong>{activeValues}</strong><small>su {totalValues} complessivi</small></article>
-        <article className={pendingValues ? "is-warning" : "is-ok"}><span>Da approvare</span><strong>{pendingValues}</strong><small>richieste Quick Add</small></article>
-        <article><span>Regole operative</span><strong>{operationalRules.regole?.length || 0}</strong><small>solo vincoli verificati</small></article>
-      </div>
-
-      {message && <div className="core-standard-message" role="status">{message}</div>}
 
       <DizionariControls
         tab={tab}
@@ -370,70 +248,40 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
         onShowInactiveChange={setShowInactive}
       />
 
-      {tab === "DIZIONARI" && <div className="core-dictionary-layout">
-        <aside className="core-dictionary-list">
-          <div className="core-section-heading"><h3>Dizionari</h3><span>{filteredCatalog.length}</span></div>
-          <div className="core-dictionary-scroll">
-            {filteredCatalog.map(d => <button type="button" title={`Apri il dizionario ${d.descrizione}`} key={d.codice} className={selected === d.codice ? "active" : ""} onClick={() => { setSelected(d.codice); setValueSearch(""); setDraft({ ...emptyValue, dizionario: d.codice }); cancelEditValue(); }}>
-              <strong>{d.descrizione}</strong><span>{(d.valori || []).filter(v => v.attivo !== false).length} attivi · {d.valori?.length || 0} totali</span>
-            </button>)}
-          </div>
-        </aside>
+      {tab === "DIZIONARI" && (
+        <div className="core-cataloghi-layout">
+          <aside>
+            {filteredCatalog.map(d => (
+              <button
+                key={d.codice}
+                type="button"
+                onClick={() => setSelected(d.codice)}
+              >
+                {d.descrizione}
+              </button>
+            ))}
+          </aside>
 
-        <div className="core-dictionary-panel">
-          <div className="core-dictionary-title"><div><h3>{current?.descrizione || "Dizionario"}</h3><p>Codice tecnico stabile, etichetta leggibile e stato controllato.</p></div><span>{current?.codice}</span></div>
-          <div className="core-table-head"><span>Codice</span><span>Etichetta</span><span>Stato</span><span>Azioni</span></div>
-          <div className="core-value-table">
-            {filteredValues.length ? filteredValues.map(v => <div className={`core-value-row ${v.attivo ? "" : "disabled"}`} key={v.id || `${v.dizionario}-${v.codice}`}>
-              <code>{v.codice}</code>
-              {editingValueId === v.id ? (
-                <input className="core-inline-label-input" value={editingLabel} onChange={(event) => setEditingLabel(event.target.value)} autoFocus />
-              ) : <strong>{v.etichetta}</strong>}
-              {(() => {
-                const governance = String(v.stato_governance || (v.attivo ? "APPROVATO" : "DISATTIVATO")).toUpperCase();
-                const statusLabel = governance === "RICHIESTA_APPROVAZIONE" ? "Da approvare" : governance === "SOSTITUITO" ? "Alias storico" : v.attivo ? "Attivo" : "Disattivato";
-                const statusClass = governance === "RICHIESTA_APPROVAZIONE" ? "pending" : governance === "SOSTITUITO" ? "replaced" : v.attivo ? "active" : "inactive";
-                return <span className={`core-status ${statusClass}`}>{statusLabel}</span>;
-              })()}
-              {canManage ? <div className="core-value-actions">
-                {editingValueId === v.id ? <>
-                  <button type="button" onClick={() => saveValueLabel(v)} disabled={saving}>Salva nome</button>
-                  <button type="button" className="secondary" onClick={cancelEditValue}>Annulla</button>
-                </> : <>
-                  <button type="button" onClick={() => startEditValue(v)}>Modifica nome</button>
-                  {String(v.stato_governance || "").toUpperCase() !== "SOSTITUITO" && <button type="button" className="secondary" onClick={() => startMerge(v)}>Unifica</button>}
-                  <button type="button" className="secondary" onClick={() => toggleValue(v)}>{String(v.stato_governance || "").toUpperCase() === "RICHIESTA_APPROVAZIONE" ? "Approva" : v.attivo ? "Disattiva" : "Riattiva"}</button>
-                </>}
-              </div> : <span>—</span>}
-            </div>) : <div className="core-empty-state">Nessun valore corrispondente ai filtri.</div>}
-          </div>
-
-          {canManage && mergeSource && <div className="core-merge-value">
-            <div><h4>Unifica duplicato nel valore canonico</h4><p><b>{mergeSource.etichetta}</b> resterà nello storico e diventerà un alias della voce scelta.</p></div>
-            <select value={mergeTargetId} onChange={(event) => setMergeTargetId(event.target.value)}>
-              <option value="">Seleziona la voce canonica</option>
-              {(current?.valori || []).filter((item) => item.attivo !== false && String(item.id) !== String(mergeSource.id)).map((item) => <option key={item.id} value={item.id}>{item.etichetta} · {item.codice}</option>)}
-            </select>
-            <button type="button" disabled={saving || !mergeTargetId} onClick={applyMerge}>Conferma unificazione</button>
-            <button type="button" className="secondary" onClick={() => { setMergeSource(null); setMergeTargetId(""); }}>Annulla</button>
-          </div>}
-
-          {canManage && <div className="core-add-value"><h4>Aggiungi valore standard</h4>
-            <div className="core-auto-code-preview" title="Il codice viene assegnato dal backend e resta stabile anche se l'etichetta viene modificata">
-              <span>Codice automatico</span>
-              <code>{nextCode || "Calcolo…"}</code>
-            </div>
-            <input placeholder="Etichetta mostrata nei menu" value={draft.etichetta} onChange={e => setDraft({ ...draft, dizionario: current?.codice || selected, etichetta: e.target.value })} />
-            <input aria-label="Ordine" type="number" min="0" value={draft.ordine} onChange={e => setDraft({ ...draft, dizionario: current?.codice || selected, ordine: Number(e.target.value) })} />
-            <button type="button" disabled={saving || !draft.etichetta.trim()} onClick={saveValue}>{saving ? "Salvataggio…" : "Crea valore standard"}</button>
-            <p className="core-auto-code-note">FMED assegna un codice univoco progressivo. Il codice non cambia quando modifichi l’etichetta.</p>
-          </div>}
+          <main>
+            <h3>{current?.descrizione || "Dizionario"}</h3>
+            {filteredValues.map(v => (
+              <div key={v.id}>
+                <strong>{v.etichetta}</strong>
+              </div>
+            ))}
+          </main>
         </div>
-      </div>}
+      )}
 
       {tab === "REGOLE" && <OperationalRulesPanel audit={operationalRules} catalog={catalogo} search={valueSearch} />}
 
-      {tab === "QUALITA" && <div className="core-quality-stack"><DataQualityPanel audit={dataQuality} loading={dataQualityLoading} onRefresh={loadDataQuality} /></div>}
+      {tab === "QUALITA" && (
+        <DataQualityPanel
+          audit={dataQuality}
+          loading={dataQualityLoading}
+          onRefresh={loadDataQuality}
+        />
+      )}
     </section>
   );
 }
