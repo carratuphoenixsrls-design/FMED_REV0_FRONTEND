@@ -756,32 +756,22 @@
   .core-rule-row { grid-template-columns: 1fr; }
 }
 
-/* FMED REV0 - Cataloghi Hero dedicato */
-.core-cataloghi-head {
-  background:
-    linear-gradient(135deg, #315f8c, #527da8);
-  border: none;
-  color: #ffffff;
-  padding: 18px 24px;
+/* FMED REV0 Cataloghi - testata allineata Asset */
+.core-standard-page .core-standard-head {
+  color: #10233f;
 }
 
-.core-cataloghi-head .core-standard-kicker,
-.core-cataloghi-head h2,
-.core-cataloghi-head p {
-  color: #ffffff;
-  -webkit-text-fill-color: #ffffff;
+.core-standard-page .core-standard-head .fmed-banner-copy h2 {
+  color: #10233f;
+  -webkit-text-fill-color: #10233f;
 }
 
-.core-cataloghi-head .core-standard-kicker {
-  opacity: .9;
+.core-standard-page .core-standard-head .fmed-banner-copy p {
+  color: #61758d;
+  -webkit-text-fill-color: #61758d;
 }
 
-.core-cataloghi-head h2 {
-  font-size: 32px;
-  font-weight: 600;
+.core-standard-page .core-standard-head .fmed-banner-copy .core-standard-kicker {
+  color: #c52e67;
+  -webkit-text-fill-color: #c52e67;
 }
-
-.core-cataloghi-head p {
-  opacity: .9;
-}
-
