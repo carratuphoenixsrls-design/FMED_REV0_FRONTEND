@@ -2386,7 +2386,7 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  padding: 14px 14px;
+  padding: 10px 12px;
   border-bottom: 1px solid var(--fmed-d3-border);
   background: var(--fmed-table-head);
   color: var(--fmed-muted);
@@ -2401,15 +2401,15 @@
   background: var(--fmed-card);
 }
 .fmed-style-interventi-td {
-  padding: 14px 14px;
+  padding: 10px 12px;
   border-bottom: 1px solid var(--fmed-d3-border);
   color: var(--fmed-text);
   font-size: 13px;
-  line-height: 1.45;
+  line-height: 1.35;
   vertical-align: middle;
 }
 .fmed-style-interventi-td-code {
-  padding: 14px 14px;
+  padding: 10px 12px;
   border-bottom: 1px solid var(--fmed-d3-border);
   color: #315f8c;
   font-size: 13px;
