@@ -755,3 +755,33 @@
   .core-rules-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .core-rule-row { grid-template-columns: 1fr; }
 }
+
+/* FMED REV0 - Cataloghi Hero dedicato */
+.core-cataloghi-head {
+  background:
+    linear-gradient(135deg, #315f8c, #527da8);
+  border: none;
+  color: #ffffff;
+  padding: 18px 24px;
+}
+
+.core-cataloghi-head .core-standard-kicker,
+.core-cataloghi-head h2,
+.core-cataloghi-head p {
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+}
+
+.core-cataloghi-head .core-standard-kicker {
+  opacity: .9;
+}
+
+.core-cataloghi-head h2 {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.core-cataloghi-head p {
+  opacity: .9;
+}
+
