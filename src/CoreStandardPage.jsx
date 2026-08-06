@@ -223,7 +223,14 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
   }, [catalogo, dictionarySearch]);
   const filteredValues = useMemo(() => {
     const q = normalizeText(valueSearch);
-    return (
+    return (current?.valori || []).filter(v => {
+      const pending = String(v.stato_governance || "").toUpperCase() === "RICHIESTA_APPROVAZIONE";
+      return (showInactive || v.attivo !== false || pending) &&
+        (!q || normalizeText(`${v.codice} ${v.etichetta} ${v.stato_governance || ""}`).includes(q));
+    });
+  }, [current, valueSearch, showInactive]);
+
+  return (
     <section className="core-cataloghi-page">
       <header className="core-cataloghi-header">
         <FmedModuleIcon module="Dizionari" />
