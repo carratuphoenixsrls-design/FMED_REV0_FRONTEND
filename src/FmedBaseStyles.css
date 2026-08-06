@@ -2421,7 +2421,7 @@
 .fmed-style-scadenze-page-shell {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   width: 100%;
   max-width: none;
   margin: 0;
@@ -2433,8 +2433,8 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 210px;
   align-items: stretch;
-  gap: 18px;
-  padding: 20px 22px;
+  gap: 14px;
+  padding: 14px 18px;
   border-radius: 24px;
   background: linear-gradient(135deg, rgba(8,20,28,.98) 0%, rgba(12,33,42,.96) 58%, rgba(39,87,69,.90) 100%);
   border: 1px solid rgba(127,226,204,.18);
@@ -2466,7 +2466,7 @@
 }
 .fmed-style-scadenze-hero-title {
   margin: 0;
-  font-size: clamp(30px, 3vw, 48px);
+  font-size: clamp(28px, 2.4vw, 38px);
   line-height: 1.02;
   letter-spacing: -.045em;
   font-weight: 500;
