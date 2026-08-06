@@ -226,8 +226,43 @@ function normalizzaCentroCostoFmed(valore, sedeFallback = "") {
   return normalizzaSedeDisplay(candidato);
 }
 function getLocazioneFmed(record = {}, fallbackRecord = {}) {
-  const valore = record?.locazione ?? record?.Locazione ?? record?.LOCAZIONE ?? record?.ubicazione ?? record?.Ubicazione ?? record?.UBICAZIONE ?? record?.stanza ?? record?.Stanza ?? record?.STANZA ?? record?.locale ?? record?.Locale ?? record?.LOCALE ?? record?.ambiente ?? record?.Ambiente ?? fallbackRecord?.locazione ?? fallbackRecord?.Locazione ?? fallbackRecord?.ubicazione ?? fallbackRecord?.stanza ?? "";
-  return String(valore || "").trim();
+  const candidati = [
+    record?.locazione,
+    record?.Locazione,
+    record?.LOCAZIONE,
+    record?.ubicazione,
+    record?.Ubicazione,
+    record?.UBICAZIONE,
+    record?.stanza,
+    record?.Stanza,
+    record?.STANZA,
+    record?.locale,
+    record?.Locale,
+    record?.LOCALE,
+    record?.ambiente,
+    record?.Ambiente,
+
+    fallbackRecord?.locazione,
+    fallbackRecord?.Locazione,
+    fallbackRecord?.LOCAZIONE,
+    fallbackRecord?.ubicazione,
+    fallbackRecord?.Ubicazione,
+    fallbackRecord?.UBICAZIONE,
+    fallbackRecord?.stanza,
+    fallbackRecord?.Stanza,
+    fallbackRecord?.STANZA,
+    fallbackRecord?.locale,
+    fallbackRecord?.Locale,
+    fallbackRecord?.LOCALE,
+    fallbackRecord?.ambiente,
+    fallbackRecord?.Ambiente
+  ];
+
+  const valore = candidati.find(
+    (candidato) => String(candidato ?? "").trim() !== ""
+  );
+
+  return String(valore ?? "").trim();
 }
 function normalizzaSedePerConfronto(valore) {
   return chiaveSedeOperativa(valore) || normalizzaTestoCodice(valore);
