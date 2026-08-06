@@ -415,40 +415,6 @@
   border-radius: 16px;
 }
 
-/* Cataloghi: il secondo livello resta chiaro, non bianco su bianco. */
-.fmed-app-root.fmed-shell-premium .p0-governance--catalogs .core-standard-page {
-  min-width: 0;
-  padding: 0;
-  background: transparent;
-}
-
-.fmed-app-root.fmed-shell-premium .p0-governance--catalogs .core-standard-head {
-  min-height: 128px;
-  padding: 24px;
-  border: 1px solid #d1dce8;
-  border-radius: 19px;
-  color: #10233f;
-  background:
-    radial-gradient(circle at 86% -28%, rgba(201,45,105,.12) 0 94px, transparent 95px),
-    #ffffff;
-  box-shadow: 0 10px 30px rgba(17,48,88,.07);
-}
-
-.fmed-app-root.fmed-shell-premium .p0-governance--catalogs .core-standard-head :is(h1,h2,h3,p,span,small,strong) {
-  color: #10233f;
-  -webkit-text-fill-color: currentColor;
-}
-
-.fmed-app-root.fmed-shell-premium .p0-governance--catalogs .core-standard-head :is(p,small) {
-  color: #61758d;
-}
-
-.fmed-app-root.fmed-shell-premium .p0-governance--catalogs .core-standard-head [class*="kicker"],
-.fmed-app-root.fmed-shell-premium .p0-governance--catalogs .core-standard-head > div > span {
-  color: #c52e67;
-  -webkit-text-fill-color: currentColor;
-}
-
 /* Scheda cespite: nessun pulsante o pannello tagliato. */
 .fmed-app-root.fmed-shell-premium .fmed-asset-detail-workspace,
 .fmed-app-root.fmed-shell-premium .fmed-asset-detail-workspace .fmed-asset-detail-page,
