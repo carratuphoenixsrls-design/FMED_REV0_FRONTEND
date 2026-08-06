@@ -40,18 +40,21 @@
   font-size: clamp(26px, 2.4vw, 36px);
   line-height: 1.08;
   white-space: normal;
-  
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
 }
 .core-standard-head p {
   max-width: 920px;
   margin: 0;
-  color: var(--fmed-muted, #5e6878);
+  color: rgba(255,255,255,.88);
+  -webkit-text-fill-color: rgba(255,255,255,.88);
   font-size: 14px;
   line-height: 1.55;
   white-space: normal;
 }
 .core-standard-kicker {
-  color: var(--fmed-primary, #315f8c);
+  color: rgba(255,255,255,.92);
+  -webkit-text-fill-color: rgba(255,255,255,.92);
   font-size: 12px;
   font-weight: 900;
   letter-spacing: .15em;
@@ -755,19 +758,4 @@
   .core-rules-heading { display: grid; }
   .core-rules-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .core-rule-row { grid-template-columns: 1fr; }
-}
-
-.fmed-banner-copy .core-standard-kicker {
-  color: rgba(255,255,255,.92);
-  -webkit-text-fill-color: rgba(255,255,255,.92);
-}
-
-.fmed-banner-copy h2 {
-  color: #ffffff;
-  -webkit-text-fill-color: #ffffff;
-}
-
-.fmed-banner-copy p {
-  color: rgba(255,255,255,.88);
-  -webkit-text-fill-color: rgba(255,255,255,.88);
 }
