@@ -3067,8 +3067,30 @@ function AppNuovoCore({
         );
       }, 0);
 
+    const categoriaRegistrata = (record) => String(
+      record?.categoria ||
+      record?.Categoria ||
+      record?.CATEGORIA ||
+      ""
+    ).trim().toUpperCase();
+
+    const assetMedicali = listaCespiti.filter(
+      (cespite) => categoriaRegistrata(cespite) === "E"
+    );
+
+    const interventiMedicali = listaInterventi.filter(
+      (intervento) => {
+        const cespiteCollegato =
+          cespiteCollegatoIntervento(intervento);
+
+        return (
+          categoriaRegistrata(cespiteCollegato) === "E"
+        );
+      }
+    );
+
     const assetSenzaBranca =
-      contaVuoti(listaCespiti, brancaRegistrata);
+      contaVuoti(assetMedicali, brancaRegistrata);
 
     const assetSenzaLocazione =
       contaVuoti(
@@ -3105,7 +3127,7 @@ function AppNuovoCore({
 
     const interventiSenzaBranca =
       contaVuoti(
-        listaInterventi,
+        interventiMedicali,
         brancaIntervento
       );
 
@@ -3126,8 +3148,10 @@ function AppNuovoCore({
       interventiSenzaLocazione;
 
     const controlliPossibili =
-      listaCespiti.length * 6 +
-      listaInterventi.length * 2;
+      listaCespiti.length * 5 +
+      assetMedicali.length +
+      listaInterventi.length +
+      interventiMedicali.length;
 
     const indiceQualita =
       datiDisponibili && controlliPossibili > 0
@@ -3147,9 +3171,9 @@ function AppNuovoCore({
     const righe = [{
       sezione: "ASSET",
       controllo: "ASSET SENZA BRANCA",
-      etichetta: "Asset senza branca",
+      etichetta: "Asset medicali senza branca",
       valore: assetSenzaBranca,
-      totale: listaCespiti.length,
+      totale: assetMedicali.length,
       priorita: assetSenzaBranca ? "ALTA" : "OK"
     }, {
       sezione: "ASSET",
@@ -3189,9 +3213,9 @@ function AppNuovoCore({
     }, {
       sezione: "INTERVENTI",
       controllo: "INTERVENTI SENZA BRANCA",
-      etichetta: "Interventi senza branca",
+      etichetta: "Interventi medicali senza branca",
       valore: interventiSenzaBranca,
-      totale: listaInterventi.length,
+      totale: interventiMedicali.length,
       priorita: interventiSenzaBranca ? "MEDIA" : "OK"
     }, {
       sezione: "INTERVENTI",
