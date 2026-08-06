@@ -2873,6 +2873,86 @@ function AppNuovoCore({
     finestra.focus();
     setTimeout(() => finestra.print(), 500);
   }
+
+  function esportaInterventiFiltratiExcel() {
+    const righe = interventiFiltrati.map((intervento) => ({
+      codice:
+        intervento.codice_strumento ||
+        intervento.codicestrumento ||
+        "-",
+      sede: intervento.sede || "-",
+      societa: normalizzaSocietaDitta(
+        intervento.ditta_esecutrice ||
+        intervento.ditta ||
+        ""
+      ),
+      tipologia: intervento.tipologia || "-",
+      attivita: intervento.attivita || "-",
+      ultimo: formattaData(intervento.data_ultimo_intervento),
+      prossimo: formattaData(intervento.data_prossimo_intervento),
+      costo: formatCurrency(importoIntervento(intervento)),
+    }));
+
+    if (righe.length === 0) {
+      alert(
+        "Nessun dettaglio costi da esportare con i filtri attuali."
+      );
+      return;
+    }
+
+    const sedeFile =
+      filtroInterventiSede === "TUTTE"
+        ? "TUTTE_LE_SEDI"
+        : nomeFileSicuro(filtroInterventiSede);
+
+    scaricaCsvFmed({
+      nomeFile:
+        `DETTAGLIO_COSTI_MANUTENTIVI_${sedeFile}_` +
+        `${new Date().toISOString().slice(0, 10)}.csv`,
+      titolo: "Dettaglio costi manutentivi",
+      sottotitolo:
+        "Interventi compresi nel perimetro economico selezionato",
+      meta: [
+        labelPeriodoContabileInterventi(),
+        `Sede: ${
+          filtroInterventiSede === "TUTTE"
+            ? "Tutte le sedi"
+            : filtroInterventiSede
+        }`,
+        `Ditta: ${
+          filtroInterventiSocieta === "TUTTE"
+            ? "Tutte le società e ditte"
+            : filtroInterventiSocieta
+        }`,
+        `Attività: ${
+          filtroInterventiAttivita === "TUTTE"
+            ? "Tutte le attività"
+            : filtroInterventiAttivita
+        }`,
+        `Cespite: ${
+          filtroInterventiCodice === "TUTTE"
+            ? "Tutti i cespiti"
+            : filtroInterventiCodice
+        }`,
+        `Interventi: ${righe.length}`,
+        `Totale costi: ${formatCurrency(
+          totaleSpesaInterventiFiltrati
+        )}`,
+      ],
+      colonne: [
+        { key: "codice", label: "Codice cespite" },
+        { key: "sede", label: "Sede" },
+        { key: "societa", label: "Ditta esecutrice" },
+        { key: "tipologia", label: "Tipologia" },
+        { key: "attivita", label: "Attività" },
+        { key: "ultimo", label: "Ultimo intervento" },
+        { key: "prossimo", label: "Prossimo intervento" },
+        { key: "costo", label: "Costo" },
+      ],
+      righe,
+    });
+  }
+
   const riepilogoCostiDashboard = useMemo(() => {
     const totaleSpesa = (Array.isArray(interventi) ? interventi : []).reduce((totale, intervento) => totale + importoIntervento(intervento), 0);
     const interventiConCosto = (Array.isArray(interventi) ? interventi : []).filter((intervento) => importoIntervento(intervento) > 0).length;
@@ -2889,21 +2969,146 @@ function AppNuovoCore({
   const fmedAuditQualitaDati = useMemo(() => {
     const listaCespiti = Array.isArray(cespiti) ? cespiti : [];
     const listaInterventi = Array.isArray(interventi) ? interventi : [];
-    const contaVuoti = (lista, getter) => lista.reduce((totale, record) => {
-      const valore = getter(record);
-      return totale + (String(valore ?? "").trim() ? 0 : 1);
-    }, 0);
-    const assetSenzaBranca = contaVuoti(listaCespiti, (c) => c.branca_medica || c.branca || c.reparto);
-    const assetSenzaLocazione = contaVuoti(listaCespiti, (c) => getLocazioneFmed(c));
-    const assetSenzaMatricola = contaVuoti(listaCespiti, (c) => c.matricola);
-    const assetSenzaModello = contaVuoti(listaCespiti, (c) => c.modello);
-    const assetSenzaCostruttore = contaVuoti(listaCespiti, (c) => c.costruttore);
-    const assetSenzaSharePoint = contaVuoti(listaCespiti, (c) => c.link_documento || c.link_sharepoint || c.linkDocumentazione);
-    const interventiSenzaBranca = contaVuoti(listaInterventi, (i) => i.branca_medica || i.branca || i.reparto);
-    const interventiSenzaLocazione = contaVuoti(listaInterventi, (i) => getLocazioneFmed(i));
-    const anomalieTotali = assetSenzaBranca + assetSenzaLocazione + assetSenzaMatricola + assetSenzaModello + assetSenzaCostruttore + assetSenzaSharePoint + interventiSenzaBranca + interventiSenzaLocazione;
-    const controlliPossibili = Math.max(1, listaCespiti.length * 6 + listaInterventi.length * 2);
-    const indiceQualita = Math.max(0, Math.round(100 - anomalieTotali / controlliPossibili * 100));
+    const datiDisponibili = listaCespiti.length > 0 || listaInterventi.length > 0;
+
+    const normalizzaCodiceAudit = (record) => String(
+      record?.codice_strumento ||
+      record?.codicestrumento ||
+      record?.codice ||
+      ""
+    ).trim().toUpperCase();
+
+    const brancaRegistrata = (record) => String(
+      record?.branca_medica ||
+      record?.branca ||
+      record?.Branca ||
+      record?.["Branca medica"] ||
+      record?.BRANCA_MEDICA ||
+      ""
+    ).trim();
+
+    const mappaCespitiPerCodice = new Map(
+      listaCespiti
+        .map((cespite) => [
+          normalizzaCodiceAudit(cespite),
+          cespite
+        ])
+        .filter(([codice]) => codice)
+    );
+
+    const cespiteCollegatoIntervento = (intervento) =>
+      mappaCespitiPerCodice.get(
+        normalizzaCodiceAudit(intervento)
+      ) || null;
+
+    const brancaIntervento = (intervento) => {
+      const cespiteCollegato =
+        cespiteCollegatoIntervento(intervento);
+
+      return (
+        brancaRegistrata(intervento) ||
+        brancaRegistrata(cespiteCollegato)
+      );
+    };
+
+    const locazioneIntervento = (intervento) => {
+      const cespiteCollegato =
+        cespiteCollegatoIntervento(intervento);
+
+      return getLocazioneFmed(
+        intervento,
+        cespiteCollegato
+      );
+    };
+
+    const contaVuoti = (lista, getter) =>
+      lista.reduce((totale, record) => {
+        const valore = getter(record);
+
+        return totale + (
+          String(valore ?? "").trim()
+            ? 0
+            : 1
+        );
+      }, 0);
+
+    const assetSenzaBranca =
+      contaVuoti(listaCespiti, brancaRegistrata);
+
+    const assetSenzaLocazione =
+      contaVuoti(
+        listaCespiti,
+        (cespite) => getLocazioneFmed(cespite)
+      );
+
+    const assetSenzaMatricola =
+      contaVuoti(
+        listaCespiti,
+        (cespite) => cespite.matricola
+      );
+
+    const assetSenzaModello =
+      contaVuoti(
+        listaCespiti,
+        (cespite) => cespite.modello
+      );
+
+    const assetSenzaCostruttore =
+      contaVuoti(
+        listaCespiti,
+        (cespite) => cespite.costruttore
+      );
+
+    const assetSenzaSharePoint =
+      contaVuoti(
+        listaCespiti,
+        (cespite) =>
+          cespite.link_documento ||
+          cespite.link_sharepoint ||
+          cespite.linkDocumentazione
+      );
+
+    const interventiSenzaBranca =
+      contaVuoti(
+        listaInterventi,
+        brancaIntervento
+      );
+
+    const interventiSenzaLocazione =
+      contaVuoti(
+        listaInterventi,
+        locazioneIntervento
+      );
+
+    const anomalieTotali =
+      assetSenzaBranca +
+      assetSenzaLocazione +
+      assetSenzaMatricola +
+      assetSenzaModello +
+      assetSenzaCostruttore +
+      assetSenzaSharePoint +
+      interventiSenzaBranca +
+      interventiSenzaLocazione;
+
+    const controlliPossibili =
+      listaCespiti.length * 6 +
+      listaInterventi.length * 2;
+
+    const indiceQualita =
+      datiDisponibili && controlliPossibili > 0
+        ? Math.max(
+            0,
+            Math.round(
+              100 -
+              (
+                anomalieTotali /
+                controlliPossibili
+              ) *
+              100
+            )
+          )
+        : null;
+
     const righe = [{
       sezione: "ASSET",
       controllo: "ASSET SENZA BRANCA",
@@ -2961,18 +3166,34 @@ function AppNuovoCore({
       totale: listaInterventi.length,
       priorita: interventiSenzaLocazione ? "MEDIA" : "OK"
     }];
+
     return {
+      datiDisponibili,
       indiceQualita,
       anomalieTotali,
+      totaleAsset: listaCespiti.length,
+      totaleInterventi: listaInterventi.length,
       righe
     };
   }, [cespiti, interventi]);
   function exportAuditQualitaDatiFmed() {
+    if (!fmedAuditQualitaDati.datiDisponibili) {
+      window.alert(
+        "Audit non esportato: i dati Asset e Interventi non risultano ancora caricati."
+      );
+      return;
+    }
+
     scaricaCsvFmed({
       nomeFile: `FMED_AUDIT_QUALITA_DATI_${new Date().toISOString().slice(0, 10)}.csv`,
       titolo: "Audit qualità dati",
       sottotitolo: "Controllo anomalie operative su asset, interventi, branche, locazioni e documentazione.",
-      meta: [`Indice qualità dati: ${fmedAuditQualitaDati.indiceQualita}%`, `Anomalie totali: ${fmedAuditQualitaDati.anomalieTotali}`, `Asset: ${(Array.isArray(cespiti) ? cespiti.length : 0).toLocaleString("it-IT")}`, `Interventi: ${(Array.isArray(interventi) ? interventi.length : 0).toLocaleString("it-IT")}`],
+      meta: [
+        `Indice qualità dati: ${fmedAuditQualitaDati.indiceQualita}%`,
+        `Anomalie totali: ${fmedAuditQualitaDati.anomalieTotali}`,
+        `Asset: ${fmedAuditQualitaDati.totaleAsset.toLocaleString("it-IT")}`,
+        `Interventi: ${fmedAuditQualitaDati.totaleInterventi.toLocaleString("it-IT")}`
+      ],
       colonne: [{
         label: "Sezione",
         value: (r) => r.sezione
@@ -2987,7 +3208,12 @@ function AppNuovoCore({
         value: (r) => r.totale
       }, {
         label: "Percentuale",
-        value: (r) => r.totale ? `${Math.round(r.valore / r.totale * 100)}%` : "0%"
+        value: (r) =>
+          r.totale
+            ? `${Math.round(
+                r.valore / r.totale * 100
+              )}%`
+            : "N/D"
       }, {
         label: "Priorità",
         value: (r) => r.priorita
@@ -7401,6 +7627,9 @@ ${messaggio}`);
           listaCodiciFiltroInterventi,
           resetFiltriInterventi,
           esportaInterventiFiltratiPdf,
+
+          setPagina,
+          esportaInterventiFiltratiExcel,
           formatCurrency,
           totaleSpesaInterventiFiltrati,
           interventiFiltrati,

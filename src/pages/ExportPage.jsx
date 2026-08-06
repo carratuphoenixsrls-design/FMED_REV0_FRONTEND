@@ -2,12 +2,12 @@ import FmedModuleIcon from "../components/FmedModuleIcon.jsx";
 
 function ReportAdvancedSection({ title, summary, children }) {
   return (
-    <details className="fmed-report-advanced">
+    <details className="fmed-report-advanced fmed-report-v2-advanced">
       <summary>
         <span>{title}</span>
         <small>{summary}</small>
       </summary>
-      <div className="fmed-report-advanced-body">{children}</div>
+      <div className="fmed-report-v2-advanced-body">{children}</div>
     </details>
   );
 }
@@ -146,67 +146,67 @@ export default function ExportPage(props) {
     exportBudgetCriticitaFmed
   } = props;
   return (
-    <div className="fmed-export-page fmed-report-page fmed-style-card">
-            <header className="fmed-report-hero">
-              <div className="fmed-banner-heading fmed-report-hero-heading">
+    <div className="fmed-export-page fmed-report-v2">
+            <header className="fmed-report-v2-hero">
+              <div className="fmed-report-v2-hero-heading">
                 <FmedModuleIcon module="Export" />
-                <div className="fmed-report-hero-copy fmed-banner-copy">
+                <div className="fmed-report-v2-hero-copy">
                   <span>Report e analisi</span>
                   <h2>Report e analisi FMED</h2>
                   <p>Esporta inventario, interventi, scadenze, budget e audit qualità in formati ordinati e pronti per l’uso.</p>
                 </div>
               </div>
-              <div className="fmed-report-environment">
+              <div className="fmed-report-v2-environment">
                 <small>Ambiente report</small>
                 <strong>{window.location.host}</strong>
                 <span>Inventario · Interventi · Scadenze · Budget</span>
               </div>
             </header>
 
-            <div className="fmed-report-audit fmed-style-fmed-audit-quality-panel">
-              <div className="fmed-report-audit-head fmed-style-fmed-audit-quality-head">
+            <div className="fmed-report-v2-audit">
+              <div className="fmed-report-v2-audit-head">
                 <div>
-                  <div className="fmed-style-fmed-audit-eyebrow">Audit qualità dati</div>
-                  <h3 className="fmed-style-fmed-audit-title">Controllo rapido integrità FMED</h3>
-                  <p className="fmed-style-fmed-audit-subtitle">Verifica automatica di branche, locazioni, matricole, modelli, costruttori e link documentali.</p>
+                  <div className="fmed-report-v2-audit-eyebrow">Audit qualità dati</div>
+                  <h3 className="fmed-report-v2-audit-title">Controllo rapido integrità FMED</h3>
+                  <p className="fmed-report-v2-audit-subtitle">Verifica automatica di branche, locazioni, matricole, modelli, costruttori e link documentali.</p>
                 </div>
-                <div className="fmed-style-fmed-audit-score-box">
-                  <strong className="fmed-style-fmed-audit-score-main">{fmedAuditQualitaDati.indiceQualita}%</strong>
+                <div className="fmed-report-v2-score-box" style={{ "--fmed-report-score": `${fmedAuditQualitaDati.datiDisponibili ? fmedAuditQualitaDati.indiceQualita : 0}%` }}>
+                  <strong className="fmed-report-v2-score-main">{fmedAuditQualitaDati.datiDisponibili ? `${fmedAuditQualitaDati.indiceQualita}%` : "N/D"}</strong>
                   <span>Indice qualità</span>
                 </div>
               </div>
-              <div className="fmed-report-audit-grid fmed-style-fmed-audit-metric-grid">
+              <div className="fmed-report-v2-audit-grid">
                 {fmedAuditQualitaDati.righe.map((controllo) => (
-                  <div className="fmed-style-fmed-audit-metric" key={`${controllo.sezione}-${controllo.controllo}`}>
-                    <strong className="fmed-style-fmed-audit-metric-main">{controllo.valore}</strong>
+                  <div className="fmed-report-v2-audit-metric" key={`${controllo.sezione}-${controllo.controllo}`}>
+                    <strong className="fmed-report-v2-audit-metric-main">{controllo.valore}</strong>
                     <span>{controllo.etichetta}</span>
                   </div>
                 ))}
               </div>
-              <div className="fmed-report-audit-actions fmed-style-fmed-audit-actions">
-                <button type="button" onClick={exportAuditQualitaDatiFmed} className="fmed-style-primary-btn">Esporta audit qualità dati</button>
+              <div className="fmed-report-v2-audit-actions">
+                <button type="button" onClick={exportAuditQualitaDatiFmed} disabled={!fmedAuditQualitaDati.datiDisponibili} title={fmedAuditQualitaDati.datiDisponibili ? "Esporta audit qualità dati" : "Attendere il caricamento dei dati"} className="fmed-style-primary-btn">Esporta audit qualità dati</button>
                 <button type="button" onClick={() => setExportPanelAperto("inventario")} className="fmed-style-secondary-btn">Apri export inventario</button>
               </div>
             </div>
 
-            <div className="fmed-report-modules">
+            <div className="fmed-report-v2-modules">
 
 
         
-              <div className="fmed-report-accordion-item fmed-style-export-accordion-item">
-                <button type="button" className="fmed-report-accordion-header fmed-style-export-accordion-header" onClick={() => setExportPanelAperto(exportPanelAperto === "inventario" ? null : "inventario")}>
-                  <div className="fmed-report-accordion-title-wrap fmed-style-export-accordion-title-wrap">
-                    <span className="fmed-style-export-accordion-icon"></span>
+              <div className="fmed-report-v2-accordion-item">
+                <button type="button" className="fmed-report-v2-accordion-header" onClick={() => setExportPanelAperto(exportPanelAperto === "inventario" ? null : "inventario")}>
+                  <div className="fmed-report-v2-accordion-title-wrap">
+                    <span className="fmed-report-v2-accordion-icon"></span>
                     <div>
-                      <div className="fmed-style-export-accordion-title">Export Inventario</div>
-                      <div className="fmed-style-export-accordion-subtitle">Inventario sintetico con colonne opzionali.</div>
+                      <div className="fmed-report-v2-accordion-title">Export Inventario</div>
+                      <div className="fmed-report-v2-accordion-subtitle">Inventario sintetico con colonne opzionali.</div>
                     </div>
                   </div>
-                  <span className="fmed-style-export-accordion-chevron">{exportPanelAperto === "inventario" ? "▲" : "▼"}</span>
+                  <span className="fmed-report-v2-accordion-chevron">{exportPanelAperto === "inventario" ? "▲" : "▼"}</span>
                 </button>
 
-                {exportPanelAperto === "inventario" && <div className="fmed-style-export-accordion-body">
-                    <div className="fmed-style-export-inline-grid">
+                {exportPanelAperto === "inventario" && <div className="fmed-report-v2-accordion-body">
+                    <div className="fmed-report-v2-filter-grid">
                       <select value={exportSedeInventario} onChange={(e) => setExportSedeInventario(e.target.value)} className="fmed-style-select">
                         <option value="TUTTE">Tutte le sedi</option>
                         {listaSedi.map((s) => <option key={s} value={s}>{s}</option>)}
@@ -250,7 +250,7 @@ export default function ExportPage(props) {
                         <option value="STATO_ASC">Ordina per stato</option>
                       </select>
                     </div>
-                    <div className="fmed-style-export-action-row">
+                    <div className="fmed-report-v2-export-actions">
                       <button type="button" onClick={() => exportInventarioFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
                       <button type="button" onClick={() => exportInventarioFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
                     </div>
@@ -259,7 +259,7 @@ export default function ExportPage(props) {
                       {renderFiltroBrancheExport("Filtro multiplo branca", exportBrancheInventario, setExportBrancheInventario)}
                     </ReportAdvancedSection>
 
-                    <div className="fmed-report-quick-actions">
+                    <div className="fmed-report-v2-quick-actions">
                       <button type="button" onClick={() => {
                 setExportStatoInventario("Attivo");
                 setExportCespitiInventarioSelezionati([]);
@@ -284,28 +284,28 @@ export default function ExportPage(props) {
                     </div>
 
                     <ReportAdvancedSection title="Colonne opzionali" summary="Export sintetico predefinito">
-                    <div className="fmed-style-export-filter-box">
-                      <div className="fmed-literal-d1380c0341">
+                    <div className="fmed-report-v2-filter-box">
+                      <div className="fmed-report-v2-box-head">
 
 
 
 
 
                 
-                        <div className="fmed-literal-5ffa08dd75">
+                        <div className="fmed-report-v2-box-title">
 
 
 
                   Colonne aggiuntive opzionali</div>
                         <button type="button" onClick={resetColonneExtraInventario} className="fmed-style-mini-action-btn">Default pulito</button>
                       </div>
-                      <div className="fmed-style-export-checkbox-grid">
-                        {colonneExtraInventarioDisponibili.map((colonna) => <label key={colonna.key} className="fmed-style-export-check-label">
+                      <div className="fmed-report-v2-checkbox-grid">
+                        {colonneExtraInventarioDisponibili.map((colonna) => <label key={colonna.key} className="fmed-report-v2-check">
                             <input type="checkbox" checked={!!exportInventarioColonneExtra[colonna.key]} onChange={() => toggleColonnaExtraInventario(colonna.key)} />
                             <span>{colonna.label}</span>
                           </label>)}
                       </div>
-                      <div className="fmed-literal-14fdc86419">
+                      <div className="fmed-report-v2-box-note">
 
 
 
@@ -317,20 +317,20 @@ export default function ExportPage(props) {
                     </ReportAdvancedSection>
 
                     <ReportAdvancedSection title="Cespiti specifici" summary={exportCespitiInventarioSelezionati.length ? `${exportCespitiInventarioSelezionati.length} selezionati` : "Tutti i cespiti filtrati"}>
-                    <div className="fmed-style-export-filter-box">
-                      <div className="fmed-literal-d1380c0341">
+                    <div className="fmed-report-v2-filter-box">
+                      <div className="fmed-report-v2-box-head">
 
 
 
 
 
                 
-                        <div className="fmed-literal-5ffa08dd75">
+                        <div className="fmed-report-v2-box-title">
 
 
 
                   Cespiti da esportare</div>
-                        <div className="fmed-literal-cc9c605f61">
+                        <div className="fmed-report-v2-box-actions">
 
 
 
@@ -340,16 +340,16 @@ export default function ExportPage(props) {
                         </div>
                       </div>
 
-                      <input value={exportRicercaCespiteInventario} onChange={(e) => setExportRicercaCespiteInventario(e.target.value)} placeholder="Cerca codice cespite da esportare..." className="fmed-style-input fmed-report-search-input" />
+                      <input value={exportRicercaCespiteInventario} onChange={(e) => setExportRicercaCespiteInventario(e.target.value)} placeholder="Cerca codice cespite da esportare..." className="fmed-style-input fmed-report-v2-search-input" />
 
-                      <div className="fmed-style-export-checkbox-grid">
-                        {codiciInventarioExportVisibili.slice(0, 60).map((codice) => <label key={codice} className="fmed-style-export-check-label">
+                      <div className="fmed-report-v2-checkbox-grid">
+                        {codiciInventarioExportVisibili.slice(0, 60).map((codice) => <label key={codice} className="fmed-report-v2-check">
                             <input type="checkbox" checked={exportCespitiInventarioSelezionati.includes(codice)} onChange={() => toggleCespiteExportInventario(codice)} />
                             <span>{codice}</span>
                           </label>)}
                       </div>
 
-                      {codiciInventarioExportVisibili.length > 60 && <div className="fmed-literal-1212093a3b">
+                      {codiciInventarioExportVisibili.length > 60 && <div className="fmed-report-v2-box-warning">
 
 
 
@@ -358,7 +358,7 @@ export default function ExportPage(props) {
                           Mostrati i primi 60 codici: usa la ricerca per trovare gli altri.
                         </div>}
 
-                      <div className="fmed-literal-14fdc86419">
+                      <div className="fmed-report-v2-box-note">
 
 
 
@@ -369,26 +369,26 @@ export default function ExportPage(props) {
                     </div>
                     </ReportAdvancedSection>
 
-                    <div className="fmed-style-export-info-line">
+                    <div className="fmed-report-v2-info">
                       Filtri: {exportSedeInventario} · {exportStatoInventario} · {exportCategoriaInventario === "TUTTE" ? "Tutte le categorie" : formatCategoria(exportCategoriaInventario)} · {exportTipologiaInventario} · Branche: {exportBrancheInventario.length ? exportBrancheInventario.length : "tutte"} · {exportCostruttoreInventario} · {exportRepartoInventario} · {exportSocietaInventario} · {exportLocazioneInventario} · {exportOrdineInventario}
                     </div>
                   </div>}
               </div>
 
-              <div className="fmed-report-accordion-item fmed-style-export-accordion-item">
-                <button type="button" className="fmed-report-accordion-header fmed-style-export-accordion-header" onClick={() => setExportPanelAperto(exportPanelAperto === "interventi" ? null : "interventi")}>
-                  <div className="fmed-report-accordion-title-wrap fmed-style-export-accordion-title-wrap">
-                    <span className="fmed-style-export-accordion-icon"></span>
+              <div className="fmed-report-v2-accordion-item">
+                <button type="button" className="fmed-report-v2-accordion-header" onClick={() => setExportPanelAperto(exportPanelAperto === "interventi" ? null : "interventi")}>
+                  <div className="fmed-report-v2-accordion-title-wrap">
+                    <span className="fmed-report-v2-accordion-icon"></span>
                     <div>
-                      <div className="fmed-style-export-accordion-title">Export Interventi</div>
-                      <div className="fmed-style-export-accordion-subtitle">Storico interventi filtrato.</div>
+                      <div className="fmed-report-v2-accordion-title">Export Interventi</div>
+                      <div className="fmed-report-v2-accordion-subtitle">Storico interventi filtrato.</div>
                     </div>
                   </div>
-                  <span className="fmed-style-export-accordion-chevron">{exportPanelAperto === "interventi" ? "▲" : "▼"}</span>
+                  <span className="fmed-report-v2-accordion-chevron">{exportPanelAperto === "interventi" ? "▲" : "▼"}</span>
                 </button>
 
-                {exportPanelAperto === "interventi" && <div className="fmed-style-export-accordion-body">
-                    <div className="fmed-style-export-inline-grid">
+                {exportPanelAperto === "interventi" && <div className="fmed-report-v2-accordion-body">
+                    <div className="fmed-report-v2-filter-grid">
                       <select value={exportSedeInterventi} onChange={(e) => {
                 setExportSedeInterventi(e.target.value);
                 setExportSediInterventi([]);
@@ -423,7 +423,7 @@ export default function ExportPage(props) {
                       <input type="date" value={exportDataInterventiDa} onChange={(e) => setExportDataInterventiDa(e.target.value)} className="fmed-style-input" />
                       <input type="date" value={exportDataInterventiA} onChange={(e) => setExportDataInterventiA(e.target.value)} className="fmed-style-input" />
                     </div>
-                    <div className="fmed-style-export-action-row">
+                    <div className="fmed-report-v2-export-actions">
                       <button type="button" onClick={() => exportInterventiFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
                       <button type="button" onClick={() => exportInterventiFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
                     </div>
@@ -437,20 +437,20 @@ export default function ExportPage(props) {
                     </ReportAdvancedSection>
 
                     <ReportAdvancedSection title="Attività" summary={`${attivitaExportIncluse.length} incluse`}>
-                    <div className="fmed-style-export-filter-box">
-                      <div className="fmed-literal-d1380c0341">
+                    <div className="fmed-report-v2-filter-box">
+                      <div className="fmed-report-v2-box-head">
 
 
 
 
 
                 
-                        <div className="fmed-literal-5ffa08dd75">
+                        <div className="fmed-report-v2-box-title">
 
 
 
                   Attività da includere nell'export</div>
-                        <div className="fmed-literal-cc9c605f61">
+                        <div className="fmed-report-v2-box-actions">
 
 
 
@@ -460,14 +460,14 @@ export default function ExportPage(props) {
                         </div>
                       </div>
 
-                      <div className="fmed-style-export-checkbox-grid">
-                        {listaAttivitaExportInterventi.map((attivita) => <label key={attivita} className="fmed-style-export-check-label">
+                      <div className="fmed-report-v2-checkbox-grid">
+                        {listaAttivitaExportInterventi.map((attivita) => <label key={attivita} className="fmed-report-v2-check">
                             <input type="checkbox" checked={!exportAttivitaInterventiEscluse.includes(attivita)} onChange={() => toggleAttivitaExportInterventi(attivita)} />
                             <span>{attivita}</span>
                           </label>)}
                       </div>
 
-                      <div className="fmed-literal-14fdc86419">
+                      <div className="fmed-report-v2-box-note">
 
 
 
@@ -479,20 +479,20 @@ export default function ExportPage(props) {
                     </ReportAdvancedSection>
 
                     <ReportAdvancedSection title="Cespiti specifici" summary={exportCespitiInterventiSelezionati.length ? `${exportCespitiInterventiSelezionati.length} selezionati` : "Tutti gli interventi filtrati"}>
-                    <div className="fmed-style-export-filter-box">
-                      <div className="fmed-literal-d1380c0341">
+                    <div className="fmed-report-v2-filter-box">
+                      <div className="fmed-report-v2-box-head">
 
 
 
 
 
                 
-                        <div className="fmed-literal-5ffa08dd75">
+                        <div className="fmed-report-v2-box-title">
 
 
 
                   Cespiti da esportare negli interventi</div>
-                        <div className="fmed-literal-cc9c605f61">
+                        <div className="fmed-report-v2-box-actions">
 
 
 
@@ -502,16 +502,16 @@ export default function ExportPage(props) {
                         </div>
                       </div>
 
-                      <input value={exportRicercaCespiteInterventi} onChange={(e) => setExportRicercaCespiteInterventi(e.target.value)} placeholder="Cerca codice cespite da esportare..." className="fmed-style-input fmed-report-search-input" />
+                      <input value={exportRicercaCespiteInterventi} onChange={(e) => setExportRicercaCespiteInterventi(e.target.value)} placeholder="Cerca codice cespite da esportare..." className="fmed-style-input fmed-report-v2-search-input" />
 
-                      <div className="fmed-style-export-checkbox-grid">
-                        {codiciInterventiExportVisibili.slice(0, 60).map((codice) => <label key={codice} className="fmed-style-export-check-label">
+                      <div className="fmed-report-v2-checkbox-grid">
+                        {codiciInterventiExportVisibili.slice(0, 60).map((codice) => <label key={codice} className="fmed-report-v2-check">
                             <input type="checkbox" checked={exportCespitiInterventiSelezionati.includes(codice)} onChange={() => toggleCespiteExportInterventi(codice)} />
                             <span>{codice}</span>
                           </label>)}
                       </div>
 
-                      {codiciInterventiExportVisibili.length > 60 && <div className="fmed-literal-1212093a3b">
+                      {codiciInterventiExportVisibili.length > 60 && <div className="fmed-report-v2-box-warning">
 
 
 
@@ -520,7 +520,7 @@ export default function ExportPage(props) {
                           Mostrati i primi 60 codici: usa la ricerca per trovare gli altri.
                         </div>}
 
-                      <div className="fmed-literal-14fdc86419">
+                      <div className="fmed-report-v2-box-note">
 
 
 
@@ -534,20 +534,20 @@ export default function ExportPage(props) {
                   </div>}
               </div>
 
-              <div className="fmed-report-accordion-item fmed-style-export-accordion-item">
-                <button type="button" className="fmed-report-accordion-header fmed-style-export-accordion-header" onClick={() => setExportPanelAperto(exportPanelAperto === "scadenze" ? null : "scadenze")}>
-                  <div className="fmed-report-accordion-title-wrap fmed-style-export-accordion-title-wrap">
-                    <span className="fmed-style-export-accordion-icon"></span>
+              <div className="fmed-report-v2-accordion-item">
+                <button type="button" className="fmed-report-v2-accordion-header" onClick={() => setExportPanelAperto(exportPanelAperto === "scadenze" ? null : "scadenze")}>
+                  <div className="fmed-report-v2-accordion-title-wrap">
+                    <span className="fmed-report-v2-accordion-icon"></span>
                     <div>
-                      <div className="fmed-style-export-accordion-title">Export Scadenze</div>
-                      <div className="fmed-style-export-accordion-subtitle">Scadenze visibili o selezionate.</div>
+                      <div className="fmed-report-v2-accordion-title">Export Scadenze</div>
+                      <div className="fmed-report-v2-accordion-subtitle">Scadenze visibili o selezionate.</div>
                     </div>
                   </div>
-                  <span className="fmed-style-export-accordion-chevron">{exportPanelAperto === "scadenze" ? "▲" : "▼"}</span>
+                  <span className="fmed-report-v2-accordion-chevron">{exportPanelAperto === "scadenze" ? "▲" : "▼"}</span>
                 </button>
 
-                {exportPanelAperto === "scadenze" && <div className="fmed-style-export-accordion-body">
-                    <div className="fmed-literal-632664df44">
+                {exportPanelAperto === "scadenze" && <div className="fmed-report-v2-accordion-body">
+                    <div className="fmed-report-v2-deadline-head">
 
 
 
@@ -555,10 +555,10 @@ export default function ExportPage(props) {
 
 
               
-                      <div className="fmed-style-export-info-line">
+                      <div className="fmed-report-v2-info">
                         Visibili: {scadenzeVisualizzate.length} · Selezionate: {scadenzeSelezionateVisualizzate.length}
                       </div>
-                      <div className="fmed-literal-f60672cbcd">
+                      <div className="fmed-report-v2-deadline-actions">
 
 
 
@@ -568,7 +568,7 @@ export default function ExportPage(props) {
                         <button type="button" onClick={deselezionaTutteScadenze} className="fmed-style-mini-action-btn">Nessuna</button>
                       </div>
                     </div>
-                    <div className="fmed-style-export-inline-grid">
+                    <div className="fmed-report-v2-filter-grid">
                       <select value={filtroScadenze} onChange={(e) => setFiltroScadenze(e.target.value)} className="fmed-style-select">
                         <option value="TUTTE">Tutti gli stati</option>
                         <option value="SCADUTA">Scadute</option>
@@ -599,7 +599,7 @@ export default function ExportPage(props) {
                       <input type="date" value={filtroScadenzeProssimaDa} onChange={(e) => setFiltroScadenzeProssimaDa(e.target.value)} className="fmed-style-input" />
                       <input type="date" value={filtroScadenzeProssimaA} onChange={(e) => setFiltroScadenzeProssimaA(e.target.value)} className="fmed-style-input" />
                     </div>
-                    <div className="fmed-style-export-action-row">
+                    <div className="fmed-report-v2-export-actions">
                       <button type="button" onClick={() => exportScadenzeFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
                       <button type="button" onClick={() => exportScadenzeFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
                     </div>
@@ -609,20 +609,20 @@ export default function ExportPage(props) {
                   </div>}
               </div>
 
-              <div className="fmed-report-accordion-item fmed-style-export-accordion-item">
-                <button type="button" className="fmed-report-accordion-header fmed-style-export-accordion-header" onClick={() => setExportPanelAperto(exportPanelAperto === "budget" ? null : "budget")}>
-                  <div className="fmed-report-accordion-title-wrap fmed-style-export-accordion-title-wrap">
-                    <span className="fmed-style-export-accordion-icon"></span>
+              <div className="fmed-report-v2-accordion-item">
+                <button type="button" className="fmed-report-v2-accordion-header" onClick={() => setExportPanelAperto(exportPanelAperto === "budget" ? null : "budget")}>
+                  <div className="fmed-report-v2-accordion-title-wrap">
+                    <span className="fmed-report-v2-accordion-icon"></span>
                     <div>
-                      <div className="fmed-style-export-accordion-title">Export Budget Criticità</div>
-                      <div className="fmed-style-export-accordion-subtitle">Budget manutentivo con criticità VERDE/GIALLO/ROSSO dallo storico interventi.</div>
+                      <div className="fmed-report-v2-accordion-title">Export Budget Criticità</div>
+                      <div className="fmed-report-v2-accordion-subtitle">Budget manutentivo con criticità VERDE/GIALLO/ROSSO dallo storico interventi.</div>
                     </div>
                   </div>
-                  <span className="fmed-style-export-accordion-chevron">{exportPanelAperto === "budget" ? "▲" : "▼"}</span>
+                  <span className="fmed-report-v2-accordion-chevron">{exportPanelAperto === "budget" ? "▲" : "▼"}</span>
                 </button>
 
-                {exportPanelAperto === "budget" && <div className="fmed-style-export-accordion-body">
-                    <div className="fmed-style-export-inline-grid">
+                {exportPanelAperto === "budget" && <div className="fmed-report-v2-accordion-body">
+                    <div className="fmed-report-v2-filter-grid">
                       <select value={exportBudgetSede} onChange={(e) => setExportBudgetSede(e.target.value)} className="fmed-style-select">
                         <option value="TUTTE">Tutte le sedi</option>
                         {listaSedi.map((s) => <option key={s} value={s}>{s}</option>)}
@@ -646,7 +646,7 @@ export default function ExportPage(props) {
                         <option value="VERDE">VERDE</option>
                       </select>
                     </div>
-                    <div className="fmed-style-export-action-row">
+                    <div className="fmed-report-v2-export-actions">
                       <button type="button" onClick={() => exportBudgetCriticitaFmed("csv")} className="fmed-style-primary-btn">CSV per Excel</button>
                       <button type="button" onClick={() => exportBudgetCriticitaFmed("pdf")} className="fmed-style-secondary-btn">PDF</button>
                     </div>

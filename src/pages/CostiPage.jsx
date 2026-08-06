@@ -1,4 +1,4 @@
-import FmedModuleIcon from "../components/FmedModuleIcon.jsx";
+import FmedIcon from "../components/ui/FmedIcon.jsx";
 import CostiControls from "../components/costi/CostiControls.jsx";
 
 export default function CostiPage(props) {
@@ -27,6 +27,8 @@ export default function CostiPage(props) {
     listaCodiciFiltroInterventi,
     resetFiltriInterventi,
     esportaInterventiFiltratiPdf,
+    setPagina,
+    esportaInterventiFiltratiExcel,
     formatCurrency,
     totaleSpesaInterventiFiltrati,
     interventiFiltrati,
@@ -39,140 +41,354 @@ export default function CostiPage(props) {
     classificaCostiPerAttivita,
     setCostiPanelAperto,
     costiPanelAperto,
-    puliziaSocietaDaCorreggere
+    puliziaSocietaDaCorreggere,
   } = props;
+
+  const metriche = [
+    {
+      key: "totale",
+      label: "Totale costi",
+      value: formatCurrency(totaleSpesaInterventiFiltrati),
+      detail: `${interventiFiltrati.length} interventi`,
+      icon: "euro",
+      tone: "violet",
+    },
+    {
+      key: "interventi",
+      label: "Interventi analizzati",
+      value: interventiFiltrati.length,
+      detail: "interventi",
+      icon: "activity",
+      tone: "cyan",
+    },
+    {
+      key: "cespiti",
+      label: "Cespiti coinvolti",
+      value: codiciCoinvoltiInterventi.size,
+      detail: "cespiti",
+      icon: "box",
+      tone: "green",
+    },
+    {
+      key: "ditte",
+      label: "Ditte coinvolte",
+      value: ditteCoinvolteInterventi.size,
+      detail: "società e ditte",
+      icon: "users",
+      tone: "blue",
+    },
+    {
+      key: "media",
+      label: "Costo medio",
+      value: formatCurrency(costoMedioInterventoFiltrato),
+      detail: "per intervento",
+      icon: "chart",
+      tone: "amber",
+    },
+  ];
+
+  const classifiche = [
+    {
+      key: "ditta",
+      title: "Costi per ditta",
+      rows: classificaCostiPerDitta,
+      icon: "users",
+      tone: "violet",
+    },
+    {
+      key: "sede",
+      title: "Costi per sede",
+      rows: classificaCostiPerSede,
+      icon: "building",
+      tone: "cyan",
+    },
+    {
+      key: "cespiti",
+      title: "Cespiti più costosi",
+      rows: classificaCostiPerCespite,
+      icon: "box",
+      tone: "green",
+    },
+    {
+      key: "attivita",
+      title: "Costi per attività",
+      rows: classificaCostiPerAttivita,
+      icon: "activity",
+      tone: "blue",
+    },
+  ];
+
   return (
-    <div className="fmed-costi-page fmed-style-card">
-    <header className="fmed-costi-hero fmed-style-scadenze-header">
-      <div className="fmed-banner-heading">
-        <FmedModuleIcon module="Costi" />
-        <div className="fmed-banner-copy">
-          <span className="fmed-costi-kicker">Controllo economico</span>
-          <h2 className="fmed-costi-title fmed-style-card-title">Analisi costi manutentivi</h2>
-          <p className="fmed-style-muted">
-            Analisi economica sugli interventi con anno contabile, periodo, sede, ditta, attività e cespite. I dati usano gli stessi filtri della pagina Interventi.
+    <div className="fmed-costi-page fmed-costi-v2">
+      <header className="fmed-costi-hero fmed-costi-v2-hero">
+        <span className="fmed-costi-v2-hero-icon">
+          <FmedIcon name="euro" size={30} />
+        </span>
+
+        <div className="fmed-costi-v2-hero-copy">
+          <span>Controllo economico</span>
+          <h1>Analisi costi manutentivi</h1>
+          <p>
+            Analisi economica degli interventi per anno contabile, periodo,
+            sede, ditta, attività e cespite. I dati utilizzano gli stessi
+            filtri operativi della pagina Interventi.
           </p>
         </div>
-      </div>
-    </header>
+        <button
+          type="button"
+          className="fmed-costi-v2-back"
+          onClick={() => setPagina("")}
+        >
+          <FmedIcon name="history" size={17} />
+          Torna a Strumenti
+        </button>
 
-    <CostiControls {...{
-        labelPeriodoContabileInterventi,
-        filtroInterventiAnnoContabile,
-        setFiltroInterventiAnnoContabile,
-        listaAnniContabiliInterventi,
-        filtroInterventiPeriodoContabile,
-        setFiltroInterventiPeriodoContabile,
-        filtroInterventiPeriodoDa,
-        setFiltroInterventiPeriodoDa,
-        filtroInterventiPeriodoA,
-        setFiltroInterventiPeriodoA,
-        filtroInterventiSede,
-        setFiltroInterventiSede,
-        listaSediInterventi,
-        filtroInterventiSocieta,
-        setFiltroInterventiSocieta,
-        listaSocietaInterventi,
-        filtroInterventiAttivita,
-        setFiltroInterventiAttivita,
-        listaAttivitaFiltroInterventi,
-        filtroInterventiCodice,
-        setFiltroInterventiCodice,
-        listaCodiciFiltroInterventi,
-        resetFiltriInterventi,
-        esportaInterventiFiltratiPdf
-      }} />
+        <span className="fmed-costi-v2-hero-decoration" aria-hidden="true" />
+      </header>
 
-    <section className="fmed-costi-summary fmed-style-conto-economico-box">
-      <div className="fmed-style-conto-economico-header">
-        <div>
-          <h3 className="fmed-style-conto-economico-title">Quadro economico filtrato</h3>
-          <p className="fmed-style-muted">Il totale considera solo le righe con costo valorizzato nei campi costo/importo_extra.</p>
-        </div>
-      </div>
+      <CostiControls
+        {...{
+          labelPeriodoContabileInterventi,
+          filtroInterventiAnnoContabile,
+          setFiltroInterventiAnnoContabile,
+          listaAnniContabiliInterventi,
+          filtroInterventiPeriodoContabile,
+          setFiltroInterventiPeriodoContabile,
+          filtroInterventiPeriodoDa,
+          setFiltroInterventiPeriodoDa,
+          filtroInterventiPeriodoA,
+          setFiltroInterventiPeriodoA,
+          filtroInterventiSede,
+          setFiltroInterventiSede,
+          listaSediInterventi,
+          filtroInterventiSocieta,
+          setFiltroInterventiSocieta,
+          listaSocietaInterventi,
+          filtroInterventiAttivita,
+          setFiltroInterventiAttivita,
+          listaAttivitaFiltroInterventi,
+          filtroInterventiCodice,
+          setFiltroInterventiCodice,
+          listaCodiciFiltroInterventi,
+          resetFiltriInterventi,
+          esportaInterventiFiltratiPdf,
+          esportaInterventiFiltratiExcel,
+        }}
+      />
 
-      <div className="fmed-costi-summary-grid fmed-style-conto-economico-grid">
-        <div className="fmed-style-conto-economico-card"><span className="fmed-style-conto-economico-label">Totale spesa</span><strong className="fmed-style-conto-economico-value">{formatCurrency(totaleSpesaInterventiFiltrati)}</strong></div>
-        <div className="fmed-style-conto-economico-card"><span className="fmed-style-conto-economico-label">Interventi</span><strong className="fmed-style-conto-economico-value">{interventiFiltrati.length}</strong></div>
-        <div className="fmed-style-conto-economico-card"><span className="fmed-style-conto-economico-label">Cespiti coinvolti</span><strong className="fmed-style-conto-economico-value">{codiciCoinvoltiInterventi.size}</strong></div>
-        <div className="fmed-style-conto-economico-card"><span className="fmed-style-conto-economico-label">Ditte coinvolte</span><strong className="fmed-style-conto-economico-value">{ditteCoinvolteInterventi.size}</strong></div>
-        <div className="fmed-style-conto-economico-card"><span className="fmed-style-conto-economico-label">Costo medio</span><strong className="fmed-style-conto-economico-value">{formatCurrency(costoMedioInterventoFiltrato)}</strong></div>
-      </div>
-    </section>
+      <section
+        className="fmed-costi-summary fmed-costi-v2-summary"
+        aria-labelledby="fmed-costi-summary-title"
+      >
+        <header className="fmed-costi-v2-section-head">
+          <span>
+            <FmedIcon name="chart" size={18} />
+          </span>
 
-    <div className="fmed-costi-rankings fmed-literal-3037c666cf">
+          <div>
+            <h2 id="fmed-costi-summary-title">Quadro economico filtrato</h2>
+            <p>
+              Valori calcolati esclusivamente sugli interventi compresi nel
+              perimetro selezionato.
+            </p>
+          </div>
+        </header>
 
+        <div className="fmed-costi-v2-kpi-grid">
+          {metriche.map((metrica) => (
+            <article
+              key={metrica.key}
+              className={`fmed-costi-v2-kpi fmed-costi-v2-tone--${metrica.tone}`}
+            >
+              <span className="fmed-costi-v2-kpi-icon">
+                <FmedIcon name={metrica.icon} size={23} />
+              </span>
 
-
-        
-      {[["ditta", "Costi per ditta", classificaCostiPerDitta, ""], ["sede", "Costi per sede", classificaCostiPerSede, ""], ["cespiti", "Cespiti più costosi", classificaCostiPerCespite, ""], ["attivita", "Costi per attività", classificaCostiPerAttivita, ""]].map(([chiave, titolo, righe, icona]) => <div key={chiave} className="fmed-costi-accordion fmed-style-export-accordion-item">
-          <button type="button" onClick={() => setCostiPanelAperto(costiPanelAperto === chiave ? null : chiave)} className="fmed-style-export-accordion-header">
-            <div className="fmed-style-export-accordion-title-wrap">
-              <span className="fmed-style-export-accordion-icon">{icona}</span>
               <div>
-                <div className="fmed-style-export-accordion-title">{titolo}</div>
-                <div className="fmed-style-export-accordion-subtitle">{righe.length} voci · totale {formatCurrency(righe.reduce((acc, r) => acc + (Number(r.totale) || 0), 0))}</div>
+                <span>{metrica.label}</span>
+                <strong>{metrica.value}</strong>
+                <small>{metrica.detail}</small>
               </div>
-            </div>
-            <span className="fmed-style-export-accordion-chevron">{costiPanelAperto === chiave ? "▲ Chiudi" : "▼ Apri"}</span>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section
+        className="fmed-costi-rankings fmed-costi-v2-rankings"
+        aria-label="Classifiche economiche"
+      >
+        {classifiche.map(({ key, title, rows, icon, tone }) => {
+          const isOpen = costiPanelAperto === key;
+          const totale = rows.reduce(
+            (acc, row) => acc + (Number(row.totale) || 0),
+            0
+          );
+
+          return (
+            <article
+              key={key}
+              className={`fmed-costi-accordion fmed-costi-v2-accordion fmed-costi-v2-tone--${tone} ${
+                isOpen ? "is-open" : ""
+              }`}
+            >
+              <button
+                type="button"
+                className="fmed-costi-v2-accordion-trigger"
+                aria-expanded={isOpen}
+                onClick={() =>
+                  setCostiPanelAperto(isOpen ? null : key)
+                }
+              >
+                <span className="fmed-costi-v2-accordion-icon">
+                  <FmedIcon name={icon} size={20} />
+                </span>
+
+                <span className="fmed-costi-v2-accordion-copy">
+                  <strong>{title}</strong>
+                  <small>
+                    {rows.length} voci · Totale {formatCurrency(totale)}
+                  </small>
+                </span>
+
+                <span className="fmed-costi-v2-accordion-action">
+                  {isOpen ? "Chiudi" : "Apri"}
+                  <span aria-hidden="true">{isOpen ? "⌃" : "⌄"}</span>
+                </span>
+              </button>
+
+              {isOpen && (
+                <div className="fmed-costi-v2-table-wrap">
+                  <table className="fmed-costi-v2-table">
+                    <thead>
+                      <tr>
+                        <th>Voce</th>
+                        <th>Interventi</th>
+                        <th>Cespiti</th>
+                        <th>Totale costi</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {rows.slice(0, 20).map((row, index) => (
+                        <tr key={`${title}-${row.nome}-${index}`}>
+                          <td>
+                            <strong>{row.nome}</strong>
+                          </td>
+                          <td>{row.interventi}</td>
+                          <td>{row.cespiti}</td>
+                          <td>{formatCurrency(row.totale)}</td>
+                        </tr>
+                      ))}
+
+                      {rows.length === 0 && (
+                        <tr>
+                          <td
+                            colSpan={4}
+                            className="fmed-costi-v2-empty"
+                          >
+                            <FmedIcon name="archive" size={25} />
+                            <span>
+                              Nessun dato disponibile con i filtri attuali.
+                            </span>
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </article>
+          );
+        })}
+
+        <article
+          className={`fmed-costi-accordion fmed-costi-cleanup fmed-costi-v2-accordion fmed-costi-v2-cleanup ${
+            costiPanelAperto === "pulizia" ? "is-open" : ""
+          }`}
+        >
+          <button
+            type="button"
+            className="fmed-costi-v2-accordion-trigger"
+            aria-expanded={costiPanelAperto === "pulizia"}
+            onClick={() =>
+              setCostiPanelAperto(
+                costiPanelAperto === "pulizia" ? null : "pulizia"
+              )
+            }
+          >
+            <span className="fmed-costi-v2-accordion-icon">
+              <FmedIcon name="settings" size={20} />
+            </span>
+
+            <span className="fmed-costi-v2-accordion-copy">
+              <strong>Pulizia Ditte/Società</strong>
+              <small>
+                {puliziaSocietaDaCorreggere.length} varianti rilevate
+              </small>
+            </span>
+
+            <span className="fmed-costi-v2-accordion-action">
+              {costiPanelAperto === "pulizia" ? "Chiudi" : "Apri"}
+              <span aria-hidden="true">
+                {costiPanelAperto === "pulizia" ? "⌃" : "⌄"}
+              </span>
+            </span>
           </button>
 
-          {costiPanelAperto === chiave && <div className="fmed-style-table-wrap">
-              <table className="fmed-style-table">
-                <thead>
-                  <tr><th className="fmed-style-th">Voce</th><th className="fmed-style-th">Interventi</th><th className="fmed-style-th">Cespiti</th><th className="fmed-style-th">Totale</th></tr>
-                </thead>
-                <tbody>
-                  {righe.slice(0, 20).map((r) => <tr key={`${titolo}-${r.nome}`} className="fmed-style-tr">
-                      <td className="fmed-style-td-code">{r.nome}</td>
-                      <td className="fmed-style-td">{r.interventi}</td>
-                      <td className="fmed-style-td">{r.cespiti}</td>
-                      <td className="fmed-style-td">{formatCurrency(r.totale)}</td>
-                    </tr>)}
-                  {righe.length === 0 && <tr><td colSpan={4} className="fmed-style-td">Nessun dato disponibile con i filtri attuali.</td></tr>}
-                </tbody>
-              </table>
-            </div>}
-        </div>)}
+          {costiPanelAperto === "pulizia" && (
+            <div className="fmed-costi-v2-cleanup-content">
+              <p>
+                La tabella non modifica Supabase: mostra le varianti
+                individuate e il nome standard utilizzato da FMED.
+              </p>
+
+              <div className="fmed-costi-v2-table-wrap">
+                <table className="fmed-costi-v2-table">
+                  <thead>
+                    <tr>
+                      <th>Valore presente</th>
+                      <th>Nome standard FMED</th>
+                      <th>Occorrenze</th>
+                      <th>Esito</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {puliziaSocietaDaCorreggere
+                      .slice(0, 80)
+                      .map((row) => (
+                        <tr key={`${row.standard}-${row.originale}`}>
+                          <td>{row.originale}</td>
+                          <td>
+                            <strong>{row.standard}</strong>
+                          </td>
+                          <td>{row.occorrenze}</td>
+                          <td>
+                            <span className="fmed-costi-v2-status">
+                              Da accorpare
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+
+                    {puliziaSocietaDaCorreggere.length === 0 && (
+                      <tr>
+                        <td
+                          colSpan={4}
+                          className="fmed-costi-v2-empty"
+                        >
+                          Nessuna variante da correggere rilevata.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </article>
+      </section>
     </div>
-
-    <div className="fmed-costi-accordion fmed-costi-cleanup fmed-style-export-accordion-item" style={{
-
-        marginTop: 18
-      }}>
-      <button type="button" onClick={() => setCostiPanelAperto(costiPanelAperto === "pulizia" ? null : "pulizia")} className="fmed-style-export-accordion-header">
-        <div className="fmed-style-export-accordion-title-wrap">
-          <span className="fmed-style-export-accordion-icon"></span>
-          <div>
-            <div className="fmed-style-export-accordion-title">Pulizia Ditte/Società - proposte di accorpamento</div>
-            <div className="fmed-style-export-accordion-subtitle">{puliziaSocietaDaCorreggere.length} varianti rilevate</div>
-          </div>
-        </div>
-        <span className="fmed-style-export-accordion-chevron">{costiPanelAperto === "pulizia" ? "▲ Chiudi" : "▼ Apri"}</span>
-      </button>
-      {costiPanelAperto === "pulizia" && <>
-          <p style={{
-
-            margin: "12px 14px"
-          }} className="fmed-style-muted">
-            Questa tabella non modifica Supabase: mostra le varianti trovate e il nome standard usato da FMED per filtri e analisi. Quando sei d'accordo, possiamo generare lo script SQL di bonifica definitiva.
-          </p>
-          <div className="fmed-style-table-wrap">
-            <table className="fmed-style-table">
-              <thead><tr><th className="fmed-style-th">Valore presente</th><th className="fmed-style-th">Nome standard FMED</th><th className="fmed-style-th">Occorrenze</th><th className="fmed-style-th">Esito</th></tr></thead>
-              <tbody>
-                {puliziaSocietaDaCorreggere.slice(0, 80).map((r) => <tr key={`${r.standard}-${r.originale}`} className="fmed-style-tr">
-                    <td className="fmed-style-td">{r.originale}</td>
-                    <td className="fmed-style-td-code">{r.standard}</td>
-                    <td className="fmed-style-td">{r.occorrenze}</td>
-                    <td className="fmed-style-td">Da accorpare</td>
-                  </tr>)}
-                {puliziaSocietaDaCorreggere.length === 0 && <tr><td colSpan={4} className="fmed-style-td">Nessuna variante da correggere rilevata.</td></tr>}
-              </tbody>
-            </table>
-          </div>
-        </>}
-    </div>
-  </div>);
-
+  );
 }
