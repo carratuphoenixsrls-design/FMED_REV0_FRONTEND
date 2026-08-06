@@ -335,7 +335,7 @@ export default function CoreStandardPage({ apiBaseUrl, onDataChanged, canManage 
 
   return (
     <section className="core-standard-page">
-      <header className="core-standard-head core-cataloghi-head">
+      <header className="core-standard-head">
         <div className="fmed-banner-heading">
           <FmedModuleIcon module="Dizionari" />
           <div className="fmed-banner-copy">
