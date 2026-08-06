@@ -756,22 +756,9 @@
   .core-rule-row { grid-template-columns: 1fr; }
 }
 
-/* FMED REV0 Cataloghi - testata allineata Asset */
-.core-standard-page .core-standard-head {
-  color: #10233f;
-}
 
-.core-standard-page .core-standard-head .fmed-banner-copy h2 {
-  color: #10233f;
-  -webkit-text-fill-color: #10233f;
-}
 
-.core-standard-page .core-standard-head .fmed-banner-copy p {
-  color: #61758d;
-  -webkit-text-fill-color: #61758d;
-}
 
-.core-standard-page .core-standard-head .fmed-banner-copy .core-standard-kicker {
-  color: #c52e67;
-  -webkit-text-fill-color: #c52e67;
-}
+
+
+
