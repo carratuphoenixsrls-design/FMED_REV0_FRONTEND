@@ -1,458 +1,1014 @@
-/* FMED REV0
-   Dizionari e regole operative: layout desktop stabile, senza sticky o scroll annidati. */
-.core-standard-page {
-  display: grid;
-  gap: 16px;
-  width: 100%;
-  max-width: none;
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  color: var(--fmed-text, #263238);
-  box-sizing: border-box;
-  position: relative;
-  overflow: visible;
-}
-.core-standard-page * { box-sizing: border-box; }
+/* ============================================================
+   FMED REV0 · CATALOGHI
+   Ricostruzione grafica dedicata.
+   Nessuna classe condivisa con gli altri moduli FMED.
+   ============================================================ */
 
-.core-standard-head {
-  position: relative;
-  inset: auto;
-  z-index: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 14px;
+.fmed-cataloghi-page {
+  --cataloghi-blue: #24588f;
+  --cataloghi-blue-dark: #173f6d;
+  --cataloghi-blue-soft: #eaf2fb;
+  --cataloghi-border: #d8e1ec;
+  --cataloghi-text: #1f2f3f;
+  --cataloghi-muted: #647386;
+  --cataloghi-surface: #f4f7fb;
+  --cataloghi-card: #ffffff;
+
+  display: grid;
+  gap: 11px;
+  width: 100%;
   min-width: 0;
   margin: 0;
-  padding: 14px 18px;
-  border: 1px solid var(--fmed-border, #d8dee7);
-  border-radius: 18px;
-  background:
-    radial-gradient(circle at 88% -40%, rgba(49, 95, 140, .17), transparent 46%),
-    var(--fmed-card, #fff);
-  box-shadow: 0 10px 28px rgba(15, 58, 55, .08);
-  overflow: visible;
+  padding: 0 0 14px;
+  color: var(--cataloghi-text);
 }
-.core-standard-head > div { flex: 1 1 auto; min-width: 0; }
-.core-standard-head h2 {
-  margin: 5px 0 8px;
-  font-size: clamp(26px, 2.4vw, 36px);
-  line-height: 1.08;
-  white-space: normal;
+
+.fmed-cataloghi-page,
+.fmed-cataloghi-page * {
+  box-sizing: border-box;
 }
-.core-standard-head p {
-  max-width: 920px;
-  margin: 0;
-  color: var(--fmed-muted, #5e6878);
-  font-size: 14px;
-  line-height: 1.55;
-  white-space: normal;
+
+/* CATALOGO CANONICO */
+
+.fmed-cataloghi-canonical {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-width: 0;
+  padding: 15px 18px;
+  border: 1px solid var(--cataloghi-border);
+  border-radius: 14px;
+  background: var(--cataloghi-card);
+  box-shadow: 0 7px 20px rgba(31, 62, 94, .07);
 }
-.core-standard-kicker {
-  color: var(--fmed-primary, #315f8c);
-  font-size: 12px;
+
+.fmed-cataloghi-canonical-copy {
+  min-width: 0;
+}
+
+.fmed-cataloghi-canonical-copy > span,
+.fmed-cataloghi-section-head > div > span,
+.fmed-cataloghi-add header > div > span {
+  color: var(--cataloghi-blue);
+  font-size: 10px;
   font-weight: 900;
   letter-spacing: .15em;
-}
-
-.core-primary-button,
-.core-add-value button {
-  border: 0;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--fmed-primary, #315f8c), #527da8);
-  color: #fff;
-  font-weight: 800;
-  cursor: pointer;
-  transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
-}
-.core-primary-button:hover,
-.core-add-value button:hover {
-  filter: brightness(1.06);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 22px rgba(13, 118, 110, .18);
-}
-.core-primary-button:not(.core-sync-button):disabled,
-.core-add-value button:disabled {
-  opacity: .55;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-.core-sync-button:disabled {
-  opacity: 1;
-  cursor: wait;
-  transform: none;
-}
-.core-sync-button {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 190px;
-  min-height: 42px;
-  padding: 7px 12px;
-  text-align: left;
-  white-space: normal;
-}
-.core-sync-icon {
-  display: grid;
-  place-items: center;
-  width: 34px;
-  min-width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, .15);
-  font-size: 23px;
-  line-height: 1;
-}
-.core-sync-copy { display: grid; gap: 3px; min-width: 0; }
-.core-sync-copy strong {
-  color: #fff;
-  -webkit-text-fill-color: #fff;
-  font-size: 13px;
-  line-height: 1.1;
-}
-.core-sync-copy small {
-  color: rgba(255, 255, 255, .82);
-  -webkit-text-fill-color: rgba(255, 255, 255, .82);
-  font-size: 12px;
-  line-height: 1.2;
-}
-
-.core-summary-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-.core-summary-grid article {
-  display: grid;
-  gap: 5px;
-  min-width: 0;
-  padding: 12px 14px;
-  border: 1px solid var(--fmed-border, #d8dee7);
-  border-radius: 15px;
-  background: var(--fmed-card, #fff);
-  box-shadow: 0 6px 18px rgba(15, 58, 55, .05);
-}
-.core-summary-grid span {
-  color: var(--fmed-muted, #5e6878);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: .08em;
   text-transform: uppercase;
 }
-.core-summary-grid strong { color: var(--fmed-primary, #315f8c); font-size: 29px; line-height: 1; }
-.core-summary-grid small { color: var(--fmed-muted, #5e6878); }
 
-.core-standard-message {
-  padding: 13px 15px;
-  border: 1px solid #ecd28d;
-  border-radius: 12px;
-  background: #fff4d7;
-  font-weight: 700;
-  line-height: 1.35;
+.fmed-cataloghi-canonical-copy h2 {
+  margin: 4px 0 5px;
+  color: #183d65;
+  font-size: 21px;
+  line-height: 1.1;
 }
 
-.core-standard-tabs {
-  position: relative;
-  inset: auto;
-  z-index: 1;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  width: 100%;
-  padding: 7px;
-  border: 1px solid var(--fmed-border, #d8dee7);
-  border-radius: 14px;
-  background: var(--fmed-card, #fff);
-  overflow: visible;
+.fmed-cataloghi-canonical-copy p {
+  max-width: 900px;
+  margin: 0;
+  color: var(--cataloghi-muted);
+  font-size: 12px;
+  line-height: 1.45;
 }
-.core-standard-tabs button {
-  flex: 0 1 auto;
+
+.fmed-cataloghi-sync {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  min-height: 42px;
-  padding: 9px 17px;
-  border: 1px solid transparent;
+  flex: 0 0 auto;
+  min-width: 184px;
+  min-height: 43px;
+  padding: 7px 12px;
+  border: 0;
   border-radius: 10px;
-  background: transparent;
-  color: inherit;
-  font-weight: 800;
-  cursor: pointer;
-  white-space: normal;
-}
-.core-standard-tabs button svg {
-  display: block;
-  flex: 0 0 20px;
-  width: 20px;
-  height: 20px;
-}
-.core-standard-tabs button.active {
-  border-color: rgba(13, 118, 110, .16);
-  background: linear-gradient(135deg, var(--fmed-primary, #315f8c), #527da8);
+  background: linear-gradient(135deg, var(--cataloghi-blue), #3977b2);
   color: #fff;
-  box-shadow: 0 5px 13px rgba(13, 118, 110, .2);
-}
-
-.core-toolbar {
-  display: grid;
-  grid-template-columns: minmax(260px, 1fr) minmax(260px, 1fr) max-content;
-  gap: 10px;
-  align-items: center;
-  width: 100%;
-  padding: 14px;
-  border: 1px solid var(--fmed-border, #d8dee7);
-  border-radius: 14px;
-  background: var(--fmed-card, #fff);
-}
-.core-toolbar input,
-.core-add-value input {
-  width: 100%;
-  min-width: 0;
-  min-height: 44px;
-  padding: 10px 12px;
-  border: 1px solid var(--fmed-border-strong, #c7d0dc);
-  border-radius: 10px;
-  background: var(--fmed-input, #fff);
-  color: inherit;
-}
-.core-toolbar label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  font-size: 13px;
-  font-weight: 700;
-  white-space: normal;
-}
-.core-search-field {
-  display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
-}
-.core-search-field input {
-  width: 100%;
-  min-width: 0;
-}
-.core-inactive-toggle input[type="checkbox"] {
-  width: 18px;
-  min-width: 18px;
-  min-height: 18px;
-}
-
-.core-dictionary-layout {
-  display: grid;
-  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
-  align-items: start;
-  gap: 16px;
-  width: 100%;
-  min-width: 0;
-}
-.core-dictionary-list,
-.core-dictionary-panel {
-  position: relative;
-  inset: auto;
-  min-width: 0;
-  max-width: 100%;
-  padding: 16px;
-  border: 1px solid var(--fmed-border, #d8dee7);
-  border-radius: 16px;
-  background: var(--fmed-card, #fff);
-  box-shadow: 0 6px 18px rgba(15, 58, 55, .04);
-  overflow: visible;
-}
-.core-dictionary-list {
-  display: flex;
-  flex-direction: column;
-  max-height: none;
-}
-.core-section-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 11px;
-}
-.core-section-heading h3 { margin: 0; font-size: 18px; }
-.core-section-heading span {
-  display: grid;
-  place-items: center;
-  min-width: 31px;
-  height: 31px;
-  padding: 0 8px;
-  border-radius: 999px;
-  background: var(--fmed-soft, #edf3f9);
-  color: var(--fmed-primary, #315f8c);
-  font-weight: 900;
-}
-.core-dictionary-scroll {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  max-height: none;
-  padding: 0;
-  overflow: visible;
-}
-.core-dictionary-list button {
-  width: 100%;
-  min-width: 0;
-  min-height: 54px;
-  padding: 10px 12px;
-  border: 1px solid transparent;
-  border-radius: 11px;
-  background: transparent;
-  color: inherit;
   text-align: left;
   cursor: pointer;
-  white-space: normal;
-  overflow: visible;
-}
-.core-dictionary-list button:hover { background: color-mix(in srgb, var(--fmed-soft, #edf3f9) 72%, transparent); }
-.core-dictionary-list button.active {
-  border-color: rgba(13, 118, 110, .28);
-  background: var(--fmed-soft, #edf3f9);
-  box-shadow: inset 4px 0 0 var(--fmed-primary, #315f8c);
-}
-.core-dictionary-list strong,
-.core-dictionary-list span { display: block; white-space: normal; }
-.core-dictionary-list strong { font-size: 13px; line-height: 1.25; }
-.core-dictionary-list span { margin-top: 4px; color: var(--fmed-muted, #5e6878); font-size: 12px; line-height: 1.25; }
-
-.core-dictionary-panel { display: flex; flex-direction: column; min-height: 0; }
-.core-dictionary-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 12px 16px;
-  min-width: 0;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--fmed-border, #d8dee7);
-}
-.core-dictionary-title > div { flex: 1 1 420px; min-width: 0; }
-.core-dictionary-title h3 { margin: 0; font-size: 22px; line-height: 1.2; }
-.core-dictionary-title p { margin: 5px 0 0; color: var(--fmed-muted, #5e6878); line-height: 1.4; }
-.core-dictionary-title > span {
-  flex: 0 1 auto;
-  max-width: 100%;
-  padding: 7px 9px;
-  border-radius: 8px;
-  background: var(--fmed-soft, #edf3f9);
-  font: 700 11px/1.25 monospace;
-  overflow-wrap: anywhere;
+  box-shadow: 0 7px 16px rgba(36, 88, 143, .19);
 }
 
-.core-table-head,
-.core-value-row {
+.fmed-cataloghi-sync:disabled {
+  cursor: wait;
+}
+
+.fmed-cataloghi-sync-icon {
   display: grid;
-  grid-template-columns: minmax(135px, .8fr) minmax(210px, 1.55fr) minmax(100px, .55fr) minmax(110px, auto);
-  gap: 12px;
-  align-items: center;
-  min-width: 0;
+  place-items: center;
+  flex: 0 0 29px;
+  width: 29px;
+  height: 29px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .15);
+  font-size: 20px;
+  line-height: 1;
 }
-.core-table-head {
-  padding: 13px 11px 8px;
-  color: var(--fmed-muted, #5e6878);
+
+.fmed-cataloghi-sync > span:last-child {
+  display: grid;
+  gap: 2px;
+}
+
+.fmed-cataloghi-sync strong {
+  color: #fff;
   font-size: 12px;
+  line-height: 1.1;
+}
+
+.fmed-cataloghi-sync small {
+  color: rgba(255, 255, 255, .8);
+  font-size: 10px;
+}
+
+/* KPI */
+
+.fmed-cataloghi-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.fmed-cataloghi-kpis article {
+  position: relative;
+  display: grid;
+  align-content: center;
+  gap: 3px;
+  min-width: 0;
+  min-height: 78px;
+  padding: 11px 14px 11px 17px;
+  border: 1px solid var(--cataloghi-border);
+  border-radius: 12px;
+  background: var(--cataloghi-card);
+  box-shadow: 0 5px 15px rgba(31, 62, 94, .055);
+  overflow: hidden;
+}
+
+.fmed-cataloghi-kpis article::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--cataloghi-blue);
+}
+
+.fmed-cataloghi-kpis article.warning::before {
+  background: #d99a00;
+}
+
+.fmed-cataloghi-kpis article.ok::before {
+  background: #21876c;
+}
+
+.fmed-cataloghi-kpis span {
+  color: var(--cataloghi-muted);
+  font-size: 10px;
   font-weight: 900;
   letter-spacing: .08em;
   text-transform: uppercase;
 }
-.core-value-table {
-  display: grid;
-  gap: 7px;
-  max-height: none;
-  padding: 0;
-  overflow: visible;
+
+.fmed-cataloghi-kpis strong {
+  color: #183d65;
+  font-size: 25px;
+  line-height: 1;
 }
-.core-value-row {
-  min-height: 52px;
-  padding: 11px;
-  border: 1px solid var(--fmed-border, #d8dee7);
+
+.fmed-cataloghi-kpis small {
+  color: var(--cataloghi-muted);
+  font-size: 10px;
+}
+
+.fmed-cataloghi-message {
+  padding: 10px 13px;
+  border: 1px solid #e8ce86;
   border-radius: 10px;
-  overflow: visible;
+  background: #fff7df;
+  color: #725313;
+  font-size: 12px;
+  font-weight: 700;
 }
-.core-value-row.disabled { opacity: .58; }
-.core-value-row code,
-.core-value-row strong { min-width: 0; overflow-wrap: anywhere; white-space: normal; }
-.core-value-row > button {
-  justify-self: end;
-  min-height: 36px;
-  padding: 7px 10px;
-  border: 1px solid var(--fmed-border, #d8dee7);
-  border-radius: 9px;
-  background: transparent;
-  color: var(--fmed-primary, #315f8c);
-  font-weight: 800;
-  cursor: pointer;
-  white-space: normal;
-}
-.core-value-actions {
+
+/* BARRA COMANDI */
+
+.fmed-cataloghi-controls {
   display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+  padding: 7px;
+  border: 1px solid var(--cataloghi-border);
+  border-radius: 12px;
+  background: var(--cataloghi-card);
+  box-shadow: 0 5px 15px rgba(31, 62, 94, .05);
 }
-.core-value-actions button {
-  min-height: 34px;
-  padding: 7px 10px;
-  border: 1px solid var(--fmed-border-strong, #c7d0dc);
-  border-radius: 9px;
-  background: var(--fmed-card, #fff);
-  color: var(--fmed-primary, #315f8c);
-  font-weight: 800;
-  cursor: pointer;
+
+.fmed-cataloghi-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
 }
-.core-value-actions button:hover {
-  border-color: color-mix(in srgb, var(--fmed-primary, #315f8c) 45%, var(--fmed-border-strong, #c7d0dc));
-  background: var(--fmed-soft, #edf3f9);
-}
-.core-value-actions button:disabled {
-  opacity: .55;
-  cursor: wait;
-}
-.core-status {
+
+.fmed-cataloghi-tabs button,
+.fmed-cataloghi-quality,
+.fmed-cataloghi-new {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: max-content;
-  max-width: 100%;
-  padding: 5px 8px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 900;
-  white-space: normal;
+  gap: 7px;
+  min-height: 37px;
+  padding: 7px 11px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #536477;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
 }
-.core-status.active { background: #ddf6ee; color: #087760; }
-.core-status.inactive { background: #f3e5e5; color: #a74444; }
-.core-empty-state {
-  padding: 28px;
-  border: 1px dashed var(--fmed-border, #d8dee7);
-  border-radius: 12px;
-  color: var(--fmed-muted, #5e6878);
+
+.fmed-cataloghi-tabs button svg {
+  flex: 0 0 17px;
+  width: 17px;
+  height: 17px;
+}
+
+.fmed-cataloghi-tabs button:hover,
+.fmed-cataloghi-quality:hover {
+  background: var(--cataloghi-blue-soft);
+  color: var(--cataloghi-blue);
+}
+
+.fmed-cataloghi-tabs button.active,
+.fmed-cataloghi-quality.active {
+  border-color: rgba(36, 88, 143, .18);
+  background: var(--cataloghi-blue);
+  color: #fff;
+  box-shadow: 0 5px 12px rgba(36, 88, 143, .17);
+}
+
+.fmed-cataloghi-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+  min-width: 0;
+}
+
+.fmed-cataloghi-search {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 250px;
+  min-height: 37px;
+  padding: 0 10px;
+  border: 1px solid var(--cataloghi-border);
+  border-radius: 8px;
+  background: #fbfcfe;
+  color: var(--cataloghi-muted);
+}
+
+.fmed-cataloghi-search svg {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.fmed-cataloghi-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--cataloghi-text);
+  font-size: 11px;
+}
+
+.fmed-cataloghi-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 37px;
+  padding: 0 9px;
+  border: 1px solid var(--cataloghi-border);
+  border-radius: 8px;
+  color: var(--cataloghi-muted);
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.fmed-cataloghi-filter input {
+  width: 15px;
+  height: 15px;
+}
+
+.fmed-cataloghi-request-filter {
+  display: flex;
+  align-items: center;
+  min-height: 37px;
+  padding: 0 11px;
+  border: 1px solid #e8ce86;
+  border-radius: 8px;
+  background: #fff7df;
+  color: #765713;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.fmed-cataloghi-quality {
+  border-color: var(--cataloghi-border);
+}
+
+.fmed-cataloghi-new {
+  border-color: var(--cataloghi-blue);
+  background: var(--cataloghi-blue);
+  color: #fff;
+}
+
+.fmed-cataloghi-new:hover {
+  background: var(--cataloghi-blue-dark);
+}
+
+/* REGISTRO E PANNELLO VALORI */
+
+.fmed-cataloghi-workspace {
+  display: grid;
+  gap: 11px;
+  min-width: 0;
+}
+
+.fmed-cataloghi-register,
+.fmed-cataloghi-values-panel {
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid var(--cataloghi-border);
+  border-radius: 13px;
+  background: var(--cataloghi-card);
+  box-shadow: 0 6px 18px rgba(31, 62, 94, .055);
+}
+
+.fmed-cataloghi-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  min-width: 0;
+  margin-bottom: 10px;
+}
+
+.fmed-cataloghi-section-head > div {
+  min-width: 0;
+}
+
+.fmed-cataloghi-section-head h3 {
+  margin: 3px 0 0;
+  color: #183d65;
+  font-size: 17px;
+  line-height: 1.15;
+}
+
+.fmed-cataloghi-section-head p {
+  margin: 4px 0 0;
+  color: var(--cataloghi-muted);
+  font-size: 11px;
+}
+
+.fmed-cataloghi-section-head > strong {
+  display: grid;
+  place-items: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--cataloghi-blue-soft);
+  color: var(--cataloghi-blue);
+  font-size: 12px;
+}
+
+.fmed-cataloghi-section-head > code {
+  max-width: 240px;
+  padding: 6px 8px;
+  border-radius: 7px;
+  background: var(--cataloghi-blue-soft);
+  color: var(--cataloghi-blue-dark);
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+
+.fmed-cataloghi-table-wrap {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--cataloghi-border);
+  border-radius: 10px;
+}
+
+.fmed-cataloghi-table-head,
+.fmed-cataloghi-catalog-row {
+  display: grid;
+  grid-template-columns:
+    minmax(150px, 1.15fr)
+    minmax(220px, 1.8fr)
+    minmax(85px, .55fr)
+    minmax(75px, .5fr)
+    minmax(125px, .8fr)
+    minmax(70px, .45fr);
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+}
+
+.fmed-cataloghi-table-head {
+  min-height: 37px;
+  padding: 7px 11px;
+  background: #edf3f9;
+  color: #617185;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.fmed-cataloghi-table-body {
+  max-height: 330px;
+  overflow: auto;
+}
+
+.fmed-cataloghi-catalog-row {
+  min-height: 48px;
+  padding: 7px 11px;
+  border-top: 1px solid #e6ebf1;
+  background: #fff;
+  color: #405164;
+  font-size: 11px;
+}
+
+.fmed-cataloghi-catalog-row:first-child {
+  border-top: 0;
+}
+
+.fmed-cataloghi-catalog-row:hover,
+.fmed-cataloghi-catalog-row.active {
+  background: #f5f9fd;
+}
+
+.fmed-cataloghi-catalog-row.active {
+  box-shadow: inset 3px 0 0 var(--cataloghi-blue);
+}
+
+.fmed-cataloghi-catalog-row > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.fmed-cataloghi-dictionary-name {
+  display: grid;
+  gap: 2px;
+}
+
+.fmed-cataloghi-dictionary-name strong {
+  color: #183d65;
+  font-size: 11px;
+}
+
+.fmed-cataloghi-dictionary-name code {
+  color: var(--cataloghi-muted);
+  font-size: 9px;
+}
+
+.fmed-cataloghi-request-count {
+  display: inline-grid;
+  place-items: center;
+  justify-self: start;
+  min-width: 25px;
+  height: 25px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: #eef2f6;
+  color: #617185;
+  font-weight: 900;
+}
+
+.fmed-cataloghi-request-count.pending {
+  background: #fff0c9;
+  color: #8a5a00;
+}
+
+.fmed-cataloghi-catalog-row > button {
+  min-height: 30px;
+  padding: 5px 9px;
+  border: 1px solid #b9c9da;
+  border-radius: 7px;
+  background: #fff;
+  color: var(--cataloghi-blue);
+  font-size: 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.fmed-cataloghi-catalog-row > button:hover {
+  border-color: var(--cataloghi-blue);
+  background: var(--cataloghi-blue-soft);
+}
+
+/* VALORI */
+
+.fmed-cataloghi-values-head,
+.fmed-cataloghi-value-row {
+  display: grid;
+  grid-template-columns:
+    minmax(120px, .75fr)
+    minmax(210px, 1.55fr)
+    minmax(105px, .55fr)
+    minmax(225px, auto);
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+}
+
+.fmed-cataloghi-values-head {
+  min-height: 35px;
+  padding: 6px 10px;
+  border-radius: 8px 8px 0 0;
+  background: #edf3f9;
+  color: #617185;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.fmed-cataloghi-values-body {
+  max-height: 410px;
+  overflow: auto;
+  border: 1px solid var(--cataloghi-border);
+  border-top: 0;
+  border-radius: 0 0 9px 9px;
+}
+
+.fmed-cataloghi-value-row {
+  min-height: 48px;
+  padding: 7px 10px;
+  border-top: 1px solid #e6ebf1;
+  background: #fff;
+  font-size: 11px;
+}
+
+.fmed-cataloghi-value-row:first-child {
+  border-top: 0;
+}
+
+.fmed-cataloghi-value-row.disabled {
+  opacity: .58;
+}
+
+.fmed-cataloghi-value-row > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.fmed-cataloghi-value-row code {
+  color: var(--cataloghi-blue-dark);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.fmed-cataloghi-value-row > strong {
+  color: #26394c;
+  font-size: 11px;
+}
+
+.fmed-cataloghi-inline-input {
+  width: 100%;
+  min-height: 32px;
+  padding: 5px 8px;
+  border: 1px solid var(--cataloghi-blue);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--cataloghi-text);
+}
+
+.fmed-cataloghi-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: start;
+  min-height: 25px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.fmed-cataloghi-status.active {
+  background: #ddf6ee;
+  color: #087760;
+}
+
+.fmed-cataloghi-status.inactive {
+  background: #f3e5e5;
+  color: #a74444;
+}
+
+.fmed-cataloghi-status.pending {
+  background: #fff0c9;
+  color: #8a5a00;
+}
+
+.fmed-cataloghi-status.replaced {
+  background: #e9edf2;
+  color: #536273;
+}
+
+.fmed-cataloghi-value-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.fmed-cataloghi-value-actions button,
+.fmed-cataloghi-merge button {
+  min-height: 30px;
+  padding: 5px 8px;
+  border: 1px solid var(--cataloghi-blue);
+  border-radius: 7px;
+  background: var(--cataloghi-blue);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.fmed-cataloghi-value-actions button.secondary,
+.fmed-cataloghi-merge button.secondary {
+  border-color: #c4d0dc;
+  background: #fff;
+  color: var(--cataloghi-blue);
+}
+
+.fmed-cataloghi-value-actions button:disabled,
+.fmed-cataloghi-merge button:disabled {
+  opacity: .55;
+  cursor: wait;
+}
+
+/* UNIFICAZIONE */
+
+.fmed-cataloghi-merge {
+  display: grid;
+  grid-template-columns: minmax(230px, 1fr) minmax(240px, 1fr) auto auto;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+  padding: 11px;
+  border: 1px solid #e8ce86;
+  border-radius: 10px;
+  background: #fff8e6;
+}
+
+.fmed-cataloghi-merge h4,
+.fmed-cataloghi-merge p {
+  margin: 0;
+}
+
+.fmed-cataloghi-merge h4 {
+  color: #63490d;
+  font-size: 12px;
+}
+
+.fmed-cataloghi-merge p {
+  margin-top: 3px;
+  color: #7a673c;
+  font-size: 10px;
+}
+
+.fmed-cataloghi-merge select {
+  min-width: 0;
+  min-height: 34px;
+  padding: 6px 8px;
+  border: 1px solid #d3bd80;
+  border-radius: 7px;
+  background: #fff;
+  color: var(--cataloghi-text);
+}
+
+/* NUOVO VALORE */
+
+.fmed-cataloghi-add {
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid var(--cataloghi-border);
+  border-radius: 10px;
+  background: var(--cataloghi-surface);
+}
+
+.fmed-cataloghi-add header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 9px;
+}
+
+.fmed-cataloghi-add h4 {
+  margin: 3px 0 0;
+  color: #183d65;
+  font-size: 14px;
+}
+
+.fmed-cataloghi-code-preview {
+  display: grid;
+  gap: 2px;
+  min-width: 145px;
+  padding: 6px 9px;
+  border: 1px solid var(--cataloghi-border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.fmed-cataloghi-code-preview span {
+  color: var(--cataloghi-muted);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.fmed-cataloghi-code-preview code {
+  color: var(--cataloghi-blue-dark);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.fmed-cataloghi-add-fields {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 105px auto;
+  gap: 8px;
+  align-items: end;
+}
+
+.fmed-cataloghi-add-fields label {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.fmed-cataloghi-add-fields label > span {
+  color: var(--cataloghi-muted);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.fmed-cataloghi-add-fields input {
+  width: 100%;
+  min-width: 0;
+  min-height: 35px;
+  padding: 6px 8px;
+  border: 1px solid #bcc9d7;
+  border-radius: 7px;
+  background: #fff;
+  color: var(--cataloghi-text);
+}
+
+.fmed-cataloghi-add-fields > button {
+  min-height: 35px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 7px;
+  background: var(--cataloghi-blue);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.fmed-cataloghi-add-fields > button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+.fmed-cataloghi-add > p {
+  margin: 7px 0 0;
+  color: var(--cataloghi-muted);
+  font-size: 9px;
+}
+
+.fmed-cataloghi-empty {
+  padding: 25px;
+  color: var(--cataloghi-muted);
+  font-size: 11px;
   text-align: center;
 }
 
-.core-add-value {
-  display: grid;
-  grid-template-columns: minmax(140px, .85fr) minmax(210px, 1.55fr) minmax(95px, .55fr) minmax(170px, auto);
-  gap: 9px;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--fmed-border, #d8dee7);
-}
-.core-add-value h4 { grid-column: 1 / -1; margin: 0 0 5px; }
-.core-add-value button { min-height: 44px; padding: 9px 14px; white-space: normal; }
+/* SUPPORTO PANNELLI QUALITÀ E REGOLE */
 
-@media (max-width: 1320px) and (min-width: 1024px) {
-  .core-standard-head { align-items: flex-start; }
-  .core-toolbar { grid-template-columns: minmax(220px, 1fr) minmax(220px, 1fr); }
-  .core-toolbar label { grid-column: 1 / -1; }
-  .core-dictionary-layout { grid-template-columns: minmax(270px, 310px) minmax(0, 1fr); }
-  .core-table-head,
-  .core-value-row { grid-template-columns: minmax(120px, .8fr) minmax(170px, 1.5fr) 100px 105px; }
-  .core-add-value { grid-template-columns: minmax(120px, .8fr) minmax(170px, 1.5fr) 90px minmax(150px, auto); }
+.fmed-cataloghi-page .core-standard-kicker {
+  color: var(--cataloghi-blue);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.fmed-cataloghi-page .core-primary-button {
+  min-height: 36px;
+  padding: 7px 11px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--cataloghi-blue);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.fmed-cataloghi-page .core-primary-button:disabled {
+  opacity: .55;
+  cursor: wait;
+}
+
+.fmed-cataloghi-page .core-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 9px;
+}
+
+.fmed-cataloghi-page .core-section-heading h3 {
+  margin: 0;
+}
+
+.fmed-cataloghi-page .core-section-heading > span {
+  display: grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--cataloghi-blue-soft);
+  color: var(--cataloghi-blue);
+  font-weight: 900;
+}
+
+.fmed-cataloghi-page .core-empty-state {
+  padding: 24px;
+  border: 1px dashed var(--cataloghi-border);
+  border-radius: 10px;
+  color: var(--cataloghi-muted);
+  text-align: center;
+}
+
+.fmed-cataloghi-quality-stack {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1320px) {
+  .fmed-cataloghi-controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .fmed-cataloghi-tabs,
+  .fmed-cataloghi-toolbar {
+    width: 100%;
+  }
+
+  .fmed-cataloghi-toolbar {
+    justify-content: flex-start;
+  }
+
+  .fmed-cataloghi-search {
+    flex: 1 1 260px;
+  }
+
+  .fmed-cataloghi-table-head,
+  .fmed-cataloghi-catalog-row {
+    grid-template-columns:
+      minmax(145px, 1.2fr)
+      minmax(190px, 1.5fr)
+      75px
+      70px
+      105px
+      62px;
+    gap: 7px;
+  }
+
+  .fmed-cataloghi-values-head,
+  .fmed-cataloghi-value-row {
+    grid-template-columns:
+      minmax(105px, .7fr)
+      minmax(175px, 1.3fr)
+      95px
+      minmax(190px, auto);
+    gap: 7px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .fmed-cataloghi-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fmed-cataloghi-table-head,
+  .fmed-cataloghi-catalog-row {
+    grid-template-columns:
+      minmax(150px, 1.5fr)
+      80px
+      70px
+      70px;
+  }
+
+  .fmed-cataloghi-table-head > :nth-child(2),
+  .fmed-cataloghi-catalog-row > :nth-child(2),
+  .fmed-cataloghi-table-head > :nth-child(5),
+  .fmed-cataloghi-catalog-row > :nth-child(5) {
+    display: none;
+  }
+
+  .fmed-cataloghi-values-head,
+  .fmed-cataloghi-value-row {
+    grid-template-columns: 105px minmax(160px, 1fr) 90px;
+  }
+
+  .fmed-cataloghi-values-head > :nth-child(4),
+  .fmed-cataloghi-value-row > :nth-child(4) {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+
+  .fmed-cataloghi-merge,
+  .fmed-cataloghi-add-fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .fmed-cataloghi-canonical {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .fmed-cataloghi-sync {
+    width: 100%;
+  }
+
+  .fmed-cataloghi-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .fmed-cataloghi-tabs,
+  .fmed-cataloghi-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .fmed-cataloghi-tabs button {
+    flex: 1 1 calc(50% - 4px);
+  }
+
+  .fmed-cataloghi-search {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+
+  .fmed-cataloghi-table-head {
+    display: none;
+  }
+
+  .fmed-cataloghi-catalog-row {
+    grid-template-columns: 1fr auto;
+    gap: 5px 10px;
+    padding: 10px;
+  }
+
+  .fmed-cataloghi-catalog-row > * {
+    grid-column: 1;
+  }
+
+  .fmed-cataloghi-catalog-row > button {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+
+  .fmed-cataloghi-values-head {
+    display: none;
+  }
+
+  .fmed-cataloghi-value-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 10px;
+  }
 }
 
 /* ============================================================
@@ -584,7 +1140,7 @@
   border-radius: 14px;
   background: var(--fmed-surface, #f8fafc);
 }
-.core-quality-rules span::before { content: "✓"; margin-right: 8px; color: var(--fmed-primary, #315f8c); font-weight: 900; }
+.core-quality-rules span::before { content: "âœ“"; margin-right: 8px; color: var(--fmed-primary, #315f8c); font-weight: 900; }
 .core-quality-diagnostics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -626,36 +1182,6 @@
   .core-quality-empty-catalogs > div:not(.core-section-heading) { grid-template-columns: 1fr; }
 }
 
-/* REV0 Catalogo Canonico Globale */
-.core-status.pending {
-  background: rgba(217, 154, 0, .13);
-  border-color: rgba(217, 154, 0, .28);
-  color: #8a5a00;
-}
-.core-status.replaced {
-  background: rgba(100, 116, 139, .12);
-  border-color: rgba(100, 116, 139, .24);
-  color: #475569;
-}
-.core-merge-value {
-  display: grid;
-  grid-template-columns: minmax(240px, 1fr) minmax(250px, 1fr) auto auto;
-  gap: 10px;
-  align-items: center;
-  margin: 14px 0;
-  padding: 14px;
-  border: 1px solid rgba(217, 154, 0, .30);
-  border-radius: 16px;
-  background: rgba(255, 248, 225, .72);
-}
-.core-merge-value h4,
-.core-merge-value p { margin: 0; }
-.core-merge-value p { margin-top: 4px; font-size: 12px; color: var(--fmed-text-muted, #5e6878); }
-.core-merge-value select,
-.core-merge-value button { min-height: 42px; }
-@media (max-width: 980px) {
-  .core-merge-value { grid-template-columns: 1fr; }
-}
 .core-operational-rules {
   display: grid;
   gap: 16px;
@@ -755,10 +1281,3 @@
   .core-rules-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .core-rule-row { grid-template-columns: 1fr; }
 }
-
-
-
-
-
-
-
