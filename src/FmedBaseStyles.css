@@ -2225,7 +2225,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 34px;
+  min-height: 30px;
   padding: 0 12px;
   border-radius: 999px;
   font-size: 12px;
@@ -2237,11 +2237,11 @@
 .fmed-style-interventi-filters-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(190px, 1fr));
-  gap: 12px;
+  gap: 10px;
   align-items: end;
 }
 .fmed-style-interventi-select-large {
-  min-height: 46px;
+  min-height: 42px;
   width: 100%;
   border-radius: 15px;
   padding: 0 38px 0 13px;
@@ -2268,10 +2268,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 18px;
+  margin-top: 12px;
 }
 .fmed-style-interventi-primary-action {
-  min-height: 46px;
+  min-height: 42px;
   border: 1px solid rgba(49,95,140,.30);
   border-radius: 15px;
   padding: 0 16px;
@@ -2282,7 +2282,7 @@
   box-shadow: 0 14px 28px rgba(49,95,140,.18);
 }
 .fmed-style-interventi-secondary-action {
-  min-height: 46px;
+  min-height: 42px;
   border: 1px solid rgba(49,95,140,.22);
   border-radius: 15px;
   padding: 0 16px;
