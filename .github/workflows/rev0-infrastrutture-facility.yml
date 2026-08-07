@@ -1,0 +1,87 @@
+name: rev0-infrastrutture-facility
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  patch:
+    if: github.head_ref == 'rev0-infrastrutture-facility'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: rev0-infrastrutture-facility
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Applica regole Facility Infrastrutture frontend
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('src/FmedApp.jsx')
+          s = p.read_text(encoding='utf-8')
+
+          start = s.index('  function statoInfrastruttura(infra) {')
+          end = s.index('\n  const infrastruttureConStato = useMemo', start)
+          nuovo_stato = '''  function statoInfrastruttura(infra) {\n    const statoManuale = normalizzaTestoCodice(infra?.stato).replace(/\\s+/g, "_").trim();\n    const statoCiclo = normalizzaTestoCodice(infra?.stato_ciclo || "").replace(/\\s+/g, "_");\n    const cicloStato = normalizzaTestoCodice(infra?._ciclo_stato || "").replace(/\\s+/g, "_");\n    const statoCalcolato = normalizzaTestoCodice(infra?.stato_calcolato || "").replace(/\\s+/g, "_");\n\n    if (statoCiclo === "DUPLICATO") {\n      return { codice: "DUPLICATO", testo: "Duplicato", colore: "#7A5C9E", giorni: null };\n    }\n    if (statoCiclo === "COMPLETATA") {\n      return { codice: "COMPLETATA", testo: "Completata", colore: "#B77900", giorni: null };\n    }\n    if (statoCiclo === "SOSTITUITA") {\n      return { codice: "SOSTITUITA", testo: "Sostituita", colore: "#7A8791", giorni: null };\n    }\n    if (["CESSATA", "ANNULLATA", "NON_APPLICABILE"].includes(statoCiclo)) {\n      return { codice: statoCiclo, testo: statoCiclo.replace(/_/g, " "), colore: "#B42318", giorni: null };\n    }\n    if (cicloStato === "CHIUSO" || ["ARCHIVIATO", "ARCHIVIATA", "SUPERATO", "SUPERATA"].includes(statoManuale)) {\n      return { codice: "CHIUSA", testo: "Chiusa", colore: "#7A8791", giorni: null };\n    }\n\n    const statoDaData = statoScadenza(infra?.prossimo_intervento);\n    if (statoCalcolato === "SCADUTA" || statoManuale === "SC" || statoManuale === "SCADUTA" || statoManuale === "SCADUTO" || statoDaData.codice === "SCADUTA") {\n      return { ...statoDaData, codice: "SCADUTA", testo: "Scaduta", colore: "#FF4D5E" };\n    }\n    if (statoCalcolato === "30_GIORNI" || statoManuale === "PS" || statoManuale === "IN_SCADENZA" || statoManuale === "PROSSIMA_SCADENZA" || statoDaData.codice === "30_GIORNI") {\n      return { ...statoDaData, codice: "30_GIORNI", testo: "In scadenza", colore: "#FF9F1C" };\n    }\n    if (statoCalcolato === "60_GIORNI") {\n      return { ...statoDaData, codice: "60_GIORNI", testo: "Entro 60 giorni", colore: "#A88316" };\n    }\n    if (statoCalcolato === "DA_PIANIFICARE" || statoManuale === "DA_VERIFICARE" || statoManuale === "DA VERIFICARE" || !infra?.prossimo_intervento) {\n      return { codice: "DA_VERIFICARE", testo: "Da verificare", colore: "#9AA6B2", giorni: null };\n    }\n    return { ...statoDaData, codice: "OK", testo: "Programmata", colore: "#2FD37D" };\n  }\n'''
+          s = s[:start] + nuovo_stato + s[end:]
+
+          start = s.index('  function mesiValiditaOperativaInfrastruttura(periodicita) {')
+          end = s.index('\n  // eslint-disable-next-line react-hooks/exhaustive-deps', start)
+          nuovo_perimetro = '''  function infrastrutturaRilevanteOperativa(r) {\n    const statoCiclo = normalizzaTestoCodice(r?.stato_ciclo || "").replace(/\\s+/g, "_");\n    const cicloStato = normalizzaTestoCodice(r?._ciclo_stato || "").replace(/\\s+/g, "_");\n\n    // I duplicati restano volutamente visibili per poterli verificare e bonificare.\n    if (statoCiclo === "DUPLICATO") return true;\n\n    // Il Motore Cicli decide il perimetro: lo storico chiuso non entra nella vista\n    // operativa, mentre un ciclo corrente resta visibile anche se è già scaduto.\n    if (cicloStato === "CHIUSO") return false;\n    if (r?._ciclo_corrente === true || cicloStato === "ATTIVO") return true;\n\n    return statoCiclo === "ATTIVA" && Boolean(r?.prossimo_intervento || r?.periodicita);\n  }\n'''
+          s = s[:start] + nuovo_perimetro + s[end:]
+
+          old = '''  function aggiornaFormInfra(campo, valore) {\n    setFormInfra((prev) => {\n      const prossimo = {\n        ...prev,\n        [campo]: valore\n      };\n      if (campo === "sede") {\n        prossimo.centro_costo = "";\n        prossimo.societa = "";\n      }\n      return prossimo;\n    });\n  }\n'''
+          new = '''  function aggiornaFormInfra(campo, valore) {\n    setFormInfra((prev) => {\n      const prossimo = { ...prev, [campo]: valore };\n      if (campo === "sede") {\n        // Società e centro di costo sono derivati dalla sede dal backend.\n        prossimo.centro_costo = "";\n        prossimo.societa = "";\n      }\n      if (campo === "periodicita" || campo === "ultimo_intervento") {\n        const periodicita = String(campo === "periodicita" ? valore : prossimo.periodicita || "").trim().toUpperCase().replace(/[\\s-]+/g, "_");\n        const ultimo = campo === "ultimo_intervento" ? valore : prossimo.ultimo_intervento;\n        if (periodicita === "UNA_TANTUM" || periodicita === "TANTUM") {\n          prossimo.prossimo_intervento = "";\n        } else if (ultimo && periodicita && periodicita !== "DA_DEFINIRE") {\n          prossimo.prossimo_intervento = calcolaProssimaScadenza(ultimo, periodicita, PERIODICITA_STANDARD) || "";\n        }\n      }\n      return prossimo;\n    });\n  }\n'''
+          if old not in s:
+              raise SystemExit('aggiornaFormInfra non trovato')
+          s = s.replace(old, new, 1)
+
+          start = s.index('  function payloadInfrastrutturaDaForm() {')
+          end = s.index('\n  async function salvaInfrastruttura()', start)
+          nuovo_payload = '''  function payloadInfrastrutturaDaForm() {\n    const payloadCompleto = { ...formInfra };\n    Object.keys(payloadCompleto).forEach((k) => {\n      if (typeof payloadCompleto[k] === "string") payloadCompleto[k] = payloadCompleto[k].trim();\n      if (payloadCompleto[k] === "") payloadCompleto[k] = null;\n    });\n    if (payloadCompleto.importo_annuo !== null && payloadCompleto.importo_annuo !== undefined) {\n      const numero = Number(String(payloadCompleto.importo_annuo).replace(",", "."));\n      payloadCompleto.importo_annuo = Number.isFinite(numero) ? numero : null;\n    }\n\n    // Facility source-of-truth: società e centro costo non vengono riscritti dal\n    // form. Il backend li deriva sempre dalla sede autorevole.\n    delete payloadCompleto.societa;\n    delete payloadCompleto.centro_costo;\n\n    if (!infraInModifica?.id) return payloadCompleto;\n\n    // Modifica semantica: i record storici possono contenere vecchi valori di\n    // catalogo. Inviamo soltanto ciò che l'utente ha realmente cambiato.\n    const originale = nuovoFormInfrastruttura(infraInModifica);\n    const confronta = (value) => String(value ?? "").trim();\n    const payload = {};\n    Object.entries(payloadCompleto).forEach(([campo, valore]) => {\n      if (campo === "codice") return;\n      let originaleVal = originale?.[campo] ?? null;\n      if (campo === "importo_annuo") {\n        const n = Number(String(originaleVal ?? "").replace(",", "."));\n        originaleVal = Number.isFinite(n) ? n : null;\n      }\n      if (confronta(valore) !== confronta(originaleVal)) payload[campo] = valore;\n    });\n    return payload;\n  }\n'''
+          s = s[:start] + nuovo_payload + s[end:]
+
+          old = '''      const payload = payloadInfrastrutturaDaForm();\n      const endpoint = infraInModifica?.id ? `/infrastrutture/${encodeURIComponent(infraInModifica.id)}` : "/infrastrutture";\n'''
+          new = '''      const payload = payloadInfrastrutturaDaForm();\n      if (infraInModifica?.id && Object.keys(payload).length === 0) {\n        setFormInfrastrutturaOpen(false);\n        setInfraInModifica(null);\n        return;\n      }\n      const endpoint = infraInModifica?.id ? `/infrastrutture/${encodeURIComponent(infraInModifica.id)}` : "/infrastrutture";\n'''
+          if old not in s:
+              raise SystemExit('salvaInfrastruttura payload non trovato')
+          s = s.replace(old, new, 1)
+          p.write_text(s, encoding='utf-8')
+
+          p = Path('src/components/infrastrutture/InfrastrutturaEditor.jsx')
+          s = p.read_text(encoding='utf-8')
+          old = '''              <TextField label="Prossimo intervento" type="date" value={formInfra.prossimo_intervento} onChange={(e) => aggiornaFormInfra("prossimo_intervento", e.target.value)} />\n'''
+          new = '''              <TextField\n                label="Prossimo intervento"\n                type="date"\n                value={formInfra.prossimo_intervento}\n                onChange={(e) => aggiornaFormInfra("prossimo_intervento", e.target.value)}\n                readOnly={Boolean(formInfra.periodicita && !["DA_DEFINIRE"].includes(String(formInfra.periodicita).toUpperCase().replace(/[\\s-]+/g, "_")))}\n                placeholder="Calcolato da ultimo intervento + periodicità"\n              />\n'''
+          if old not in s:
+              raise SystemExit('campo prossimo intervento non trovato')
+          s = s.replace(old, new, 1)
+          old = '''              {canonical("Società", "societa", "SOCIETA", infraSocietaOptions)}\n              <TextField label="Helpdesk" value={formInfra.numero_helpdesk} onChange={(e) => aggiornaFormInfra("numero_helpdesk", e.target.value)} />\n              {canonical("Responsabile", "responsabile", "RESPONSABILI")}\n              {canonical("Centro di costo", "centro_costo", "CENTRI_COSTO", infraCentroCostoOptions)}\n'''
+          new = '''              <TextField label="Società" value={formInfra.societa} readOnly placeholder="Derivata automaticamente dalla sede" />\n              <TextField label="Helpdesk" value={formInfra.numero_helpdesk} onChange={(e) => aggiornaFormInfra("numero_helpdesk", e.target.value)} />\n              {canonical("Responsabile", "responsabile", "RESPONSABILI")}\n              <TextField label="Centro di costo" value={formInfra.centro_costo} readOnly placeholder="Derivato automaticamente dalla sede" />\n'''
+          if old not in s:
+              raise SystemExit('campi società/centro costo non trovati')
+          s = s.replace(old, new, 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Build frontend
+        run: |
+          npm ci
+          npm run build
+      - name: Verifica regole Infrastrutture
+        run: |
+          grep -q 'statoCiclo === "DUPLICATO"' src/FmedApp.jsx
+          grep -q 'Il Motore Cicli decide il perimetro' src/FmedApp.jsx
+          grep -q 'Derivata automaticamente dalla sede' src/components/infrastrutture/InfrastrutturaEditor.jsx
+          grep -q 'calcolaProssimaScadenza(ultimo, periodicita' src/FmedApp.jsx
+      - name: Commit risultato e rimuove workflow temporaneo
+        run: |
+          rm .github/workflows/rev0-infrastrutture-facility.yml
+          git config user.name "FMED REV0 Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/FmedApp.jsx src/components/infrastrutture/InfrastrutturaEditor.jsx .github/workflows/rev0-infrastrutture-facility.yml
+          git commit -m "REV0 Infrastrutture: vista operativa e fonte dati Facility"
+          git push origin HEAD:rev0-infrastrutture-facility
