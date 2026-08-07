@@ -2,6 +2,7 @@ name: rev0-infra-reset-visible
 on:
   pull_request:
     branches: [main]
+# trigger collaudo finale
 jobs:
   build:
     runs-on: ubuntu-latest
