@@ -1934,11 +1934,11 @@ function AppNuovoCore({
       modello: cespiteCorrente?.modello || record?.modello || "",
       matricola: cespiteCorrente?.matricola || record?.matricola || "",
       reparto: cespiteCorrente?.reparto || record?.reparto || "",
-      branca_medica: getBrancaAsset(cespiteCorrente) || record?.branca_medica || record?.branca || "",
+      branca_medica: cespiteCorrente?.branca_medica || cespiteCorrente?.branca || record?.branca_medica || record?.branca || "",
       locazione: getLocazioneFmed(cespiteCorrente) || record?.locazione || "",
       societa: cespiteCorrente?.societa || record?.societa || ""
     };
-  }, [cespitiByCodice, getBrancaAsset]);
+  }, [cespitiByCodice]);
 
   const interventiConContestoCorrente = useMemo(
     () => (Array.isArray(interventi) ? interventi : []).map(contestoCespiteCorrenteRecord),
@@ -2174,7 +2174,7 @@ function AppNuovoCore({
       })),
       listaAnniContabiliInterventi: [...new Set([String(new Date().getFullYear()), ...interventi.map((i) => parseDataFMED(i.data_ultimo_intervento || i.data_prossimo_intervento)?.getFullYear()).filter((anno) => Number.isFinite(anno)).map(String)])].sort((a, b) => Number(b) - Number(a)),
       listaTipologieFiltroInterventi: listaPulitaDizionario([
-      ...valoriDizionarioPrimari(dizionariCoreFmed, "tipologie", extraTipologie),
+      ...valoriDizionarioPrimari(dizionariCoreFmed, "tipologie_asset", extraTipologie),
       ...cespiti.map((c) => c.tipologia)]
       ),
       listaAttivitaFiltroInterventi: filtraDizionarioRimosso("attivita", listaPulitaAttivita([
@@ -2419,7 +2419,7 @@ function AppNuovoCore({
   ...interventi.map((i) => i.sede)],
   true));
   const listaTipologieFormInterventi = filtraDizionarioRimosso("tipologia", listaPulitaDizionario([
-  ...valoriDizionarioPrimari(dizionariCoreFmed, "tipologie", extraTipologie),
+  ...valoriDizionarioPrimari(dizionariCoreFmed, "tipologie_asset", extraTipologie),
   ...cespiti.map((c) => c.tipologia)]
   ));
   const listaCostruttoriFormInterventi = filtraDizionarioRimosso("costruttore", listaPulitaDizionario([
@@ -8257,7 +8257,7 @@ ${messaggio}`);
         </div>
 
         <div className="fmed-new-intervention-status" aria-live="polite">
-          <span><strong>Prima di salvare:</strong> verifica cespite, attività, date, ditta ed esito. I dati del cespite possono essere corretti senza modificare la sua anagrafica.</span>
+          <span><strong>Prima di salvare:</strong> verifica cespite, attività, date, ditta ed esito. I dati anagrafici del cespite si modificano esclusivamente dalla scheda Asset.</span>
           <span>{formNuovoIntervento.codice_strumento ? `Cespite: ${formNuovoIntervento.codice_strumento}` : "Cespite non selezionato"}</span>
         </div>
 
@@ -8628,11 +8628,11 @@ ${messaggio}`);
             </div>
           </div>
 
-          <SelectField label="Tipologia" field="tipologia" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaTipologie} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
+          <SelectField label="Tipologia" field="tipologia" options={listaTipologie} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
 
-          <SelectField label="Costruttore" field="costruttore" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaCostruttoriFormInterventi} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
+          <SelectField label="Costruttore" field="costruttore" options={listaCostruttoriFormInterventi} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
 
-          <SelectField label="Modello" field="modello" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaModelliFormInterventi} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
+          <SelectField label="Modello" field="modello" options={listaModelliFormInterventi} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
 
           <div className="fmed-style-edit-field">
             <label className="fmed-style-edit-label">Matricola</label>
@@ -8669,7 +8669,7 @@ ${messaggio}`);
                 }} className="fmed-style-edit-field" />
               
 
-          <SelectField label="Reparto" field="reparto" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaRepartiFormInterventi} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
+          <SelectField label="Reparto" field="reparto" options={listaRepartiFormInterventi} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
 
           <CanonicalSelect
                 label="Branca medica"
@@ -8686,7 +8686,7 @@ ${messaggio}`);
                 }} className="fmed-style-edit-field" />
               
 
-          <SelectField label="Locazione" field="locazione" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaLocazioniNuovoCespite} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
+          <SelectField label="Locazione" field="locazione" options={listaLocazioniNuovoCespite} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
 
           <SelectField label="Fornitore" field="fornitore" options={listaFornitori} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
 
@@ -9232,11 +9232,11 @@ ${messaggio}`);
           </div>}
       </div>
 
-      <SelectField label="Tipologia" field="tipologia" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaTipologie} formCespite={formCespite} setFormCespite={setFormCespite} />
+      <SelectField label="Tipologia" field="tipologia" options={listaTipologie} formCespite={formCespite} setFormCespite={setFormCespite} />
 
-      <SelectField label="Costruttore" field="costruttore" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaCostruttoriFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
+      <SelectField label="Costruttore" field="costruttore" options={listaCostruttoriFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
 
-      <SelectField label="Modello" field="modello" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaModelliFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
+      <SelectField label="Modello" field="modello" options={listaModelliFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
 
       <div className="fmed-style-edit-field">
         <label className="fmed-style-edit-label">Matricola</label>
@@ -9248,7 +9248,7 @@ ${messaggio}`);
 
       <SelectField label="Società" field="societa" options={listaSocieta} formCespite={formCespite} setFormCespite={setFormCespite} />
 
-      <SelectField label="Locazione" field="locazione" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaLocazioni} formCespite={formCespite} setFormCespite={setFormCespite} />
+      <SelectField label="Locazione" field="locazione" options={listaLocazioni} formCespite={formCespite} setFormCespite={setFormCespite} />
 
       <SelectField label="Categoria" field="categoria" options={listaCategorie} formCespite={formCespite} setFormCespite={setFormCespite} />
 
@@ -9328,9 +9328,9 @@ ${messaggio}`);
                 })} className="fmed-style-edit-input" />
       </div>
 
-      <SelectField label="Sede" field="sede" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaSediFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
+      <SelectField label="Sede" field="sede" options={listaSediFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
 
-      <SelectField label="Reparto" field="reparto" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaRepartiFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
+      <SelectField label="Reparto" field="reparto" options={listaRepartiFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
 
       <SelectField label="Fornitore" field="fornitore" options={listaFornitori} formCespite={formCespite} setFormCespite={setFormCespite} />
 
