@@ -2158,7 +2158,7 @@ function AppNuovoCore({
       true),
       listaSocietaInterventi: filtraDizionarioRimosso("societa", listaPulitaDizionario([
       ...valoriDizionarioPrimari(dizionariCoreFmed, "societa", extraSocieta),
-      ...interventi.map((i) => normalizzaSocietaDitta(i.societa))]
+      ...cespiti.map((c) => c.societa)]
       )),
       listaDitteEsecutrici: filtraDizionarioRimosso("ditta", listaPulitaDizionario([...ditteEsecutriciMasterData, ...interventi.map((i) => normalizzaSocietaDitta(i.ditta_esecutrice || i.ditta))], extraDitte)),
       listaEsitiInterventi: filtraDizionarioRimosso("esito", listaPulitaDizionario([
@@ -2415,8 +2415,7 @@ function AppNuovoCore({
   const listaCodiciStrumentoInterventi = pulisciLista([...cespiti.map((c) => c.codicestrumento), ...interventi.map((i) => i.codice_strumento || i.codicestrumento)]);
   const listaSediFormInterventi = filtraDizionarioRimosso("sede", deduplicaSediFmed([
   ...valoriDizionarioPrimari(dizionariCoreFmed, "sedi", [...SEDI_STANDARD_LIST, ...extraSedi]),
-  ...cespiti.map((c) => c.sede),
-  ...interventi.map((i) => i.sede)],
+  ...cespiti.map((c) => c.sede)],
   true));
   const listaTipologieFormInterventi = filtraDizionarioRimosso("tipologia", listaPulitaDizionario([
   ...valoriDizionarioPrimari(dizionariCoreFmed, "tipologie_asset", extraTipologie),
@@ -2424,13 +2423,11 @@ function AppNuovoCore({
   ));
   const listaCostruttoriFormInterventi = filtraDizionarioRimosso("costruttore", listaPulitaDizionario([
   ...valoriDizionarioPrimari(dizionariCoreFmed, "costruttori", extraCostruttori),
-  ...cespiti.map((c) => c.costruttore),
-  ...interventi.map((i) => i.costruttore)]
+  ...cespiti.map((c) => c.costruttore)]
   ));
   const listaModelliFormInterventi = filtraDizionarioRimosso("modello", listaPulitaDizionario([
   ...valoriDizionarioPrimari(dizionariCoreFmed, "modelli", extraModelli),
-  ...cespiti.map((c) => c.modello),
-  ...interventi.map((i) => i.modello)]
+  ...cespiti.map((c) => c.modello)]
   ));
   const listaRepartiFormInterventi = filtraDizionarioRimosso("reparto", listaPulitaDizionario(
     valoriDizionarioPrimari(dizionariCoreFmed, "reparti", [...REPARTI_STANDARD, ...extraReparti])
@@ -2438,9 +2435,8 @@ function AppNuovoCore({
   const listaBrancheForm = listaBranche;
   const listaSocietaFormInterventi = useMemo(() => filtraDizionarioRimosso("societa", listaPulitaDizionario([
   ...valoriDizionarioPrimari(dizionariCoreFmed, "societa", extraSocieta),
-  ...cespiti.map((c) => c.societa),
-  ...interventi.map((i) => normalizzaSocietaDitta(i.societa))]
-  )), [cespiti, interventi, dizionariCoreFmed, extraSocieta, filtraDizionarioRimosso]);
+  ...cespiti.map((c) => c.societa)]
+  )), [cespiti, dizionariCoreFmed, extraSocieta, filtraDizionarioRimosso]);
 
   // Dizionario ditta esecutrice: separato da Società / Committente.
   // Usa solo ditta_esecutrice/ditta + voci aggiunte nel dizionario dedicato.
@@ -8153,7 +8149,7 @@ ${messaggio}`);
 
               ...{}
             }} className="fmed-style-edit-grid">
-          <SelectField label="Codice strumento" field="codice_strumento" allowQuickAdd={false} options={listaCodiciStrumentoInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
+          <SelectField label="Codice strumento" field="codice_strumento" allowQuickAdd={false} disabled hint="Seleziona il cespite dal selettore sopra: la relazione non si riscrive nel form." options={listaCodiciStrumentoInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
 
           <SelectField label="Sede" field="sede" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaSediFormInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
 
