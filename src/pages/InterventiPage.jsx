@@ -1,3 +1,4 @@
+import { useState } from "react";
 import InterventiControls from "../components/interventi/InterventiControls";
 import FmedIcon from "../components/ui/FmedIcon.jsx";
 import { PERIODICITA_STANDARD, calcolaProssimaScadenza } from "../fmedStandard.js";
@@ -29,6 +30,10 @@ export default function InterventiPage(props) {
     FMED_RENDER_BATCH_INTERVENTI
   } = props || {};
 
+  const [filtroStatoCicloLocale, setFiltroStatoCicloLocale] = useState("TUTTI");
+  const filtroInterventiStato = props?.filtroInterventiStato ?? filtroStatoCicloLocale;
+  const setFiltroInterventiStato = props?.setFiltroInterventiStato ?? setFiltroStatoCicloLocale;
+
   const normalizzaPeriodicitaIntervento = (value) => {
     const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
     const aliases = {
@@ -50,7 +55,7 @@ export default function InterventiPage(props) {
 
   const statoCicloIntervento = (row) => {
     const statoBase = String(row?.stato_ciclo || "").trim().toUpperCase();
-    const statiTerminaliReali = ["CESSATA", "ANNULLATA", "CANCELLATA", "FALLITA", "NON_APPLICABILE"];
+    const statiTerminaliReali = ["DUPLICATO", "CESSATA", "ANNULLATA", "CANCELLATA", "FALLITA", "NON_APPLICABILE"];
     if (statiTerminaliReali.includes(statoBase)) return statoBase;
     if (isCollaudoIntervento(row)) return "COMPLETATA";
     if (isFermoMacchinaIntervento(row)) return "COMPLETATA";
@@ -63,6 +68,7 @@ export default function InterventiPage(props) {
     if (stato === "ATTIVA") return { background: "#e8f6ed", color: "#25663b", border: "1px solid #b9dfc5" };
     if (stato === "COMPLETATA") return { background: "#fff4cf", color: "#856300", border: "1px solid #ead58c" };
     if (stato === "SOSTITUITA") return { background: "#eef1f5", color: "#5f6d7e", border: "1px solid #d5dce5" };
+    if (stato === "DUPLICATO") return { background: "#fff0f0", color: "#a52a46", border: "1px solid #efbcc8" };
     if (["CESSATA", "ANNULLATA", "CANCELLATA", "FALLITA"].includes(stato)) return { background: "#fde9ed", color: "#a52a46", border: "1px solid #efbcc8" };
     return { background: "#f4f7fb", color: "#53677f", border: "1px solid #cbd8e8" };
   };
@@ -101,7 +107,7 @@ export default function InterventiPage(props) {
       .map((cespite) => String(cespite?.codicestrumento || cespite?.codice_strumento || "").trim().toUpperCase())
       .filter(Boolean)
   );
-  const interventiFiltratiVista = ricercaRegistroAttiva
+  const interventiFiltratiRicerca = ricercaRegistroAttiva
     ? interventiFiltrati.filter((row) =>
         codiciRicercaRegistro.has(
           String(row?.codice_strumento || row?.codicestrumento || "").trim().toUpperCase()
@@ -109,19 +115,28 @@ export default function InterventiPage(props) {
       )
     : interventiFiltrati;
 
+  const interventiFiltratiVista = filtroInterventiStato === "TUTTI"
+    ? interventiFiltratiRicerca
+    : interventiFiltratiRicerca.filter((row) => statoCicloIntervento(row) === filtroInterventiStato);
+
+  const resetFiltriInterventiConStato = () => {
+    setFiltroInterventiStato("TUTTI");
+    props?.resetFiltriInterventi?.();
+  };
+
   const renderLimitVista = Math.max(
     Number(FMED_RENDER_BATCH_INTERVENTI || 120),
     Array.isArray(interventiFiltratiRenderizzati) ? interventiFiltratiRenderizzati.length : 0
   );
   const interventiRenderizzatiVista = interventiFiltratiVista.slice(0, renderLimitVista);
 
-  const totaleSpesaVista = ricercaRegistroAttiva
+  const totaleSpesaVista = (ricercaRegistroAttiva || filtroInterventiStato !== "TUTTI")
     ? interventiFiltratiVista.reduce((totale, row) => totale + Number(importoIntervento(row) || 0), 0)
     : totaleSpesaInterventiFiltrati;
-  const codiciCoinvoltiVista = ricercaRegistroAttiva
+  const codiciCoinvoltiVista = (ricercaRegistroAttiva || filtroInterventiStato !== "TUTTI")
     ? new Set(interventiFiltratiVista.map((row) => row?.codice_strumento || row?.codicestrumento).filter(Boolean))
     : codiciCoinvoltiInterventi;
-  const ditteCoinvolteVista = ricercaRegistroAttiva
+  const ditteCoinvolteVista = (ricercaRegistroAttiva || filtroInterventiStato !== "TUTTI")
     ? new Set(
         interventiFiltratiVista
           .map((row) => normalizzaSocietaDitta(row?.ditta_esecutrice || row?.ditta))
@@ -152,7 +167,13 @@ export default function InterventiPage(props) {
         ))}
       </section>
 
-      <InterventiControls {...props} interventiFiltrati={interventiFiltratiVista} />
+      <InterventiControls
+        {...props}
+        interventiFiltrati={interventiFiltratiVista}
+        filtroInterventiStato={filtroInterventiStato}
+        setFiltroInterventiStato={setFiltroInterventiStato}
+        resetFiltriInterventi={resetFiltriInterventiConStato}
+      />
 
       <section className="p0-history-switch">
         <div>

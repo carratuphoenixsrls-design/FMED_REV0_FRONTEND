@@ -40,6 +40,8 @@ export default function InterventiControls(props) {
     filtroInterventiAttivita,
     setFiltroInterventiAttivita,
     listaAttivitaFiltroInterventi = [],
+    filtroInterventiStato = "TUTTI",
+    setFiltroInterventiStato = () => {},
     filtroInterventiAnnoContabile,
     setFiltroInterventiAnnoContabile,
     listaAnniContabiliInterventi = [],
@@ -154,7 +156,7 @@ export default function InterventiControls(props) {
       <details className="p0-advanced">
         <summary>
           <span style={{ display: "flex", alignItems: "center", gap: "14px", flexWrap: "wrap" }}>
-            <span><b>Affina registro</b><small>Periodo, cespite, attività e date</small></span>
+            <span><b>Affina registro</b><small>Periodo, cespite, attività, stato e date</small></span>
             <span
               className="p0-advanced__summary"
               style={{ background: "#fff4cf", color: "#856300", border: "1px solid #ead58c" }}
@@ -183,6 +185,18 @@ export default function InterventiControls(props) {
           <SelectField label="Attività" value={filtroInterventiAttivita} onChange={update(setFiltroInterventiAttivita)}>
             <option value="TUTTE">Tutte le attività</option>
             {listaAttivitaFiltroInterventi.map((v) => <option key={v} value={v}>{v}</option>)}
+          </SelectField>
+          <SelectField label="Stato ciclo" value={filtroInterventiStato} onChange={update(setFiltroInterventiStato)}>
+            <option value="TUTTI">Tutti gli stati</option>
+            <option value="ATTIVA">Attiva</option>
+            <option value="COMPLETATA">Completata</option>
+            <option value="SOSTITUITA">Sostituita</option>
+            <option value="DUPLICATO">Duplicato</option>
+            <option value="CESSATA">Cessata</option>
+            <option value="ANNULLATA">Annullata</option>
+            <option value="CANCELLATA">Cancellata</option>
+            <option value="FALLITA">Fallita</option>
+            <option value="NON_APPLICABILE">Non applicabile</option>
           </SelectField>
           <SelectField label="Anno contabile" value={filtroInterventiAnnoContabile} onChange={update(setFiltroInterventiAnnoContabile)}>
             {listaAnniContabiliInterventi.map((v) => <option key={v} value={v}>{v}</option>)}
