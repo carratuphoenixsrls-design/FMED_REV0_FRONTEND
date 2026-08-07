@@ -2487,18 +2487,37 @@ function AppNuovoCore({
     });
   }, [paginaRichiedeAssetPesanti, cespitiIndicizzati, ricercaDeferred, sede, categoriaFiltro, assetRepartoFiltro, assetLocazioneFiltro, assetCostruttoreFiltro, assetTipologiaFiltro, assetModelloFiltro, assetSocietaFiltro, assetStatoFiltro, ordineCodiceAsset, getBrancaAsset]);
   const assetKpiFiltrati = useMemo(() => {
-    // FMED FASE 6 - KPI Asset calcolati una sola volta dalla lista filtrata.
-    // Evita ricalcoli sparsi e rende coerenti contatori, tabella e card.
+    // FMED KPI OPERATIVI:
+    // escludono cespiti dismessi e arredi dal perimetro tecnico.
     const riepilogo = {
-      totale: filtrati.length,
+      totale: 0,
       attivi: 0,
       dismessi: 0,
       nonInUso: 0
     };
+
     filtrati.forEach((c) => {
       const stato = statoCespite(c);
-      if (stato === "Attivo") riepilogo.attivi += 1;else if (stato === "Dismesso") riepilogo.dismessi += 1;else riepilogo.nonInUso += 1;
+      const categoria = normalizeCategoria(c?.categoria);
+
+      if (stato === "Dismesso") {
+        riepilogo.dismessi += 1;
+        return;
+      }
+
+      if (categoria === "A" || categoria === "S") {
+        return;
+      }
+
+      riepilogo.totale += 1;
+
+      if (stato === "Attivo") {
+        riepilogo.attivi += 1;
+      } else {
+        riepilogo.nonInUso += 1;
+      }
     });
+
     return riepilogo;
   }, [filtrati]);
   const filtratiRenderizzati = useMemo(() => filtrati.slice(0, assetRenderLimit), [filtrati, assetRenderLimit]);
@@ -3245,7 +3264,7 @@ function AppNuovoCore({
 
     scaricaCsvFmed({
       nomeFile: `FMED_AUDIT_QUALITA_DATI_${new Date().toISOString().slice(0, 10)}.csv`,
-      titolo: "Audit qualità dati",
+      titolo: "Audit qualita dati",
       sottotitolo: "Controllo anomalie operative su asset, interventi, branche, locazioni e documentazione.",
       meta: [
         `Indice qualità dati: ${fmedAuditQualitaDati.indiceQualita}%`,
