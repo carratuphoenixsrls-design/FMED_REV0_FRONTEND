@@ -1,0 +1,40 @@
+html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"]
+.p0-command--safety > .p0-safety-command-bar{
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+}
+
+html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"]
+.p0-safety-command-bar__newsite{
+  border:1px solid #a97805 !important;
+  background:#bd8b12 !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+  box-shadow:0 4px 11px rgba(189,139,18,.18) !important;
+}
+
+html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"]
+.p0-safety-command-bar__newsite:hover{
+  border-color:#8e6605 !important;
+  background:#a97805 !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+}
+
+html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"]
+> div:has(> button.p0-btn.p0-btn--safety){
+  display:none !important;
+}
+
+@media (max-width:1180px){
+  html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"]
+  .p0-command--safety > .p0-safety-command-bar{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+
+@media (max-width:900px){
+  html body .fmed-main-content[data-fmed-page="Sicurezza 81/08"]
+  .p0-command--safety > .p0-safety-command-bar{
+    grid-template-columns:1fr !important;
+  }
+}
