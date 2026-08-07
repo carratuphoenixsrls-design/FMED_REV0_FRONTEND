@@ -1,7 +1,7 @@
 name: rev0-interventi-filtro-stato
 on:
-  pull_request:
-    branches: [main]
+  push:
+    branches: [rev0-interventi-filtro-stato]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: rev0-interventi-filtro-stato
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -22,8 +22,6 @@ jobs:
 
           p = Path('src/FmedApp.jsx')
           s = p.read_text(encoding='utf-8')
-
-          replacements = []
 
           old = '  const [filtroInterventiAttivita, setFiltroInterventiAttivita] = useState("TUTTE");\n  const [filtroInterventiUltimoDa, setFiltroInterventiUltimoDa] = useState("");'
           new = '  const [filtroInterventiAttivita, setFiltroInterventiAttivita] = useState("TUTTE");\n  const [filtroInterventiStato, setFiltroInterventiStato] = useState("TUTTI");\n  const [filtroInterventiUltimoDa, setFiltroInterventiUltimoDa] = useState("");'
@@ -64,7 +62,6 @@ jobs:
           if old not in s: raise SystemExit('props target not found')
           s = s.replace(old, new, 1)
 
-          # Include state in PDF/filter summary when that block is present.
           old = '''        `Attività: ${
           filtroInterventiAttivita === "TUTTE"
             ? "Tutte le attività"
@@ -134,4 +131,4 @@ jobs:
           git commit -m "feat interventi: filtro stato ciclo" || true
           git rm .github/workflows/rev0-interventi-filtro-stato.yml
           git commit -m "chore: rimuove collaudo temporaneo" || true
-          git push origin HEAD:${{ github.head_ref }}
+          git push origin HEAD:rev0-interventi-filtro-stato
