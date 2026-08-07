@@ -1,13 +1,13 @@
-import fs from "node:fs";
+﻿import fs from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 const fail = (message) => {
-  console.error(`ERRORE REV0 · ${message}`);
+  console.error(`ERRORE REV0 Â· ${message}`);
   process.exitCode = 1;
 };
-const ok = (message) => console.log(`OK REV0 · ${message}`);
+const ok = (message) => console.log(`OK REV0 Â· ${message}`);
 
 const packageJson = JSON.parse(read("package.json"));
 const build = JSON.parse(read("public/fmed-build.json"));
@@ -57,8 +57,8 @@ app.includes("VITE_API_BASE_URL") || main.includes("VITE_API_BASE_URL")
   ? ok("nessuna forzatura colore universale")
   : fail("forzatura colore universale presente");
 !/\.fmed-main-content button:disabled\s*\{[^}]*opacity/i.test(visual)
-  ? ok("nessuna opacità disabled universale")
-  : fail("opacità disabled universale presente");
+  ? ok("nessuna opacitÃ  disabled universale")
+  : fail("opacitÃ  disabled universale presente");
 exportPage.includes("fmed-report-advanced")
   && !exportPage.includes("slice(0, 300)")
   && !exportPage.includes("fmed-literal-2a57fba0b1")
@@ -69,17 +69,17 @@ exportPage.includes("fmed-report-advanced")
   : fail("contenitore Report ancora comprimibile");
 exportPage.includes("fmedAuditQualitaDati.righe.map")
   && !exportPage.includes("fmedAuditQualitaDati.assetSenzaBranca")
-  && app.includes('titolo: "Audit qualità dati"')
-  && !app.includes('titolo: "FMED · Audit qualità dati"')
+  && app.includes('titolo: "Audit qualitÃ  dati"')
+  && !app.includes('titolo: "FMED Â· Audit qualitÃ  dati"')
   ? ok("Audit unico e coerente tra schermata e CSV")
   : fail("Audit schermata e CSV non condividono la stessa sorgente");
 allSource.includes("/data-quality/audit")
   && allSource.includes("function DataQualityPanel")
-  ? ok("Qualità dati unica")
-  : fail("Qualità dati non unificata");
+  ? ok("QualitÃ  dati unica")
+  : fail("QualitÃ  dati non unificata");
 (allSource.match(/function DataQualityPanel/g) || []).length === 1
-  ? ok("un solo pannello Qualità dati")
-  : fail("pannello Qualità dati duplicato");
+  ? ok("un solo pannello QualitÃ  dati")
+  : fail("pannello QualitÃ  dati duplicato");
 allSource.includes("cataloghi_vuoti_richiesti")
   && allSource.includes("Non utilizzato nei dati analizzati")
   ? ok("cataloghi vuoti classificati per uso reale")
@@ -89,7 +89,7 @@ allSource.includes("/core/regole-operative")
   && allSource.includes("Solo vincoli espliciti e verificati")
   ? ok("motore unico Regole operative")
   : fail("Regole operative non sostitutive o incomplete");
-!/(\/core\/relazioni|acquisisci-storico|Relazioni intelligenti|Anteprima relazioni storiche|Passato → futuro|relationContextFor|core-relations-panel|core-relations-table|core-relation-row|core-add-relation|core-historical-relations|core-relation-preview)/i.test(allSource)
+!/(\/core\/relazioni|acquisisci-storico|Relazioni intelligenti|Anteprima relazioni storiche|Passato â†’ futuro|relationContextFor|core-relations-panel|core-relations-table|core-relation-row|core-add-relation|core-historical-relations|core-relation-preview)/i.test(allSource)
   ? ok("vecchio sistema Relazioni completamente assente")
   : fail("residui del vecchio sistema Relazioni");
 allSource.includes("Nessun vincolo configurato: sono mostrate tutte le opzioni attive.")
@@ -112,7 +112,7 @@ const patch15Visual = [
   : fail("vecchia palette verde-teal ancora presente");
 (/fmed-style-asset-hero-badge-number[\s\S]{0,300}-webkit-text-fill-color:\s*currentColor/i.test(patch15Visual)
   && /fmed-style-asset-hero-badge-text[\s\S]{0,500}-webkit-text-fill-color:\s*currentColor/i.test(patch15Visual))
-  ? ok("contrasto e leggibilità KPI ripristinati")
+  ? ok("contrasto e leggibilitÃ  KPI ripristinati")
   : fail("contrasto KPI testata Asset non corretto");
 
 const appShell = read("src/FmedApp.jsx");
@@ -122,13 +122,13 @@ const appShell = read("src/FmedApp.jsx");
   && /--module-accent:\s*#d97706/i.test(visual)
   && /--module-accent:\s*#dc4c64/i.test(visual)
   && /--module-accent:\s*#7c3aed/i.test(visual))
-  ? ok("identità cromatica univoca dei moduli")
-  : fail("identità cromatica Patch 16 incompleta");
+  ? ok("identitÃ  cromatica univoca dei moduli")
+  : fail("identitÃ  cromatica Patch 16 incompleta");
 (/@media\s*\(max-width:\s*1440px\)/i.test(visual)
   && /@media\s*\(min-width:\s*1800px\)/i.test(visual)
   && /notebook 15"/i.test(visual))
   ? ok("layout adattivo da notebook 15 a monitor 27")
-  : fail("densità adattiva 15-27 pollici assente");
+  : fail("densitÃ  adattiva 15-27 pollici assente");
 !/#12b76a|#eaf8f0/i.test(read("src/NewAssetWizard.css"))
   ? ok("verde decorativo eliminato dal wizard")
   : fail("verde decorativo residuo nel wizard");
@@ -139,7 +139,9 @@ const appShell = read("src/FmedApp.jsx");
 (/fmed-side-menu-btn \.fmed-side-menu-icon[\s\S]{0,260}background:\s*color-mix/i.test(visual)
   && /fmed-side-menu-btn\.is-active \.fmed-side-menu-icon[\s\S]{0,300}transform:\s*translateX\(1px\)/i.test(visual))
   ? ok("icone moduli sempre riconoscibili")
-  : fail("identità cromatica icone laterali incompleta");
+  : fail("identitÃ  cromatica icone laterali incompleta");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("FMED REV0 frontend: gate completato");
+
+
