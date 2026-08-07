@@ -75,6 +75,28 @@ export default function InterventiControls(props) {
     closeList();
   };
 
+  const cespiteRicercaUnivoco =
+    ricercaCespiteIntervento.trim() && cespitiPerNuovoIntervento.length === 1
+      ? cespitiPerNuovoIntervento[0]
+      : null;
+
+  const apriRegistroInterventi = () => {
+    if (interventiElencoAperto) {
+      setInterventiElencoAperto(false);
+      return;
+    }
+
+    if (cespiteRicercaUnivoco) {
+      setFiltroInterventiCodice(
+        cespiteRicercaUnivoco.codicestrumento ||
+          cespiteRicercaUnivoco.codice_strumento ||
+          "TUTTE"
+      );
+    }
+
+    setInterventiElencoAperto(true);
+  };
+
   return (
     <section className="p0-command p0-command--maintenance" aria-label="Comandi interventi">
       <div className="p0-command__primary">
@@ -97,44 +119,14 @@ export default function InterventiControls(props) {
             onChange={(event) => {
               const valore = event.target.value;
               setRicercaCespiteIntervento(valore);
-
-              const testo = String(valore || "").trim().toLowerCase();
-
-              if (!testo) {
-                setFiltroInterventiCodice("TUTTE");
-                setInterventiElencoAperto(false);
-                return;
-              }
-
-              const matches = cespitiPerNuovoIntervento.filter((cespite) => {
-                const codice = String(cespite?.codicestrumento || "").trim().toLowerCase();
-                const codiceSenzaPrefisso = codice
-                  .replace(/^a[_\-\s]*/i, "")
-                  .replace(/^0+/, "");
-
-                const testoNormalizzato = testo
-                  .replace(/^a[_\-\s]*/i, "")
-                  .replace(/^0+/, "");
-
-                return (
-                  codice === testo ||
-                  codice.includes(testo) ||
-                  codiceSenzaPrefisso === testoNormalizzato
-                );
-              });
-
-              if (matches.length === 1) {
-                setFiltroInterventiCodice(matches[0].codicestrumento);
-                setInterventiElencoAperto(true);
-              } else {
-                setFiltroInterventiCodice("TUTTE");
-              }
+              setFiltroInterventiCodice("TUTTE");
+              setInterventiElencoAperto(false);
             }}
           />
           <span className="p0-search__meta">Ricerca immediata</span>
         </div>
 
-        {ricercaCespiteIntervento.trim() && (
+        {ricercaCespiteIntervento.trim() && !cespiteRicercaUnivoco && (
           <div className="p0-smart-results">
             {cespitiPerNuovoIntervento.length === 0 ? (
               <p className="p0-empty">Nessun cespite corrisponde alla ricerca.</p>
@@ -163,7 +155,12 @@ export default function InterventiControls(props) {
         <summary>
           <span style={{ display: "flex", alignItems: "center", gap: "14px", flexWrap: "wrap" }}>
             <span><b>Affina registro</b><small>Periodo, cespite, attività e date</small></span>
-            <span className="p0-advanced__summary">Filtri multipli</span>
+            <span
+              className="p0-advanced__summary"
+              style={{ background: "#fff4cf", color: "#856300", border: "1px solid #ead58c" }}
+            >
+              Filtri multipli
+            </span>
           </span>
         </summary>
         <div className="p0-filter-grid">
@@ -213,11 +210,13 @@ export default function InterventiControls(props) {
         <button
           className="p0-btn p0-btn--maintenance"
           type="button"
-          onClick={() => setInterventiElencoAperto((v) => !v)}
+          onClick={apriRegistroInterventi}
         >
           {interventiElencoAperto
             ? "Chiudi registro"
-            : `Apri registro · ${interventiFiltrati.length}`}
+            : cespiteRicercaUnivoco
+              ? "Apri registro cespite"
+              : `Apri registro · ${interventiFiltrati.length}`}
         </button>
 
         <button
