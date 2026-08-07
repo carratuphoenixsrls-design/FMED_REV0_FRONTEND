@@ -1,7 +1,6 @@
 import InterventiControls from "../components/interventi/InterventiControls";
 import FmedIcon from "../components/ui/FmedIcon.jsx";
 import { PERIODICITA_STANDARD, calcolaProssimaScadenza } from "../fmedStandard.js";
-import "./InterventiCycleStatus.css";
 
 export default function InterventiPage(props) {
   const {
@@ -47,22 +46,17 @@ export default function InterventiPage(props) {
 
   const statoCicloIntervento = (row) => {
     const statoBase = String(row?.stato_ciclo || "").toUpperCase();
-
-    // I collaudi sono eventi una tantum: una volta registrati come eseguiti
-    // non devono restare esposti come cicli ATTIVI.
     if (isCollaudoIntervento(row) && statoBase === "ATTIVA") return "COMPLETATA";
-
-    // Per tutte le altre attività lo stato resta indipendente dalla periodicità.
     return statoBase;
   };
 
-  const classeStatoCicloIntervento = (row) => {
+  const stileStatoCicloIntervento = (row) => {
     const stato = statoCicloIntervento(row);
-    if (stato === "ATTIVA") return "is-active";
-    if (stato === "COMPLETATA") return "is-completed";
-    if (stato === "SOSTITUITA") return "is-replaced";
-    if (["CESSATA", "ANNULLATA", "CANCELLATA", "FALLITA"].includes(stato)) return "is-stopped";
-    return "is-neutral";
+    if (stato === "ATTIVA") return { background: "#e8f6ed", color: "#25663b", border: "1px solid #b9dfc5" };
+    if (stato === "COMPLETATA") return { background: "#fff4cf", color: "#856300", border: "1px solid #ead58c" };
+    if (stato === "SOSTITUITA") return { background: "#eef1f5", color: "#5f6d7e", border: "1px solid #d5dce5" };
+    if (["CESSATA", "ANNULLATA", "CANCELLATA", "FALLITA"].includes(stato)) return { background: "#fde9ed", color: "#a52a46", border: "1px solid #efbcc8" };
+    return { background: "#f4f7fb", color: "#53677f", border: "1px solid #cbd8e8" };
   };
 
   const badgeCicloIntervento = (row) => {
@@ -140,7 +134,7 @@ export default function InterventiPage(props) {
                   <tr key={row.id_intervento || index}>
                     <td><button className="p0-table-link" onClick={() => apriSchedaDaCodice(row.codice_strumento || row.codicestrumento)}>{row.codice_strumento || row.codicestrumento}</button><small>{row.sede || "-"}</small></td>
                     <td><b>{normalizzaSocietaDitta(row.ditta_esecutrice || row.ditta)}</b><small>{row.tipologia || "-"}</small></td>
-                    <td><b>{row.attivita || "-"}</b>{row.stato_ciclo && <span className={`p0-tag p0-tag--cycle ${classeStatoCicloIntervento(row)}`}>{badgeCicloIntervento(row)}</span>}{row._eccezione_collaudo && <span className="p0-tag">Collaudo conservato</span>}{row._archivio_storico && <span className="p0-tag">Pre-2023</span>}</td>
+                    <td><b>{row.attivita || "-"}</b>{row.stato_ciclo && <span className="p0-tag" style={stileStatoCicloIntervento(row)}>{badgeCicloIntervento(row)}</span>}{row._eccezione_collaudo && <span className="p0-tag">Collaudo conservato</span>}{row._archivio_storico && <span className="p0-tag">Pre-2023</span>}</td>
                     <td><span>{formattaData(row.data_ultimo_intervento)}</span><small>Prossimo: {prossimoInterventoVisibile(row)}</small></td>
                     <td><b>{formatCurrency(importoIntervento(row))}</b></td>
                     <td><BottoneJobReport intervento={row} /></td>
