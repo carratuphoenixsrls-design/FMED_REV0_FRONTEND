@@ -12294,3 +12294,37 @@ html body
   }
 }
 /* ===== FMED REPORT V2 DEFINITIVO · END ===== */
+
+
+/* REV0 INFRASTRUTTURE FINAL COMMAND BAR */
+.fmed-app-root.fmed-shell-premium .p0-operations--infrastructure .p0-infrastructure-command-bar {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  overflow: visible;
+}
+.fmed-app-root.fmed-shell-premium .p0-operations--infrastructure .p0-infrastructure-command-bar > .p0-btn {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  white-space: nowrap;
+}
+.fmed-app-root.fmed-shell-premium .p0-operations--infrastructure .p0-infrastructure-command-bar__reset {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+}
+@media (max-width: 1180px) {
+  .fmed-app-root.fmed-shell-premium .p0-operations--infrastructure .p0-infrastructure-command-bar {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 800px) {
+  .fmed-app-root.fmed-shell-premium .p0-operations--infrastructure .p0-infrastructure-command-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

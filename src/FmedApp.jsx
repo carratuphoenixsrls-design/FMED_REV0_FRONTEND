@@ -7001,7 +7001,7 @@ ${messaggio}`);
   // (sede, categoria, stato e ricerca), cioè la stessa lista visibile in tabella.
   const infraScadute = infrastruttureFiltrate.filter((r) => r._statoInfra?.codice === "SCADUTA");
   const infraInScadenza = infrastruttureFiltrate.filter((r) => r._statoInfra?.codice === "30_GIORNI");
-  const infraOk = infrastruttureFiltrate.filter((r) => r._statoInfra?.codice === "OK");
+  const infraOk = infrastruttureFiltrate.filter((r) => ["OK", "60_GIORNI"].includes(r._statoInfra?.codice));
   function resetFiltriInfrastrutture() {
     setFiltroInfraSede("TUTTE");
     setFiltroInfraCategoria("TUTTE");
