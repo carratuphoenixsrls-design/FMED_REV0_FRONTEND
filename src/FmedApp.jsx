@@ -5702,7 +5702,9 @@ ${messaggio}`);
     const datiDaSalvare = {
       codice_strumento: formModificaIntervento.codice_strumento || null,
       sede: formModificaIntervento.sede || null,
-      tipologia: formModificaIntervento.tipologia || null,
+      // La tipologia appartiene al cespite, non al record intervento.
+      // Non va validata/salvata come TIPOLOGIE_INTERVENTO nel PUT.
+      tipologia: null,
       attivita: formModificaIntervento.attivita || null,
       costruttore: formModificaIntervento.costruttore || null,
       modello: formModificaIntervento.modello || null,
