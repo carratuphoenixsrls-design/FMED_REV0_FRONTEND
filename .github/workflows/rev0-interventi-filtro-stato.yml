@@ -1,0 +1,137 @@
+name: rev0-interventi-filtro-stato
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Add stato ciclo filter
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('src/FmedApp.jsx')
+          s = p.read_text(encoding='utf-8')
+
+          replacements = []
+
+          old = '  const [filtroInterventiAttivita, setFiltroInterventiAttivita] = useState("TUTTE");\n  const [filtroInterventiUltimoDa, setFiltroInterventiUltimoDa] = useState("");'
+          new = '  const [filtroInterventiAttivita, setFiltroInterventiAttivita] = useState("TUTTE");\n  const [filtroInterventiStato, setFiltroInterventiStato] = useState("TUTTI");\n  const [filtroInterventiUltimoDa, setFiltroInterventiUltimoDa] = useState("");'
+          if old not in s: raise SystemExit('state target not found')
+          s = s.replace(old, new, 1)
+
+          old = '[filtroInterventiSede, filtroInterventiSocieta, filtroInterventiCodice, filtroInterventiTipologia, filtroInterventiAttivita, filtroInterventiUltimoDa'
+          new = '[filtroInterventiSede, filtroInterventiSocieta, filtroInterventiCodice, filtroInterventiTipologia, filtroInterventiAttivita, filtroInterventiStato, filtroInterventiUltimoDa'
+          if old not in s: raise SystemExit('render deps target not found')
+          s = s.replace(old, new, 1)
+
+          old = '    setFiltroInterventiAttivita("TUTTE");\n'
+          new = '    setFiltroInterventiAttivita("TUTTE");\n    setFiltroInterventiStato("TUTTI");\n'
+          if old not in s: raise SystemExit('reset target not found')
+          s = s.replace(old, new, 1)
+
+          old = '      const attivitaIntervento = normalizzaAttivitaIntervento(i.attivita || "");\n      const sedeInterventoNormalizzata = normalizzaSedePerConfronto(i.sede || i.sede_originale || "");\n      return (filtroInterventiCodice === "TUTTE" || codiceIntervento === filtroInterventiCodice) && (filtroInterventiSede === "TUTTE" || sedeInterventoNormalizzata === sedeFiltroNormalizzata) && (filtroInterventiSocieta === "TUTTE" || societaIntervento === filtroInterventiSocieta) && (filtroInterventiTipologia === "TUTTE" || tipologiaIntervento === filtroInterventiTipologia) && (filtroInterventiAttivita === "TUTTE" || attivitaIntervento === filtroInterventiAttivita) && interventoNelPeriodoContabile(i)'
+          new = '''      const attivitaIntervento = normalizzaAttivitaIntervento(i.attivita || "");
+      const sedeInterventoNormalizzata = normalizzaSedePerConfronto(i.sede || i.sede_originale || "");
+      const attivitaStato = String(i.attivita || "").trim().toUpperCase();
+      let statoIntervento = String(i.stato_ciclo || "").trim().toUpperCase();
+      const statiTerminaliIntervento = ["CESSATA", "ANNULLATA", "CANCELLATA", "FALLITA", "NON_APPLICABILE"];
+      if (!statiTerminaliIntervento.includes(statoIntervento)) {
+        if (attivitaStato.includes("COLLAUDO") || attivitaStato.includes("FERMO MACCHINA")) statoIntervento = "COMPLETATA";
+        else if (attivitaStato.includes("MANUTENZIONE STRAORDINARIA") && (!i.data_prossimo_intervento || String(i.periodicita || "").toUpperCase().includes("TANTUM"))) statoIntervento = "COMPLETATA";
+      }
+      return (filtroInterventiCodice === "TUTTE" || codiceIntervento === filtroInterventiCodice) && (filtroInterventiSede === "TUTTE" || sedeInterventoNormalizzata === sedeFiltroNormalizzata) && (filtroInterventiSocieta === "TUTTE" || societaIntervento === filtroInterventiSocieta) && (filtroInterventiTipologia === "TUTTE" || tipologiaIntervento === filtroInterventiTipologia) && (filtroInterventiAttivita === "TUTTE" || attivitaIntervento === filtroInterventiAttivita) && (filtroInterventiStato === "TUTTI" || statoIntervento === filtroInterventiStato) && interventoNelPeriodoContabile(i)'''
+          if old not in s: raise SystemExit('filter target not found')
+          s = s.replace(old, new, 1)
+
+          old = 'filtroInterventiTipologia, filtroInterventiAttivita, filtroInterventiUltimoDa'
+          new = 'filtroInterventiTipologia, filtroInterventiAttivita, filtroInterventiStato, filtroInterventiUltimoDa'
+          if old not in s: raise SystemExit('memo deps target not found')
+          s = s.replace(old, new, 1)
+
+          old = '          filtroInterventiAttivita,\n          setFiltroInterventiAttivita,\n          listaAttivitaFiltroInterventi,'
+          new = '          filtroInterventiAttivita,\n          setFiltroInterventiAttivita,\n          listaAttivitaFiltroInterventi,\n          filtroInterventiStato,\n          setFiltroInterventiStato,'
+          if old not in s: raise SystemExit('props target not found')
+          s = s.replace(old, new, 1)
+
+          # Include state in PDF/filter summary when that block is present.
+          old = '''        `Attività: ${
+          filtroInterventiAttivita === "TUTTE"
+            ? "Tutte le attività"
+            : filtroInterventiAttivita
+        }`,
+        `Cespite: ${'''
+          new = '''        `Attività: ${
+          filtroInterventiAttivita === "TUTTE"
+            ? "Tutte le attività"
+            : filtroInterventiAttivita
+        }`,
+        `Stato ciclo: ${filtroInterventiStato === "TUTTI" ? "Tutti gli stati" : filtroInterventiStato}`,
+        `Cespite: ${'''
+          if old in s:
+              s = s.replace(old, new, 1)
+
+          p.write_text(s, encoding='utf-8')
+
+          p = Path('src/components/interventi/InterventiControls.jsx')
+          s = p.read_text(encoding='utf-8')
+          old = '''    filtroInterventiAttivita,
+    setFiltroInterventiAttivita,
+    listaAttivitaFiltroInterventi = [],
+    filtroInterventiAnnoContabile,'''
+          new = '''    filtroInterventiAttivita,
+    setFiltroInterventiAttivita,
+    listaAttivitaFiltroInterventi = [],
+    filtroInterventiStato = "TUTTI",
+    setFiltroInterventiStato = () => {},
+    filtroInterventiAnnoContabile,'''
+          if old not in s: raise SystemExit('controls destructuring target not found')
+          s = s.replace(old, new, 1)
+
+          old = '''          <SelectField label="Attività" value={filtroInterventiAttivita} onChange={update(setFiltroInterventiAttivita)}>
+            <option value="TUTTE">Tutte le attività</option>
+            {listaAttivitaFiltroInterventi.map((v) => <option key={v} value={v}>{v}</option>)}
+          </SelectField>
+          <SelectField label="Anno contabile"'''
+          new = '''          <SelectField label="Attività" value={filtroInterventiAttivita} onChange={update(setFiltroInterventiAttivita)}>
+            <option value="TUTTE">Tutte le attività</option>
+            {listaAttivitaFiltroInterventi.map((v) => <option key={v} value={v}>{v}</option>)}
+          </SelectField>
+          <SelectField label="Stato ciclo" value={filtroInterventiStato} onChange={update(setFiltroInterventiStato)}>
+            <option value="TUTTI">Tutti gli stati</option>
+            <option value="ATTIVA">Attiva</option>
+            <option value="COMPLETATA">Completata</option>
+            <option value="SOSTITUITA">Sostituita</option>
+            <option value="DUPLICATO">Duplicato</option>
+            <option value="CESSATA">Cessata</option>
+            <option value="ANNULLATA">Annullata</option>
+            <option value="FALLITA">Fallita</option>
+            <option value="NON_APPLICABILE">Non applicabile</option>
+          </SelectField>
+          <SelectField label="Anno contabile"'''
+          if old not in s: raise SystemExit('controls UI target not found')
+          s = s.replace(old, new, 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - run: npm ci
+      - run: npm run build
+      - name: Commit functional change and remove workflow
+        if: success()
+        run: |
+          git config user.name "FMED REV0 Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/FmedApp.jsx src/components/interventi/InterventiControls.jsx
+          git commit -m "feat interventi: filtro stato ciclo" || true
+          git rm .github/workflows/rev0-interventi-filtro-stato.yml
+          git commit -m "chore: rimuove collaudo temporaneo" || true
+          git push origin HEAD:${{ github.head_ref }}
