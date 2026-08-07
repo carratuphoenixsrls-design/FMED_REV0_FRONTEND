@@ -6682,7 +6682,7 @@ ${messaggio}`);
       sede: formNuovoIntervento.sede || null,
       locazione: formNuovoIntervento.locazione || null,
       branca_medica: formNuovoIntervento.branca_medica || null,
-      tipologia: formNuovoIntervento.tipologia || null,
+      tipologia: null,
       attivita: formNuovoIntervento.attivita || null,
       costruttore: formNuovoIntervento.costruttore || null,
       modello: formNuovoIntervento.modello || null,
