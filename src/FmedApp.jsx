@@ -5733,9 +5733,11 @@ ${messaggio}`);
       alert("Non trovo l'ID dell'intervento da modificare.\n\n" + "Serve che il backend esponga un campo ID per ogni riga intervento.");
       return;
     }
-    const datiDaSalvare = {
-      // Il codice identifica la relazione; l'anagrafica del bene resta di proprietà Asset.
-      codice_strumento: formModificaIntervento.codice_strumento || null,
+    // PUT semantico: inviamo solo i campi operativi realmente modificati.
+    // I record storici possono contenere codici/alias oggi non più attivi nel
+    // Catalogo Canonico (es. vecchi codici esito): se non sono stati toccati
+    // non devono bloccare la modifica di periodicità, costo o date con un 422.
+    const valoriModificaIntervento = {
       attivita: formModificaIntervento.attivita || null,
       ditta_esecutrice: formModificaIntervento.ditta_esecutrice || null,
       link_documento: formModificaIntervento.link_documento || null,
@@ -5747,6 +5749,30 @@ ${messaggio}`);
       periodicita: formModificaIntervento.periodicita || null,
       importo_extra: formModificaIntervento.importo_extra || null
     };
+    const valoreOriginaleIntervento = (campo) => {
+      if (campo === "ditta_esecutrice") return interventoDaModificare.ditta_esecutrice || interventoDaModificare.ditta || null;
+      return interventoDaModificare?.[campo] ?? null;
+    };
+    const confrontaValoreIntervento = (value) => String(value ?? "").trim();
+    const datiDaSalvare = {
+      // Il codice identifica la relazione; l'anagrafica del bene resta di proprietà Asset.
+      codice_strumento: formModificaIntervento.codice_strumento || interventoDaModificare.codice_strumento || interventoDaModificare.codicestrumento || null
+    };
+    Object.entries(valoriModificaIntervento).forEach(([campo, valore]) => {
+      if (confrontaValoreIntervento(valore) !== confrontaValoreIntervento(valoreOriginaleIntervento(campo))) {
+        datiDaSalvare[campo] = valore;
+      }
+    });
+    // Se cambia la periodicità, la prossima scadenza deriva dall'ultimo intervento
+    // e dalla nuova periodicità, non dal vecchio valore rimasto nel form.
+    if (Object.prototype.hasOwnProperty.call(datiDaSalvare, "periodicita")) {
+      datiDaSalvare.data_ultimo_intervento = formModificaIntervento.data_ultimo_intervento || null;
+      datiDaSalvare.data_prossimo_intervento = calcolaProssimaScadenza(
+        formModificaIntervento.data_ultimo_intervento,
+        formModificaIntervento.periodicita,
+        PERIODICITA_STANDARD,
+      ) || null;
+    }
     const idUrl = encodeURIComponent(String(id));
     const tentativi = [`${API_BASE_URL}/interventi/${idUrl}`, `${API_BASE_URL}/intervento/${idUrl}`];
     try {
