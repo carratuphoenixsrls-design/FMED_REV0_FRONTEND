@@ -8,6 +8,8 @@ export default function InterventiPage(props) {
     interventi = [],
     interventiIncludeStorico,
     cambiaVistaStoricoInterventi = () => {},
+    ricercaCespiteIntervento = "",
+    cespitiPerNuovoIntervento = [],
     formatCurrency = (value) => Number(value || 0).toLocaleString('it-IT', { style: 'currency', currency: 'EUR' }),
     importoIntervento = () => 0,
     totaleSpesaInterventiFiltrati,
@@ -85,11 +87,47 @@ export default function InterventiPage(props) {
     return formattaData(row?.data_prossimo_intervento);
   };
 
+  // La ricerca in alto definisce lo stesso perimetro usato da KPI e registro.
+  // Se l'UI trova uno o più cespiti, mostriamo solo gli interventi dei cespiti trovati.
+  const ricercaRegistroAttiva = Boolean(String(ricercaCespiteIntervento || "").trim());
+  const codiciRicercaRegistro = new Set(
+    (Array.isArray(cespitiPerNuovoIntervento) ? cespitiPerNuovoIntervento : [])
+      .map((cespite) => String(cespite?.codicestrumento || cespite?.codice_strumento || "").trim().toUpperCase())
+      .filter(Boolean)
+  );
+  const interventiFiltratiVista = ricercaRegistroAttiva
+    ? interventiFiltrati.filter((row) =>
+        codiciRicercaRegistro.has(
+          String(row?.codice_strumento || row?.codicestrumento || "").trim().toUpperCase()
+        )
+      )
+    : interventiFiltrati;
+
+  const renderLimitVista = Math.max(
+    Number(FMED_RENDER_BATCH_INTERVENTI || 120),
+    Array.isArray(interventiFiltratiRenderizzati) ? interventiFiltratiRenderizzati.length : 0
+  );
+  const interventiRenderizzatiVista = interventiFiltratiVista.slice(0, renderLimitVista);
+
+  const totaleSpesaVista = ricercaRegistroAttiva
+    ? interventiFiltratiVista.reduce((totale, row) => totale + Number(importoIntervento(row) || 0), 0)
+    : totaleSpesaInterventiFiltrati;
+  const codiciCoinvoltiVista = ricercaRegistroAttiva
+    ? new Set(interventiFiltratiVista.map((row) => row?.codice_strumento || row?.codicestrumento).filter(Boolean))
+    : codiciCoinvoltiInterventi;
+  const ditteCoinvolteVista = ricercaRegistroAttiva
+    ? new Set(
+        interventiFiltratiVista
+          .map((row) => normalizzaSocietaDitta(row?.ditta_esecutrice || row?.ditta))
+          .filter((value) => value && value !== "-")
+      )
+    : ditteCoinvolteInterventi;
+
   const metrics = [
-    ["Spesa", formatCurrency(totaleSpesaInterventiFiltrati), labelPeriodoContabileInterventi(), "euro"],
-    ["Attività", interventiFiltrati.length, `su ${interventi.length} totali`, "activity"],
-    ["Beni", codiciCoinvoltiInterventi.size, "coinvolti", "box"],
-    ["Esecutori", ditteCoinvolteInterventi.size, "ditte e società", "users"]
+    ["Spesa", formatCurrency(totaleSpesaVista), labelPeriodoContabileInterventi(), "euro"],
+    ["Attività", interventiFiltratiVista.length, `su ${interventi.length} totali`, "activity"],
+    ["Beni", codiciCoinvoltiVista.size, "coinvolti", "box"],
+    ["Esecutori", ditteCoinvolteVista.size, "ditte e società", "users"]
   ];
 
   return (
@@ -100,7 +138,7 @@ export default function InterventiPage(props) {
           <div><span>Registro manutentivo</span><h1>Interventi</h1><p>Dal bene all’attività: pianifica, documenta e ricostruisci ogni lavoro.</p></div>
         </div>
         <div className="p0-operations__metric">
-          <strong>{interventiFiltrati.length}</strong><span>attività nel perimetro</span>
+          <strong>{interventiFiltratiVista.length}</strong><span>attività nel perimetro</span>
         </div>
       </header><section className="p0-metric-strip" aria-label="Sintesi interventi">
         {metrics.map(([label, value, note, icon]) => (
@@ -108,7 +146,7 @@ export default function InterventiPage(props) {
         ))}
       </section>
 
-      <InterventiControls {...props} />
+      <InterventiControls {...props} interventiFiltrati={interventiFiltratiVista} />
 
       <section className="p0-history-switch">
         <div>
@@ -122,12 +160,12 @@ export default function InterventiPage(props) {
 
       {interventiElencoAperto && (
         <section className="p0-register">
-          <header><div><span className="p0-kicker">Registro filtrato</span><h2>{interventiFiltrati.length} interventi</h2><p>Seleziona un codice per entrare nella scheda del bene.</p></div><button className="p0-btn p0-btn--quiet" onClick={() => setInterventiElencoAperto(false)}>Chiudi</button></header>
+          <header><div><span className="p0-kicker">Registro filtrato</span><h2>{interventiFiltratiVista.length} interventi</h2><p>Seleziona un codice per entrare nella scheda del bene.</p></div><button className="p0-btn p0-btn--quiet" onClick={() => setInterventiElencoAperto(false)}>Chiudi</button></header>
           <div className="p0-table-wrap">
             <table>
               <thead><tr><th>Cespite</th><th>Contesto</th><th>Intervento</th><th>Ultimo / prossimo</th><th>Costo</th><th>Documento</th><th>Azioni</th></tr></thead>
               <tbody>
-                {interventiFiltratiRenderizzati.map((row, index) => (
+                {interventiRenderizzatiVista.map((row, index) => (
                   <tr key={row.id_intervento || index}>
                     <td><button className="p0-table-link" onClick={() => apriSchedaDaCodice(row.codice_strumento || row.codicestrumento)}>{row.codice_strumento || row.codicestrumento}</button><small>{row.sede || "-"}</small></td>
                     <td><b>{normalizzaSocietaDitta(row.ditta_esecutrice || row.ditta)}</b><small>{row.tipologia || "-"}</small></td>
@@ -151,7 +189,7 @@ export default function InterventiPage(props) {
               </tbody>
             </table>
           </div>
-          {interventiFiltrati.length > interventiFiltratiRenderizzati.length && <button className="p0-btn p0-register__more" onClick={() => setInterventiRenderLimit((v) => v + FMED_RENDER_BATCH_INTERVENTI)}>Mostra altri · {interventiFiltratiRenderizzati.length}/{interventiFiltrati.length}</button>}
+          {interventiFiltratiVista.length > interventiRenderizzatiVista.length && <button className="p0-btn p0-register__more" onClick={() => setInterventiRenderLimit((v) => v + FMED_RENDER_BATCH_INTERVENTI)}>Mostra altri · {interventiRenderizzatiVista.length}/{interventiFiltratiVista.length}</button>}
         </section>
       )}
     </main>
