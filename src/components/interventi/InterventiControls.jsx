@@ -66,7 +66,8 @@ export default function InterventiControls(props) {
     setPagina = () => {},
     resetFiltriInterventi = () => {},
     esportaInterventiFiltratiPdf = () => {},
-    exportInterventiFmed = () => {},
+    formatCurrency = (value) => String(value ?? ""),
+    importoIntervento = (row) => Number(row?.costo || row?.importo || 0) || 0,
     interventiIncludeStorico = false,
     cambiaVistaStoricoInterventi = () => {}
   } = props || {};
@@ -75,6 +76,72 @@ export default function InterventiControls(props) {
   const update = (setter) => (event) => {
     setter(event.target.value);
     closeList();
+  };
+
+  const formattaDataExcel = (value) => {
+    if (!value) return "";
+    const raw = String(value).trim();
+    const date = new Date(raw);
+    if (Number.isNaN(date.getTime())) return raw;
+    return new Intl.DateTimeFormat("it-IT", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    }).format(date);
+  };
+
+  const valoreCsvExcel = (value) => {
+    let testo = String(value ?? "").replace(/\r?\n/g, " ").trim();
+    if (/^[=+\-@]/.test(testo)) testo = `'${testo}`;
+    return `"${testo.replace(/"/g, '""')}"`;
+  };
+
+  const esportaInterventiExcelVisibili = () => {
+    const lista = Array.isArray(interventiFiltrati) ? interventiFiltrati : [];
+    if (!lista.length) {
+      window.alert("Nessun intervento da esportare con i filtri attuali.");
+      return;
+    }
+
+    const colonne = [
+      "Codice cespite",
+      "Sede",
+      "Ditta esecutrice",
+      "Tipologia",
+      "Attività",
+      "Ultimo intervento",
+      "Prossimo intervento",
+      "Costo"
+    ];
+
+    const righe = lista.map((intervento) => [
+      intervento?.codice_strumento || intervento?.codicestrumento || "",
+      intervento?.sede || "",
+      intervento?.ditta_esecutrice || intervento?.ditta || "",
+      intervento?.tipologia || "",
+      intervento?.attivita || "",
+      formattaDataExcel(intervento?.data_ultimo_intervento),
+      formattaDataExcel(intervento?.data_prossimo_intervento),
+      formatCurrency(importoIntervento(intervento))
+    ]);
+
+    const csv = [colonne, ...righe]
+      .map((riga) => riga.map(valoreCsvExcel).join(";"))
+      .join("\r\n");
+
+    const blob = new Blob(["\uFEFF", csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    const now = new Date();
+    const data = now.toISOString().slice(0, 10);
+    const ora = `${String(now.getHours()).padStart(2, "0")}${String(now.getMinutes()).padStart(2, "0")}`;
+
+    link.href = url;
+    link.download = `FMED_INTERVENTI_${data}_${ora}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   const cespiteRicercaUnivoco =
@@ -262,7 +329,7 @@ export default function InterventiControls(props) {
         <button
           className="p0-btn p0-btn--excel"
           type="button"
-          onClick={() => exportInterventiFmed("excel")}
+          onClick={esportaInterventiExcelVisibili}
         >
           Esporta Excel
         </button>
