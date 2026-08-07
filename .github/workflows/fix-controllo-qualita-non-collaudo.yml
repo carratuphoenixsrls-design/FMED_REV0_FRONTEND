@@ -1,0 +1,35 @@
+name: Fix controllo qualita non collaudo frontend
+
+on:
+  push:
+    branches:
+      - fix-controllo-qualita-non-collaudo
+
+permissions:
+  contents: write
+
+jobs:
+  fix-build-clean:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix-controllo-qualita-non-collaudo
+          fetch-depth: 0
+      - name: Applica protezione badge collaudo
+        run: python scripts/fix_controllo_qualita_non_collaudo.py
+      - name: Build REV0
+        run: |
+          npm ci
+          npm run build
+      - name: Commit finale pulito
+        run: |
+          rm -f scripts/fix_controllo_qualita_non_collaudo.py
+          rm -f .github/workflows/fix-controllo-qualita-non-collaudo.yml
+          rm -f .fix-controllo-qualita-trigger
+          git config user.name "FMED REV0 Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/pages/InterventiPage.jsx scripts/fix_controllo_qualita_non_collaudo.py .github/workflows/fix-controllo-qualita-non-collaudo.yml .fix-controllo-qualita-trigger
+          git commit -m "REV0 Interventi: badge collaudo solo su veri collaudi"
+          git push origin HEAD:fix-controllo-qualita-non-collaudo
