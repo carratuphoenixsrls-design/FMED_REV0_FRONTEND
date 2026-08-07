@@ -219,7 +219,9 @@ function Sicurezza8108PageInner({ apiBaseUrl }) {
   const visibleSites = sedi.filter((site) => sede === "TUTTE" || site.codice === sede);
   const documentCount = documenti.filter((doc) => !doc?.is_cartella).length;
   const folderCount = documenti.filter((doc) => doc?.is_cartella).length;
-  const unclassifiedCount = documenti.filter((doc) => !doc?.sede || !doc?.categoria).length;
+  const unclassifiedCount = documenti.filter(
+    (doc) => !doc?.is_cartella && (!doc?.sede || !doc?.categoria)
+  ).length;
 
   return (
     <main className="p0-operations p0-operations--safety">
