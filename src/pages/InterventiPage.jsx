@@ -1,6 +1,7 @@
 import InterventiControls from "../components/interventi/InterventiControls";
 import FmedIcon from "../components/ui/FmedIcon.jsx";
-import { PERIODICITA_STANDARD } from "../fmedStandard.js";
+import { PERIODICITA_STANDARD, calcolaProssimaScadenza } from "../fmedStandard.js";
+import "./InterventiCycleStatus.css";
 
 export default function InterventiPage(props) {
   const {
@@ -44,24 +45,52 @@ export default function InterventiPage(props) {
     return normalizzaPeriodicitaIntervento(row?.periodicita);
   };
 
-  const badgeCicloIntervento = (row) => {
+  const statoCicloIntervento = (row) => {
     const statoBase = String(row?.stato_ciclo || "").toUpperCase();
-    const periodicita = periodicitaCicloIntervento(row);
 
-    // Regola definitiva REV0:
-    // - periodicità e stato sono indipendenti;
-    // - UNA_TANTUM non chiude automaticamente un intervento;
-    // - i collaudi sono eventi una tantum e, se il motore li espone ancora ATTIVA,
-    //   vengono presentati come COMPLETATA;
-    // - stati storici/terminali (SOSTITUITA, CESSATA, ANNULLATA...) restano invariati.
-    const stato = isCollaudoIntervento(row) && statoBase === "ATTIVA" ? "COMPLETATA" : statoBase;
+    // I collaudi sono eventi una tantum: una volta registrati come eseguiti
+    // non devono restare esposti come cicli ATTIVI.
+    if (isCollaudoIntervento(row) && statoBase === "ATTIVA") return "COMPLETATA";
+
+    // Per tutte le altre attività lo stato resta indipendente dalla periodicità.
+    return statoBase;
+  };
+
+  const classeStatoCicloIntervento = (row) => {
+    const stato = statoCicloIntervento(row);
+    if (stato === "ATTIVA") return "is-active";
+    if (stato === "COMPLETATA") return "is-completed";
+    if (stato === "SOSTITUITA") return "is-replaced";
+    if (["CESSATA", "ANNULLATA", "CANCELLATA", "FALLITA"].includes(stato)) return "is-stopped";
+    return "is-neutral";
+  };
+
+  const badgeCicloIntervento = (row) => {
+    const stato = statoCicloIntervento(row);
+    const periodicita = periodicitaCicloIntervento(row);
     const periodicitaVisibile = periodicita ? periodicita.replace(/_/g, " ") : "";
     return [stato, periodicitaVisibile].filter(Boolean).join(" · ");
   };
 
   const prossimoInterventoVisibile = (row) => {
+    const periodicita = periodicitaCicloIntervento(row);
+
     // UNA TANTUM significa nessuna ricorrenza successiva, non durata di un giorno.
-    if (periodicitaCicloIntervento(row) === "UNA_TANTUM") return "-";
+    if (periodicita === "UNA_TANTUM") return "-";
+
+    // Per periodicità canoniche ricorrenti la prossima data deriva sempre
+    // dall'ultimo intervento + periodicità, così i vecchi dati incoerenti
+    // non vengono propagati nella vista operativa.
+    if (periodicita && periodicita !== "DA_DEFINIRE") {
+      const calcolata = calcolaProssimaScadenza(
+        row?.data_ultimo_intervento,
+        periodicita,
+        PERIODICITA_STANDARD,
+      );
+      if (calcolata) return formattaData(calcolata);
+    }
+
+    // Se il dato storico non ha una periodicità canonica, non inventiamo nulla.
     return formattaData(row?.data_prossimo_intervento);
   };
 
@@ -111,7 +140,7 @@ export default function InterventiPage(props) {
                   <tr key={row.id_intervento || index}>
                     <td><button className="p0-table-link" onClick={() => apriSchedaDaCodice(row.codice_strumento || row.codicestrumento)}>{row.codice_strumento || row.codicestrumento}</button><small>{row.sede || "-"}</small></td>
                     <td><b>{normalizzaSocietaDitta(row.ditta_esecutrice || row.ditta)}</b><small>{row.tipologia || "-"}</small></td>
-                    <td><b>{row.attivita || "-"}</b>{row.stato_ciclo && <span className="p0-tag">{badgeCicloIntervento(row)}</span>}{row._eccezione_collaudo && <span className="p0-tag">Collaudo conservato</span>}{row._archivio_storico && <span className="p0-tag">Pre-2023</span>}</td>
+                    <td><b>{row.attivita || "-"}</b>{row.stato_ciclo && <span className={`p0-tag p0-tag--cycle ${classeStatoCicloIntervento(row)}`}>{badgeCicloIntervento(row)}</span>}{row._eccezione_collaudo && <span className="p0-tag">Collaudo conservato</span>}{row._archivio_storico && <span className="p0-tag">Pre-2023</span>}</td>
                     <td><span>{formattaData(row.data_ultimo_intervento)}</span><small>Prossimo: {prossimoInterventoVisibile(row)}</small></td>
                     <td><b>{formatCurrency(importoIntervento(row))}</b></td>
                     <td><BottoneJobReport intervento={row} /></td>
