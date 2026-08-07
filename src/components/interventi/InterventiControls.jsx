@@ -24,7 +24,6 @@ export default function InterventiControls(props) {
     setRicercaCespiteIntervento = () => {},
     cespitiPerNuovoIntervento = [],
     apriSchedaCespite = () => {},
-    labelPeriodoContabileInterventi = () => 'Periodo corrente',
     filtroInterventiCodice,
     setFiltroInterventiCodice,
     setInterventiElencoAperto = () => {},
@@ -162,8 +161,10 @@ export default function InterventiControls(props) {
 
       <details className="p0-advanced">
         <summary>
-          <span><b>Affina registro</b><small>Periodo, cespite, attività e date</small></span>
-          <span className="p0-advanced__summary">{labelPeriodoContabileInterventi()} · {interventiFiltrati.length} risultati</span>
+          <span style={{ display: "flex", alignItems: "center", gap: "14px", flexWrap: "wrap" }}>
+            <span><b>Affina registro</b><small>Periodo, cespite, attività e date</small></span>
+            <span className="p0-advanced__summary">Filtri multipli</span>
+          </span>
         </summary>
         <div className="p0-filter-grid">
           <SelectField label="Cespite" value={filtroInterventiCodice} onChange={update(setFiltroInterventiCodice)}>
