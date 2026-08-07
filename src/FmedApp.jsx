@@ -1905,10 +1905,45 @@ function AppNuovoCore({
     const indice = new Map();
     (Array.isArray(cespiti) ? cespiti : []).forEach((record) => {
       const codice = String(record?.codicestrumento || record?.codice_strumento || "").trim();
-      if (codice) indice.set(codice, record);
+      if (codice) {
+        indice.set(codice, record);
+        indice.set(codice.toUpperCase(), record);
+      }
     });
     return indice;
   }, [cespiti]);
+
+  // REGOLA FACILITY ASSOLUTA: l'anagrafica corrente del bene vive in Asset.
+  // Gli altri moduli possono conservare snapshot storici, ma il dato corrente
+  // viene sempre risolto tramite il codice strumento.
+  const contestoCespiteCorrenteRecord = useCallback((record = {}) => {
+    const codice = String(record?.codice_strumento || record?.codicestrumento || record?.entita_chiave || "").trim();
+    if (!codice) return record;
+    const cespiteCorrente = cespitiByCodice.get(codice) || cespitiByCodice.get(codice.toUpperCase());
+    if (!cespiteCorrente) return record;
+    return {
+      ...record,
+      sede_snapshot: record?.sede_snapshot || record?.sede || "",
+      tipologia_snapshot: record?.tipologia_snapshot || record?.tipologia || "",
+      costruttore_snapshot: record?.costruttore_snapshot || record?.costruttore || "",
+      modello_snapshot: record?.modello_snapshot || record?.modello || "",
+      matricola_snapshot: record?.matricola_snapshot || record?.matricola || "",
+      sede: cespiteCorrente?.sede || record?.sede || "",
+      tipologia: cespiteCorrente?.tipologia || record?.tipologia || "",
+      costruttore: cespiteCorrente?.costruttore || record?.costruttore || "",
+      modello: cespiteCorrente?.modello || record?.modello || "",
+      matricola: cespiteCorrente?.matricola || record?.matricola || "",
+      reparto: cespiteCorrente?.reparto || record?.reparto || "",
+      branca_medica: getBrancaAsset(cespiteCorrente) || record?.branca_medica || record?.branca || "",
+      locazione: getLocazioneFmed(cespiteCorrente) || record?.locazione || "",
+      societa: cespiteCorrente?.societa || record?.societa || ""
+    };
+  }, [cespitiByCodice, getBrancaAsset]);
+
+  const interventiConContestoCorrente = useMemo(
+    () => (Array.isArray(interventi) ? interventi : []).map(contestoCespiteCorrenteRecord),
+    [interventi, contestoCespiteCorrenteRecord]
+  );
   const listaSedi = useMemo(() => filtraDizionarioRimosso("sede", deduplicaSediFmed([
   ...valoriDizionarioPrimari(dizionariCoreFmed, "sedi", [...SEDI_STANDARD_LIST, ...extraSedi]),
   ...cespiti.map((c) => c.sede)],
@@ -2119,7 +2154,7 @@ function AppNuovoCore({
       )),
       listaSediInterventi: deduplicaSediFmed([
       ...valoriDizionarioPrimari(dizionariCoreFmed, "sedi", SEDI_STANDARD_LIST),
-      ...interventi.map((i) => i.sede)],
+      ...cespiti.map((c) => c.sede)],
       true),
       listaSocietaInterventi: filtraDizionarioRimosso("societa", listaPulitaDizionario([
       ...valoriDizionarioPrimari(dizionariCoreFmed, "societa", extraSocieta),
@@ -2139,15 +2174,15 @@ function AppNuovoCore({
       })),
       listaAnniContabiliInterventi: [...new Set([String(new Date().getFullYear()), ...interventi.map((i) => parseDataFMED(i.data_ultimo_intervento || i.data_prossimo_intervento)?.getFullYear()).filter((anno) => Number.isFinite(anno)).map(String)])].sort((a, b) => Number(b) - Number(a)),
       listaTipologieFiltroInterventi: listaPulitaDizionario([
-      ...valoriDizionarioPrimari(dizionariCoreFmed, "tipologie_intervento", []),
-      ...interventi.map((i) => i.tipologia)]
+      ...valoriDizionarioPrimari(dizionariCoreFmed, "tipologie", extraTipologie),
+      ...cespiti.map((c) => c.tipologia)]
       ),
       listaAttivitaFiltroInterventi: filtraDizionarioRimosso("attivita", listaPulitaAttivita([
       ...valoriDizionarioPrimari(dizionariCoreFmed, "attivita_intervento", extraAttivita),
       ...interventi.map((i) => i.attivita)]
       ))
     };
-  }, [cespiti, interventi, dizionariCoreFmed, extraCategorie, extraPossesso, extraStatiAsset, extraSocieta, extraDitte, extraEsiti, extraPriorita, extraAttivita, filtraDizionarioRimosso]);
+  }, [cespiti, interventi, dizionariCoreFmed, extraCategorie, extraPossesso, extraStatiAsset, extraSocieta, extraDitte, extraEsiti, extraPriorita, extraAttivita, extraTipologie, filtraDizionarioRimosso]);
   const {
     listaCategorie,
     listaPossesso,
@@ -2336,7 +2371,7 @@ function AppNuovoCore({
     const dataA = exportDataInterventiA ? parseDataFMED(exportDataInterventiA) : null;
     if (dataDa) dataDa.setHours(0, 0, 0, 0);
     if (dataA) dataA.setHours(23, 59, 59, 999);
-    return interventi.filter((i) => sediExport.length > 0 ? sediExport.some((s) => filtroSedeExport(i, s)) : filtroSedeExport(i, sedeExport)).filter((i) => codiceExport === "TUTTI" || String(i.codice_strumento || i.codicestrumento || "") === codiceExport).filter((i) => tipologiaExport === "TUTTE" || String(i.tipologia || "") === tipologiaExport).filter((i) => societaExport === "TUTTE" || normalizzaSocietaDitta(i.ditta_esecutrice || i.ditta) === societaExport).filter((i) => filtroBrancheExport(i, exportBrancheInterventi)).filter((i) => filtroScadenzaExportInterventi(i)).filter((i) => {
+    return interventiConContestoCorrente.filter((i) => sediExport.length > 0 ? sediExport.some((s) => filtroSedeExport(i, s)) : filtroSedeExport(i, sedeExport)).filter((i) => codiceExport === "TUTTI" || String(i.codice_strumento || i.codicestrumento || "") === codiceExport).filter((i) => tipologiaExport === "TUTTE" || String(i.tipologia || "") === tipologiaExport).filter((i) => societaExport === "TUTTE" || normalizzaSocietaDitta(i.ditta_esecutrice || i.ditta) === societaExport).filter((i) => filtroBrancheExport(i, exportBrancheInterventi)).filter((i) => filtroScadenzaExportInterventi(i)).filter((i) => {
       const attivitaExport = String(i.attivita || "NON SPECIFICATA").trim();
       return !exportAttivitaInterventiEscluse.includes(attivitaExport);
     }).filter((i) => {
@@ -2384,8 +2419,8 @@ function AppNuovoCore({
   ...interventi.map((i) => i.sede)],
   true));
   const listaTipologieFormInterventi = filtraDizionarioRimosso("tipologia", listaPulitaDizionario([
-  ...valoriDizionarioPrimari(dizionariCoreFmed, "tipologie_intervento", extraTipologie),
-  ...interventi.map((i) => i.tipologia)]
+  ...valoriDizionarioPrimari(dizionariCoreFmed, "tipologie", extraTipologie),
+  ...cespiti.map((c) => c.tipologia)]
   ));
   const listaCostruttoriFormInterventi = filtraDizionarioRimosso("costruttore", listaPulitaDizionario([
   ...valoriDizionarioPrimari(dizionariCoreFmed, "costruttori", extraCostruttori),
@@ -3302,7 +3337,7 @@ function AppNuovoCore({
   const interventiFiltrati = useMemo(() => {
     if (!paginaRichiedeInterventiPesanti) return [];
     const sedeFiltroNormalizzata = normalizzaSedePerConfronto(filtroInterventiSede);
-    return interventi.filter((i) => {
+    return interventiConContestoCorrente.filter((i) => {
       // FMED FASE 7 - Interventi: filtro professionale e robusto.
       // Manteniamo la logica esistente, ma normalizziamo sedi/ditte/attività
       // per evitare esclusioni dovute a differenze di maiuscole, accenti o formato sede.
@@ -3318,7 +3353,7 @@ function AppNuovoCore({
       return ordineInterventi === "RECENTI" ? dataB - dataA : dataA - dataB;
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps -- interventoNelPeriodoContabile dipende dagli stessi filtri già elencati.
-  }, [paginaRichiedeInterventiPesanti, interventi, filtroInterventiCodice, filtroInterventiSede, filtroInterventiSocieta, filtroInterventiTipologia, filtroInterventiAttivita, filtroInterventiUltimoDa, filtroInterventiUltimoA, filtroInterventiProssimoDa, filtroInterventiProssimoA, filtroInterventiAnnoContabile, filtroInterventiPeriodoContabile, filtroInterventiPeriodoDa, filtroInterventiPeriodoA, ordineInterventi]);
+  }, [paginaRichiedeInterventiPesanti, interventiConContestoCorrente, filtroInterventiCodice, filtroInterventiSede, filtroInterventiSocieta, filtroInterventiTipologia, filtroInterventiAttivita, filtroInterventiUltimoDa, filtroInterventiUltimoA, filtroInterventiProssimoDa, filtroInterventiProssimoA, filtroInterventiAnnoContabile, filtroInterventiPeriodoContabile, filtroInterventiPeriodoDa, filtroInterventiPeriodoA, ordineInterventi]);
   const interventiFiltratiRenderizzati = useMemo(() => interventiFiltrati.slice(0, interventiRenderLimit), [interventiFiltrati, interventiRenderLimit]);
   const riepilogoCostiInterventi = useMemo(() => {
     if (!paginaRichiedeInterventiPesanti) {
@@ -3387,20 +3422,23 @@ function AppNuovoCore({
   const scadenzeConStatoBase = useMemo(() => {
     // Il backend ha già escluso cicli annullati, non applicabili e sostituiti.
     return (Array.isArray(scadenzeFiltrate) ? scadenzeFiltrate : []).map((s) => {
-      const data = s._dataScadenza || s.data_prossimo_intervento || s.prossima_scadenza || s.data_scadenza;
+      const corrente = String(s?.modulo || "").toUpperCase() === "ASSET"
+        ? contestoCespiteCorrenteRecord(s)
+        : s;
+      const data = corrente._dataScadenza || corrente.data_prossimo_intervento || corrente.prossima_scadenza || corrente.data_scadenza;
       return {
-        ...s,
+        ...corrente,
         sede_originale: s.sede_originale || s.sede || "",
-        sede: normalizzaSedeDisplay(s.sede || s.sede_originale || ""),
+        sede: normalizzaSedeDisplay(corrente.sede || s.sede_originale || ""),
         _dataScadenza: data,
-        _statoScadenza: s._statoScadenza || statoScadenza(data)
+        _statoScadenza: corrente._statoScadenza || statoScadenza(data)
       };
     }).sort((a, b) => {
       const da = parseDataFMED(a._dataScadenza) || new Date(8640000000000000);
       const db = parseDataFMED(b._dataScadenza) || new Date(8640000000000000);
       return da - db;
     });
-  }, [scadenzeFiltrate]);
+  }, [scadenzeFiltrate, contestoCespiteCorrenteRecord]);
   const listaModuliFiltroScadenze = pulisciLista(scadenzeConStatoBase.map((s) => s.modulo));
   const listaCodiciFiltroScadenze = pulisciLista(scadenzeConStatoBase.map((s) => s.codice_strumento || s.codicestrumento));
   const listaSediFiltroScadenze = deduplicaSediFmed(scadenzeConStatoBase.map((s) => s.sede), true);
@@ -5626,15 +5664,15 @@ ${messaggio}`);
     if (!cespite) return;
     setFormNuovoIntervento((prev) => ({
       ...prev,
-      sede: prev.sede || cespite.sede || "",
-      locazione: prev.locazione || cespite.locazione || "",
-      branca_medica: prev.branca_medica || cespite.branca_medica || cespite.branca || "",
-      tipologia: prev.tipologia || cespite.tipologia || "",
-      costruttore: prev.costruttore || cespite.costruttore || "",
-      modello: prev.modello || cespite.modello || "",
-      reparto: prev.reparto || cespite.reparto || "",
-      matricola: prev.matricola || cespite.matricola || "",
-      societa: prev.societa || cespite.societa || "",
+      sede: cespite.sede || prev.sede || "",
+      locazione: getLocazioneFmed(cespite) || prev.locazione || "",
+      branca_medica: getBrancaAsset(cespite) || prev.branca_medica || "",
+      tipologia: cespite.tipologia || prev.tipologia || "",
+      costruttore: cespite.costruttore || prev.costruttore || "",
+      modello: cespite.modello || prev.modello || "",
+      reparto: cespite.reparto || prev.reparto || "",
+      matricola: cespite.matricola || prev.matricola || "",
+      societa: cespite.societa || prev.societa || "",
       link_documento: prev.link_documento || cespite.link_documento || ""
     }));
   }, [nuovoInterventoOpen, formNuovoIntervento.codice_strumento, cespiti]);
@@ -5673,7 +5711,7 @@ ${messaggio}`);
     setModificaLinkDoc(false);
     setStoricoCespiteOpen(false);
     setInterventoDaModificare(intervento);
-    setFormModificaIntervento(normalizzaInterventoPerForm(intervento));
+    setFormModificaIntervento(normalizzaInterventoPerForm(contestoCespiteCorrenteRecord(intervento)));
     setModificaInterventoOpen(true);
   }
   function apriModificaUltimoInterventoCespite() {
@@ -5700,17 +5738,9 @@ ${messaggio}`);
       return;
     }
     const datiDaSalvare = {
+      // Il codice identifica la relazione; l'anagrafica del bene resta di proprietà Asset.
       codice_strumento: formModificaIntervento.codice_strumento || null,
-      sede: formModificaIntervento.sede || null,
-      // La tipologia appartiene al cespite, non al record intervento.
-      // Non va validata/salvata come TIPOLOGIE_INTERVENTO nel PUT.
-      tipologia: null,
       attivita: formModificaIntervento.attivita || null,
-      costruttore: formModificaIntervento.costruttore || null,
-      modello: formModificaIntervento.modello || null,
-      reparto: formModificaIntervento.reparto || null,
-      matricola: formModificaIntervento.matricola || null,
-      societa: formModificaIntervento.societa || null,
       ditta_esecutrice: formModificaIntervento.ditta_esecutrice || null,
       link_documento: formModificaIntervento.link_documento || null,
       descrizione_attivita: formModificaIntervento.descrizione_attivita || null,
@@ -6679,18 +6709,20 @@ ${messaggio}`);
       alert("Inserisci il codice strumento dell'intervento");
       return;
     }
+    const contestoCespite = contestoCespiteCorrenteRecord({ ...formNuovoIntervento, codice_strumento: codice });
     const datiDaSalvare = {
       codice_strumento: codice,
-      sede: formNuovoIntervento.sede || null,
-      locazione: formNuovoIntervento.locazione || null,
-      branca_medica: formNuovoIntervento.branca_medica || null,
+      // Snapshot di compatibilità coerente con la fonte Asset al momento della registrazione.
+      sede: contestoCespite.sede || null,
+      locazione: contestoCespite.locazione || null,
+      branca_medica: contestoCespite.branca_medica || null,
       tipologia: null,
       attivita: formNuovoIntervento.attivita || null,
-      costruttore: formNuovoIntervento.costruttore || null,
-      modello: formNuovoIntervento.modello || null,
-      reparto: formNuovoIntervento.reparto || null,
-      matricola: formNuovoIntervento.matricola || null,
-      societa: formNuovoIntervento.societa || null,
+      costruttore: contestoCespite.costruttore || null,
+      modello: contestoCespite.modello || null,
+      reparto: contestoCespite.reparto || null,
+      matricola: contestoCespite.matricola || null,
+      societa: contestoCespite.societa || null,
       ditta_esecutrice: formNuovoIntervento.ditta_esecutrice || null,
       link_documento: formNuovoIntervento.link_documento || null,
       descrizione_attivita: formNuovoIntervento.descrizione_attivita || null,
@@ -7617,7 +7649,7 @@ ${messaggio}`);
 
       {paginaInterventiAttiva && <Suspense fallback={<div className="fmed-lazy-loading">Caricamento modulo…</div>}><InterventiPage {...{
           interventiFiltrati,
-          interventi,
+          interventi: interventiConContestoCorrente,
           interventiIncludeStorico,
           cambiaVistaStoricoInterventi,
           apriNuovoIntervento,
@@ -8123,31 +8155,31 @@ ${messaggio}`);
             }} className="fmed-style-edit-grid">
           <SelectField label="Codice strumento" field="codice_strumento" allowQuickAdd={false} options={listaCodiciStrumentoInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
 
-          <SelectField label="Sede" field="sede" options={listaSediFormInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
+          <SelectField label="Sede" field="sede" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaSediFormInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
 
-          <SelectField label="Locazione" field="locazione" options={listaLocazioniNuovoIntervento} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
+          <SelectField label="Locazione" field="locazione" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaLocazioniNuovoIntervento} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
 
-          <SelectField label="Branca" field="branca_medica" options={listaBrancheForm} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
+          <SelectField label="Branca" field="branca_medica" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaBrancheForm} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
 
-          <SelectField label="Tipologia" field="tipologia" options={listaTipologieFormInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
+          <SelectField label="Tipologia" field="tipologia" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaTipologieFormInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
 
           <SelectField label="Attività" field="attivita" options={listaAttivitaInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
 
-          <SelectField label="Costruttore" field="costruttore" options={listaCostruttoriFormInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
+          <SelectField label="Costruttore" field="costruttore" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaCostruttoriFormInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
 
-          <SelectField label="Modello" field="modello" options={listaModelliFormInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
+          <SelectField label="Modello" field="modello" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaModelliFormInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
 
-          <SelectField label="Reparto" field="reparto" options={listaRepartiFormInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
+          <SelectField label="Reparto" field="reparto" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaRepartiFormInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
 
           <div className="fmed-style-edit-field">
             <label className="fmed-style-edit-label">Matricola</label>
-            <input value={formNuovoIntervento.matricola || ""} onChange={(e) => setFormNuovoIntervento({
+            <input readOnly title="Dato anagrafico del cespite: si modifica dalla scheda Asset." value={formNuovoIntervento.matricola || ""} onChange={(e) => setFormNuovoIntervento({
                   ...formNuovoIntervento,
                   matricola: e.target.value
                 })} className="fmed-style-edit-input" />
           </div>
 
-          <SelectField label="Società / Committente" field="societa" options={listaSocietaFormInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
+          <SelectField label="Società / Committente" field="societa" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaSocietaFormInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
 
           <SelectField label="Ditta esecutrice" field="ditta_esecutrice" options={listaDitteEsecutriciFormInterventi} formCespite={formNuovoIntervento} setFormCespite={setFormNuovoIntervento} />
 
@@ -8256,29 +8288,29 @@ ${messaggio}`);
 
               ...{}
             }} className="fmed-style-edit-grid">
-          <SelectField label="Codice strumento" field="codice_strumento" allowQuickAdd={false} options={listaCodiciStrumentoInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
+          <SelectField label="Codice strumento" field="codice_strumento" allowQuickAdd={false} disabled hint="Relazione al cespite: non si modifica dal registro interventi." options={listaCodiciStrumentoInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
 
-          <SelectField label="Sede" field="sede" options={listaSediFormInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
+          <SelectField label="Sede" field="sede" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaSediFormInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
 
-          <SelectField label="Tipologia" field="tipologia" options={listaTipologieFormInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
+          <SelectField label="Tipologia" field="tipologia" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaTipologieFormInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
 
           <SelectField label="Attività" field="attivita" options={listaAttivitaInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
 
-          <SelectField label="Costruttore" field="costruttore" options={listaCostruttoriFormInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
+          <SelectField label="Costruttore" field="costruttore" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaCostruttoriFormInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
 
-          <SelectField label="Modello" field="modello" options={listaModelliFormInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
+          <SelectField label="Modello" field="modello" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaModelliFormInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
 
-          <SelectField label="Reparto" field="reparto" options={listaRepartiFormInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
+          <SelectField label="Reparto" field="reparto" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaRepartiFormInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
 
           <div className="fmed-style-edit-field">
             <label className="fmed-style-edit-label">Matricola</label>
-            <input value={formModificaIntervento.matricola || ""} onChange={(e) => setFormModificaIntervento({
+            <input readOnly title="Dato anagrafico del cespite: si modifica dalla scheda Asset." value={formModificaIntervento.matricola || ""} onChange={(e) => setFormModificaIntervento({
                   ...formModificaIntervento,
                   matricola: e.target.value
                 })} className="fmed-style-edit-input" />
           </div>
 
-          <SelectField label="Società / Committente" field="societa" options={listaSocietaFormInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
+          <SelectField label="Società / Committente" field="societa" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaSocietaFormInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
 
           <SelectField label="Ditta esecutrice" field="ditta_esecutrice" options={listaDitteEsecutriciFormInterventi} formCespite={formModificaIntervento} setFormCespite={setFormModificaIntervento} />
 
@@ -8596,11 +8628,11 @@ ${messaggio}`);
             </div>
           </div>
 
-          <SelectField label="Tipologia" field="tipologia" options={listaTipologie} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
+          <SelectField label="Tipologia" field="tipologia" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaTipologie} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
 
-          <SelectField label="Costruttore" field="costruttore" options={listaCostruttoriFormInterventi} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
+          <SelectField label="Costruttore" field="costruttore" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaCostruttoriFormInterventi} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
 
-          <SelectField label="Modello" field="modello" options={listaModelliFormInterventi} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
+          <SelectField label="Modello" field="modello" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaModelliFormInterventi} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
 
           <div className="fmed-style-edit-field">
             <label className="fmed-style-edit-label">Matricola</label>
@@ -8637,7 +8669,7 @@ ${messaggio}`);
                 }} className="fmed-style-edit-field" />
               
 
-          <SelectField label="Reparto" field="reparto" options={listaRepartiFormInterventi} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
+          <SelectField label="Reparto" field="reparto" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaRepartiFormInterventi} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
 
           <CanonicalSelect
                 label="Branca medica"
@@ -8654,7 +8686,7 @@ ${messaggio}`);
                 }} className="fmed-style-edit-field" />
               
 
-          <SelectField label="Locazione" field="locazione" options={listaLocazioniNuovoCespite} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
+          <SelectField label="Locazione" field="locazione" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaLocazioniNuovoCespite} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
 
           <SelectField label="Fornitore" field="fornitore" options={listaFornitori} formCespite={formNuovoCespite} setFormCespite={setFormNuovoCespite} />
 
@@ -9200,11 +9232,11 @@ ${messaggio}`);
           </div>}
       </div>
 
-      <SelectField label="Tipologia" field="tipologia" options={listaTipologie} formCespite={formCespite} setFormCespite={setFormCespite} />
+      <SelectField label="Tipologia" field="tipologia" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaTipologie} formCespite={formCespite} setFormCespite={setFormCespite} />
 
-      <SelectField label="Costruttore" field="costruttore" options={listaCostruttoriFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
+      <SelectField label="Costruttore" field="costruttore" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaCostruttoriFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
 
-      <SelectField label="Modello" field="modello" options={listaModelliFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
+      <SelectField label="Modello" field="modello" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaModelliFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
 
       <div className="fmed-style-edit-field">
         <label className="fmed-style-edit-label">Matricola</label>
@@ -9216,7 +9248,7 @@ ${messaggio}`);
 
       <SelectField label="Società" field="societa" options={listaSocieta} formCespite={formCespite} setFormCespite={setFormCespite} />
 
-      <SelectField label="Locazione" field="locazione" options={listaLocazioni} formCespite={formCespite} setFormCespite={setFormCespite} />
+      <SelectField label="Locazione" field="locazione" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaLocazioni} formCespite={formCespite} setFormCespite={setFormCespite} />
 
       <SelectField label="Categoria" field="categoria" options={listaCategorie} formCespite={formCespite} setFormCespite={setFormCespite} />
 
@@ -9296,9 +9328,9 @@ ${messaggio}`);
                 })} className="fmed-style-edit-input" />
       </div>
 
-      <SelectField label="Sede" field="sede" options={listaSediFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
+      <SelectField label="Sede" field="sede" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaSediFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
 
-      <SelectField label="Reparto" field="reparto" options={listaRepartiFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
+      <SelectField label="Reparto" field="reparto" disabled hint="Dato anagrafico del cespite: si modifica dalla scheda Asset." options={listaRepartiFormInterventi} formCespite={formCespite} setFormCespite={setFormCespite} />
 
       <SelectField label="Fornitore" field="fornitore" options={listaFornitori} formCespite={formCespite} setFormCespite={setFormCespite} />
 
@@ -9685,7 +9717,9 @@ function SelectField({
   formCespite,
   setFormCespite,
   dictionary = "",
-  allowQuickAdd = true
+  allowQuickAdd = true,
+  disabled = false,
+  hint = ""
 }) {
   return <CanonicalSelect
     label={label}
@@ -9696,6 +9730,8 @@ function SelectField({
     form={formCespite || {}}
     apiBaseUrl={API_BASE_URL}
     allowQuickAdd={allowQuickAdd}
+    disabled={disabled}
+    hint={hint}
 
     onChange={(value) => setFormCespite((prev) => ({ ...prev, [field]: value }))} className="fmed-style-edit-field" />;
 
