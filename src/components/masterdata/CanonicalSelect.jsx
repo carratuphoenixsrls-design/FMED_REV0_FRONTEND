@@ -1,5 +1,6 @@
 import { useEffect, useId, useMemo, useState } from "react";
 import { fmedAuthHeaders, fmedFetchJson, fmedSession } from "../../fmedApiClient.js";
+import { PERIODICITA_STANDARD } from "../../fmedStandard.js";
 
 const FIELD_DICTIONARIES = {
   sede: "SEDI",
@@ -25,6 +26,10 @@ const FIELD_DICTIONARIES = {
   centro_costo: "CENTRI_COSTO",
   responsabile: "RESPONSABILI",
 };
+
+const PERIODICITA_CANONICHE = PERIODICITA_STANDARD
+  .map((item) => String(item?.codice || "").trim())
+  .filter((codice) => codice && codice !== "DA_DEFINIRE");
 
 function normalize(value) {
   return String(value || "")
@@ -96,6 +101,7 @@ export default function CanonicalSelect({
   const [message, setMessage] = useState("");
   const [confirmDistinct, setConfirmDistinct] = useState(false);
   const dictionaryCode = inferDictionary(field, label, dictionary);
+  const isPeriodicita = dictionaryCode === "PERIODICITA";
   const controlId = id || `fmed-canonical-${String(field || dictionaryCode || "select").toLocaleLowerCase("it-IT")}-${generatedId.replace(/:/g, "")}`;
   const controlName = name || field || dictionaryPayloadKey(dictionaryCode);
   const role = roleInfo();
@@ -128,6 +134,10 @@ export default function CanonicalSelect({
   );
 
   const cleanOptions = useMemo(() => {
+    // PERIODICITA è un dominio chiuso FMED: non deve ereditare valori sporchi
+    // dallo storico (es. PER 0001, PER 0002) né consentire quick-add arbitrari.
+    if (isPeriodicita) return [...PERIODICITA_CANONICHE];
+
     const map = new Map();
     const source = restrictToOptions
       ? (Array.isArray(options) ? options : [])
@@ -139,7 +149,7 @@ export default function CanonicalSelect({
       if (!map.has(key)) map.set(key, labelValue);
     }
     return [...map.values()].sort((a, b) => a.localeCompare(b, "it", { numeric: true, sensitivity: "base" }));
-  }, [options, canonicalRemoteOptions, catalogLoaded, extraOptions, value, restrictToOptions]);
+  }, [options, canonicalRemoteOptions, catalogLoaded, extraOptions, value, restrictToOptions, isPeriodicita]);
 
   const familyOptions = useMemo(() => labelsFromCatalog(catalog, "FAMIGLIE_ATTIVITA"), [catalog]);
   const scopeOptions = useMemo(() => labelsFromCatalog(catalog, "AMBITI_OPERATIVI"), [catalog]);
@@ -250,9 +260,9 @@ export default function CanonicalSelect({
       >
         <option value="">{placeholder || `Seleziona ${String(label || "voce").toLocaleLowerCase("it-IT")}`}</option>
         {!cleanOptions.length && <option value="" disabled>Nessuna voce disponibile</option>}
-        {cleanOptions.map(item => <option key={`${dictionaryCode}-${item}`} value={item}>{item}</option>)}
+        {cleanOptions.map(item => <option key={`${dictionaryCode}-${item}`} value={item}>{isPeriodicita ? String(item).replace(/_/g, " ") : item}</option>)}
       </select>
-      {allowQuickAdd && dictionaryCode && <button type="button" className="fmed-canonical-add" onClick={openQuickAdd} disabled={disabled || loading} title={`Aggiungi una voce a ${dictionaryCode}`} aria-label={`Aggiungi una voce a ${dictionaryCode}`}><span aria-hidden="true">+</span></button>}
+      {allowQuickAdd && !isPeriodicita && dictionaryCode && <button type="button" className="fmed-canonical-add" onClick={openQuickAdd} disabled={disabled || loading} title={`Aggiungi una voce a ${dictionaryCode}`} aria-label={`Aggiungi una voce a ${dictionaryCode}`}><span aria-hidden="true">+</span></button>}
     </div>
     {hint && <small className="fmed-canonical-hint">{hint}</small>}
 
