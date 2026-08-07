@@ -183,7 +183,7 @@ export default function InterventiPage(props) {
                           <span className="p0-tag" style={stileStatoCicloIntervento(row)}>{badgeCicloIntervento(row)}</span>
                         </div>
                       )}
-                      {row._eccezione_collaudo && <span className="p0-tag" style={{ marginTop: "5px" }}>Collaudo conservato</span>}
+                      {row._eccezione_collaudo && isCollaudoIntervento(row) && <span className="p0-tag" style={{ marginTop: "5px" }}>Collaudo conservato</span>}
                       {row._archivio_storico && <span className="p0-tag" style={{ marginTop: "5px" }}>Pre-2023</span>}
                     </td>
                     <td><span>{formattaData(row.data_ultimo_intervento)}</span><small>Prossimo: {prossimoInterventoVisibile(row)}</small></td>
