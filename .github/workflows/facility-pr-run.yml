@@ -1,0 +1,36 @@
+name: Facility single source PR verification
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  apply-build-commit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: rev0-facility-source-of-truth
+          fetch-depth: 0
+      - name: Applica regola Facility
+        run: python scripts/apply_facility_source.py
+      - name: Verifica REV0
+        run: |
+          npm ci
+          npm run build
+      - name: Commit finale pulito
+        run: |
+          rm -f .facility-source-trigger
+          rm -f scripts/apply_facility_source.py
+          rm -f .github/workflows/rev0-facility-single-source.yml
+          rm -f .github/workflows/facility-pr-run.yml
+          git config user.name "FMED REV0 Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/FmedApp.jsx .facility-source-trigger scripts/apply_facility_source.py .github/workflows/rev0-facility-single-source.yml .github/workflows/facility-pr-run.yml
+          git commit -m "REV0 Facility: fonte unica Asset nei moduli operativi"
+          git push origin HEAD:rev0-facility-source-of-truth
