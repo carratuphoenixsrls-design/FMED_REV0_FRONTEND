@@ -26,6 +26,21 @@ export default function InterventiPage(props) {
     FMED_RENDER_BATCH_INTERVENTI
   } = props || {};
 
+  const badgeCicloIntervento = (row) => {
+    const attivita = String(row?.attivita || "").toUpperCase();
+    const periodicita = String(row?.periodicita || "").toUpperCase().replace(/_/g, " ").trim();
+    const statoBase = String(row?.stato_ciclo || "").toUpperCase();
+    const isCollaudo = attivita.includes("COLLAUDO");
+    const isUnaTantumEsplicita = periodicita.includes("UNA TANTUM");
+    const chiudiUnaTantum = !row?.data_prossimo_intervento && statoBase === "ATTIVA" && (isCollaudo || isUnaTantumEsplicita);
+    const stato = chiudiUnaTantum ? "COMPLETATA" : row?.stato_ciclo;
+    const periodicitaStandard = ["MENSILE", "BIMESTRALE", "TRIMESTRALE", "QUADRIMESTRALE", "SEMESTRALE", "ANNUALE", "BIENNALE", "TRIENNALE", "QUADRIENNALE", "QUINQUENNALE"];
+    const periodicitaVisibile = (isCollaudo || isUnaTantumEsplicita)
+      ? "UNA TANTUM"
+      : periodicitaStandard.find((voce) => periodicita.includes(voce)) || "";
+    return [stato, periodicitaVisibile].filter(Boolean).join(" · ");
+  };
+
   const metrics = [
     ["Spesa", formatCurrency(totaleSpesaInterventiFiltrati), labelPeriodoContabileInterventi(), "euro"],
     ["Attività", interventiFiltrati.length, `su ${interventi.length} totali`, "activity"],
@@ -72,7 +87,7 @@ export default function InterventiPage(props) {
                   <tr key={row.id_intervento || index}>
                     <td><button className="p0-table-link" onClick={() => apriSchedaDaCodice(row.codice_strumento || row.codicestrumento)}>{row.codice_strumento || row.codicestrumento}</button><small>{row.sede || "-"}</small></td>
                     <td><b>{normalizzaSocietaDitta(row.ditta_esecutrice || row.ditta)}</b><small>{row.tipologia || "-"}</small></td>
-                    <td><b>{row.attivita || "-"}</b>{row.stato_ciclo && <span className="p0-tag">{(!row.data_prossimo_intervento && (String(row.attivita || "").toUpperCase().includes("MANUTENZIONE STRAORDINARIA") || String(row.periodicita || "").toUpperCase().replace(/_/g, " ").includes("UNA TANTUM")) ? "COMPLETATA" : row.stato_ciclo)}{(!row.data_prossimo_intervento && String(row.attivita || "").toUpperCase().includes("MANUTENZIONE STRAORDINARIA")) ? " · UNA TANTUM" : (row.periodicita ? ` · ${String(row.periodicita).replace(/_/g, " ")}` : "")}</span>}{row._eccezione_collaudo && <span className="p0-tag">Collaudo conservato</span>}{row._archivio_storico && <span className="p0-tag">Pre-2023</span>}</td>
+                    <td><b>{row.attivita || "-"}</b>{row.stato_ciclo && <span className="p0-tag">{badgeCicloIntervento(row)}</span>}{row._eccezione_collaudo && <span className="p0-tag">Collaudo conservato</span>}{row._archivio_storico && <span className="p0-tag">Pre-2023</span>}</td>
                     <td><span>{formattaData(row.data_ultimo_intervento)}</span><small>Prossimo: {formattaData(row.data_prossimo_intervento)}</small></td>
                     <td><b>{formatCurrency(importoIntervento(row))}</b></td>
                     <td><BottoneJobReport intervento={row} /></td>
