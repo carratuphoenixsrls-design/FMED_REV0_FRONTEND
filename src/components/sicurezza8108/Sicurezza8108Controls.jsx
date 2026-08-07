@@ -1,3 +1,5 @@
+import "./Sicurezza8108NewSite.css";
+
 function SelectField({ label, value, onChange, children }) {
   return (
     <label className="p0-field">
@@ -33,6 +35,14 @@ export default function Sicurezza8108Controls({
     Boolean(String(search || "").trim()) ||
     sede !== "TUTTE" ||
     categoria !== "TUTTE";
+
+  const apriNuovaSede = () => {
+    const launcher = Array.from(document.querySelectorAll("button")).find((button) => {
+      const label = String(button?.textContent || "").replace(/\s+/g, " ").trim().toUpperCase();
+      return label === "+ NUOVA SEDE" && !button.closest(".p0-safety-command-bar");
+    });
+    if (launcher) launcher.click();
+  };
 
   return (
     <section className="p0-command p0-command--safety">
@@ -119,6 +129,14 @@ export default function Sicurezza8108Controls({
           disabled={!filtriAttivi}
         >
           Azzera filtri
+        </button>
+
+        <button
+          type="button"
+          className="p0-btn p0-safety-command-bar__newsite"
+          onClick={apriNuovaSede}
+        >
+          + Nuova sede
         </button>
       </div>
     </section>
