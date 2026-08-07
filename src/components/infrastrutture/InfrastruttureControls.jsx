@@ -46,12 +46,9 @@ export default function InfrastruttureControls(props) {
     resetFiltriInfrastrutture = () => {}
   } = props || {};
   const refresh = () => caricaInfrastruttureOnDemand({ force: true });
-  /* INFRASTRUTTURE EXPORT EXCEL START */
-  const esportaInfrastruttureExcel = () => {
-    const righe = Array.isArray(infrastruttureFiltrate)
-      ? infrastruttureFiltrate
-      : [];
 
+  const esportaInfrastruttureExcel = () => {
+    const righe = Array.isArray(infrastruttureFiltrate) ? infrastruttureFiltrate : [];
     if (!righe.length) {
       window.alert("NESSUNA INFRASTRUTTURA FILTRATA DA ESPORTARE.");
       return;
@@ -59,13 +56,8 @@ export default function InfrastruttureControls(props) {
 
     const pulisci = (value) => {
       if (value === null || value === undefined) return "";
-
-      return String(value)
-        .replaceAll('"', '""')
-        .replace(/\r?\n|\r/g, " ")
-        .trim();
+      return String(value).replaceAll('"', '""').replace(/\r?\n|\r/g, " ").trim();
     };
-
     const cella = (value) => `"${pulisci(value)}"`;
 
     const intestazioni = [
@@ -102,37 +94,24 @@ export default function InfrastruttureControls(props) {
       row.note || ""
     ].map(cella).join(";"));
 
-    const csv = [
-      intestazioni.map(cella).join(";"),
-      ...contenutoRighe
-    ].join("\r\n");
-
-    const blob = new Blob(
-      ["\uFEFF" + csv],
-      { type: "text/csv;charset=utf-8;" }
-    );
-
+    const csv = [intestazioni.map(cella).join(";"), ...contenutoRighe].join("\r\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     const data = new Date().toISOString().slice(0, 10);
-
     link.href = url;
     link.download = `FMED_INFRASTRUTTURE_FILTRATE_${data}.csv`;
-
     document.body.appendChild(link);
     link.click();
     link.remove();
-
     URL.revokeObjectURL(url);
   };
-  /* INFRASTRUTTURE EXPORT EXCEL END */
 
   return (
     <section className="p0-command p0-command--infrastructure">
       <div className="p0-command__primary">
         <div className="p0-command__intro">
           <div><span className="p0-kicker">Patrimonio impiantistico</span><h2>Trova impianto, servizio o attività</h2></div>
-          
         </div>
         <div className="p0-search">
           <span className="p0-search__mark" aria-hidden="true">⌕</span>
@@ -158,60 +137,54 @@ export default function InfrastruttureControls(props) {
         </div>
       </details>
 
-      {/* INFRASTRUTTURE BARRA COMANDI START */}
       <div
         className="p0-command__actions p0-infrastructure-command-bar"
         role="toolbar"
         aria-label="Comandi infrastrutture"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+          gap: "8px",
+          overflow: "visible"
+        }}
       >
-        <button
-          type="button"
-          className="p0-btn p0-infrastructure-command-bar__refresh"
-          onClick={refresh}
-          disabled={infrastruttureLoading}
-        >
+        <button type="button" className="p0-btn p0-infrastructure-command-bar__refresh" onClick={refresh} disabled={infrastruttureLoading}>
           {infrastruttureLoading ? "AGGIORNAMENTO…" : "AGGIORNA DATI"}
         </button>
 
         {permessiRuoloFmed.canEdit && (
-          <button
-            type="button"
-            className="p0-btn p0-infrastructure-command-bar__new"
-            onClick={apriNuovaInfrastruttura}
-          >
+          <button type="button" className="p0-btn p0-infrastructure-command-bar__new" onClick={apriNuovaInfrastruttura}>
             + NUOVA INFRASTRUTTURA
           </button>
         )}
 
-        <button
-          type="button"
-          className="p0-btn p0-infrastructure-command-bar__excel"
-          onClick={esportaInfrastruttureExcel}
-          disabled={!infrastruttureFiltrate.length}
-        >
+        <button type="button" className="p0-btn p0-infrastructure-command-bar__excel" onClick={esportaInfrastruttureExcel} disabled={!infrastruttureFiltrate.length}>
           ESPORTA EXCEL · {infrastruttureFiltrate.length}
         </button>
 
-        
-        {/* INFRASTRUTTURE APRI PATRIMONIO START */}
-        <button
-          type="button"
-          className="p0-btn p0-infrastructure-command-bar__open"
-          onClick={() => setInfrastruttureElencoAperto(true)}
-          disabled={!infrastruttureFiltrate.length || infrastruttureElencoAperto}
-        >
+        <button type="button" className="p0-btn p0-infrastructure-command-bar__open" onClick={() => setInfrastruttureElencoAperto(true)} disabled={!infrastruttureFiltrate.length || infrastruttureElencoAperto}>
           APRI PATRIMONIO · {infrastruttureFiltrate.length}
         </button>
-        {/* INFRASTRUTTURE APRI PATRIMONIO END */}
-<button
+
+        <button
           type="button"
           className="p0-btn p0-infrastructure-command-bar__reset"
           onClick={resetFiltriInfrastrutture}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "static",
+            visibility: "visible",
+            opacity: 1,
+            width: "100%",
+            minWidth: 0,
+            margin: 0
+          }}
         >
           AZZERA FILTRI
         </button>
       </div>
-      {/* INFRASTRUTTURE BARRA COMANDI END */}
     </section>
   );
 }
