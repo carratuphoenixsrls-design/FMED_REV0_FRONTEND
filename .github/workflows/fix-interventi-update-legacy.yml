@@ -1,0 +1,48 @@
+name: fix-interventi-update-legacy
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  patch:
+    if: github.head_ref == 'fix-duplicati-interventi-ui'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix-duplicati-interventi-ui
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Corregge payload modifica intervento
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('src/FmedApp.jsx')
+          s=p.read_text(encoding='utf-8')
+          old='''    const datiDaSalvare = {\n      // Il codice identifica la relazione; l'anagrafica del bene resta di proprietà Asset.\n      codice_strumento: formModificaIntervento.codice_strumento || null,\n      attivita: formModificaIntervento.attivita || null,\n      ditta_esecutrice: formModificaIntervento.ditta_esecutrice || null,\n      link_documento: formModificaIntervento.link_documento || null,\n      descrizione_attivita: formModificaIntervento.descrizione_attivita || null,\n      esito: formModificaIntervento.esito || null,\n      costo: formModificaIntervento.costo || null,\n      data_ultimo_intervento: formModificaIntervento.data_ultimo_intervento || null,\n      data_prossimo_intervento: formModificaIntervento.data_prossimo_intervento || null,\n      periodicita: formModificaIntervento.periodicita || null,\n      importo_extra: formModificaIntervento.importo_extra || null\n    };\n'''
+          new='''    // PUT semantico: inviamo solo i campi operativi realmente modificati.\n    // I record storici possono contenere codici/alias oggi non più attivi nel\n    // Catalogo Canonico (es. vecchi codici esito): se non sono stati toccati\n    // non devono bloccare la modifica di periodicità, costo o date con un 422.\n    const valoriModificaIntervento = {\n      attivita: formModificaIntervento.attivita || null,\n      ditta_esecutrice: formModificaIntervento.ditta_esecutrice || null,\n      link_documento: formModificaIntervento.link_documento || null,\n      descrizione_attivita: formModificaIntervento.descrizione_attivita || null,\n      esito: formModificaIntervento.esito || null,\n      costo: formModificaIntervento.costo || null,\n      data_ultimo_intervento: formModificaIntervento.data_ultimo_intervento || null,\n      data_prossimo_intervento: formModificaIntervento.data_prossimo_intervento || null,\n      periodicita: formModificaIntervento.periodicita || null,\n      importo_extra: formModificaIntervento.importo_extra || null\n    };\n    const valoreOriginaleIntervento = (campo) => {\n      if (campo === "ditta_esecutrice") return interventoDaModificare.ditta_esecutrice || interventoDaModificare.ditta || null;\n      return interventoDaModificare?.[campo] ?? null;\n    };\n    const confrontaValoreIntervento = (value) => String(value ?? "").trim();\n    const datiDaSalvare = {\n      // Il codice identifica la relazione; l'anagrafica del bene resta di proprietà Asset.\n      codice_strumento: formModificaIntervento.codice_strumento || interventoDaModificare.codice_strumento || interventoDaModificare.codicestrumento || null\n    };\n    Object.entries(valoriModificaIntervento).forEach(([campo, valore]) => {\n      if (confrontaValoreIntervento(valore) !== confrontaValoreIntervento(valoreOriginaleIntervento(campo))) {\n        datiDaSalvare[campo] = valore;\n      }\n    });\n    // Se cambia la periodicità, la prossima scadenza deriva dall'ultimo intervento\n    // e dalla nuova periodicità, non dal vecchio valore rimasto nel form.\n    if (Object.prototype.hasOwnProperty.call(datiDaSalvare, "periodicita")) {\n      datiDaSalvare.data_ultimo_intervento = formModificaIntervento.data_ultimo_intervento || null;\n      datiDaSalvare.data_prossimo_intervento = calcolaProssimaScadenza(\n        formModificaIntervento.data_ultimo_intervento,\n        formModificaIntervento.periodicita,\n        PERIODICITA_STANDARD,\n      ) || null;\n    }\n'''
+          if old not in s:
+              raise SystemExit('blocco datiDaSalvare non trovato')
+          s=s.replace(old,new,1)
+          old2='''        alert(`Errore durante la modifica dell'intervento (${response?.status || "nessuna risposta"}).\\\n\\\n` + "Se il backend non ha ancora il PUT /interventi/{id}, va aggiunto lato FastAPI.");\n'''
+          new2='''        let dettaglioErrore = testoRisposta;\n        try {\n          const parsed = testoRisposta ? JSON.parse(testoRisposta) : null;\n          const detail = parsed?.detail;\n          if (detail && typeof detail === "object") {\n            dettaglioErrore = [detail.messaggio || detail.message, ...(Array.isArray(detail.errori) ? detail.errori : []), detail.errore].filter(Boolean).join(" · ");\n          } else if (detail) dettaglioErrore = String(detail);\n        } catch { /* mantiene il testo originale */ }\n        alert(`Errore durante la modifica dell'intervento (${response?.status || "nessuna risposta"}).${dettaglioErrore ? `\\n\\n${dettaglioErrore}` : ""}`);\n'''
+          if old2 not in s:
+              raise SystemExit('blocco alert 422 non trovato')
+          s=s.replace(old2,new2,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Build frontend
+        run: |
+          npm ci
+          npm run build
+      - name: Commit risultato e pulizia workflow
+        run: |
+          rm .github/workflows/fix-interventi-update-legacy.yml
+          git config user.name "FMED REV0 Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/FmedApp.jsx .github/workflows/fix-interventi-update-legacy.yml
+          git commit -m "REV0 Interventi: modifica solo campi cambiati e mostra errore backend"
+          git push origin HEAD:fix-duplicati-interventi-ui
