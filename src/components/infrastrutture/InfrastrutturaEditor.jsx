@@ -64,17 +64,24 @@ export default function InfrastrutturaEditor(props) {
               {canonical("Periodicità", "periodicita", "PERIODICITA", infraPeriodicitaStandard)}
               {canonical("Stato", "stato", "STATI_INFRASTRUTTURA", infraStatiStandard)}
               <TextField label="Ultimo intervento" type="date" value={formInfra.ultimo_intervento} onChange={(e) => aggiornaFormInfra("ultimo_intervento", e.target.value)} />
-              <TextField label="Prossimo intervento" type="date" value={formInfra.prossimo_intervento} onChange={(e) => aggiornaFormInfra("prossimo_intervento", e.target.value)} />
+              <TextField
+                label="Prossimo intervento"
+                type="date"
+                value={formInfra.prossimo_intervento}
+                onChange={(e) => aggiornaFormInfra("prossimo_intervento", e.target.value)}
+                readOnly={Boolean(formInfra.periodicita && !["DA_DEFINIRE"].includes(String(formInfra.periodicita).toUpperCase().replace(/[\s-]+/g, "_")))}
+                placeholder="Calcolato da ultimo intervento + periodicità"
+              />
               {canonical("Priorità", "priorita", "PRIORITA", PRIORITA_STANDARD)}
             </div>
           </fieldset>
 
           <fieldset><legend><b>03</b><span>Gestione<small>Organizzazione, referente e costo</small></span></legend>
             <div className="p0-editor__grid">
-              {canonical("Società", "societa", "SOCIETA", infraSocietaOptions)}
+              <TextField label="Società" value={formInfra.societa} readOnly placeholder="Derivata automaticamente dalla sede" />
               <TextField label="Helpdesk" value={formInfra.numero_helpdesk} onChange={(e) => aggiornaFormInfra("numero_helpdesk", e.target.value)} />
               {canonical("Responsabile", "responsabile", "RESPONSABILI")}
-              {canonical("Centro di costo", "centro_costo", "CENTRI_COSTO", infraCentroCostoOptions)}
+              <TextField label="Centro di costo" value={formInfra.centro_costo} readOnly placeholder="Derivato automaticamente dalla sede" />
               <TextField label="Importo annuo" value={formInfra.importo_annuo} onChange={(e) => aggiornaFormInfra("importo_annuo", e.target.value)} placeholder="0,00" />
             </div>
           </fieldset>
