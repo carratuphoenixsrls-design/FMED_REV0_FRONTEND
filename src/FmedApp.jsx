@@ -6907,47 +6907,42 @@ ${messaggio}`);
   // Lo stato viene ricavato da una sola funzione, usata da KPI, tabella ed export.
   function statoInfrastruttura(infra) {
     const statoManuale = normalizzaTestoCodice(infra?.stato).replace(/\s+/g, "_").trim();
+    const statoCiclo = normalizzaTestoCodice(infra?.stato_ciclo || "").replace(/\s+/g, "_");
     const cicloStato = normalizzaTestoCodice(infra?._ciclo_stato || "").replace(/\s+/g, "_");
-    if (cicloStato === "CHIUSO" || ["CHIUSO", "CHIUSA", "ARCHIVIATO", "ARCHIVIATA", "SUPERATO", "SUPERATA"].includes(statoManuale)) {
-      return {
-        codice: "CHIUSA",
-        testo: "Chiusa",
-        colore: "#7A8791",
-        giorni: null
-      };
+    const statoCalcolato = normalizzaTestoCodice(infra?.stato_calcolato || "").replace(/\s+/g, "_");
+
+    if (statoCiclo === "DUPLICATO") {
+      return { codice: "DUPLICATO", testo: "Duplicato", colore: "#7A5C9E", giorni: null };
     }
+    if (statoCiclo === "COMPLETATA") {
+      return { codice: "COMPLETATA", testo: "Completata", colore: "#B77900", giorni: null };
+    }
+    if (statoCiclo === "SOSTITUITA") {
+      return { codice: "SOSTITUITA", testo: "Sostituita", colore: "#7A8791", giorni: null };
+    }
+    if (["CESSATA", "ANNULLATA", "NON_APPLICABILE"].includes(statoCiclo)) {
+      return { codice: statoCiclo, testo: statoCiclo.replace(/_/g, " "), colore: "#B42318", giorni: null };
+    }
+    if (cicloStato === "CHIUSO" || ["ARCHIVIATO", "ARCHIVIATA", "SUPERATO", "SUPERATA"].includes(statoManuale)) {
+      return { codice: "CHIUSA", testo: "Chiusa", colore: "#7A8791", giorni: null };
+    }
+
     const statoDaData = statoScadenza(infra?.prossimo_intervento);
-    if (statoManuale === "SC" || statoManuale === "SCADUTA" || statoManuale === "SCADUTO" || statoDaData.codice === "SCADUTA") {
-      return {
-        ...statoDaData,
-        codice: "SCADUTA",
-        testo: "Scaduta",
-        colore: "#FF4D5E"
-      };
+    if (statoCalcolato === "SCADUTA" || statoManuale === "SC" || statoManuale === "SCADUTA" || statoManuale === "SCADUTO" || statoDaData.codice === "SCADUTA") {
+      return { ...statoDaData, codice: "SCADUTA", testo: "Scaduta", colore: "#FF4D5E" };
     }
-    if (statoManuale === "PS" || statoManuale === "IN_SCADENZA" || statoManuale === "PROSSIMA_SCADENZA" || statoDaData.codice === "30_GIORNI") {
-      return {
-        ...statoDaData,
-        codice: "30_GIORNI",
-        testo: "In scadenza",
-        colore: "#FF9F1C"
-      };
+    if (statoCalcolato === "30_GIORNI" || statoManuale === "PS" || statoManuale === "IN_SCADENZA" || statoManuale === "PROSSIMA_SCADENZA" || statoDaData.codice === "30_GIORNI") {
+      return { ...statoDaData, codice: "30_GIORNI", testo: "In scadenza", colore: "#FF9F1C" };
     }
-    if (statoManuale === "DA_VERIFICARE" || statoManuale === "DA VERIFICARE" || !infra?.prossimo_intervento) {
-      return {
-        codice: "DA_VERIFICARE",
-        testo: "Da verificare",
-        colore: "#9AA6B2",
-        giorni: null
-      };
+    if (statoCalcolato === "60_GIORNI") {
+      return { ...statoDaData, codice: "60_GIORNI", testo: "Entro 60 giorni", colore: "#A88316" };
     }
-    return {
-      ...statoDaData,
-      codice: "OK",
-      testo: "OK",
-      colore: "#2FD37D"
-    };
+    if (statoCalcolato === "DA_PIANIFICARE" || statoManuale === "DA_VERIFICARE" || statoManuale === "DA VERIFICARE" || !infra?.prossimo_intervento) {
+      return { codice: "DA_VERIFICARE", testo: "Da verificare", colore: "#9AA6B2", giorni: null };
+    }
+    return { ...statoDaData, codice: "OK", testo: "Programmata", colore: "#2FD37D" };
   }
+
   const infrastruttureConStato = useMemo(() => (Array.isArray(infrastrutture) ? infrastrutture : []).map((r) => ({
     ...normalizzaInfrastrutturaDaApi(r),
     _statoInfra: statoInfrastruttura(normalizzaInfrastrutturaDaApi(r))
@@ -6958,38 +6953,21 @@ ${messaggio}`);
   // 2) per attività mensili/trimestrali/semestrali/annuali: ultimo intervento negli ultimi 12 mesi;
   // 3) per attività biennali/triennali: finestra coerente con la periodicità, quindi rispettivamente 24/36 mesi;
   // 4) esclude lo storico vecchio e le scadenze già scadute, perché non devono sporcare la pagina operativa.
-  function mesiValiditaOperativaInfrastruttura(periodicita) {
-    const p = normalizzaTestoCodice(periodicita);
-    if (p.includes("QUINQUENNALE")) return 60;
-    if (p.includes("TRIENNALE") || p.includes("TRIENALE")) return 36;
-    if (p.includes("BIENNALE")) return 24;
-    if (p.includes("MENSILE")) return 3;
-
-    // Trimestrali, quadrimestrali, semestrali e annuali restano nella finestra operativa 12 mesi.
-    return 12;
-  }
   function infrastrutturaRilevanteOperativa(r) {
-    if (normalizzaTestoCodice(r?._ciclo_stato || "") === "CHIUSO") return false;
-    const ultimo = parseDataFMED(r?.ultimo_intervento);
-    const prossimo = parseDataFMED(r?.prossimo_intervento);
+    const statoCiclo = normalizzaTestoCodice(r?.stato_ciclo || "").replace(/\s+/g, "_");
+    const cicloStato = normalizzaTestoCodice(r?._ciclo_stato || "").replace(/\s+/g, "_");
 
-    // Senza ultimo intervento non entra nella vista default: resta gestibile tramite inserimento/correzione dato,
-    // ma non sporca la pagina operativa delle scadenze infrastrutturali.
-    if (!ultimo) return false;
-    const oggi = new Date();
-    oggi.setHours(0, 0, 0, 0);
-    ultimo.setHours(0, 0, 0, 0);
+    // I duplicati restano volutamente visibili per poterli verificare e bonificare.
+    if (statoCiclo === "DUPLICATO") return true;
 
-    // Esclude tutto ciò che risulta già scaduto: lo storico vecchio non deve comparire di default.
-    if (prossimo) {
-      prossimo.setHours(0, 0, 0, 0);
-      if (prossimo < oggi) return false;
-    }
-    const mesiValidita = mesiValiditaOperativaInfrastruttura(r?.periodicita);
-    const limite = new Date(oggi);
-    limite.setMonth(limite.getMonth() - mesiValidita);
-    return ultimo >= limite;
+    // Il Motore Cicli decide il perimetro: lo storico chiuso non entra nella vista
+    // operativa, mentre un ciclo corrente resta visibile anche se è già scaduto.
+    if (cicloStato === "CHIUSO") return false;
+    if (r?._ciclo_corrente === true || cicloStato === "ATTIVO") return true;
+
+    return statoCiclo === "ATTIVA" && Boolean(r?.prossimo_intervento || r?.periodicita);
   }
+
   // eslint-disable-next-line react-hooks/exhaustive-deps -- il predicato usa data corrente e campi dei record, senza stato React aggiuntivo.
   const infrastruttureOperative = useMemo(() => infrastruttureConStato.filter((r) => infrastrutturaRilevanteOperativa(r)), [infrastruttureConStato]);
   const listaInfraSedi = useMemo(() => deduplicaSediFmed(infrastruttureOperative.map((r) => r.sede), true), [infrastruttureOperative]);
@@ -7100,32 +7078,59 @@ ${messaggio}`);
   }
   function aggiornaFormInfra(campo, valore) {
     setFormInfra((prev) => {
-      const prossimo = {
-        ...prev,
-        [campo]: valore
-      };
+      const prossimo = { ...prev, [campo]: valore };
       if (campo === "sede") {
+        // Società e centro di costo sono derivati dalla sede dal backend.
         prossimo.centro_costo = "";
         prossimo.societa = "";
+      }
+      if (campo === "periodicita" || campo === "ultimo_intervento") {
+        const periodicita = String(campo === "periodicita" ? valore : prossimo.periodicita || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+        const ultimo = campo === "ultimo_intervento" ? valore : prossimo.ultimo_intervento;
+        if (periodicita === "UNA_TANTUM" || periodicita === "TANTUM") {
+          prossimo.prossimo_intervento = "";
+        } else if (ultimo && periodicita && periodicita !== "DA_DEFINIRE") {
+          prossimo.prossimo_intervento = calcolaProssimaScadenza(ultimo, periodicita, PERIODICITA_STANDARD) || "";
+        }
       }
       return prossimo;
     });
   }
   function payloadInfrastrutturaDaForm() {
-    const payload = {
-      ...formInfra
-    };
-    Object.keys(payload).forEach((k) => {
-      if (typeof payload[k] === "string") payload[k] = payload[k].trim();
-      if (payload[k] === "") payload[k] = null;
+    const payloadCompleto = { ...formInfra };
+    Object.keys(payloadCompleto).forEach((k) => {
+      if (typeof payloadCompleto[k] === "string") payloadCompleto[k] = payloadCompleto[k].trim();
+      if (payloadCompleto[k] === "") payloadCompleto[k] = null;
     });
-    if (payload.importo_annuo !== null && payload.importo_annuo !== undefined) {
-      const numero = Number(String(payload.importo_annuo).replace(",", "."));
-      payload.importo_annuo = Number.isFinite(numero) ? numero : null;
+    if (payloadCompleto.importo_annuo !== null && payloadCompleto.importo_annuo !== undefined) {
+      const numero = Number(String(payloadCompleto.importo_annuo).replace(",", "."));
+      payloadCompleto.importo_annuo = Number.isFinite(numero) ? numero : null;
     }
-    payload.centro_costo = normalizzaCentroCostoFmed(payload.centro_costo, payload.sede) || payload.sede;
+
+    // Facility source-of-truth: società e centro costo non vengono riscritti dal
+    // form. Il backend li deriva sempre dalla sede autorevole.
+    delete payloadCompleto.societa;
+    delete payloadCompleto.centro_costo;
+
+    if (!infraInModifica?.id) return payloadCompleto;
+
+    // Modifica semantica: i record storici possono contenere vecchi valori di
+    // catalogo. Inviamo soltanto ciò che l'utente ha realmente cambiato.
+    const originale = nuovoFormInfrastruttura(infraInModifica);
+    const confronta = (value) => String(value ?? "").trim();
+    const payload = {};
+    Object.entries(payloadCompleto).forEach(([campo, valore]) => {
+      if (campo === "codice") return;
+      let originaleVal = originale?.[campo] ?? null;
+      if (campo === "importo_annuo") {
+        const n = Number(String(originaleVal ?? "").replace(",", "."));
+        originaleVal = Number.isFinite(n) ? n : null;
+      }
+      if (confronta(valore) !== confronta(originaleVal)) payload[campo] = valore;
+    });
     return payload;
   }
+
   async function salvaInfrastruttura() {
     if (!formInfra.sede || !formInfra.categoria || !String(formInfra.descrizione || "").trim()) {
       setMessaggioInfra("Sede, categoria e descrizione sono obbligatorie.");
@@ -7135,6 +7140,11 @@ ${messaggio}`);
     setMessaggioInfra("");
     try {
       const payload = payloadInfrastrutturaDaForm();
+      if (infraInModifica?.id && Object.keys(payload).length === 0) {
+        setFormInfrastrutturaOpen(false);
+        setInfraInModifica(null);
+        return;
+      }
       const endpoint = infraInModifica?.id ? `/infrastrutture/${encodeURIComponent(infraInModifica.id)}` : "/infrastrutture";
       const method = infraInModifica?.id ? "PUT" : "POST";
       const rispostaSalvataggio = await chiamataApiAutenticataFmed(endpoint, {
