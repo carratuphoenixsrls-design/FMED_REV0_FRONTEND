@@ -2,11 +2,12 @@ name: Patch Sicurezza nuova sede
 on:
   push:
     branches: [rev0-sicurezza-nuova-sede]
+  pull_request:
+    branches: [main]
 permissions:
   contents: write
 jobs:
   patch:
-    if: ${{ !contains(github.event.head_commit.message, '[safety-site-ui]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +20,8 @@ jobs:
           from pathlib import Path
           p = Path('src/Sicurezza8108Page.jsx')
           text = p.read_text(encoding='utf-8')
-
+          if 'const [newSiteOpen' in text:
+              raise SystemExit('patch già presente')
           anchor_helper = '\nclass Sicurezza8108ErrorBoundary extends Component {'
           helper = r'''
 
@@ -33,7 +35,6 @@ function cartellaSicurezzaDaMaster(site) {
           if anchor_helper not in text:
               raise SystemExit('anchor ErrorBoundary non trovato')
           text = text.replace(anchor_helper, helper + anchor_helper, 1)
-
           old_state = '''  const [categoria, setCategoria] = useState("TUTTE");
   const [showHistory, setShowHistory] = useState(false);
 '''
@@ -48,7 +49,6 @@ function cartellaSicurezzaDaMaster(site) {
           if old_state not in text:
               raise SystemExit('anchor state non trovato')
           text = text.replace(old_state, new_state, 1)
-
           anchor_reset = '''  const resetFilters = () => {
     setSearch("");
     setSede("TUTTE");
@@ -61,9 +61,7 @@ function cartellaSicurezzaDaMaster(site) {
     setError("");
     try {
       const base = String(apiBaseUrl || "").replace(/\/$/, "");
-      const response = await fetch(`${base}/core/dizionari/amministrazione`, {
-        headers: fmedAuthHeaders({ Accept: "application/json" }),
-      });
+      const response = await fetch(`${base}/core/dizionari/amministrazione`, { headers: fmedAuthHeaders({ Accept: "application/json" }) });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(payload?.detail || "Master SEDI non disponibile");
       const dizionari = Array.isArray(payload?.dizionari) ? payload.dizionari : [];
@@ -124,7 +122,6 @@ function cartellaSicurezzaDaMaster(site) {
           if anchor_reset not in text:
               raise SystemExit('anchor reset non trovato')
           text = text.replace(anchor_reset, functions + anchor_reset, 1)
-
           old_header = '''        <header>
           <div><span className="p0-kicker">Mappa documentale</span><h2>Struttura SharePoint 81/08</h2><p>Le stesse sette categorie, organizzate per ogni sede.</p></div>
           {selectedSite && <a className="p0-btn p0-btn--safety" href={buildOpenUrl(selectedSite.codice)} target="_blank" rel="noreferrer">Apri {selectedSite.label}</a>}
@@ -172,6 +169,7 @@ function cartellaSicurezzaDaMaster(site) {
           git config user.name "FMED automation"
           git config user.email "actions@users.noreply.github.com"
           git rm .github/workflows/patch-sicurezza-nuova-sede.yml
+          git rm -f .github/safety-site-trigger.txt
           git add src/Sicurezza8108Page.jsx
           git commit -m "feat sicurezza 81/08: aggiunge nuova sede da Master SEDI [safety-site-ui]"
           git push origin HEAD:rev0-sicurezza-nuova-sede
