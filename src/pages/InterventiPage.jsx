@@ -72,7 +72,7 @@ export default function InterventiPage(props) {
                   <tr key={row.id_intervento || index}>
                     <td><button className="p0-table-link" onClick={() => apriSchedaDaCodice(row.codice_strumento || row.codicestrumento)}>{row.codice_strumento || row.codicestrumento}</button><small>{row.sede || "-"}</small></td>
                     <td><b>{normalizzaSocietaDitta(row.ditta_esecutrice || row.ditta)}</b><small>{row.tipologia || "-"}</small></td>
-                    <td><b>{row.attivita || "-"}</b>{row.stato_ciclo && <span className="p0-tag">{(!row.data_prossimo_intervento && String(row.periodicita || "").toUpperCase().includes("UNA TANTUM") ? "COMPLETATA" : row.stato_ciclo)}{row.periodicita ? ` · ${row.periodicita}` : ""}</span>}{row._eccezione_collaudo && <span className="p0-tag">Collaudo conservato</span>}{row._archivio_storico && <span className="p0-tag">Pre-2023</span>}</td>
+                    <td><b>{row.attivita || "-"}</b>{row.stato_ciclo && <span className="p0-tag">{(!row.data_prossimo_intervento && String(row.periodicita || "").toUpperCase().replace(/_/g, " ").includes("UNA TANTUM") ? "COMPLETATA" : row.stato_ciclo)}{row.periodicita ? ` · ${String(row.periodicita).replace(/_/g, " ")}` : ""}</span>}{row._eccezione_collaudo && <span className="p0-tag">Collaudo conservato</span>}{row._archivio_storico && <span className="p0-tag">Pre-2023</span>}</td>
                     <td><span>{formattaData(row.data_ultimo_intervento)}</span><small>Prossimo: {formattaData(row.data_prossimo_intervento)}</small></td>
                     <td><b>{formatCurrency(importoIntervento(row))}</b></td>
                     <td><BottoneJobReport intervento={row} /></td>
