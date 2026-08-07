@@ -1,0 +1,219 @@
+name: Patch Sicurezza storico e nomi
+on:
+  push:
+    branches: [rev0-sicurezza-storico-nomi]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: ${{ !contains(github.event.head_commit.message, '[safety-patched]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: rev0-sicurezza-storico-nomi
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Patch UI Sicurezza 81/08
+        shell: python
+        run: |
+          from pathlib import Path
+
+          page = Path('src/Sicurezza8108Page.jsx')
+          text = page.read_text(encoding='utf-8')
+
+          anchor = '''function formatSize(value) {
+            const bytes = Number(value || 0);
+            if (!Number.isFinite(bytes) || bytes <= 0) return "—";
+            const units = ["B", "KB", "MB", "GB"];
+            let current = bytes;
+            let idx = 0;
+            while (current >= 1024 && idx < units.length - 1) {
+              current /= 1024;
+              idx += 1;
+            }
+            return `${current >= 10 || idx === 0 ? current.toFixed(0) : current.toFixed(1)} ${units[idx]}`;
+          }
+          '''
+          insert = anchor + '''
+          const STATI_STORICI_8108 = new Set(["SOSTITUITA", "CESSATA", "ANNULLATA", "NON_APPLICABILE", "DUPLICATO"]);
+
+          function statoCicloDocumento(doc) {
+            const value = normalizzaTesto(doc?.stato_ciclo || "ATTIVA").replace(/\\s+/g, "_");
+            return value || "ATTIVA";
+          }
+
+          function nomeDocumentoPulito(doc) {
+            const originale = String(doc?.nome || "").trim();
+            if (!originale) return "Documento";
+            let value = originale.replace(/\\.[A-Za-z0-9]{1,8}$/, "");
+            value = value
+              .replace(/\\b(?:19|20)\\d{2}[-_.](?:0?[1-9]|1[0-2])[-_.](?:0?[1-9]|[12]\\d|3[01])\\b/gi, " ")
+              .replace(/\\b(?:0?[1-9]|[12]\\d|3[01])[-_.](?:0?[1-9]|1[0-2])[-_.](?:19|20)\\d{2}\\b/gi, " ")
+              .replace(/\\b(?:19|20)\\d{6}\\b/g, " ")
+              .replace(/\\b(?:GENNAIO|FEBBRAIO|MARZO|APRILE|MAGGIO|GIUGNO|LUGLIO|AGOSTO|SETTEMBRE|OTTOBRE|NOVEMBRE|DICEMBRE)[ _-]*\\d{2,4}\\b/gi, " ")
+              .replace(/\\bREV(?:ISIONE)?[ _-]*0*\\d+[A-Z]?\\b/gi, " ")
+              .replace(/\\bVERSIONE[ _-]*0*\\d+[A-Z]?\\b/gi, " ")
+              .replace(/^(?:DS\\d{1,3}|VER|DOC)[ _-]+/i, " ")
+              .replace(/\\bMARILAB[ _-]+(?:ZAMBRINI|CAFFARO|CENTER|FIUMICINO|GARBATELLA|GAR\\s*BATELLA|FUTURE[ _-]*LABS|SURGERY|POMEZIA|OSTIA)\\b/gi, " ")
+              .replace(/\\bMARILAB\\b/gi, " ")
+              .replace(/[_-]+/g, " ")
+              .replace(/\\s+/g, " ")
+              .trim()
+              .replace(/[ ._-]+$/g, "")
+              .replace(/\\bDOCUMENTO$/i, "")
+              .trim();
+            return (value || originale.replace(/\\.[A-Za-z0-9]{1,8}$/, "")).toUpperCase();
+          }
+          '''
+          if anchor not in text:
+              raise SystemExit('anchor formatSize non trovato')
+          text = text.replace(anchor, insert, 1)
+
+          text = text.replace('''  const [categoria, setCategoria] = useState("TUTTE");
+          ''', '''  const [categoria, setCategoria] = useState("TUTTE");
+            const [showHistory, setShowHistory] = useState(false);
+          ''', 1)
+
+          old_filter = '''  const documentiFiltrati = useMemo(() => {
+            const q = normalizzaTesto(search);
+            return documenti.filter((doc) => {
+              const haystack = normalizzaTesto(`${doc?.nome || ""} ${doc?.sede_label || ""} ${doc?.categoria_label || ""} ${doc?.percorso_relativo || ""}`);
+              return (
+                (sede === "TUTTE" || doc?.sede === sede) &&
+                (categoria === "TUTTE" || doc?.categoria === categoria) &&
+                (!q || haystack.includes(q))
+              );
+            });
+          }, [documenti, search, sede, categoria]);
+          '''
+          new_filter = '''  const documentNameBySourceId = useMemo(() => {
+            const map = new Map();
+            documenti.forEach((doc) => {
+              if (doc?.source_id) map.set(String(doc.source_id), nomeDocumentoPulito(doc));
+            });
+            return map;
+          }, [documenti]);
+
+            const currentDocumentCount = useMemo(
+              () => documenti.filter((doc) => !doc?.is_cartella && !STATI_STORICI_8108.has(statoCicloDocumento(doc))).length,
+              [documenti]
+            );
+            const historicalDocumentCount = useMemo(
+              () => documenti.filter((doc) => !doc?.is_cartella && STATI_STORICI_8108.has(statoCicloDocumento(doc))).length,
+              [documenti]
+            );
+
+            const documentiFiltrati = useMemo(() => {
+              const q = normalizzaTesto(search);
+              return documenti.filter((doc) => {
+                const statoCiclo = statoCicloDocumento(doc);
+                if (!showHistory && STATI_STORICI_8108.has(statoCiclo)) return false;
+                const nomePulito = nomeDocumentoPulito(doc);
+                const haystack = normalizzaTesto(`${nomePulito} ${doc?.nome || ""} ${doc?.sede_label || ""} ${doc?.categoria_label || ""} ${doc?.percorso_relativo || ""}`);
+                return (
+                  (sede === "TUTTE" || doc?.sede === sede) &&
+                  (categoria === "TUTTE" || doc?.categoria === categoria) &&
+                  (!q || haystack.includes(q))
+                );
+              });
+            }, [documenti, search, sede, categoria, showHistory]);
+          '''
+          if old_filter not in text:
+              raise SystemExit('blocco documentiFiltrati non trovato')
+          text = text.replace(old_filter, new_filter, 1)
+
+          old_header = '''<section className="p0-safety-documents">
+                <header><div><span className="p0-kicker">Indice FMED</span><h2>Documenti indicizzati</h2><p>{loading ? "Lettura archivio in corso…" : `${documentiFiltrati.length} elementi visibili.`}</p></div></header>
+          '''
+          new_header = '''<section className="p0-safety-documents">
+                <header>
+                  <div><span className="p0-kicker">Indice FMED</span><h2>Documenti indicizzati</h2><p>{loading ? "Lettura archivio in corso…" : `${documentiFiltrati.length} elementi visibili · ${currentDocumentCount} vigenti.`}</p></div>
+                  <div className="p0-safety-history-actions">
+                    <span>{historicalDocumentCount} storici</span>
+                    <button type="button" className="p0-btn" onClick={() => setShowHistory((value) => !value)}>
+                      {showHistory ? "NASCONDI STORICO" : `MOSTRA STORICO · ${historicalDocumentCount}`}
+                    </button>
+                  </div>
+                </header>
+          '''
+          if old_header not in text:
+              raise SystemExit('header documenti non trovato')
+          text = text.replace(old_header, new_header, 1)
+
+          old_rows = '''          <div className="p0-safety-doc-list">{documentiFiltrati.map((doc, index) => (
+                    <article className="p0-safety-doc" key={doc.id || `${doc.nome}-${index}`}>
+                      <div className="p0-safety-doc__main">
+                        <span>{doc.is_cartella ? "CARTELLA" : doc.estensione || "FILE"}</span>
+                        <div><strong title={doc.nome}>{doc.nome}</strong><small title={doc.percorso_relativo}>{doc.percorso_relativo || "Percorso non disponibile"}</small></div>
+                      </div>
+                      <dl>
+                        <div><dt>Sede</dt><dd>{doc.sede_label || "Non classificato"}</dd></div>
+                        <div><dt>Categoria</dt><dd>{doc.categoria_label || "Non classificata"}</dd></div>
+                        <div><dt>Modificato</dt><dd>{formatDate(doc.data_modifica)}</dd></div>
+                        <div><dt>Dimensione</dt><dd>{doc.is_cartella ? `${doc.numero_elementi ?? "—"} elementi` : formatSize(doc.dimensione)}</dd></div>
+                      </dl>
+                      <div className="p0-safety-doc__actions">
+                        {doc.web_url ? <a className="p0-btn p0-btn--safety" href={doc.web_url} target="_blank" rel="noreferrer">Apri</a> : <span>—</span>}
+                        <button type="button" className="p0-btn" onClick={() => eliminaDocumentoIndice(doc)} disabled={deletingId === doc.id}>{deletingId === doc.id ? "Rimozione…" : "Rimuovi dall’indice"}</button>
+                      </div>
+                    </article>
+                  ))}</div>
+          '''
+          new_rows = '''          <div className="p0-safety-doc-list">{documentiFiltrati.map((doc, index) => {
+                    const statoCiclo = statoCicloDocumento(doc);
+                    const storico = STATI_STORICI_8108.has(statoCiclo);
+                    const sostituto = doc?.sostituito_da ? documentNameBySourceId.get(String(doc.sostituito_da)) : "";
+                    return (
+                    <article className={`p0-safety-doc${storico ? " is-superseded" : ""}`} key={doc.id || `${doc.nome}-${index}`}>
+                      <div className="p0-safety-doc__main">
+                        <span>{doc.is_cartella ? "CARTELLA" : doc.estensione || "FILE"}</span>
+                        <div>
+                          <strong title={`Nome originale: ${doc.nome || ""}`}>{nomeDocumentoPulito(doc)}</strong>
+                          <small title={doc.percorso_relativo}>{doc.percorso_relativo || "Percorso non disponibile"}</small>
+                          {statoCiclo === "SOSTITUITA" && <small className="p0-safety-doc__replacement">Sostituito da: {sostituto || doc.sostituito_da || "documento successivo"}</small>}
+                        </div>
+                      </div>
+                      <dl>
+                        <div><dt>Sede</dt><dd>{doc.sede_label || "Non classificato"}</dd></div>
+                        <div><dt>Categoria</dt><dd>{doc.categoria_label || "Non classificata"}</dd></div>
+                        <div><dt>Stato</dt><dd><span className={`p0-safety-state ${storico ? "is-history" : "is-current"}`}>{statoCiclo === "ATTIVA" ? "VIGENTE" : statoCiclo.replaceAll("_", " ")}</span></dd></div>
+                        <div><dt>Modificato</dt><dd>{formatDate(doc.data_modifica)}</dd></div>
+                        <div><dt>Dimensione</dt><dd>{doc.is_cartella ? `${doc.numero_elementi ?? "—"} elementi` : formatSize(doc.dimensione)}</dd></div>
+                      </dl>
+                      <div className="p0-safety-doc__actions">
+                        {doc.web_url ? <a className="p0-btn p0-btn--safety" href={doc.web_url} target="_blank" rel="noreferrer">Apri</a> : <span>—</span>}
+                        <button type="button" className="p0-btn" onClick={() => eliminaDocumentoIndice(doc)} disabled={deletingId === doc.id}>{deletingId === doc.id ? "Rimozione…" : "Rimuovi dall’indice"}</button>
+                      </div>
+                    </article>
+                    );
+                  })}</div>
+          '''
+          if old_rows not in text:
+              raise SystemExit('righe documenti non trovate')
+          text = text.replace(old_rows, new_rows, 1)
+          page.write_text(text, encoding='utf-8')
+
+          css = Path('src/FmedUnifiedVisualSystem.css')
+          c = css.read_text(encoding='utf-8')
+          anchor_css = '.p0-safety-doc__actions .p0-btn{min-height:32px;padding:0 10px;border-radius:9px;font-size:8px}\n'
+          add_css = anchor_css + '''.p0-safety-history-actions{display:flex;align-items:center;gap:8px}\n.p0-safety-history-actions>span{padding:5px 8px;border-radius:999px;background:#fff8dc;color:#8a6400;font-size:8px;font-weight:800;text-transform:uppercase}\n.p0-safety-history-actions .p0-btn{min-height:32px;font-size:8px}\n.p0-safety-doc dl{grid-template-columns:repeat(5,minmax(0,1fr))}\n.p0-safety-doc.is-superseded{background:#f7f8fa;opacity:.78}\n.p0-safety-doc.is-superseded:hover{background:#f2f4f7}\n.p0-safety-doc__replacement{color:#707987!important;font-weight:700}\n.p0-safety-state{display:inline-flex;padding:3px 6px;border-radius:999px;font-size:7px;font-weight:850;letter-spacing:.03em}\n.p0-safety-state.is-current{background:#e6f6ec;color:#17653b}\n.p0-safety-state.is-history{background:#eceff3;color:#626c79}\n'''
+          if anchor_css not in c:
+              raise SystemExit('anchor CSS non trovato')
+          c = c.replace(anchor_css, add_css, 1)
+          css.write_text(c, encoding='utf-8')
+      - run: npm ci
+      - run: npm run build
+      - name: Commit patch e rimuovi workflow temporaneo
+        run: |
+          git config user.name "FMED automation"
+          git config user.email "actions@users.noreply.github.com"
+          git rm .github/workflows/patch-sicurezza-storico-nomi.yml
+          git add src/Sicurezza8108Page.jsx src/FmedUnifiedVisualSystem.css
+          git commit -m "feat sicurezza 81/08: documenti vigenti, storico e nomi puliti [safety-patched]"
+          git push origin HEAD:rev0-sicurezza-storico-nomi
