@@ -1,5 +1,6 @@
 import InterventiControls from "../components/interventi/InterventiControls";
 import FmedIcon from "../components/ui/FmedIcon.jsx";
+import { PERIODICITA_STANDARD } from "../fmedStandard.js";
 
 export default function InterventiPage(props) {
   const {
@@ -26,19 +27,42 @@ export default function InterventiPage(props) {
     FMED_RENDER_BATCH_INTERVENTI
   } = props || {};
 
+  const normalizzaPeriodicitaIntervento = (value) => {
+    const raw = String(value || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+    const aliases = {
+      TANTUM: "UNA_TANTUM",
+      UNA_TANTUM: "UNA_TANTUM"
+    };
+    const codice = aliases[raw] || raw;
+    return PERIODICITA_STANDARD.some((item) => item.codice === codice) ? codice : "";
+  };
+
+  const isCollaudoIntervento = (row) => String(row?.attivita || "").toUpperCase().includes("COLLAUDO");
+
+  const periodicitaCicloIntervento = (row) => {
+    if (isCollaudoIntervento(row)) return "UNA_TANTUM";
+    return normalizzaPeriodicitaIntervento(row?.periodicita);
+  };
+
   const badgeCicloIntervento = (row) => {
-    const attivita = String(row?.attivita || "").toUpperCase();
-    const periodicita = String(row?.periodicita || "").toUpperCase().replace(/_/g, " ").trim();
     const statoBase = String(row?.stato_ciclo || "").toUpperCase();
-    const isCollaudo = attivita.includes("COLLAUDO");
-    const isUnaTantumEsplicita = periodicita.includes("UNA TANTUM");
-    const chiudiUnaTantum = !row?.data_prossimo_intervento && statoBase === "ATTIVA" && (isCollaudo || isUnaTantumEsplicita);
-    const stato = chiudiUnaTantum ? "COMPLETATA" : row?.stato_ciclo;
-    const periodicitaStandard = ["MENSILE", "BIMESTRALE", "TRIMESTRALE", "QUADRIMESTRALE", "SEMESTRALE", "ANNUALE", "BIENNALE", "TRIENNALE", "QUADRIENNALE", "QUINQUENNALE"];
-    const periodicitaVisibile = (isCollaudo || isUnaTantumEsplicita)
-      ? "UNA TANTUM"
-      : periodicitaStandard.find((voce) => periodicita.includes(voce)) || "";
+    const periodicita = periodicitaCicloIntervento(row);
+
+    // Regola definitiva REV0:
+    // - periodicità e stato sono indipendenti;
+    // - UNA_TANTUM non chiude automaticamente un intervento;
+    // - i collaudi sono eventi una tantum e, se il motore li espone ancora ATTIVA,
+    //   vengono presentati come COMPLETATA;
+    // - stati storici/terminali (SOSTITUITA, CESSATA, ANNULLATA...) restano invariati.
+    const stato = isCollaudoIntervento(row) && statoBase === "ATTIVA" ? "COMPLETATA" : statoBase;
+    const periodicitaVisibile = periodicita ? periodicita.replace(/_/g, " ") : "";
     return [stato, periodicitaVisibile].filter(Boolean).join(" · ");
+  };
+
+  const prossimoInterventoVisibile = (row) => {
+    // UNA TANTUM significa nessuna ricorrenza successiva, non durata di un giorno.
+    if (periodicitaCicloIntervento(row) === "UNA_TANTUM") return "-";
+    return formattaData(row?.data_prossimo_intervento);
   };
 
   const metrics = [
@@ -88,7 +112,7 @@ export default function InterventiPage(props) {
                     <td><button className="p0-table-link" onClick={() => apriSchedaDaCodice(row.codice_strumento || row.codicestrumento)}>{row.codice_strumento || row.codicestrumento}</button><small>{row.sede || "-"}</small></td>
                     <td><b>{normalizzaSocietaDitta(row.ditta_esecutrice || row.ditta)}</b><small>{row.tipologia || "-"}</small></td>
                     <td><b>{row.attivita || "-"}</b>{row.stato_ciclo && <span className="p0-tag">{badgeCicloIntervento(row)}</span>}{row._eccezione_collaudo && <span className="p0-tag">Collaudo conservato</span>}{row._archivio_storico && <span className="p0-tag">Pre-2023</span>}</td>
-                    <td><span>{formattaData(row.data_ultimo_intervento)}</span><small>Prossimo: {formattaData(row.data_prossimo_intervento)}</small></td>
+                    <td><span>{formattaData(row.data_ultimo_intervento)}</span><small>Prossimo: {prossimoInterventoVisibile(row)}</small></td>
                     <td><b>{formatCurrency(importoIntervento(row))}</b></td>
                     <td><BottoneJobReport intervento={row} /></td>
                     <td><div className="p0-row-actions"><button onClick={() => apriModificaIntervento(row)} title="Modifica"><FmedIcon name="edit" /></button><button className="is-danger" onClick={() => eliminaIntervento(row)} title="Elimina"><FmedIcon name="trash" /></button></div></td>
