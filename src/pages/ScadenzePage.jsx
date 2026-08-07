@@ -8,8 +8,6 @@ export default function ScadenzePage(props) {
     scadenzeSelezionateVisualizzate = [],
     scadenzeElencoAperto,
     setScadenzeElencoAperto = () => {},
-    scadenzeScadute = [],
-    scadenzeImminenti = [],
     scadenzeRenderizzate = [],
     chiaveScadenzaExport = (row) => String(row?.id || row?.codice_strumento || row?.codicestrumento || ''),
     scadenzeSelezionateExport = [],
@@ -22,13 +20,18 @@ export default function ScadenzePage(props) {
     setScadenzeRenderLimit = () => {},
     FMED_RENDER_BATCH_SCADENZE
   } = props || {};
-  const daPianificare = scadenzeConStatoBase.filter((row) => row?._statoScadenza?.codice === "DA_PIANIFICARE");
+
+  // I KPI devono seguire esattamente il perimetro filtrato visibile.
+  const scadenzeScaduteNelPerimetro = scadenzeVisualizzate.filter((row) => row?._statoScadenza?.codice === "SCADUTA");
+  const scadenzeImminentiNelPerimetro = scadenzeVisualizzate.filter((row) => row?._statoScadenza?.codice === "30_GIORNI");
+  const daPianificare = scadenzeVisualizzate.filter((row) => row?._statoScadenza?.codice === "DA_PIANIFICARE");
+
   const moduleLabel = (value) => ({ ASSET: "Asset", INFRASTRUTTURE: "Infrastrutture", SICUREZZA_81_08: "Sicurezza 81/08" })[String(value || "").toUpperCase()] || String(value || "Altro").replaceAll("_", " ");
   const isCollaudo = (row) => /COLLAUDO/i.test([row?.famiglia_codice, row?.famiglia_label, row?.attivita, row?.attivita_originale].filter(Boolean).join(" "));
   const metrics = [
     ["Nel perimetro", scadenzeVisualizzate.length, "calendar"],
-    ["Scadute", scadenzeScadute.length, "alert"],
-    ["Entro 30 giorni", scadenzeImminenti.length, "clock"],
+    ["Scadute", scadenzeScaduteNelPerimetro.length, "alert"],
+    ["Entro 30 giorni", scadenzeImminentiNelPerimetro.length, "clock"],
     ["Da pianificare", daPianificare.length, "plus"],
     ["Selezionate", scadenzeSelezionateVisualizzate.length, "check"]
   ];
@@ -82,10 +85,14 @@ export default function ScadenzePage(props) {
         row.branca ||
         "";
 
+      const statoOperativo = row?._statoScadenza || statoScadenza?.(
+        row?._dataScadenza || row?.data_prossimo_intervento || row?.prossima_scadenza || row?.data_scadenza
+      );
       const stato =
+        statoOperativo?.testo ||
+        statoOperativo?.codice ||
         row.stato_scadenza ||
         row.stato ||
-        row.priorita ||
         "";
 
       return [
@@ -96,8 +103,8 @@ export default function ScadenzePage(props) {
         row.tipologia || "",
         row.attivita || "",
         row.ditta_esecutrice || row.ditta || "",
-        row.data_ultimo_intervento || "",
-        row.data_prossimo_intervento || "",
+        row._dataUltimoIntervento || row.data_ultimo_intervento || "",
+        row._dataScadenza || row.data_prossimo_intervento || row.prossima_scadenza || row.data_scadenza || "",
         stato
       ].map(cella).join(";");
     });
@@ -134,7 +141,7 @@ export default function ScadenzePage(props) {
           <span className="p0-operations__icon"><FmedIcon name="calendar" /></span>
           <div><span>Controllo temporale</span><h1>Scadenze</h1><p>Un’unica agenda per capire cosa è urgente, cosa arriva e cosa deve essere pianificato.</p></div>
         </div>
-        <div className="p0-operations__metric"><strong>{scadenzeScadute.length}</strong><span>scadenze da recuperare</span></div>
+        <div className="p0-operations__metric"><strong>{scadenzeScaduteNelPerimetro.length}</strong><span>scadenze da recuperare</span></div>
       </header>
 
       <ScadenzeControls {...props} />
@@ -200,7 +207,7 @@ export default function ScadenzePage(props) {
                       <td><b>{row.attivita || "-"}</b><small>{normalizzaSocietaDitta(row.ditta_esecutrice || row.ditta || "")}</small>{isCollaudo(row) && <span className="p0-tag">Storico protetto</span>}</td>
                       <td><span>{formattaData(row._dataUltimoIntervento || row.data_ultimo_intervento)}</span><small>Prossima: {formattaData(row._dataScadenza || row.data_prossimo_intervento || row.prossima_scadenza || row.data_scadenza)}</small></td>
                       <td><span className={`p0-state p0-state--${String(state.codice || "").toLowerCase()}`}><i style={{ background: state.colore }} />{state.testo}</span><small>{state.giorni == null ? "" : `${state.giorni} giorni`}</small></td>
-                      <td onClick={(e) => e.stopPropagation()}>{["SCADUTA", "DA_PIANIFICARE"].includes(state.codice) && typeof chiudiScadenzaSingolaComeSostituita === "function" ? <button className="p0-btn p0-btn--small" onClick={() => chiudiScadenzaSingolaComeSostituita(row)}>{state.codice === "DA_PIANIFICARE" ? "Non applicabile" : "Archivia scadenza"}</button> : "—"}</td>
+                      <td onClick={(e) => e.stopPropagation()}>{state.codice === "DA_PIANIFICARE" && typeof chiudiScadenzaSingolaComeSostituita === "function" ? <button className="p0-btn p0-btn--small" onClick={() => chiudiScadenzaSingolaComeSostituita(row)}>Non applicabile</button> : "—"}</td>
                     </tr>
                   );
                 })}
