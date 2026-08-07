@@ -1,0 +1,33 @@
+.p0-tag--cycle {
+  border: 1px solid transparent;
+}
+
+.p0-tag--cycle.is-active {
+  border-color: #b9dfc5;
+  background: #e8f6ed;
+  color: #25663b;
+}
+
+.p0-tag--cycle.is-completed {
+  border-color: #ead58c;
+  background: #fff4cf;
+  color: #856300;
+}
+
+.p0-tag--cycle.is-replaced {
+  border-color: #d5dce5;
+  background: #eef1f5;
+  color: #5f6d7e;
+}
+
+.p0-tag--cycle.is-stopped {
+  border-color: #efbcc8;
+  background: #fde9ed;
+  color: #a52a46;
+}
+
+.p0-tag--cycle.is-neutral {
+  border-color: #cbd8e8;
+  background: #f4f7fb;
+  color: #53677f;
+}
