@@ -1,5 +1,7 @@
 name: rev0-infra-reset-visible
 on:
+  push:
+    branches: [rev0-infrastrutture-reset-visible]
   pull_request:
     branches: [main]
 # trigger collaudo finale
@@ -11,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: rev0-infrastrutture-reset-visible
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -62,4 +64,4 @@ jobs:
           git commit -m "fix infrastrutture: azzera filtri sempre visibile" || true
           git rm .github/workflows/rev0-infra-reset-visible.yml
           git commit -m "chore: rimuove collaudo temporaneo" || true
-          git push origin HEAD:${{ github.head_ref }}
+          git push origin HEAD:rev0-infrastrutture-reset-visible
