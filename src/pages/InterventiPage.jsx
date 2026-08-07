@@ -38,6 +38,7 @@ export default function InterventiPage(props) {
   };
 
   const isCollaudoIntervento = (row) => String(row?.attivita || "").toUpperCase().includes("COLLAUDO");
+  const isStraordinariaIntervento = (row) => String(row?.attivita || "").toUpperCase().includes("MANUTENZIONE STRAORDINARIA");
 
   const periodicitaCicloIntervento = (row) => {
     if (isCollaudoIntervento(row)) return "UNA_TANTUM";
@@ -47,6 +48,7 @@ export default function InterventiPage(props) {
   const statoCicloIntervento = (row) => {
     const statoBase = String(row?.stato_ciclo || "").toUpperCase();
     if (isCollaudoIntervento(row) && statoBase === "ATTIVA") return "COMPLETATA";
+    if (isStraordinariaIntervento(row) && !row?.data_prossimo_intervento && statoBase === "ATTIVA") return "COMPLETATA";
     return statoBase;
   };
 
@@ -69,12 +71,8 @@ export default function InterventiPage(props) {
   const prossimoInterventoVisibile = (row) => {
     const periodicita = periodicitaCicloIntervento(row);
 
-    // UNA TANTUM significa nessuna ricorrenza successiva, non durata di un giorno.
     if (periodicita === "UNA_TANTUM") return "-";
 
-    // Per periodicità canoniche ricorrenti la prossima data deriva sempre
-    // dall'ultimo intervento + periodicità, così i vecchi dati incoerenti
-    // non vengono propagati nella vista operativa.
     if (periodicita && periodicita !== "DA_DEFINIRE") {
       const calcolata = calcolaProssimaScadenza(
         row?.data_ultimo_intervento,
@@ -84,7 +82,6 @@ export default function InterventiPage(props) {
       if (calcolata) return formattaData(calcolata);
     }
 
-    // Se il dato storico non ha una periodicità canonica, non inventiamo nulla.
     return formattaData(row?.data_prossimo_intervento);
   };
 
@@ -134,7 +131,17 @@ export default function InterventiPage(props) {
                   <tr key={row.id_intervento || index}>
                     <td><button className="p0-table-link" onClick={() => apriSchedaDaCodice(row.codice_strumento || row.codicestrumento)}>{row.codice_strumento || row.codicestrumento}</button><small>{row.sede || "-"}</small></td>
                     <td><b>{normalizzaSocietaDitta(row.ditta_esecutrice || row.ditta)}</b><small>{row.tipologia || "-"}</small></td>
-                    <td><b>{row.attivita || "-"}</b>{row.stato_ciclo && <span className="p0-tag" style={stileStatoCicloIntervento(row)}>{badgeCicloIntervento(row)}</span>}{row._eccezione_collaudo && <span className="p0-tag">Collaudo conservato</span>}{row._archivio_storico && <span className="p0-tag">Pre-2023</span>}</td>
+                    <td>
+                      <b style={{ display: "block" }}>{row.attivita || "-"}</b>
+                      {row.stato_ciclo && (
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "3px", marginTop: "7px" }}>
+                          <small style={{ fontSize: "9px", lineHeight: 1, letterSpacing: ".08em", fontWeight: 700, opacity: .58 }}>STATO</small>
+                          <span className="p0-tag" style={stileStatoCicloIntervento(row)}>{badgeCicloIntervento(row)}</span>
+                        </div>
+                      )}
+                      {row._eccezione_collaudo && <span className="p0-tag" style={{ marginTop: "5px" }}>Collaudo conservato</span>}
+                      {row._archivio_storico && <span className="p0-tag" style={{ marginTop: "5px" }}>Pre-2023</span>}
+                    </td>
                     <td><span>{formattaData(row.data_ultimo_intervento)}</span><small>Prossimo: {prossimoInterventoVisibile(row)}</small></td>
                     <td><b>{formatCurrency(importoIntervento(row))}</b></td>
                     <td><BottoneJobReport intervento={row} /></td>
