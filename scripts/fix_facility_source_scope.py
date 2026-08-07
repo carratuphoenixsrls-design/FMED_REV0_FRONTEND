@@ -11,6 +11,18 @@ def replace_all_exact(old, new, expected, label):
         raise SystemExit(f'{label}: attese {expected} occorrenze, trovate {count}')
     text = text.replace(old, new)
 
+
+def replace_after(marker, old, new, label):
+    global text
+    pos = text.find(marker)
+    if pos < 0:
+        raise SystemExit(f'{label}: marker non trovato')
+    idx = text.find(old, pos)
+    if idx < 0:
+        raise SystemExit(f'{label}: testo non trovato dopo marker')
+    text = text[:idx] + new + text[idx + len(old):]
+
+
 # La fonte Asset deve restare editabile: rimuove il blocco solo dai form Asset.
 asset_fields = [
     ('Tipologia', 'tipologia', 'listaTipologie'),
@@ -55,10 +67,10 @@ replace_all_exact(
     1,
     'resolver branca corrente'
 )
-replace_all_exact(
+replace_after(
+    'const contestoCespiteCorrenteRecord',
     '  }, [cespitiByCodice, getBrancaAsset]);',
     '  }, [cespitiByCodice]);',
-    1,
     'dipendenze resolver asset'
 )
 
