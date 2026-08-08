@@ -58,13 +58,13 @@ export default function ScadenzeControls(props) {
             <h2>Concentrati su ciò che richiede attenzione</h2>
           </div>
           <div className="p0-command__facts">
-            <span><b>{scadenzeVisualizzate.length}</b> visibili</span>
-            <span><b>{scadenzeSelezionateVisualizzate.length}</b> selezionate</span>
+            <span><b>{scadenzeVisualizzate.length}</b> cicli visibili</span>
+            <span><b>{scadenzeSelezionateVisualizzate.length}</b> selezionati</span>
           </div>
         </div>
         <div className="p0-deadline-quick">
           <SelectField label="Priorità temporale" value={filtroScadenze} onChange={update(setFiltroScadenze)}>
-            <option value="TUTTE">Tutte le scadenze</option><option value="SCADUTA">Scadute</option>
+            <option value="TUTTE">Tutti i cicli monitorati</option><option value="SCADUTA">Scadute</option>
             <option value="30_GIORNI">Entro 30 giorni</option><option value="60_GIORNI">Da 31 a 60 giorni</option>
             <option value="REGOLARE">Future / regolari</option><option value="DA_PIANIFICARE">Da pianificare</option>
             <option value="NON_DISPONIBILE">Data non disponibile</option>
@@ -83,7 +83,7 @@ export default function ScadenzeControls(props) {
       <details className="p0-advanced" open>
         <summary>
           <span><b>Affina agenda</b><small>Elemento, sede, attività, responsabile e intervallo</small></span>
-          <span className="p0-advanced__summary">{scadenzeVisualizzate.length} risultati</span>
+          <span className="p0-advanced__summary">{scadenzeVisualizzate.length} cicli</span>
         </summary>
         <div className="p0-filter-grid">
           <SelectField label="Elemento" value={filtroScadenzeCodice} onChange={update(setFiltroScadenzeCodice)}>
@@ -113,7 +113,7 @@ export default function ScadenzeControls(props) {
 
       <div className="p0-command__actions">
         <button className="p0-btn p0-btn--deadline" type="button" onClick={() => setScadenzeElencoAperto((v) => !v)}>
-          {scadenzeElencoAperto ? "Chiudi agenda" : `Apri agenda · ${scadenzeVisualizzate.length}`}
+          {scadenzeElencoAperto ? "Chiudi agenda" : `Apri agenda · ${scadenzeVisualizzate.length} cicli`}
         </button>
         <button className="p0-btn" type="button" onClick={selezionaTutteScadenzeVisualizzate}>Seleziona visibili</button>
         <button className="p0-btn" type="button" onClick={deselezionaTutteScadenze}>Deseleziona</button>
