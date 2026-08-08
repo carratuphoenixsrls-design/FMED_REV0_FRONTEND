@@ -173,6 +173,14 @@ export default function DashboardPage({
     { label: "Sicurezza 81/08", action: () => setPagina("Sicurezza 81/08"), module: "Sicurezza" },
   ];
 
+  const internalScrollStyle = {
+    maxHeight: "34vh",
+    overflowY: "auto",
+    overflowX: "hidden",
+    overscrollBehavior: "contain",
+    scrollbarWidth: "thin",
+  };
+
   return (
     <div className="fmed-dashboard-page fmed-dashboard-dashboard fmed-operational-dashboard" data-fmed-dashboard="REV0">
       <header className="fmed-dashboard-header fmed-operational-header">
@@ -277,7 +285,7 @@ export default function DashboardPage({
             <div><h3>Priorità</h3><p>Scadute e prossime scadenze entro 30 giorni</p></div>
             <button type="button" onClick={() => navigateDeadline("TUTTE")}>Apri tutte</button>
           </div>
-          <div className="fmed-dashboard-priority-list">
+          <div className="fmed-dashboard-priority-list" style={internalScrollStyle}>
             {prioritaScadenze.slice(0, 7).map((row, index) => {
               const code = deadlineCode(row);
               return (
@@ -304,7 +312,7 @@ export default function DashboardPage({
             <div><h3>Attività aperte</h3><p>Solo processi che richiedono ancora lavoro</p></div>
             <button type="button" onClick={() => setPagina("Processi")}>Gestisci</button>
           </div>
-          <div className="fmed-dashboard-priority-list">
+          <div className="fmed-dashboard-priority-list" style={internalScrollStyle}>
             {processiOperativi.slice(0, 7).map((row) => (
               <button type="button" key={`process-${row.id}`} onClick={() => setPagina("Processi")}>
                 <span className={`fmed-dashboard-state-dot ${row.in_ritardo ? "danger" : "warning"}`} />
