@@ -20,17 +20,8 @@ function humanize(value) {
     .replace(/(^|\s)\S/g, (letter) => letter.toUpperCase());
 }
 
-function categoryIsFurniture(row) {
-  const raw = String(row?.categoria || row?.Categoria || row?.CATEGORIA || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .trim()
-    .toUpperCase();
-  return raw === "A" || raw === "S" || raw.includes("ARREDO");
-}
-
 function deadlineCode(row) {
-  return String(row?._statoScadenza?.codice || row?.stato_scadenza || row?.stato || "").toUpperCase();
+  return String(row?._statoScadenza?.codice || row?.stato_operativo || row?.stato_scadenza || row?.stato || "").toUpperCase();
 }
 
 function deadlineDate(row) {
@@ -43,6 +34,10 @@ function deadlineTitle(row) {
 
 function deadlineReference(row) {
   return row?.codice_strumento || row?.codicestrumento || row?.entita_chiave || row?.codice || "-";
+}
+
+function metricValue(value, ready) {
+  return ready ? formatInteger(value) : "…";
 }
 
 function KpiCard({ label, value, detail, tone, icon, onClick }) {
@@ -65,27 +60,50 @@ export default function DashboardPage({
   setPagina,
   setImpostazioniTab,
   avviaProcessoGuidatoFmed,
-  cespiti = [],
-  statoCespite = () => "Attivo",
-  scadenzeConStatoBase = [],
 }) {
+  const [summary, setSummary] = useState(null);
   const [processRows, setProcessRows] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [summaryLoading, setSummaryLoading] = useState(true);
+  const [processLoading, setProcessLoading] = useState(true);
+  const [summaryError, setSummaryError] = useState("");
+  const [processError, setProcessError] = useState("");
 
-  const loadProcesses = useCallback(async () => {
-    setLoading(true);
-    setError("");
+  const loadSummary = useCallback(async (force = false) => {
+    setSummaryLoading(true);
+    setSummaryError("");
     try {
-      const data = await fmedFetchJson(
-        "/process-engine/riepilogo?limit=300&include_storico=false",
-        {
-          apiBaseUrl,
-          headers: fmedAuthHeaders(),
-          timeoutMs: 90000,
-          retries: 1,
-        }
-      );
+      const endpoint = force
+        ? `/dashboard-operativa?force=true&_=${Date.now()}`
+        : "/dashboard-operativa";
+      const data = await fmedFetchJson(endpoint, {
+        apiBaseUrl,
+        headers: fmedAuthHeaders(),
+        timeoutMs: 90000,
+        retries: 1,
+      });
+      if (!data || data?.status !== "ok") {
+        throw new Error("Riepilogo operativo non disponibile");
+      }
+      setSummary(data);
+    } catch (requestError) {
+      setSummary(null);
+      setSummaryError(requestError?.message || "Riepilogo operativo non raggiungibile");
+    } finally {
+      setSummaryLoading(false);
+    }
+  }, [apiBaseUrl]);
+
+  const loadProcesses = useCallback(async (force = false) => {
+    setProcessLoading(true);
+    setProcessError("");
+    try {
+      const endpoint = `/process-engine/riepilogo?limit=300&include_storico=false${force ? `&_=${Date.now()}` : ""}`;
+      const data = await fmedFetchJson(endpoint, {
+        apiBaseUrl,
+        headers: fmedAuthHeaders(),
+        timeoutMs: 90000,
+        retries: 1,
+      });
       const rows = Array.isArray(data?.processi) ? data.processi : [];
       setProcessRows(rows.map((row) => ({
         ...row,
@@ -99,15 +117,19 @@ export default function DashboardPage({
       })));
     } catch (requestError) {
       setProcessRows([]);
-      setError(requestError?.message || "Processi non raggiungibili");
+      setProcessError(requestError?.message || "Processi non raggiungibili");
     } finally {
-      setLoading(false);
+      setProcessLoading(false);
     }
   }, [apiBaseUrl]);
 
+  const refreshDashboard = useCallback(async (force = false) => {
+    await Promise.allSettled([loadSummary(force), loadProcesses(force)]);
+  }, [loadSummary, loadProcesses]);
+
   useEffect(() => {
-    loadProcesses();
-  }, [loadProcesses]);
+    refreshDashboard(false);
+  }, [refreshDashboard]);
 
   const processiOperativi = useMemo(
     () => processRows.filter((row) => !["COMPLETATO", "ANNULLATO", "ERRORE"].includes(String(row?.stato || "").toUpperCase())),
@@ -124,40 +146,20 @@ export default function DashboardPage({
     [processiOperativi]
   );
 
-  const scadenzeScadute = useMemo(
-    () => scadenzeConStatoBase.filter((row) => deadlineCode(row) === "SCADUTA"),
-    [scadenzeConStatoBase]
-  );
-
-  const scadenzeEntro30 = useMemo(
-    () => scadenzeConStatoBase.filter((row) => deadlineCode(row) === "30_GIORNI"),
-    [scadenzeConStatoBase]
-  );
-
-  const scadenzeDaPianificare = useMemo(
-    () => scadenzeConStatoBase.filter((row) => deadlineCode(row) === "DA_PIANIFICARE"),
-    [scadenzeConStatoBase]
-  );
-
   const prioritaScadenze = useMemo(() => {
-    const rows = [...scadenzeScadute, ...scadenzeEntro30];
-    return rows.sort((a, b) => {
+    const rows = Array.isArray(summary?.priorita) ? [...summary.priorita] : [];
+    rows.sort((a, b) => {
       const da = new Date(deadlineDate(a) || "9999-12-31").getTime();
       const db = new Date(deadlineDate(b) || "9999-12-31").getTime();
       return da - db;
     });
-  }, [scadenzeScadute, scadenzeEntro30]);
+    return rows;
+  }, [summary]);
 
-  const assetTecniciAttivi = useMemo(
-    () => (Array.isArray(cespiti) ? cespiti : []).filter((row) => !categoryIsFurniture(row) && statoCespite(row) === "Attivo"),
-    [cespiti, statoCespite]
-  );
-
-  const coperturaDocumentale = useMemo(() => {
-    if (!assetTecniciAttivi.length) return 0;
-    const documentati = assetTecniciAttivi.filter((row) => String(row?.link_documento || row?.link_sharepoint || "").trim()).length;
-    return Math.round((documentati / assetTecniciAttivi.length) * 100);
-  }, [assetTecniciAttivi]);
+  const summaryReady = Boolean(summary) && !summaryLoading;
+  const processReady = !processLoading;
+  const loading = summaryLoading || processLoading;
+  const errors = [summaryError, processError].filter(Boolean);
 
   const navigateDeadline = (status = "TUTTE") => {
     setFiltroScadenze(status);
@@ -174,15 +176,36 @@ export default function DashboardPage({
   ];
 
   const internalScrollStyle = {
+    flex: "1 1 auto",
+    minHeight: 0,
     maxHeight: "34vh",
     overflowY: "auto",
     overflowX: "hidden",
     overscrollBehavior: "contain",
-    scrollbarWidth: "thin",
+    scrollbarGutter: "stable",
   };
 
   return (
     <div className="fmed-dashboard-page fmed-dashboard-dashboard fmed-operational-dashboard" data-fmed-dashboard="REV0">
+      <style>{`
+        .fmed-dashboard-page .fmed-dashboard-priority-list.fmed-dashboard-scroll-list {
+          scrollbar-width: thin !important;
+          scrollbar-color: #9eb3c4 transparent !important;
+        }
+        .fmed-dashboard-page .fmed-dashboard-priority-list.fmed-dashboard-scroll-list::-webkit-scrollbar {
+          display: block !important;
+          width: 8px !important;
+          height: 8px !important;
+        }
+        .fmed-dashboard-page .fmed-dashboard-priority-list.fmed-dashboard-scroll-list::-webkit-scrollbar-thumb {
+          background: #9eb3c4 !important;
+          border-radius: 999px !important;
+        }
+        .fmed-dashboard-page .fmed-dashboard-priority-list.fmed-dashboard-scroll-list::-webkit-scrollbar-track {
+          background: transparent !important;
+        }
+      `}</style>
+
       <header className="fmed-dashboard-header fmed-operational-header">
         <div className="fmed-dashboard-title">
           <FmedModuleIcon module="Dashboard" className="fmed-dashboard-title-icon" />
@@ -193,24 +216,24 @@ export default function DashboardPage({
         </div>
         <div className="fmed-dashboard-header-actions">
           <span className="fmed-dashboard-live" role="status" aria-live="polite">
-            <i /> {loading ? "Aggiornamento in corso…" : "Dati operativi pronti"}
+            <i /> {loading ? "Aggiornamento in corso…" : errors.length ? "Dati parziali" : "Dati operativi pronti"}
           </span>
-          <button type="button" className="fmed-dashboard-button-secondary" onClick={() => window.location.reload()}>Aggiorna</button>
+          <button type="button" className="fmed-dashboard-button-secondary" disabled={loading} onClick={() => refreshDashboard(true)}>Aggiorna</button>
           <button type="button" className="fmed-dashboard-button-primary" onClick={() => setPagina("Export")}>Analisi e report</button>
         </div>
       </header>
 
-      {error && (
+      {errors.length > 0 && (
         <div className="fmed-dashboard-warning">
-          <strong>Processi non aggiornati.</strong>{" "}
-          <span>{error}. Asset e Scadenze restano disponibili dalle rispettive fonti operative.</span>
+          <strong>Aggiornamento parziale.</strong>{" "}
+          <span>{errors.join(" · ")}</span>
         </div>
       )}
 
       <section className="fmed-operational-automation-strip">
         <div>
           <strong>Automazioni attive</strong>{" "}
-          <span>I KPI usano le stesse fonti operative di Asset, Scadenze e Processi.</span>
+          <span>Dashboard leggera: KPI e priorità arrivano dal riepilogo autorevole senza scaricare gli archivi completi.</span>
         </div>
         <button type="button" onClick={() => { setImpostazioniTab?.("STRUMENTI"); setPagina("Gestione Utenti"); }}>Strumenti</button>
       </section>
@@ -231,7 +254,7 @@ export default function DashboardPage({
       <section className="fmed-dashboard-kpi-grid fmed-operational-kpi-grid">
         <KpiCard
           label="Scadenze scadute"
-          value={formatInteger(scadenzeScadute.length)}
+          value={metricValue(summary?.scadute, summaryReady)}
           detail="Richiedono verifica"
           tone="danger"
           icon={<FmedIcon name="alert" size={20} />}
@@ -239,7 +262,7 @@ export default function DashboardPage({
         />
         <KpiCard
           label="Entro 30 giorni"
-          value={formatInteger(scadenzeEntro30.length)}
+          value={metricValue(summary?.entro_30_giorni, summaryReady)}
           detail="Da organizzare"
           tone="warning"
           icon={<FmedIcon name="calendar" size={20} />}
@@ -247,7 +270,7 @@ export default function DashboardPage({
         />
         <KpiCard
           label="Processi in ritardo"
-          value={formatInteger(processiInRitardo.length)}
+          value={metricValue(processiInRitardo.length, processReady)}
           detail="Solo processi ancora aperti"
           tone="danger"
           icon={<FmedIcon name="workflow" size={20} />}
@@ -255,7 +278,7 @@ export default function DashboardPage({
         />
         <KpiCard
           label="Da approvare"
-          value={formatInteger(processiDaApprovare.length)}
+          value={metricValue(processiDaApprovare.length, processReady)}
           detail="Solo processi aperti"
           tone="warning"
           icon={<FmedIcon name="check" size={20} />}
@@ -263,7 +286,7 @@ export default function DashboardPage({
         />
         <KpiCard
           label="Da pianificare"
-          value={formatInteger(scadenzeDaPianificare.length)}
+          value={metricValue(summary?.da_pianificare, summaryReady)}
           detail="Manca la prossima data"
           tone="secondary"
           icon={<FmedIcon name="clock" size={20} />}
@@ -271,8 +294,8 @@ export default function DashboardPage({
         />
         <KpiCard
           label="Asset tecnici attivi"
-          value={formatInteger(assetTecniciAttivi.length)}
-          detail={`${coperturaDocumentale.toLocaleString("it-IT")}% documentati`}
+          value={metricValue(summary?.asset_tecnici_attivi, summaryReady)}
+          detail={summaryReady ? `${Number(summary?.copertura_documentale_pct || 0).toLocaleString("it-IT")}% documentati` : "Calcolo in corso"}
           tone="success"
           icon={<FmedIcon name="box" size={20} />}
           onClick={() => setPagina("Asset")}
@@ -285,8 +308,8 @@ export default function DashboardPage({
             <div><h3>Priorità</h3><p>Scadute e prossime scadenze entro 30 giorni</p></div>
             <button type="button" onClick={() => navigateDeadline("TUTTE")}>Apri tutte</button>
           </div>
-          <div className="fmed-dashboard-priority-list" style={internalScrollStyle}>
-            {prioritaScadenze.slice(0, 7).map((row, index) => {
+          <div className="fmed-dashboard-priority-list fmed-dashboard-scroll-list" style={internalScrollStyle}>
+            {prioritaScadenze.map((row, index) => {
               const code = deadlineCode(row);
               return (
                 <button
@@ -303,7 +326,8 @@ export default function DashboardPage({
                 </button>
               );
             })}
-            {!prioritaScadenze.length && <div className="fmed-dashboard-empty">Nessuna priorità critica.</div>}
+            {summaryReady && !prioritaScadenze.length && <div className="fmed-dashboard-empty">Nessuna priorità critica.</div>}
+            {!summaryReady && <div className="fmed-dashboard-empty">Caricamento priorità…</div>}
           </div>
         </section>
 
@@ -312,8 +336,8 @@ export default function DashboardPage({
             <div><h3>Attività aperte</h3><p>Solo processi che richiedono ancora lavoro</p></div>
             <button type="button" onClick={() => setPagina("Processi")}>Gestisci</button>
           </div>
-          <div className="fmed-dashboard-priority-list" style={internalScrollStyle}>
-            {processiOperativi.slice(0, 7).map((row) => (
+          <div className="fmed-dashboard-priority-list fmed-dashboard-scroll-list" style={internalScrollStyle}>
+            {processiOperativi.map((row) => (
               <button type="button" key={`process-${row.id}`} onClick={() => setPagina("Processi")}>
                 <span className={`fmed-dashboard-state-dot ${row.in_ritardo ? "danger" : "warning"}`} />
                 <span>
@@ -323,7 +347,8 @@ export default function DashboardPage({
                 <em>{humanize(row.stato)}</em>
               </button>
             ))}
-            {!processiOperativi.length && <div className="fmed-dashboard-empty">Nessuna attività aperta.</div>}
+            {processReady && !processiOperativi.length && <div className="fmed-dashboard-empty">Nessuna attività aperta.</div>}
+            {!processReady && <div className="fmed-dashboard-empty">Caricamento attività…</div>}
           </div>
         </section>
       </div>

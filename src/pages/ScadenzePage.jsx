@@ -29,7 +29,7 @@ export default function ScadenzePage(props) {
   const moduleLabel = (value) => ({ ASSET: "Asset", INFRASTRUTTURE: "Infrastrutture", SICUREZZA_81_08: "Sicurezza 81/08" })[String(value || "").toUpperCase()] || String(value || "Altro").replaceAll("_", " ");
   const isCollaudo = (row) => /COLLAUDO/i.test([row?.famiglia_codice, row?.famiglia_label, row?.attivita, row?.attivita_originale].filter(Boolean).join(" "));
   const metrics = [
-    ["Nel perimetro", scadenzeVisualizzate.length, "calendar"],
+    ["Cicli monitorati", scadenzeVisualizzate.length, "calendar"],
     ["Scadute", scadenzeScaduteNelPerimetro.length, "alert"],
     ["Entro 30 giorni", scadenzeImminentiNelPerimetro.length, "clock"],
     ["Da pianificare", daPianificare.length, "plus"],
@@ -152,7 +152,7 @@ export default function ScadenzePage(props) {
 
       {scadenzeElencoAperto && (
         <section className="p0-register">
-          <header><div><span className="p0-kicker">Agenda filtrata</span><h2>{scadenzeVisualizzate.length} scadenze</h2><p>Seleziona le righe da esportare o gestire.</p></div><button className="p0-btn p0-btn--quiet" onClick={() => setScadenzeElencoAperto(false)}>Chiudi</button></header>
+          <header><div><span className="p0-kicker">Agenda filtrata</span><h2>{scadenzeVisualizzate.length} cicli monitorati</h2><p>Seleziona le righe da esportare o gestire.</p></div><button className="p0-btn p0-btn--quiet" onClick={() => setScadenzeElencoAperto(false)}>Chiudi</button></header>
           {/* SCADENZE AGENDA ACTIONS START */}
           <div className="p0-register-agenda-actions" role="toolbar" aria-label="Azioni agenda scadenze">
             <button
