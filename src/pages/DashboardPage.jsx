@@ -3,6 +3,9 @@ import FmedModuleIcon from "../components/FmedModuleIcon.jsx";
 import FmedIcon from "../components/ui/FmedIcon.jsx";
 import { fmedAuthHeaders, fmedFetchJson } from "../fmedApiClient.js";
 
+const DASHBOARD_CACHE_KEY = "fmed_dashboard_operativa_v2";
+const DASHBOARD_CACHE_TTL_MS = 120000;
+
 function formatInteger(value) {
   return Number(value || 0).toLocaleString("it-IT");
 }
@@ -40,6 +43,119 @@ function metricValue(value, ready) {
   return ready ? formatInteger(value) : "…";
 }
 
+function rowsFromPayload(payload) {
+  if (Array.isArray(payload)) return payload;
+  if (Array.isArray(payload?.data)) return payload.data;
+  if (Array.isArray(payload?.risultato)) return payload.risultato;
+  if (Array.isArray(payload?.cicli_attivi)) return payload.cicli_attivi;
+  return [];
+}
+
+function flagTrue(value) {
+  return ["1", "TRUE", "SI", "SÌ", "YES", "ON"].includes(String(value ?? "").trim().toUpperCase());
+}
+
+function isTechnicalActiveAsset(row) {
+  const category = String(row?.categoria ?? row?.Categoria ?? row?.CATEGORIA ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toUpperCase();
+  if (category === "A" || category === "S" || category.includes("ARREDO")) return false;
+  if (flagTrue(row?.dismesso) || flagTrue(row?.strumento_non_in_uso)) return false;
+  return Boolean(String(row?.codicestrumento || row?.codice_strumento || "").trim());
+}
+
+function classifyDeadline(row) {
+  const explicit = deadlineCode(row);
+  if (["SCADUTA", "30_GIORNI", "60_GIORNI", "DA_PIANIFICARE", "REGOLARE"].includes(explicit)) return explicit;
+
+  const rawDate = deadlineDate(row);
+  if (!rawDate) return "DA_PIANIFICARE";
+
+  const text = String(rawDate).trim();
+  const isoDay = /^\d{4}-\d{2}-\d{2}/.test(text) ? text.slice(0, 10) : "";
+  const due = isoDay ? new Date(`${isoDay}T12:00:00`) : new Date(text);
+  if (Number.isNaN(due.getTime())) return "DA_PIANIFICARE";
+
+  const today = new Date();
+  today.setHours(12, 0, 0, 0);
+  due.setHours(12, 0, 0, 0);
+  const days = Math.round((due.getTime() - today.getTime()) / 86400000);
+  if (days < 0) return "SCADUTA";
+  if (days <= 30) return "30_GIORNI";
+  if (days <= 60) return "60_GIORNI";
+  return "REGOLARE";
+}
+
+function buildFallbackSummary(assetPayload, cyclePayload) {
+  const assetRows = rowsFromPayload(assetPayload);
+  const cycleRows = rowsFromPayload(cyclePayload).map((row) => {
+    const codice = classifyDeadline(row);
+    return {
+      ...row,
+      _dataScadenza: deadlineDate(row),
+      _statoScadenza: {
+        ...(row?._statoScadenza || {}),
+        codice,
+      },
+    };
+  });
+
+  const activeAssets = assetRows.filter(isTechnicalActiveAsset);
+  const documentedAssets = activeAssets.filter((row) => String(row?.link_documento || row?.link_sharepoint || "").trim());
+  const counts = { SCADUTA: 0, "30_GIORNI": 0, "60_GIORNI": 0, DA_PIANIFICARE: 0, REGOLARE: 0 };
+  cycleRows.forEach((row) => {
+    const code = classifyDeadline(row);
+    if (Object.prototype.hasOwnProperty.call(counts, code)) counts[code] += 1;
+  });
+
+  const priorities = cycleRows
+    .filter((row) => ["SCADUTA", "30_GIORNI"].includes(classifyDeadline(row)))
+    .sort((a, b) => {
+      const da = new Date(deadlineDate(a) || "9999-12-31").getTime();
+      const db = new Date(deadlineDate(b) || "9999-12-31").getTime();
+      return da - db;
+    });
+
+  return {
+    status: "ok",
+    source: "FMED_FRONTEND_FALLBACK",
+    cicli_monitorati: cycleRows.length,
+    scadute: counts.SCADUTA,
+    entro_30_giorni: counts["30_GIORNI"],
+    entro_60_giorni: counts["60_GIORNI"],
+    da_pianificare: counts.DA_PIANIFICARE,
+    programmate: counts.REGOLARE,
+    priorita: priorities,
+    asset_tecnici_attivi: activeAssets.length,
+    asset_tecnici_documentati: documentedAssets.length,
+    copertura_documentale_pct: activeAssets.length
+      ? Math.round((documentedAssets.length / activeAssets.length) * 100)
+      : 0,
+  };
+}
+
+function readCachedSummary() {
+  try {
+    const raw = sessionStorage.getItem(DASHBOARD_CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed?.data || Date.now() - Number(parsed?.savedAt || 0) > DASHBOARD_CACHE_TTL_MS) return null;
+    return parsed.data;
+  } catch {
+    return null;
+  }
+}
+
+function writeCachedSummary(data) {
+  try {
+    sessionStorage.setItem(DASHBOARD_CACHE_KEY, JSON.stringify({ savedAt: Date.now(), data }));
+  } catch {
+    // La cache è solo un'accelerazione: nessun errore deve bloccare la Dashboard.
+  }
+}
+
 function KpiCard({ label, value, detail, tone, icon, onClick }) {
   return (
     <button type="button" className={`fmed-dashboard-kpi fmed-dashboard-kpi-${tone}`} onClick={onClick}>
@@ -61,12 +177,32 @@ export default function DashboardPage({
   setImpostazioniTab,
   avviaProcessoGuidatoFmed,
 }) {
-  const [summary, setSummary] = useState(null);
+  const [summary, setSummary] = useState(() => readCachedSummary());
   const [processRows, setProcessRows] = useState([]);
   const [summaryLoading, setSummaryLoading] = useState(true);
   const [processLoading, setProcessLoading] = useState(true);
   const [summaryError, setSummaryError] = useState("");
   const [processError, setProcessError] = useState("");
+
+  const loadFallbackSummary = useCallback(async (force = false) => {
+    const stamp = force ? `&_=${Date.now()}` : "";
+    const cycleStamp = force ? `?_=${Date.now()}` : "";
+    const [assets, cycles] = await Promise.all([
+      fmedFetchJson(`/censimento?limit=5000${stamp}`, {
+        apiBaseUrl,
+        headers: fmedAuthHeaders(),
+        timeoutMs: 90000,
+        retries: 1,
+      }),
+      fmedFetchJson(`/cicli-unificati/attivi${cycleStamp}`, {
+        apiBaseUrl,
+        headers: fmedAuthHeaders(),
+        timeoutMs: 90000,
+        retries: 1,
+      }),
+    ]);
+    return buildFallbackSummary(assets, cycles);
+  }, [apiBaseUrl]);
 
   const loadSummary = useCallback(async (force = false) => {
     setSummaryLoading(true);
@@ -78,20 +214,29 @@ export default function DashboardPage({
       const data = await fmedFetchJson(endpoint, {
         apiBaseUrl,
         headers: fmedAuthHeaders(),
-        timeoutMs: 90000,
-        retries: 1,
+        timeoutMs: 15000,
+        retries: 0,
       });
       if (!data || data?.status !== "ok") {
         throw new Error("Riepilogo operativo non disponibile");
       }
       setSummary(data);
-    } catch (requestError) {
-      setSummary(null);
-      setSummaryError(requestError?.message || "Riepilogo operativo non raggiungibile");
+      writeCachedSummary(data);
+    } catch (primaryError) {
+      try {
+        const fallback = await loadFallbackSummary(force);
+        setSummary(fallback);
+        writeCachedSummary(fallback);
+        setSummaryError("");
+      } catch (fallbackError) {
+        setSummaryError(
+          fallbackError?.message || primaryError?.message || "Riepilogo operativo non raggiungibile"
+        );
+      }
     } finally {
       setSummaryLoading(false);
     }
-  }, [apiBaseUrl]);
+  }, [apiBaseUrl, loadFallbackSummary]);
 
   const loadProcesses = useCallback(async (force = false) => {
     setProcessLoading(true);
@@ -156,7 +301,7 @@ export default function DashboardPage({
     return rows;
   }, [summary]);
 
-  const summaryReady = Boolean(summary) && !summaryLoading;
+  const summaryReady = Boolean(summary);
   const processReady = !processLoading;
   const loading = summaryLoading || processLoading;
   const errors = [summaryError, processError].filter(Boolean);
@@ -233,7 +378,7 @@ export default function DashboardPage({
       <section className="fmed-operational-automation-strip">
         <div>
           <strong>Automazioni attive</strong>{" "}
-          <span>Dashboard leggera: KPI e priorità arrivano dal riepilogo autorevole senza scaricare gli archivi completi.</span>
+          <span>KPI e priorità usano le fonti operative FMED; il riepilogo leggero viene preferito quando disponibile.</span>
         </div>
         <button type="button" onClick={() => { setImpostazioniTab?.("STRUMENTI"); setPagina("Gestione Utenti"); }}>Strumenti</button>
       </section>
@@ -310,7 +455,7 @@ export default function DashboardPage({
           </div>
           <div className="fmed-dashboard-priority-list fmed-dashboard-scroll-list" style={internalScrollStyle}>
             {prioritaScadenze.map((row, index) => {
-              const code = deadlineCode(row);
+              const code = classifyDeadline(row);
               return (
                 <button
                   type="button"
