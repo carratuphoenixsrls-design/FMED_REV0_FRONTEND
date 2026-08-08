@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AssetControls from "../components/asset/AssetControls";
 import CanonicalSelect from "../components/masterdata/CanonicalSelect.jsx";
 import FmedIcon from "../components/ui/FmedIcon.jsx";
@@ -16,7 +16,6 @@ export default function AssetPage(props) {
     setAssetElencoAperto = () => {},
     assetAnalisiAperta = false,
     setAssetAnalisiAperta = () => {},
-    assetKpiFiltrati = { totale: 0, attivi: 0, dismessi: 0, nonInUso: 0 },
     assetPerSedeFiltrati = [],
     assetPerRepartoFiltrati = [],
     assetPerCostruttoreFiltrati = [],
@@ -65,6 +64,27 @@ export default function AssetPage(props) {
     setAssetSelezionatiBulk = () => {}
   } = props || {};
   const [assetBulkEditorOpen, setAssetBulkEditorOpen] = useState(false);
+
+  // Regola Asset definitiva: i KPI descrivono sempre e soltanto lo stesso
+  // insieme mostrato dalla tabella dopo i filtri. Nessuna categoria o stato
+  // viene escluso dal totale (compresi arredi, dismessi e non in uso).
+  const assetKpiFiltrati = useMemo(() => {
+    const riepilogo = {
+      totale: filtrati.length,
+      attivi: 0,
+      dismessi: 0,
+      nonInUso: 0
+    };
+
+    filtrati.forEach((asset) => {
+      const stato = statoCespite(asset);
+      if (stato === "Attivo") riepilogo.attivi += 1;
+      else if (stato === "Dismesso") riepilogo.dismessi += 1;
+      else riepilogo.nonInUso += 1;
+    });
+
+    return riepilogo;
+  }, [filtrati, statoCespite]);
 
   useEffect(() => {
     if (assetSelezionatiBulk.length === 0) setAssetBulkEditorOpen(false);
