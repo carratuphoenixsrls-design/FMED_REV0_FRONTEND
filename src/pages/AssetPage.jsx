@@ -101,7 +101,7 @@ export default function AssetPage(props) {
     </header>
 
     <section className="p0-asset-kpis">
-      <Kpi tone="#2f76e8" icon="box" label="Asset filtrati" value={assetKpiFiltrati.totale} detail={`su ${cespiti.length.toLocaleString("it-IT")} totali`} />
+      <Kpi tone="#2f76e8" icon="box" label="Totale asset" value={assetKpiFiltrati.totale} detail={`su ${cespiti.length.toLocaleString("it-IT")} totali`} />
       <Kpi tone="#13aa91" icon="check" label="Attivi" value={assetKpiFiltrati.attivi} detail="operativi" />
       <Kpi tone="#8d4cf2" icon="archive" label="Dismessi" value={assetKpiFiltrati.dismessi} detail="fuori inventario attivo" />
       <Kpi tone="#e88713" icon="pause" label="Non in uso" value={assetKpiFiltrati.nonInUso} detail="da verificare" />
